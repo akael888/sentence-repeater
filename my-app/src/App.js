@@ -1,37 +1,40 @@
-import logo from "./logo.svg";
+
 import "./App.css";
-import "./TestFunction.js";
-import Test from "./TestFunction.js";
-import Click from "./buttonTest.js";
-import Display from "./displayTest.js";
-import { useState } from "react";
+import {useState } from "react";
+import Repeater from "./Repeater";
 
 function App() {
-  const [AApp, setAApp] = useState(0);
-  function handleClick() {
-    setAApp(AApp + 1);
-  }
+  // Repeater Components
+  const [mainText, setMainText] = useState('Input your Text');
+  const [pText, setPText] = useState('Test');
+
+
+  const handleMainTextChange = (event) => {
+    setMainText(event.target.value);
+  };
+
+  const handlePTextChange = (event) => {
+    setPText(event.target.innerText);
+  };
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-          <Test />
-          <Click count = {AApp} onClick = {handleClick} />
-          <Display count = {AApp} />
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <TitleHeader />
+        <Repeater mainText={mainText} mainTextChange={handleMainTextChange} />
       </header>
+      
     </div>
+  );
+}
+
+function TitleHeader() {
+  return (
+    <>
+      <div className="title-container">
+        <h1>Variable Repeater</h1>
+      </div>
+    </>
   );
 }
 
