@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-function Repeater({ mainText, mainTextChange }) {
+function Repeater({ mainTextChange }) {
   const mainTextRef = useRef(null);
+  const [variables, setVariables] = useState({});
 
   const handleMainTextBlur = () => {
     if (mainTextRef.current) {
@@ -13,7 +14,9 @@ function Repeater({ mainText, mainTextChange }) {
   document.onkeydown = function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
-      document.querySelector(".main-text-container").removeAttribute("contenteditable");
+      document
+        .querySelector(".main-text-container")
+        .removeAttribute("contenteditable");
     }
   };
 
@@ -24,10 +27,20 @@ function Repeater({ mainText, mainTextChange }) {
     element.focus(); //Focusing on the eelement
   }
 
+  const addVariable = (name, type, value) => {
+    setVariables((currentVariable) => ({
+      ...currentVariable,
+      "variable 1": {
+        name: name,
+        type: type,
+        value: value,
+      },
+    }));
+    console.log(variables);
+  };
   return (
     <>
       <div className="repeater-container">
-
         <div
           contentEditable="true"
           className="main-text-container"
@@ -37,6 +50,8 @@ function Repeater({ mainText, mainTextChange }) {
         >
           Type here...
         </div>
+        <button onClick={() => addVariable('name A','Name B','Name c')}></button>
+        <h1>{variables[1]}</h1>
         {/* <textarea value={mainText} onChange={mainTextChange}></textarea> */}
       </div>
       <p>{mainTextRef.current?.innerText}</p>

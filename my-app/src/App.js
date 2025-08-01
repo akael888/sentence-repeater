@@ -1,27 +1,24 @@
 
 import "./App.css";
 import {useState } from "react";
-import Repeater from "./Repeater";
+import Repeater from "./repeater";
 
 function App() {
   // Repeater Components
   const [mainText, setMainText] = useState('Input your Text');
-  const [pText, setPText] = useState('Test');
+
 
 
   const handleMainTextChange = (event) => {
     setMainText(event.target.value);
   };
 
-  const handlePTextChange = (event) => {
-    setPText(event.target.innerText);
-  };
-
+ 
   return (
     <div className="App">
       <header className="App-header">
         <TitleHeader />
-        <Repeater mainText={mainText} mainTextChange={handleMainTextChange} />
+        <Repeater mainTextChange={handleMainTextChange} />
       </header>
       
     </div>
