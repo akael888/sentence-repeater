@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
+import Variable from "./variable";
 
 function Repeater({ mainTextChange }) {
   const mainTextRef = useRef(null);
-  const [variables, setVariables] = useState({});
+  const [variables, setVariables] = useState(new Map());
 
   const handleMainTextBlur = () => {
     if (mainTextRef.current) {
@@ -28,15 +29,11 @@ function Repeater({ mainTextChange }) {
   }
 
   const addVariable = (name, type, value) => {
-    setVariables((currentVariable) => ({
-      ...currentVariable,
-      "variable 1": {
-        name: name,
-        type: type,
-        value: value,
-      },
-    }));
-    console.log(variables);
+    setVariables(() => {
+      const newVariables = new Map(variables);
+      newVariables.set(newVariables.size,{name, type, value});
+      return newVariables;
+    });
   };
   return (
     <>
@@ -50,34 +47,14 @@ function Repeater({ mainTextChange }) {
         >
           Type here...
         </div>
-        <button onClick={() => addVariable('name A','Name B','Name c')}></button>
-        <h1>{variables[1]}</h1>
+        <button
+          onClick={() => addVariable("Variable 0", "Number", 1)}
+        ></button>
+        <h1>tEST</h1>
         {/* <textarea value={mainText} onChange={mainTextChange}></textarea> */}
       </div>
       <p>{mainTextRef.current?.innerText}</p>
-      <div className="variable-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Variable</th>
-              <th>Type</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Test 1</td>
-              <td>Test 2</td>
-              <td>Test 3</td>
-            </tr>
-            <tr>
-              <td>Test 1</td>
-              <td>Test 2</td>
-              <td>Test 3</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <Variable variables={variables}/>
     </>
   );
 }

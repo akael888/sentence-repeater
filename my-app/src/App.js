@@ -1,7 +1,7 @@
 
 import "./App.css";
 import {useState } from "react";
-import Repeater from "./repeater";
+import Repeater from "./components/repeater";
 
 function App() {
   // Repeater Components
