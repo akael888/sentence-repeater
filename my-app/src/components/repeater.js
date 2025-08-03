@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import Variable from "./variable";
+import Generator from "./generator";
 
 function Repeater({ mainTextChange }) {
   const mainTextRef = useRef(null);
@@ -52,6 +53,7 @@ function Repeater({ mainTextChange }) {
         name: "Variable " + index,
         type: "Number",
         value: index,
+        iterate: true,
       });
     });
 
@@ -70,6 +72,7 @@ function Repeater({ mainTextChange }) {
         >
           Type here...
         </div>
+        <Generator variables={variables} mainText={mainTextRef} genAmount={1} />
       </div>
       <p>{mainTextRef.current?.innerText}</p>
       <Variable variables={variables} variableChanges={handleVariableChanges} />

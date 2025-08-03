@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dropdown from "react-bootstrap/Dropdown";
+import InputGroup from "react-bootstrap/InputGroup";
 
 function Variable({ variables, variableChanges }) {
   function handleVariableChanges(key, field, value) {
@@ -20,6 +21,7 @@ function Variable({ variables, variableChanges }) {
             <th>Varibale Name</th>
             <th>Type</th>
             <th>Start Value</th>
+            <th>Iterate</th>
           </tr>
         </thead>
         <tbody>
@@ -56,6 +58,13 @@ function Variable({ variables, variableChanges }) {
                     </Dropdown>{" "}
                   </td>
                   <td contentEditable="true">{values.value}</td>
+                  <td contentEditable="true">
+                    <div>
+                      <label>
+                        <input type="checkbox" checked={values.iterate} onClick={() => handleVariableChanges(key,'iterate',!(values.iterate))} />
+                      </label>
+                    </div>
+                  </td>
                 </tr>
               ))
             : !(<div>empty</div>)}
