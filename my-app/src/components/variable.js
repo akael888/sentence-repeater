@@ -7,16 +7,20 @@ function Variable({ variables }) {
             <th>Variable</th>
             <th>Type</th>
             <th>Value</th>
+            <th>Loc</th>
           </tr>
         </thead>
         <tbody>
-          {Array.from(variables.entries()).map(([key, values]) => (
-            <tr key={key}>
-              <td>{values.name}</td>
-              <td>{values.type}</td>
-              <td>{values.value}</td>
-            </tr>
-          ))}
+          {variables != null
+            ? Array.from(variables.entries()).map(([key, values]) => (
+                <tr key={key}>
+                  <td>{values.name}</td>
+                  <td>{values.type}</td>
+                  <td>{values.value}</td>
+                  <td>{values.loc}</td>
+                </tr>
+              ))
+            : !<div>empty</div>}
         </tbody>
       </table>
     </div>
