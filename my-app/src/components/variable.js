@@ -1,8 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useRef } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 
-
 function Variable({ variables, variableChanges }) {
+  const initializedName = useRef(new Set());
+
   function handleVariableChanges(key, field, value) {
     const tempVar = new Map(variables);
     const targetObj = tempVar.get(key);
@@ -31,7 +33,14 @@ function Variable({ variables, variableChanges }) {
             ? Array.from(variables.entries()).map(([key, values]) => (
                 <tr key={key}>
                   <td>{values.id}</td>
-                  <td contentEditable="true">{values.name}</td>
+                  <td
+                    contentEditable="true"
+                    onBlur={(e) =>
+                      handleVariableChanges(key, "name", e.target.innerText)
+                    }
+                  >
+                    {values.name}
+                  </td>
 
                   <td>
                     <Dropdown>
@@ -59,11 +68,26 @@ function Variable({ variables, variableChanges }) {
                       </Dropdown.Menu>
                     </Dropdown>{" "}
                   </td>
-                  <td contentEditable="true" onBlur={(e)=>handleVariableChanges(key,'value',e.target.innerText)}>{values.value}</td>
+                  <td
+                    contentEditable="true"
+                    onBlur={(e) =>
+                      handleVariableChanges(key, "value", e.target.innerText)
+                    }
+                  >{values.value}</td>
                   <td contentEditable="true">
                     <div>
                       <label>
-                        <input type="checkbox" checked={values.iterate} onClick={() => handleVariableChanges(key,'iterate',!(values.iterate))} />
+                        <input
+                          type="checkbox"
+                          checked={values.iterate}
+                          onClick={() =>
+                            handleVariableChanges(
+                              key,
+                              "iterate",
+                              !values.iterate
+                            )
+                          }
+                        />
                       </label>
                     </div>
                   </td>

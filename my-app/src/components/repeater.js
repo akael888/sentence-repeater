@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Variable from "./variable";
 import Generator from "./generator";
 import ShowResult from "./result";
+import Preview from "./text-preview";
 
 function Repeater({ mainTextChange }) {
   const mainTextRef = useRef(null);
@@ -67,6 +68,10 @@ function Repeater({ mainTextChange }) {
   }
   return (
     <>
+      <Preview
+        mainText={mainTextRef.current?.innerText}
+        variables={variables}
+      />
       <div className="repeater-container">
         <div
           // contentEditable="true"
@@ -78,11 +83,17 @@ function Repeater({ mainTextChange }) {
         >
           Type here...
         </div>
-        <Generator variables={variables} mainText={mainTextRef} textArrayChanges={handleTextArrayChanges} />
+        <div className="generator-container">
+          <Generator
+            variables={variables}
+            mainText={mainTextRef}
+            textArrayChanges={handleTextArrayChanges}
+          />
+        </div>
       </div>
-      <p>{mainTextRef.current?.innerText}</p>
+
       <Variable variables={variables} variableChanges={handleVariableChanges} />
-      <ShowResult arrayResults = {textArrayParent}/>
+      <ShowResult arrayResults={textArrayParent} />
     </>
   );
 }
