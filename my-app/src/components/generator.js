@@ -1,4 +1,5 @@
 import { useState } from "react";
+import css from "./generator.module.css";
 
 function Generator({ variables, mainText, textArrayChanges }) {
   const [genAmount, setGenAmount] = useState(0);
@@ -24,18 +25,21 @@ function Generator({ variables, mainText, textArrayChanges }) {
     let currentKeyIndex = 0;
 
     for (let i = 0; i < genAmount; i++) {
-      let text = genText; 
+      let text = genText;
       const variableEntries = Array.from(newVariables.entries());
-      
+
       while (text.includes("{}") && variableEntries.length > 0) {
-        const [key, value] = variableEntries[currentKeyIndex % variableEntries.length];
+        const [key, value] =
+          variableEntries[currentKeyIndex % variableEntries.length];
         text = text.replace("{}", String(value.value));
-        
+
         if (value.iterate === true) {
           value.value++;
         }
-        
-        console.log("Text: " + text + " (Variable Index: " + currentKeyIndex + ")");
+
+        console.log(
+          "Text: " + text + " (Variable Index: " + currentKeyIndex + ")"
+        );
         currentKeyIndex++;
       }
       console.log("New Text: " + text);
@@ -55,10 +59,18 @@ function Generator({ variables, mainText, textArrayChanges }) {
   return (
     <>
       <input
+        id={css["amount-field"]}
         type="number"
         onChange={(e) => handleGenAmountChanges(e.target.value)}
+        placeholder="Amount"
       ></input>
-      <button onClick={generateText}>Generate</button>
+      <button
+        id={css["generate-button"]}
+        onClick={generateText}
+        disabled={mainText.length > 0}
+      >
+        Generate
+      </button>
     </>
   );
 }

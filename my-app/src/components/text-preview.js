@@ -26,7 +26,7 @@ function Preview({ mainText, variables }) {
 
   return (
     <>
-      <p>{generatePreview()}</p>
+      <h1>{mainText ? generatePreview() : "Preview"}</h1>
     </>
   );
 }

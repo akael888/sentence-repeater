@@ -1,0 +1,34 @@
+#amount-field {
+    background-color: rgb(22, 19, 19);
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+#amount-field:empty {
+    background-color: rgb(22, 19, 19);
+}
+
+#amount-field:hover {
+    background-color: rgb(255, 255, 255);
+    color: #282c34;
+    box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+}
+
+
+#generate-button {
+    background-color: rgb(22, 19, 19);
+    color: white;
+    border-radius: 10px;
+}
+
+#generate-button:hover {
+    background-color: rgb(255, 255, 255);
+    color: #282c34;
+    box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+}

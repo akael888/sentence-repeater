@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Variable from "./variable";
 import Generator from "./generator";
 import ShowResult from "./result";
 import Preview from "./text-preview";
+import css from "./repeater.module.css";
 
 function Repeater({ mainTextChange }) {
   const mainTextRef = useRef(null);
@@ -20,14 +21,19 @@ function Repeater({ mainTextChange }) {
   };
 
   //disable any enter happening on main text
-  document.onkeydown = function (event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      document
-        .querySelector(".main-text-container")
-        .removeAttribute("contenteditable");
-    }
-  };
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (mainTextRef.current) {
+          mainTextRef.current.removeAttribute("contenteditable");
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   //enableEditing onclick
   function enableEditing(element) {
@@ -66,34 +72,58 @@ function Repeater({ mainTextChange }) {
 
     setVariables(newVariables);
   }
+
   return (
     <>
-      <Preview
-        mainText={mainTextRef.current?.innerText}
-        variables={variables}
-      />
-      <div className="repeater-container">
-        <div
-          // contentEditable="true"
-          className="main-text-container"
-          onBlur={handleMainTextBlur}
-          ref={mainTextRef}
-          onClick={() => enableEditing(mainTextRef.current)}
-          onInput={(e) => addVariableOnInput(e)}
-        >
-          Type here...
+      <div className={css["all-container"]}>
+        <div className={css["leftside-container"]}>
+          <div className={css["preview-container"]}>
+            <Preview
+              mainText={mainTextRef.current?.innerText}
+              variables={variables}
+            />
+          </div>
+          <div className={css["repeater-container"]}>
+            <div
+              // contentEditable="true"
+              className={css["main-text-container"]}
+              onBlur={handleMainTextBlur}
+              ref={mainTextRef}
+              onClick={() => enableEditing(mainTextRef.current)}
+              onInput={(e) => addVariableOnInput(e)}
+            >
+              Type here...
+            </div>
+            <div className={css["generator-container"]}>
+              <Generator
+                variables={variables}
+                mainText={mainTextRef}
+                textArrayChanges={handleTextArrayChanges}
+              />
+            </div>
+          </div>
+          <div className={css["variable-container"]}>
+            {variables.size > 0 ? (
+              <div className="content-div">
+                {/* Content of the div */}
+                <Variable
+                  variables={variables}
+                  variableChanges={handleVariableChanges}
+                />
+              </div>
+            ) : null}
+          </div>
         </div>
-        <div className="generator-container">
-          <Generator
-            variables={variables}
-            mainText={mainTextRef}
-            textArrayChanges={handleTextArrayChanges}
-          />
+        <div className={css["rightside-container"]}>
+          {textArrayParent.length > 0 ? (
+              <div className="content-div">
+                {/* Content of the div */}
+                <ShowResult arrayResults={textArrayParent} />
+              </div>
+            ) : null}
+          
         </div>
       </div>
-
-      <Variable variables={variables} variableChanges={handleVariableChanges} />
-      <ShowResult arrayResults={textArrayParent} />
     </>
   );
 }

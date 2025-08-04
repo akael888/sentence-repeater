@@ -1,4 +1,4 @@
-function ShowResult({arrayResults}) {
+function ShowResult({ arrayResults }) {
   const rows = [];
   for (let i = 0; i < arrayResults.length; i++) {
     rows.push(
@@ -6,21 +6,22 @@ function ShowResult({arrayResults}) {
         <td>{arrayResults[i]}</td>
       </tr>
     );
-    console.log('Text Array Results' + {arrayResults})
+    console.log("Text Array Results" + { arrayResults });
   }
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>Sentence</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows}
-        </tbody>
-      </table>
+      <div>
+        <button>Copy</button>
+        <table>
+          <thead>
+            <tr>
+              <th>Sentence</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
+      </div>
     </>
   );
 }
