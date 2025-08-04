@@ -1,10 +1,16 @@
 import { useRef, useState } from "react";
 import Variable from "./variable";
 import Generator from "./generator";
+import ShowResult from "./result";
 
 function Repeater({ mainTextChange }) {
   const mainTextRef = useRef(null);
   const [variables, setVariables] = useState(new Map());
+  const [textArrayParent, setTextArrayParent] = useState([]);
+
+  const handleTextArrayChanges = (textArrayData) => {
+    setTextArrayParent(textArrayData);
+  };
 
   const handleMainTextBlur = () => {
     if (mainTextRef.current) {
@@ -72,10 +78,11 @@ function Repeater({ mainTextChange }) {
         >
           Type here...
         </div>
-        <Generator variables={variables} mainText={mainTextRef} genAmount={1} />
+        <Generator variables={variables} mainText={mainTextRef} textArrayChanges={handleTextArrayChanges} />
       </div>
       <p>{mainTextRef.current?.innerText}</p>
       <Variable variables={variables} variableChanges={handleVariableChanges} />
+      <ShowResult arrayResults = {textArrayParent}/>
     </>
   );
 }

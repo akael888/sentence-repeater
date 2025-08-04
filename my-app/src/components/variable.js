@@ -1,14 +1,16 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dropdown from "react-bootstrap/Dropdown";
-import InputGroup from "react-bootstrap/InputGroup";
+
 
 function Variable({ variables, variableChanges }) {
   function handleVariableChanges(key, field, value) {
     const tempVar = new Map(variables);
-    const [targetKey, targetObj] = Array.from(variables.entries())[key];
-    targetObj[field] = value;
+    const targetObj = tempVar.get(key);
+    if (targetObj) {
+      targetObj[field] = value;
+      tempVar.set(key, targetObj);
+    }
     console.log("tempvar key: " + key);
-    tempVar.set(targetKey, targetObj);
     return variableChanges(tempVar);
   }
 
@@ -18,7 +20,7 @@ function Variable({ variables, variableChanges }) {
         <thead>
           <tr>
             <th>id</th>
-            <th>Varibale Name</th>
+            <th>Variable Name</th>
             <th>Type</th>
             <th>Start Value</th>
             <th>Iterate</th>
@@ -57,7 +59,7 @@ function Variable({ variables, variableChanges }) {
                       </Dropdown.Menu>
                     </Dropdown>{" "}
                   </td>
-                  <td contentEditable="true">{values.value}</td>
+                  <td contentEditable="true" onBlur={(e)=>handleVariableChanges(key,'value',e.target.innerText)}>{values.value}</td>
                   <td contentEditable="true">
                     <div>
                       <label>
