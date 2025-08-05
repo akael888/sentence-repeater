@@ -1,0 +1,10 @@
+.variable-container {
+    background-color: rgb(22, 19, 19);
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 5px;
+    box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    -webkit-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    -moz-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+}
