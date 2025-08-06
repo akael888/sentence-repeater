@@ -1,0 +1,82 @@
+.results-container {
+    display: grid;
+    gap: 10px;
+}
+
+
+.results-all-container {
+
+    width: 100%;
+    height: 100%;
+    min-width: 30vh;
+    min-height: 10vh;
+    max-width: 35vh;
+    max-height: 25vh;
+    display: grid;
+    text-align: center;
+    place-items: center;
+    background-color: rgb(22, 19, 19);
+    /* overflow-y: scroll; */
+    box-shadow: 0px 0px 21px -6px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 21px -6px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 21px -6px rgba(0, 0, 0, 0.75);
+    margin: auto;
+    border-radius: 10px;
+    display: grid;
+
+}
+
+.results-table-header-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 0.09fr;
+}
+
+.results-table-header-container * {
+    margin: auto;
+}
+
+
+.results-table-container {
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+    place-items: center;
+    overflow-y: scroll;
+    border-radius: 10px;
+    margin: auto;
+
+    display: grid;
+
+
+
+}
+
+.results-interaction-container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    background-color: rgba(255, 255, 255, 0.03);
+
+
+    margin: auto;
+    border-radius: 10px;
+    display: inline-flex;
+    gap: 5px;
+}
+
+
+.results-interaction-container button {
+    background-color: rgb(22, 19, 19);
+    border-radius: 10px;
+}
+
+.results-interaction-container button:hover {
+    background-color: white;
+    color: black;
+
+}

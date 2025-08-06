@@ -1,8 +1,24 @@
+@keyframes scaleUp {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
 #amount-field {
     background-color: rgb(22, 19, 19);
     color: white;
     border-radius: 10px;
     text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    -webkit-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    -moz-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
 }
 
 
@@ -20,15 +36,25 @@
 
 
 #generate-button {
-    background-color: rgb(22, 19, 19);
-    color: white;
+    background: #2A7B9B;
+    background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
+    color: black;
     border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    -webkit-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    -moz-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    border: none;
+    animation: scaleUp 2s ease-in-out infinite;
 }
 
 #generate-button:hover {
     background-color: rgb(255, 255, 255);
-    color: #282c34;
-    box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-    -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-    -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    box-shadow: 0px 0px 15px -1px #2A7B9B;
+    ;
+    -webkit-box-shadow: 0px 0px 15px -1px #2A7B9B;
+    ;
+    -moz-box-shadow: 0px 0px 15px -1px #2A7B9B;
+    ;
+
 }

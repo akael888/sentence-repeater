@@ -102,26 +102,41 @@ function Repeater({ mainTextChange }) {
               />
             </div>
           </div>
-          <div className={css["variable-container"]}>
-            {variables.size > 0 ? (
-              <div className="content-div">
-                {/* Content of the div */}
-                <Variable
-                  variables={variables}
-                  variableChanges={handleVariableChanges}
-                />
-              </div>
-            ) : null}
-          </div>
-        </div>
-        <div className={css["rightside-container"]}>
-          {textArrayParent.length > 0 ? (
-              <div className="content-div">
-                {/* Content of the div */}
-                <ShowResult arrayResults={textArrayParent} />
-              </div>
-            ) : null}
-          
+
+          <>
+            <div className={css[["hidden-containers"]]}>
+              {variables ? (
+                <>
+                  {variables.size > 0 ? (
+                    <div className={css["variable-container"]}>
+                      <div className={css["content-div"]}>
+                        {/* Content of the div */}
+                        <Variable
+                          variables={variables}
+                          variableChanges={handleVariableChanges}
+                        />
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              ) : null}
+              {textArrayParent ? (
+                <>
+                  {textArrayParent.length > 0 ? (
+                    <div className={css["results-container"]}>
+                      <div className={css["content-div-results"]}>
+                        {/* Content of the div */}
+                        <ShowResult
+                          arrayResults={textArrayParent}
+                          arrayResultsChange={handleTextArrayChanges}
+                        />
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              ) : null}
+            </div>
+          </>
         </div>
       </div>
     </>
