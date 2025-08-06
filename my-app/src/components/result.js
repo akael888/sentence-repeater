@@ -25,7 +25,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
   //     tempRow[i] = convertArrayToPoints(tempRow[i]);
   //   }
 
-  //   return 
+  //   return
   // }
 
   // function convertArrayToPoints(specificArray) {
@@ -35,7 +35,9 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
 
   const handleCopyClick = async () => {
     try {
-      const textToCopy = arrayResults.map(item => `- ${String(item)}`).join('\n');
+      const textToCopy = arrayResults
+        .map((item) => `- ${String(item)}`)
+        .join("\n");
       await navigator.clipboard.writeText(textToCopy);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000); // Reset "Copied!" message after 2 seconds
@@ -47,28 +49,35 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
 
   return (
     <>
-      <div>
-        <p>Sentence</p>
-        <CloseButton
-          onClick={() => {
-            handeArrayResultsChanges();
-          }}
-        />
-      </div>
-      <div className={css["results-table-container"]}>
-        <table>
-          <thead>
-            {/* <tr>
+      <div className={css["results-container"]}>
+        <div className={css["results-all-container"]}>
+          <div className={css["results-table-header-container"]}>
+            <h4>Sentence</h4>
+            <CloseButton
+              onClick={() => {
+                handeArrayResultsChanges();
+              }}
+              variant="white"
+            />
+          </div>
+          <div className={css["results-table-container"]}>
+            <table>
+              <thead>
+                {/* <tr>
               <th>Sentence</th>
             </tr> */}
-          </thead>
-          <tbody>{rows}</tbody>
-        </table>
-      </div>
-      <div>
-        <button onClick={handleCopyClick}>
-          {isCopied ? "Copied!" : "Copy"}
-        </button>
+              </thead>
+              <tbody>{rows}</tbody>
+            </table>
+          </div>
+        </div>
+        <div className={css["results-interaction-container"]}>
+          <button onClick={handleCopyClick}>
+            {isCopied ? "Copied!" : "Copy"}
+          </button>
+          <button>Test</button>
+          <button>Test</button>
+        </div>
       </div>
     </>
   );
