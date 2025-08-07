@@ -64,7 +64,7 @@ function Repeater({ mainTextChange }) {
       newVariables.set(index, {
         id: position,
         name: "Variable " + index,
-        type: "Number",
+        type: "Integer",
         value: index,
         iterate: true,
       });

@@ -39,17 +39,17 @@
 }
 
 body.dark * {
-  --main-color: #102a43;
-  --sub-color: 	#486581;
-  --opposite-color : #ffe070;
-  --opposite-sub-color : #ffffff;
+  --main-color: #2d232e;
+  --sub-color: #474448;
+  --opposite-color: #f1dac4;
+  --opposite-sub-color: #a69cac;
 
-  --color-background: #102a43;
-  --color-foreground: #486581;
-  --gradient-color-start: #102a43;
-  --gradient-color-end: #486581;
-  --text-color:  #FFFFFF;
-  --shadow-color : #FFFFFF;
+  --color-background: #0d0c1d;
+  --color-foreground: #161b33;
+  --gradient-color-start: #2d232e;
+  --gradient-color-end: #474448;
+  --text-color: #FFFFFF;
+  --shadow-color: #FFFFFF;
 
 
   --image-grayscale: 50%;
@@ -61,22 +61,21 @@ body.dark * {
 }
 
 body * {
-  --main-color: #ffe070;
-  --sub-color: #ffffff;
-  --opposite-color : #102a43;
-   --opposite-sub-color : #486581;
+  --main-color: #f4f3ee;
+  --sub-color: #bcb8b1;
+  --opposite-color: #8a817c;
+  --opposite-sub-color: #463f3a;
 
   --color-background: #FFFFFF;
   --color-foreground: #282c34;
-  --gradient-color-start: #ffe070;
-  --gradient-color-end: #ffffff;
-  --text-color:  #102a43;
-  --shadow-color : #102a43;
+  --gradient-color-start: #f4f3ee;
+  --gradient-color-end: #bcb8b1;
+  --shadow-color: #102a43;
 
 
 
 
-   --image-grayscale: 0;
+  --image-grayscale: 0;
   --image-opacity: 100%;
 
   /* background-color: white !important;
