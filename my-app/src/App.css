@@ -32,7 +32,42 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+body.dark * {
+  --main-color: #282c34;
+  --color-background: #282c34;
+  --color-foreground: #white;
+  --gradient-color-start: #161313;
+  --gradient-color-end: #2E2E2E;
+  --text-color:  #FFFFFF;
+
+  --image-grayscale: 50%;
+  --image-opacity: 90%;
+
+  /* background-color: #282c34 !important;
+  color: white !important; */
+  ;
+}
+
+body * {
+  
+
+  --color-background: #FFFFFF;
+  --color-foreground: #282c34;
+  --gradient-color-start: #F0F0F0;
+  --gradient-color-end: #FFFFFF;
+  --text-color:  #282c34;
+
+   --image-grayscale: 0;
+  --image-opacity: 100%;
+
+  /* background-color: white !important;
+  ;
+  color: #282c34 !important;
+  ; */
 }
