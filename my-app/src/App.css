@@ -41,8 +41,8 @@
 body.dark * {
   --main-color: #102a43;
   --sub-color: 	#486581;
-  --opposite-color : #FFFFFF;
-  --opposite-sub-color : #F0F0F0;
+  --opposite-color : #ffe070;
+  --opposite-sub-color : #ffffff;
 
   --color-background: #102a43;
   --color-foreground: #486581;
@@ -61,15 +61,15 @@ body.dark * {
 }
 
 body * {
-  --main-color: #FFFFFF;
-  --sub-color: #F0F0F0;
+  --main-color: #ffe070;
+  --sub-color: #ffffff;
   --opposite-color : #102a43;
    --opposite-sub-color : #486581;
 
   --color-background: #FFFFFF;
   --color-foreground: #282c34;
-  --gradient-color-start: #F0F0F0;
-  --gradient-color-end: #FFFFFF;
+  --gradient-color-start: #ffe070;
+  --gradient-color-end: #ffffff;
   --text-color:  #102a43;
   --shadow-color : #102a43;
 

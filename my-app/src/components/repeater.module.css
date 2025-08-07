@@ -29,18 +29,19 @@
 }
 
 .all-container {
+  /* background-image: url('https://picsum.photos/200/300'); */
   width: 100%;
   min-height: 90vh;
   display: flex;
-  background: linear-gradient(180deg, var(--gradient-color-start) 0%, var(--gradient-color-end) 100%);
+  background: radial-gradient(circle, var(--gradient-color-start) 0%, var(--gradient-color-end) 100%);
   justify-content: center;
   overflow: hidden;
-  color: var(--text-color);
+  
 
 }
 
 .all-container * {
-  color: var(--text-color);
+  color: var(--opposite-color);
 
 }
 
@@ -102,26 +103,36 @@
   background-color: var(--main-color);
   place-content: center;
   border-radius: 10px;
-  box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  /* box-shadow: 0px 0px 21px -1px var(--shadow-color);
   -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
-  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color); */
+
+  border: 1px solid var(--opposite-color);
+
   cursor: text;
 }
 
 .main-text-container:focus {
   background-color: var(--opposite-color);
   color: var(--main-color);
-  box-shadow: 0px 0px 21px -1px var(--shadow-color);
+
+  border: 1px solid var(--main-color);
+
+  /* box-shadow: 0px 0px 21px -1px var(--shadow-color);
   -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
-  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color); */
 }
 
 .main-text-container:hover {
   background-color: var(--opposite-color);
   color: var(--main-color);
-  box-shadow: 0px 0px 21px -1px var(--shadow-color);
+
+  border: 1px solid var(--main-color);
+
+
+  /* box-shadow: 0px 0px 21px -1px var(--shadow-color);
   -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
-  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color); */
 }
 
 .generator-container {
@@ -138,11 +149,17 @@
 
 
 .preview-container {
-  width: 100%;
+  width: fit-content;
   height: 100%;
   margin: auto;
   display: grid;
   animation: fadeInTop 2s ease 0s 1 normal forwards;
+  background-color: color-mix(in srgb, var(--opposite-color) 10%, transparent);
+  color: var(--main-color) !important;
+  border-radius: 10px;
+  padding: 10px;
+  /* border: 1px solid var(--opposite-color); */
+  backdrop-filter: blur(10px);
 }
 
 .variable-container {
