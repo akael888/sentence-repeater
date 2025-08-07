@@ -1,5 +1,3 @@
-
-
 @keyframes fadeInTop {
   0% {
     opacity: 0;
@@ -41,7 +39,7 @@
 
 }
 
-.all-container *{
+.all-container * {
   color: var(--text-color);
 
 }
@@ -91,44 +89,45 @@
 .repeater-container {
   display: inline-flex;
   width: 50%;
-  gap: 10px;
+  height: 100%;
+  margin: auto;
+  gap: 20px;
   animation: fadeInTop 2s ease 0s 1 normal forwards;
 }
 
 .main-text-container {
-  width: 75%;
-  height: 10%;
+  width: 100%;
+  height: 100%;
 
-  background-color: rgb(22, 19, 19);
+  background-color: var(--main-color);
   place-content: center;
   border-radius: 10px;
-  box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
-  -webkit-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
-  -moz-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+  box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color);
   cursor: text;
 }
 
 .main-text-container:focus {
-  background-color: rgb(255, 255, 255);
-  color: #282c34;
-  box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-  -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-  -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+  background-color: var(--opposite-color);
+  color: var(--main-color);
+  box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color);
 }
 
 .main-text-container:hover {
-  background-color: rgb(255, 255, 255);
-  color: #282c34;
-  box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-  -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-  -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+  background-color: var(--opposite-color);
+  color: var(--main-color);
+  box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color);
 }
-
 
 .generator-container {
   width: 25%;
   display: inline-flex;
-  gap: 5px;
+  gap: 10px;
   place-content: center;
   border-radius: 10px;
 }
@@ -193,4 +192,3 @@
   margin: auto;
   border-radius: 10px; */
 }
-

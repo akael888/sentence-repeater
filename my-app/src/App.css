@@ -39,12 +39,18 @@
 }
 
 body.dark * {
-  --main-color: #282c34;
-  --color-background: #282c34;
-  --color-foreground: #white;
-  --gradient-color-start: #161313;
-  --gradient-color-end: #2E2E2E;
+  --main-color: #102a43;
+  --sub-color: 	#486581;
+  --opposite-color : #FFFFFF;
+  --opposite-sub-color : #F0F0F0;
+
+  --color-background: #102a43;
+  --color-foreground: #486581;
+  --gradient-color-start: #102a43;
+  --gradient-color-end: #486581;
   --text-color:  #FFFFFF;
+  --shadow-color : #FFFFFF;
+
 
   --image-grayscale: 50%;
   --image-opacity: 90%;
@@ -55,13 +61,20 @@ body.dark * {
 }
 
 body * {
-  
+  --main-color: #FFFFFF;
+  --sub-color: #F0F0F0;
+  --opposite-color : #102a43;
+   --opposite-sub-color : #486581;
 
   --color-background: #FFFFFF;
   --color-foreground: #282c34;
   --gradient-color-start: #F0F0F0;
   --gradient-color-end: #FFFFFF;
-  --text-color:  #282c34;
+  --text-color:  #102a43;
+  --shadow-color : #102a43;
+
+
+
 
    --image-grayscale: 0;
   --image-opacity: 100%;
