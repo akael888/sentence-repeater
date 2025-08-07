@@ -1,6 +1,4 @@
-* {
-  color: white;
-}
+
 
 @keyframes fadeInTop {
   0% {
@@ -36,12 +34,18 @@
   width: 100%;
   min-height: 90vh;
   display: flex;
-  background: linear-gradient(180deg, rgba(40, 44, 52, 1) 0%, rgba(26, 24, 24, 1) 100%);
+  background: linear-gradient(180deg, var(--gradient-color-start) 0%, var(--gradient-color-end) 100%);
   justify-content: center;
   overflow: hidden;
-
+  color: var(--text-color);
 
 }
+
+.all-container *{
+  color: var(--text-color);
+
+}
+
 
 .hidden-containers {
   display: flex;

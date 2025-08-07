@@ -1,5 +1,5 @@
 .variable-container {
-    background-color: rgb(22, 19, 19);
+    /* background-color: rgb(22, 19, 19);
     width: 100%;
     padding: 10px;
     border-radius: 10px;
@@ -7,4 +7,68 @@
     box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
     -webkit-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
     -moz-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    background: linear-gradient(180deg, rgba(22, 19, 19, 1) 0%, rgba(46, 46, 46, 1) 100%); */
+}
+
+.variable-table-name {
+    border-spacing: 10px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    -webkit-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    -moz-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
+    background: linear-gradient(180deg, rgba(22, 19, 19, 1) 0%, rgba(46, 46, 46, 1) 100%);
+}
+
+.variable-table th,
+td {
+    padding: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+
+.thead-name {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(22, 19, 19);
+    background: linear-gradient(180deg, rgba(22, 19, 19, 1) 0%, rgba(46, 46, 46, 1) 100%);
+}
+
+.thead-name th {
+    padding: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.tbody-name {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(51, 51, 51);
+    border-radius: 10px;
+}
+
+.tbody-name td:hover {
+    background-color: rgb(255, 255, 255);
+    color: #282c34;
+    box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+}
+
+.variable-table td:hover {
+    background-color: rgb(255, 255, 255);
+    color: #282c34;
+    box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+    -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
+}
+
+.tbody-name tr:hover {
+    background-color: rgb(85, 85, 85);
+    color: #282c34;
+    box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.056);
+    -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.056);
+    -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.056);
 }

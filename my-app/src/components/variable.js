@@ -21,31 +21,32 @@ function Variable({ variables, variableChanges }) {
     <>
       {variables.size > 0 ? (
         <div className={css["variable-container"]}>
-          <table>
-            <thead>
+          <table className={css["variable-table-name"]}>
+            <thead className={css["thead-name"]}>
               <tr>
-                <th>id</th>
+                {/* <th>id</th> */}
                 <th>Variable Name</th>
                 <th>Type</th>
                 <th>Start Value</th>
                 <th>Iterate</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className={css["tbody-name"]}>
               {variables != null
                 ? Array.from(variables.entries()).map(([key, values]) => (
                     <tr key={key}>
-                      <td>{values.id}</td>
+                      {/* <td>{values.id}</td> */}
                       <td
                         contentEditable="true"
                         onBlur={(e) =>
                           handleVariableChanges(key, "name", e.target.innerText)
                         }
+                        className={css["td-var-name"]}
                       >
                         {values.name}
                       </td>
 
-                      <td>
+                      <td className={css["td-var-type"]}>
                         <Dropdown>
                           <Dropdown.Toggle
                             variant="secondary"
@@ -83,10 +84,14 @@ function Variable({ variables, variableChanges }) {
                             e.target.innerText
                           )
                         }
+                        className={css["td-var-value"]}
                       >
                         {values.value}
                       </td>
-                      <td contentEditable="true">
+                      <td
+                        contentEditable="true"
+                        className={css["td-var-iterate"]}
+                      >
                         <div>
                           <label>
                             <input
