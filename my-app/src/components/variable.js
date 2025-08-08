@@ -19,101 +19,113 @@ function Variable({ variables, variableChanges }) {
 
   return (
     <>
-      {variables.size > 0 ? (
-        <div className={css["variable-container"]}>
-          <table className={css["variable-table-name"]}>
-            <thead className={css["thead-name"]}>
-              <tr>
-                {/* <th>id</th> */}
-                <th>Variable Name</th>
-                <th>Type</th>
-                <th>Start Value</th>
-                <th>Iterate</th>
-              </tr>
-            </thead>
-            <tbody className={css["tbody-name"]}>
-              {variables != null
-                ? Array.from(variables.entries()).map(([key, values]) => (
-                    <tr key={key}>
-                      {/* <td>{values.id}</td> */}
-                      <td
-                        contentEditable="true"
-                        onBlur={(e) =>
-                          handleVariableChanges(key, "name", e.target.innerText)
-                        }
-                        className={css["td-var-name"]}
-                      >
-                        {values.name}
-                      </td>
-
-                      <td className={css["td-var-type"]}>
-                        <Dropdown>
-                          <Dropdown.Toggle
-                            variant="secondary"
-                            id="dropdown-basic"
+      {variables.size ? (
+        <>
+          {variables.size > 0 ? (
+            <div className={css["variable-container"]}>
+              <table className={css["variable-table-name"]}>
+                <thead className={css["thead-name"]}>
+                  <tr>
+                    {/* <th>id</th> */}
+                    <th>Variable Name</th>
+                    <th>Type</th>
+                    <th>Start Value</th>
+                    <th>Iterate</th>
+                  </tr>
+                </thead>
+                <tbody className={css["tbody-name"]}>
+                  {variables != null
+                    ? Array.from(variables.entries()).map(([key, values]) => (
+                        <tr key={key}>
+                          {/* <td>{values.id}</td> */}
+                          <td
+                            contentEditable="true"
+                            onBlur={(e) =>
+                              handleVariableChanges(
+                                key,
+                                "name",
+                                e.target.innerText
+                              )
+                            }
+                            className={css["td-var-name"]}
                           >
-                            {values.type}
-                          </Dropdown.Toggle>
+                            {values.name}
+                          </td>
 
-                          <Dropdown.Menu>
-                            <Dropdown.Item
-                              href="#/action-1"
-                              onClick={() =>
-                                handleVariableChanges(key, "type", "Integer")
-                              }
-                            >
-                              Integer
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#/action-2"
-                              onClick={() =>
-                                handleVariableChanges(key, "type", "String")
-                              }
-                            >
-                              String
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>{" "}
-                      </td>
-                      <td
-                        contentEditable="true"
-                        onBlur={(e) =>
-                          handleVariableChanges(
-                            key,
-                            "value",
-                            e.target.innerText
-                          )
-                        }
-                        className={css["td-var-value"]}
-                      >
-                        {values.value}
-                      </td>
-                      <td
-                        contentEditable="true"
-                        className={css["td-var-iterate"]}
-                      >
-                        <div>
-                          <label>
-                            <input
-                              type="checkbox"
-                              checked={values.iterate}
-                              onClick={() =>
-                                handleVariableChanges(
-                                  key,
-                                  "iterate",
-                                  !values.iterate
-                                )
-                              }
-                            />
-                          </label>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                : !(<div>empty</div>)}
-            </tbody>
-          </table>
-        </div>
+                          <td className={css["td-var-type"]}>
+                            <Dropdown>
+                              <Dropdown.Toggle
+                                variant="secondary"
+                                id="dropdown-basic"
+                              >
+                                {values.type}
+                              </Dropdown.Toggle>
+
+                              <Dropdown.Menu>
+                                <Dropdown.Item
+                                  href="#/action-1"
+                                  onClick={() =>
+                                    handleVariableChanges(
+                                      key,
+                                      "type",
+                                      "Integer"
+                                    )
+                                  }
+                                >
+                                  Integer
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  href="#/action-2"
+                                  onClick={() =>
+                                    handleVariableChanges(key, "type", "String")
+                                  }
+                                >
+                                  String
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>{" "}
+                          </td>
+                          <td
+                            contentEditable="true"
+                            onBlur={(e) =>
+                              handleVariableChanges(
+                                key,
+                                "value",
+                                e.target.innerText
+                              )
+                            }
+                            className={css["td-var-value"]}
+                          >
+                            {values.value}
+                          </td>
+                          <td
+                            contentEditable="true"
+                            className={css["td-var-iterate"]}
+                          >
+                            <div>
+                              <label>
+                                <input
+                                  type="checkbox"
+                                  checked={values.iterate}
+                                  onClick={() =>
+                                    handleVariableChanges(
+                                      key,
+                                      "iterate",
+                                      !values.iterate
+                                    )
+                                  }
+                                />
+                              </label>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    : !(<div>empty</div>)}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
+        </>
       ) : null}
     </>
   );

@@ -9,11 +9,11 @@ import TextInput from "./text-input";
 function Repeater() {
   const [previewText, setPreviewText] = useState(); //For Text Preview
   const [variables, setVariables] = useState(new Map()); //To Count Each Variables
-  const [textArrayParent, setTextArrayParent] = useState([]); //For the array created from writing the text?
+  const [generatedSentence, setGeneratedSentence] = useState([]); //For the created Sentences
   // const [mainText, setMainText] = useState("Input your Text");
 
   const handleTextArrayChanges = (textArrayData) => {
-    setTextArrayParent(textArrayData);
+    setGeneratedSentence(textArrayData);
   };
 
   const handleMainTextChange = (text) => {
@@ -103,32 +103,20 @@ function Repeater() {
               textArrayChanges={handleTextArrayChanges}
             />
           </div>
-
           <>
             <div className={css[["hidden-containers"]]}>
-              {variables ? (
+              <Variable
+                variables={variables}
+                variableChanges={handleVariableChanges}
+              />
+              {generatedSentence ? (
                 <>
-                  {variables.size > 0 ? (
-                    <div className={css["variable-container"]}>
-                      <div className={css["content-div"]}>
-                        {/* Content of the div */}
-                        <Variable
-                          variables={variables}
-                          variableChanges={handleVariableChanges}
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                </>
-              ) : null}
-              {textArrayParent ? (
-                <>
-                  {textArrayParent.length > 0 ? (
+                  {generatedSentence.length > 0 ? (
                     <div className={css["results-container"]}>
                       <div className={css["content-div-results"]}>
                         {/* Content of the div */}
                         <ShowResult
-                          arrayResults={textArrayParent}
+                          arrayResults={generatedSentence}
                           arrayResultsChange={handleTextArrayChanges}
                         />
                       </div>
