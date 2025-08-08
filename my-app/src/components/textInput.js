@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import css from './textInput.module.css';
 
 function TextInput({ incomingText, TextChanges, incomingVariables }) {
   const mainTextRef = useRef(null);
@@ -60,10 +61,10 @@ function TextInput({ incomingText, TextChanges, incomingVariables }) {
 
   return (
     <>
-      <div>Test {incomingText}</div>
+      {/* <div>Test {incomingText}</div> */}
       <div
         // contentEditable="true"
-        // className={css["main-text-container"]}
+        className={css["main-text-container"]}
         // onBlur={handleMainTextBlur}
         ref={mainTextRef}
         onClick={() => enableEditing(mainTextRef.current)}

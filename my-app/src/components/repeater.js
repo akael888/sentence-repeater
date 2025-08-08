@@ -7,7 +7,7 @@ import css from "./repeater.module.css";
 import TextInput from "./textInput";
 
 function Repeater() {
-  const [previewText,setPreviewText] = useState(); //For Text Preview
+  const [previewText, setPreviewText] = useState(); //For Text Preview
   const [variables, setVariables] = useState(new Map()); //To Count Each Variables
   const [textArrayParent, setTextArrayParent] = useState([]); //For the array created from writing the text?
   // const [mainText, setMainText] = useState("Input your Text");
@@ -27,9 +27,7 @@ function Repeater() {
     }
   }
 
- 
-  
-    const handleVariableChanges = (passedVariable) => {
+  const handleVariableChanges = (passedVariable) => {
     setVariables(passedVariable);
   };
 
@@ -60,8 +58,6 @@ function Repeater() {
   //   element.setAttribute("contenteditable", true); //Add content editable
   //   element.focus(); //Focusing on the eelement
   // }
-
-
 
   // function addVariableOnInput(e) {
   //   const innerText = e.target.innerText;
@@ -95,12 +91,14 @@ function Repeater() {
       <div className={css["all-container"]}>
         <div className={css["leftside-container"]}>
           <div className={css["preview-container"]}>
-            <Preview
-              mainText={previewText}
-              variables={variables}
-            />
+            <Preview mainText={previewText} variables={variables} />
           </div>
           <div className={css["repeater-container"]}>
+            <TextInput
+              incomingText={previewText}
+              TextChanges={handleInputTextChanges}
+              incomingVariables={handleVariableChanges}
+            />
             {/* <div
               // contentEditable="true"
               className={css["main-text-container"]}
@@ -157,11 +155,6 @@ function Repeater() {
           </>
         </div>
       </div>
-      <TextInput
-        incomingText={previewText}
-        TextChanges={handleInputTextChanges}
-        incomingVariables={handleVariableChanges}
-      />
     </>
   );
 }
