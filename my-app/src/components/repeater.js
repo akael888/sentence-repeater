@@ -10,23 +10,24 @@ function Repeater() {
   const [previewText, setPreviewText] = useState(); //For Text Preview
   const [variables, setVariables] = useState(new Map()); //To Count Each Variables
   const [generatedSentence, setGeneratedSentence] = useState([]); //For the created Sentences
-  // const [mainText, setMainText] = useState("Input your Text");
 
-  const handleTextArrayChanges = (textArrayData) => {
+  //to update changes within the generated sentence in the parent component
+  const handleGeneratedSentenceChanges = (textArrayData) => {
     setGeneratedSentence(textArrayData);
   };
 
-  const handleMainTextChange = (text) => {
+  const handlePreviewTextChanges = (text) => {
     console.log("handle Main Text Change :" + text);
     setPreviewText(text);
   };
 
+
+  // Kenapa ada dua function yang bikin kayak gini? kerasa dobel <-------------------------------
   function handleInputTextChanges(text) {
     if (text) {
-      handleMainTextChange(text);
+      handlePreviewTextChanges(text);
     }
   }
-
   const handleVariableChanges = (passedVariable) => {
     setVariables(passedVariable);
   };
@@ -90,7 +91,7 @@ function Repeater() {
     <>
       <div className={css["all-container"]}>
         <div className={css["leftside-container"]}>
-          <Preview mainText={previewText} variables={variables} />
+          <Preview incomingPreviewText={previewText} incomingVariables={variables} /> //Clean
           <div className={css["repeater-container"]}>
             <TextInput
               incomingText={previewText}
@@ -100,7 +101,7 @@ function Repeater() {
             <Generator
               variables={variables}
               mainText={previewText}
-              textArrayChanges={handleTextArrayChanges}
+              textArrayChanges={handleGeneratedSentenceChanges}
             />
           </div>
           <>
@@ -109,21 +110,10 @@ function Repeater() {
                 variables={variables}
                 variableChanges={handleVariableChanges}
               />
-              {generatedSentence ? (
-                <>
-                  {generatedSentence.length > 0 ? (
-                    <div className={css["results-container"]}>
-                      <div className={css["content-div-results"]}>
-                        {/* Content of the div */}
-                        <ShowResult
-                          arrayResults={generatedSentence}
-                          arrayResultsChange={handleTextArrayChanges}
-                        />
-                      </div>
-                    </div>
-                  ) : null}
-                </>
-              ) : null}
+              <ShowResult
+                arrayResults={generatedSentence}
+                arrayResultsChange={handleGeneratedSentenceChanges}
+              />
             </div>
           </>
         </div>
