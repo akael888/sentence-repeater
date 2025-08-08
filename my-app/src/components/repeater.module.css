@@ -97,32 +97,8 @@
 }
 
 
-.generator-container {
-  width: 25%;
-  display: inline-flex;
-  gap: 10px;
-  place-content: center;
-  border-radius: 10px;
-}
-
-.generator-container * {
-  width: 50%;
-}
 
 
-.preview-container {
-  width: fit-content;
-  height: 100%;
-  margin: auto;
-  display: grid;
-  animation: fadeInTop 2s ease 0s 1 normal forwards;
-  background-color: color-mix(in srgb, var(--opposite-color) 10%, transparent);
-  color: var(--main-color) !important;
-  border-radius: 10px;
-  padding: 10px;
-  /* border: 1px solid var(--opposite-color); */
-  backdrop-filter: blur(10px);
-}
 
 .variable-container {
   width: 100%;

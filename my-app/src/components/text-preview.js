@@ -1,3 +1,5 @@
+import css from './text-preview.module.css';
+
 function Preview({ mainText, variables }) {
   function generatePreview() {
     if (mainText && variables) {
@@ -26,7 +28,9 @@ function Preview({ mainText, variables }) {
 
   return (
     <>
-      <h1>{mainText ? generatePreview() : "Preview"}</h1>
+      <div className={css["preview-container"]}>
+        <h1>{mainText ? generatePreview() : "Preview"}</h1>
+      </div>
     </>
   );
 }

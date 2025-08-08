@@ -4,7 +4,7 @@ import Generator from "./generator";
 import ShowResult from "./result";
 import Preview from "./text-preview";
 import css from "./repeater.module.css";
-import TextInput from "./textInput";
+import TextInput from "./text-input";
 
 function Repeater() {
   const [previewText, setPreviewText] = useState(); //For Text Preview
@@ -90,33 +90,18 @@ function Repeater() {
     <>
       <div className={css["all-container"]}>
         <div className={css["leftside-container"]}>
-          <div className={css["preview-container"]}>
-            <Preview mainText={previewText} variables={variables} />
-          </div>
+          <Preview mainText={previewText} variables={variables} />
           <div className={css["repeater-container"]}>
             <TextInput
               incomingText={previewText}
               TextChanges={handleInputTextChanges}
               incomingVariables={handleVariableChanges}
             />
-            {/* <div
-              // contentEditable="true"
-              className={css["main-text-container"]}
-              onBlur={handleMainTextBlur}
-              ref={mainTextRef}
-              onClick={() => enableEditing(mainTextRef.current)}
-              onInput={(e) => addVariableOnInput(e)}
-            >
-              Type here...
-            </div> */}
-
-            <div className={css["generator-container"]}>
-              <Generator
-                variables={variables}
-                mainText={previewText}
-                textArrayChanges={handleTextArrayChanges}
-              />
-            </div>
+            <Generator
+              variables={variables}
+              mainText={previewText}
+              textArrayChanges={handleTextArrayChanges}
+            />
           </div>
 
           <>

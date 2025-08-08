@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import css from './textInput.module.css';
+import css from './text-input.module.css';
 
 function TextInput({ incomingText, TextChanges, incomingVariables }) {
   const mainTextRef = useRef(null);

@@ -11,7 +11,7 @@ function Generator({ variables, mainText, textArrayChanges }) {
 
   function generateText() {
     let genText = mainText;
-    console.log('Main Text in Generate Text : ' + mainText);
+    console.log("Main Text in Generate Text : " + mainText);
     const newVariables = new Map();
     for (const [key, value] of variables.entries()) {
       newVariables.set(key, { ...value }); // Spread operator creates new object
@@ -59,19 +59,21 @@ function Generator({ variables, mainText, textArrayChanges }) {
 
   return (
     <>
-      <input
-        id={css["amount-field"]}
-        type="number"
-        onChange={(e) => handleGenAmountChanges(e.target.value)}
-        placeholder="Amount"
-      ></input>
-      <button
-        id={css["generate-button"]}
-        onClick={generateText}
-        // disabled={mainText.length > 0}
-      >
-        Generate
-      </button>
+      <div className={css["generator-container"]}>
+        <input
+          id={css["amount-field"]}
+          type="number"
+          onChange={(e) => handleGenAmountChanges(e.target.value)}
+          placeholder="Amount"
+        ></input>
+        <button
+          id={css["generate-button"]}
+          onClick={generateText}
+          // disabled={mainText.length > 0}
+        >
+          Generate
+        </button>
+      </div>
     </>
   );
 }
