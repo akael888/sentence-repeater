@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 
-function TextInput({ incomingText, TextChanges }) {
+function TextInput({ incomingText, TextChanges, incomingVariables }) {
   const mainTextRef = useRef(null);
   const [mainText, setMainText] = useState("Input your Text");
   const [variables, setVariables] = useState(new Map());
@@ -32,6 +32,7 @@ function TextInput({ incomingText, TextChanges }) {
 
     setVariables(newVariables);
     handleMainTextBlur();
+    incomingVariables(newVariables);
   }
 
   const mainTextChange = (event) => {

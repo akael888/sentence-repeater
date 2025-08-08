@@ -7,11 +7,10 @@ import css from "./repeater.module.css";
 import TextInput from "./textInput";
 
 function Repeater() {
-  const [previewText,setPreviewText] = useState();
-  const [variables, setVariables] = useState(new Map());
-  const [textArrayParent, setTextArrayParent] = useState([]);
-
-  const [mainText, setMainText] = useState("Input your Text");
+  const [previewText,setPreviewText] = useState(); //For Text Preview
+  const [variables, setVariables] = useState(new Map()); //To Count Each Variables
+  const [textArrayParent, setTextArrayParent] = useState([]); //For the array created from writing the text?
+  // const [mainText, setMainText] = useState("Input your Text");
 
   const handleTextArrayChanges = (textArrayData) => {
     setTextArrayParent(textArrayData);
@@ -19,7 +18,7 @@ function Repeater() {
 
   const handleMainTextChange = (text) => {
     console.log("handle Main Text Change :" + text);
-    setMainText(text);
+    setPreviewText(text);
   };
 
   function handleInputTextChanges(text) {
@@ -27,6 +26,12 @@ function Repeater() {
       handleMainTextChange(text);
     }
   }
+
+ 
+  
+    const handleVariableChanges = (passedVariable) => {
+    setVariables(passedVariable);
+  };
 
   // const handleMainTextBlur = () => {
   //   if (mainTextRef.current) {
@@ -56,9 +61,7 @@ function Repeater() {
   //   element.focus(); //Focusing on the eelement
   // }
 
-  const handleVariableChanges = (passedVariable) => {
-    setVariables(passedVariable);
-  };
+
 
   // function addVariableOnInput(e) {
   //   const innerText = e.target.innerText;
@@ -93,7 +96,7 @@ function Repeater() {
         <div className={css["leftside-container"]}>
           <div className={css["preview-container"]}>
             <Preview
-              mainText={mainText}
+              mainText={previewText}
               variables={variables}
             />
           </div>
@@ -157,6 +160,7 @@ function Repeater() {
       <TextInput
         incomingText={previewText}
         TextChanges={handleInputTextChanges}
+        incomingVariables={handleVariableChanges}
       />
     </>
   );
