@@ -67,7 +67,7 @@ function Generator({ variables, mainText, textArrayChanges }) {
       <button
         id={css["generate-button"]}
         onClick={generateText}
-        disabled={mainText.length > 0}
+        // disabled={mainText.length > 0}
       >
         Generate
       </button>

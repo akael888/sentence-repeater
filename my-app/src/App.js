@@ -5,12 +5,10 @@ import Mode from "./components/toggle-mode";
 
 function App() {
   // Repeater Components
-  const [mainText, setMainText] = useState("Input your Text");
+ 
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const handleMainTextChange = (event) => {
-    setMainText(event.target.value);
-  };
+ 
 
   const handleDarkModeChanges = (event) => {
     setIsDarkMode(!isDarkMode);
@@ -34,7 +32,7 @@ function App() {
         />
       </header>
       <div>
-        <Repeater mainTextChange={handleMainTextChange} />
+        <Repeater  />
       </div>
     </div>
   );
