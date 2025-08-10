@@ -7,7 +7,7 @@ import css from "./repeater.module.css";
 import TextInput from "./text-input";
 
 function Repeater() {
-  const [previewText, setPreviewText] = useState(); //For Text Preview
+  const [previewText, setPreviewText] = useState(""); //For Text Preview
   const [variables, setVariables] = useState(new Map()); //To Count Each Variables
   const [generatedSentence, setGeneratedSentence] = useState([]); //For the created Sentences
 
@@ -17,17 +17,11 @@ function Repeater() {
   };
 
   const handlePreviewTextChanges = (text) => {
-    console.log("handle Main Text Change :" + text);
-    setPreviewText(text);
+    if (text) {
+      setPreviewText(text);
+    }
   };
 
-
-  // Kenapa ada dua function yang bikin kayak gini? kerasa dobel <-------------------------------
-  function handleInputTextChanges(text) {
-    if (text) {
-      handlePreviewTextChanges(text);
-    }
-  }
   const handleVariableChanges = (passedVariable) => {
     setVariables(passedVariable);
   };
@@ -91,13 +85,14 @@ function Repeater() {
     <>
       <div className={css["all-container"]}>
         <div className={css["leftside-container"]}>
-          <Preview incomingPreviewText={previewText} incomingVariables={variables} /> 
+          <Preview
+            incomingPreviewText={previewText}
+            incomingVariables={variables}
+          />
           <div className={css["repeater-container"]}>
             <TextInput
-              incomingPreviewText={previewText}
-              incomingHandleInputTextChanges={handleInputTextChanges}
+              incomingHandlePreviewTextChanges={handlePreviewTextChanges}
               incomingHandleVariablesChanges={handleVariableChanges}
-              incomingVariables={variables}
             />
             <Generator
               variables={variables}

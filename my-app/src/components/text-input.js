@@ -1,8 +1,12 @@
 import { useRef, useState, useEffect } from "react";
-import css from './text-input.module.css';
+import css from "./text-input.module.css";
 
-function TextInput({ incomingPreviewText, incomingHandleInputTextChanges, incomingHandleVariablesChanges , incomingVariables }) {
-  const mainTextRef = useRef(null); //kenapa gw ref?
+function TextInput({
+
+  incomingHandlePreviewTextChanges,
+  incomingHandleVariablesChanges,
+
+}) {
 
   function addVariableOnInput(e) {
     const innerText = e.target.innerText;
@@ -28,11 +32,10 @@ function TextInput({ incomingPreviewText, incomingHandleInputTextChanges, incomi
       });
     });
 
-
-    incomingHandleInputTextChanges(mainTextRef.current.innerText);
+    incomingHandlePreviewTextChanges(innerText);
+    console.log("preview text:" + innerText);
     incomingHandleVariablesChanges(newVariables);
   }
-
 
   // pass the contenteditable attribute when selected
   function enableEditing(element) {
@@ -41,14 +44,12 @@ function TextInput({ incomingPreviewText, incomingHandleInputTextChanges, incomi
     element.focus(); //Focusing on the eelement
   }
 
-
   return (
     <>
       <div
         // contentEditable="true"
         className={css["main-text-container"]}
-        ref={mainTextRef}
-        onClick={() => enableEditing(mainTextRef.current)}
+        onClick={(e) => enableEditing(e.target)}
         onInput={(e) => addVariableOnInput(e)}
       >
         Type here...
