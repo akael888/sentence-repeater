@@ -91,12 +91,13 @@ function Repeater() {
     <>
       <div className={css["all-container"]}>
         <div className={css["leftside-container"]}>
-          <Preview incomingPreviewText={previewText} incomingVariables={variables} /> //Clean
+          <Preview incomingPreviewText={previewText} incomingVariables={variables} /> 
           <div className={css["repeater-container"]}>
             <TextInput
-              incomingText={previewText}
-              TextChanges={handleInputTextChanges}
-              incomingVariables={handleVariableChanges}
+              incomingPreviewText={previewText}
+              incomingHandleInputTextChanges={handleInputTextChanges}
+              incomingHandleVariablesChanges={handleVariableChanges}
+              incomingVariables={variables}
             />
             <Generator
               variables={variables}

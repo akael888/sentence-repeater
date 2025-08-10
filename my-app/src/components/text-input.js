@@ -1,11 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import css from './text-input.module.css';
 
-function TextInput({ incomingText, TextChanges, incomingVariables }) {
-  const mainTextRef = useRef(null);
-  const [mainText, setMainText] = useState("Input your Text");
-  const [variables, setVariables] = useState(new Map());
-  const [textArrayParent, setTextArrayParent] = useState([]);
+function TextInput({ incomingPreviewText, incomingHandleInputTextChanges, incomingHandleVariablesChanges , incomingVariables }) {
+  const mainTextRef = useRef(null); //kenapa gw ref?
 
   function addVariableOnInput(e) {
     const innerText = e.target.innerText;
@@ -31,41 +28,25 @@ function TextInput({ incomingText, TextChanges, incomingVariables }) {
       });
     });
 
-    setVariables(newVariables);
-    handleMainTextBlur();
-    incomingVariables(newVariables);
+
+    incomingHandleInputTextChanges(mainTextRef.current.innerText);
+    incomingHandleVariablesChanges(newVariables);
   }
 
-  const mainTextChange = (event) => {
-    setMainText(event.target.value);
-    
-  };
 
-  const handleMainTextBlur = () => {
-    if (mainTextRef.current) {
-      console.log("Main Text Ref : " + mainTextRef.current.innerText);
-      handleLocalTextChanges(mainTextRef.current.innerText);
-    }
-  };
-
+  // pass the contenteditable attribute when selected
   function enableEditing(element) {
     if (!element) return; // Prevent error if element is undefined
     element.setAttribute("contenteditable", true); //Add content editable
     element.focus(); //Focusing on the eelement
   }
 
-  function handleLocalTextChanges(text) {
-    console.log("Text : " + text);
-    TextChanges(text);
-  }
 
   return (
     <>
-      {/* <div>Test {incomingText}</div> */}
       <div
         // contentEditable="true"
         className={css["main-text-container"]}
-        // onBlur={handleMainTextBlur}
         ref={mainTextRef}
         onClick={() => enableEditing(mainTextRef.current)}
         onInput={(e) => addVariableOnInput(e)}
