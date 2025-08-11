@@ -1,58 +1,78 @@
 import { useState } from "react";
 import css from "./generator.module.css";
 
-function Generator({ variables, mainText, textArrayChanges }) {
-  const [genAmount, setGenAmount] = useState(0);
-  let textArray = [];
+function Generator({
+  incomingVariables,
+  incomingPreviewText,
+  incomingHandleGeneratedSentenceChanges,
+}) {
+  const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(0);
 
-  function handleGenAmountChanges(amount) {
-    setGenAmount(amount);
+  function handleGeneratedSentenceAmountChanges(amount) {
+    setGeneratedSentenceAmount(amount);
   }
 
-  function generateText() {
-    let genText = mainText;
-    console.log("Main Text in Generate Text : " + mainText);
-    const newVariables = new Map();
-    for (const [key, value] of variables.entries()) {
-      newVariables.set(key, { ...value }); // Spread operator creates new object
+  function generateSentence() {
+    let tempPreviewText = incomingPreviewText;
+    let localGeneratedSentence = [];
+    const localVariables = new Map();
+
+    // console.log("Main Text in Generate Text : " + incomingPreviewText);
+
+    //Set the local variables into the incoming variables
+    for (const [key, value] of incomingVariables.entries()) {
+      localVariables.set(key, { ...value }); // Spread operator creates new object
     }
-    let text = genText;
-    console.log("Variables: " + variables);
-    console.log("Main Text: " + genText);
-    console.log("Gen Amount: " + genAmount);
-    console.log("Text: " + text);
-    console.log("Text Size: " + text.length);
+    // let text = tempPreviewText;
 
+    //DEBUG LOG --------------------------------------------
+    console.log("Generate Text () Log----------");
+    console.log("incomingVariables: " + incomingVariables);
+    console.log("Temp Preview Text: " + tempPreviewText);
+    console.log("Temp Preview Text Size: " + tempPreviewText.length);
+    console.log("Generated Sentence Amount: " + generatedSentenceAmount);
+    // console.log("Text: " + text);
+    console.log("-----------------------------");
+    //-------------------------------------------
+
+    //Generate the Sentences and pushes them into local generated sentence array
     let currentKeyIndex = 0;
+    for (let i = 0; i < generatedSentenceAmount; i++) {
+      let tempText = tempPreviewText;
+       console.log("PRE LOOP CONSOLE LOG-----");
+      console.log("Text Pre Loop: " + tempText);
+      console.log("TempPreviewText Pre Loop: " + tempPreviewText);
+      const variableEntries = Array.from(localVariables.entries());
 
-    for (let i = 0; i < genAmount; i++) {
-      let text = genText;
-      const variableEntries = Array.from(newVariables.entries());
-
-      while (text.includes("{}") && variableEntries.length > 0) {
+      while (tempText.includes("{}") && variableEntries.length > 0) {
         const [key, value] =
           variableEntries[currentKeyIndex % variableEntries.length];
-        text = text.replace("{}", String(value.value));
+        tempText = tempText.replace("{}", String(value.value));
 
         if (value.iterate === true) {
           value.value++;
         }
 
         console.log(
-          "Text: " + text + " (Variable Index: " + currentKeyIndex + ")"
+          "Text: " + tempText + " (Variable Index: " + currentKeyIndex + ")"
         );
+        console.log("Value Iterate? :" + value.iterate);
         currentKeyIndex++;
       }
-      console.log("New Text: " + text);
-      textArray.push(text);
+
+      console.log("New Text: " + tempText);
+      console.log("New tempPreviewText: " + tempPreviewText);
+      localGeneratedSentence.push(tempText);
     }
-    // setGenAmount(0);
+    // setGeneratedSentenceAmount(0);
     // console.log("Break Text: " + text);
-    textArrayChanges(textArray);
-    return textArray;
+    //Passing the local generated sentence into the parent compoonents
+    incomingHandleGeneratedSentenceChanges(localGeneratedSentence);
+    console.log("GenerateSentence END OF LOG---------");
+    return localGeneratedSentence;
   }
 
-  // const breakMainText = (text) => {
+  // const breakincomingPreviewText = (text) => {
   //   const splitText = text.split("{}");
   //   return splitText;
   // };
@@ -63,13 +83,13 @@ function Generator({ variables, mainText, textArrayChanges }) {
         <input
           id={css["amount-field"]}
           type="number"
-          onChange={(e) => handleGenAmountChanges(e.target.value)}
+          onChange={(e) => handleGeneratedSentenceAmountChanges(e.target.value)}
           placeholder="Amount"
         ></input>
         <button
           id={css["generate-button"]}
-          onClick={generateText}
-          // disabled={mainText.length > 0}
+          onClick={generateSentence}
+          // disabled={incomingPreviewText.length > 0}
         >
           Generate
         </button>

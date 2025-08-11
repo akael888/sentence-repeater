@@ -95,9 +95,9 @@ function Repeater() {
               incomingHandleVariablesChanges={handleVariableChanges}
             />
             <Generator
-              variables={variables}
-              mainText={previewText}
-              textArrayChanges={handleGeneratedSentenceChanges}
+              incomingVariables={variables}
+              incomingPreviewText={previewText}
+              incomingHandleGeneratedSentenceChanges={handleGeneratedSentenceChanges}
             />
           </div>
           <>
