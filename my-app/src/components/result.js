@@ -6,13 +6,15 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
   const rows = [];
   const [isCopied, setIsCopied] = useState(false);
 
-  for (let i = 0; i < arrayResults.length; i++) {
-    rows.push(
-      <tr key={i}>
-        <td>{arrayResults[i]}</td>
-      </tr>
-    );
-    console.log("Text Array Results" + { arrayResults });
+  if (arrayResults) {
+    for (let i = 0; i < arrayResults.length; i++) {
+      rows.push(
+        <tr key={i}>
+          <td>{arrayResults[i]}</td>
+        </tr>
+      );
+      console.log("Text Array Results" + { arrayResults });
+    }
   }
 
   function handeArrayResultsChanges() {
