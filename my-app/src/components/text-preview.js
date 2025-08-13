@@ -1,7 +1,7 @@
 import css from './text-preview.module.css';
 
 function Preview({ incomingPreviewText, incomingVariables }) {
-  function generatePreview() {
+  function generatePreviewandVariables() {
     if (incomingPreviewText && incomingVariables) {
       let text = incomingPreviewText;
       const newincomingVariables = new Map();
@@ -26,7 +26,7 @@ function Preview({ incomingPreviewText, incomingVariables }) {
       }
 
       //DEBUG LOG--------------------------
-      console.log("Generated Text from generatePreview(): " + text);
+      console.log("Generated Text from generatePreviewandVariables(): " + text);
       //-------------------------------------
 
       return String(text);
@@ -36,7 +36,7 @@ function Preview({ incomingPreviewText, incomingVariables }) {
   return (
     <>
       <div className={css["preview-container"]}>
-        <h1>{incomingPreviewText ? generatePreview() : "Preview"}</h1>
+        <h1>{incomingPreviewText ? generatePreviewandVariables() : "Preview"}</h1>
       </div>
     </>
   );
