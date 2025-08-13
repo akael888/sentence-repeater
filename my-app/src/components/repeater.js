@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import Variable from "./variable";
+import VariableTable from "./variable-table";
 import Generator from "./generator";
 import ShowResult from "./result";
 import Preview from "./text-preview";
@@ -102,9 +102,9 @@ function Repeater() {
           </div>
           <>
             <div className={css[["hidden-containers"]]}>
-              <Variable
-                variables={variables}
-                variableChanges={handleVariableChanges}
+              <VariableTable
+                incomingVariables={variables}
+                incomingHandlevariableChanges={handleVariableChanges}
               />
               <ShowResult
                 arrayResults={generatedSentence}
