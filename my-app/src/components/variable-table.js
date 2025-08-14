@@ -1,11 +1,16 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import css from "./variable.module.css";
 
 function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
   // const initializedName = useRef(new Set());
-  let variableList = null;
+  const [typeValidator, setTypeValidator] = useState({
+    Integer: false,
+    String: false,
+    Date: false,
+    List: false,
+  });
 
   function handleincomingHandleVariableChanges(key, field, value) {
     const tempVarMap = new Map(incomingVariables);
@@ -22,10 +27,23 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
     return incomingHandlevariableChanges(tempVarMap);
   }
 
-  // useEffect(() => {
-  //   variableList = Array.from(incomingVariables.values());
-  //   return variableList.includes(targetValue);
-  // }, []);
+  useEffect(() => {
+    if (incomingVariables) {
+      let typeList = null;
+      typeList = Array.from(incomingVariables.values()).map(
+        (variable) => variable.type
+      );
+      console.log(typeList.type);
+      setTypeValidator({
+        Integer: typeList.includes("Integer"),
+        String: typeList.includes("String"),
+        Date: typeList.includes("Date"),
+        List: typeList.includes("List"),
+      });
+    }
+
+    // return typeList.includes("Integer");
+  }, [incomingVariables]);
 
   function processLocalVariableTypeChanges(
     key,
@@ -40,18 +58,22 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
         incomingTargetVar.interval = 0;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = 0;
+        // tempTypeValidator.Integer = true;
         break;
       case "String":
         incomingTargetVar.iterate = false;
         incomingTargetVar.interval = null;
         incomingTargetVar.randomize = null;
         incomingTargetVar.value = "String Here";
+        // tempTypeValidator.String = true;
         break;
       case "Date":
         console.log("Date");
+        // tempTypeValidator.Date = true;
         break;
       case "List":
         console.log("List");
+        // tempTypeValidator.List = true;
         break;
       default:
         break;
@@ -73,12 +95,12 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                     <th>Start Value</th>
                     <th>Iterate</th>
                     <>
-                      {incomingVariables.type === "Integer" ? (
+                      {typeValidator.Integer ? (
                         <th>Inteval</th>
                       ) : null}
                     </>
                     <>
-                      {incomingVariables.type === "Integer" ? (
+                      {typeValidator.Integer ? (
                         <th>Randomize</th>
                       ) : null}
                     </>
