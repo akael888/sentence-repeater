@@ -93,17 +93,9 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                     <th>Variable Name</th>
                     <th>Type</th>
                     <th>Start Value</th>
-                    <th>Iterate</th>
-                    <>
-                      {typeValidator.Integer ? (
-                        <th>Inteval</th>
-                      ) : null}
-                    </>
-                    <>
-                      {typeValidator.Integer ? (
-                        <th>Randomize</th>
-                      ) : null}
-                    </>
+                    <>{typeValidator.Integer ? <th>Iterate</th> : null}</>
+                    <>{typeValidator.Integer ? <th>Inteval</th> : null}</>
+                    <>{typeValidator.Integer ? <th>Randomize</th> : null}</>
                   </tr>
                 </thead>
                 <tbody className={css["tbody-name"]}>
@@ -176,26 +168,30 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                             >
                               {values.value}
                             </td>
-                            <td
-                              contentEditable="true"
-                              className={css["td-var-iterate"]}
-                            >
-                              <div>
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    checked={values.iterate}
-                                    onClick={() =>
-                                      handleincomingHandleVariableChanges(
-                                        key,
-                                        "iterate",
-                                        !values.iterate
-                                      )
-                                    }
-                                  />
-                                </label>
-                              </div>
-                            </td>
+                            <>
+                              {values.type === "Integer" ? (
+                                <td
+                                  contentEditable="true"
+                                  className={css["td-var-iterate"]}
+                                >
+                                  <div>
+                                    <label>
+                                      <input
+                                        type="checkbox"
+                                        checked={values.iterate}
+                                        onClick={() =>
+                                          handleincomingHandleVariableChanges(
+                                            key,
+                                            "iterate",
+                                            !values.iterate
+                                          )
+                                        }
+                                      />
+                                    </label>
+                                  </div>
+                                </td>
+                              ) : null}
+                            </>
                             <>
                               {values.type === "Integer" ? (
                                 <td>Inteval</td>
