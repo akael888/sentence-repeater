@@ -6,13 +6,15 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
   const rows = [];
   const [isCopied, setIsCopied] = useState(false);
 
-  for (let i = 0; i < arrayResults.length; i++) {
-    rows.push(
-      <tr key={i}>
-        <td>{arrayResults[i]}</td>
-      </tr>
-    );
-    console.log("Text Array Results" + { arrayResults });
+  if (arrayResults) {
+    for (let i = 0; i < arrayResults.length; i++) {
+      rows.push(
+        <tr key={i}>
+          <td>{arrayResults[i]}</td>
+        </tr>
+      );
+      console.log("Text Array Results" + { arrayResults });
+    }
   }
 
   function handeArrayResultsChanges() {
@@ -49,36 +51,42 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
 
   return (
     <>
-      <div className={css["results-container"]}>
-        <div className={css["results-all-container"]}>
-          <div className={css["results-table-header-container"]}>
-            <h4>Sentence</h4>
-            <CloseButton
-              onClick={() => {
-                handeArrayResultsChanges();
-              }}
-              variant="white"
-            />
-          </div>
-          <div className={css["results-table-container"]}>
-            <table>
-              <thead>
-                {/* <tr>
+      {arrayResults ? (
+        <>
+          {arrayResults.length > 0 ? (
+            <div className={css["results-container"]}>
+              <div className={css["results-all-container"]}>
+                <div className={css["results-table-header-container"]}>
+                  <h4>Sentence</h4>
+                  <CloseButton
+                    onClick={() => {
+                      handeArrayResultsChanges();
+                    }}
+                    variant="white"
+                  />
+                </div>
+                <div className={css["results-table-container"]}>
+                  <table>
+                    <thead>
+                      {/* <tr>
               <th>Sentence</th>
             </tr> */}
-              </thead>
-              <tbody>{rows}</tbody>
-            </table>
-          </div>
-        </div>
-        <div className={css["results-interaction-container"]}>
-          <button onClick={handleCopyClick}>
-            {isCopied ? "Copied!" : "Copy"}
-          </button>
-          <button>Test</button>
-          <button>Test</button>
-        </div>
-      </div>
+                    </thead>
+                    <tbody>{rows}</tbody>
+                  </table>
+                </div>
+              </div>
+              <div className={css["results-interaction-container"]}>
+                <button onClick={handleCopyClick}>
+                  {isCopied ? "Copied!" : "Copy"}
+                </button>
+                <button>Test</button>
+                <button>Test</button>
+              </div>
+            </div>
+          ) : null}
+        </>
+      ) : null}
     </>
   );
 }

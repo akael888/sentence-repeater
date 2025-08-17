@@ -1,0 +1,38 @@
+.main-text-container {
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--main-color);
+  place-content: center;
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color); */
+
+  border: 1px solid var(--opposite-color);
+
+  cursor: text;
+}
+
+.main-text-container:focus {
+  background-color: var(--opposite-color);
+  color: var(--main-color);
+
+  border: 1px solid var(--main-color);
+
+  /* box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color); */
+}
+
+.main-text-container:hover {
+  background-color: var(--opposite-color);
+  color: var(--main-color);
+
+  border: 1px solid var(--main-color);
+
+
+  /* box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);
+  -moz-box-shadow: 0px 0px 21px -1px var(--shadow-color); */
+}

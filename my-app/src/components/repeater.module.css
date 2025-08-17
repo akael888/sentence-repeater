@@ -1,48 +1,19 @@
-
-
-@keyframes fadeInTop {
-  0% {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-
-
-
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeOutBot {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-
-
-
-  100% {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-}
+@import url('./animation.css');
 
 .all-container {
+  /* background-image: url('https://picsum.photos/200/300'); */
   width: 100%;
   min-height: 90vh;
   display: flex;
   background: linear-gradient(180deg, var(--gradient-color-start) 0%, var(--gradient-color-end) 100%);
   justify-content: center;
   overflow: hidden;
-  color: var(--text-color);
+  
 
 }
 
-.all-container *{
-  color: var(--text-color);
+.all-container * {
+  color: var(--opposite-color);
 
 }
 
@@ -91,60 +62,15 @@
 .repeater-container {
   display: inline-flex;
   width: 50%;
-  gap: 10px;
-  animation: fadeInTop 2s ease 0s 1 normal forwards;
-}
-
-.main-text-container {
-  width: 75%;
-  height: 10%;
-
-  background-color: rgb(22, 19, 19);
-  place-content: center;
-  border-radius: 10px;
-  box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
-  -webkit-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
-  -moz-box-shadow: 0px 0px 21px -1px rgb(22, 19, 19);
-  cursor: text;
-}
-
-.main-text-container:focus {
-  background-color: rgb(255, 255, 255);
-  color: #282c34;
-  box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-  -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-  -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-}
-
-.main-text-container:hover {
-  background-color: rgb(255, 255, 255);
-  color: #282c34;
-  box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-  -webkit-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-  -moz-box-shadow: 0px 0px 21px -1px rgba(255, 255, 255, 0.75);
-}
-
-
-.generator-container {
-  width: 25%;
-  display: inline-flex;
-  gap: 5px;
-  place-content: center;
-  border-radius: 10px;
-}
-
-.generator-container * {
-  width: 50%;
-}
-
-
-.preview-container {
-  width: 100%;
   height: 100%;
   margin: auto;
-  display: grid;
+  gap: 20px;
   animation: fadeInTop 2s ease 0s 1 normal forwards;
 }
+
+
+
+
 
 .variable-container {
   width: 100%;
@@ -193,4 +119,3 @@
   margin: auto;
   border-radius: 10px; */
 }
-
