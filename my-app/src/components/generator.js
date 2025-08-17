@@ -50,7 +50,7 @@ function Generator({
         tempText = tempText.replace("{}", String(value.value));
 
         if (value.iterate === true) {
-          value.value++;
+          value.value = parseInt(value.value) + parseInt(value.interval);
         }
 
         console.log(
