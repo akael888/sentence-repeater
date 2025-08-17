@@ -9,4 +9,4 @@
 - Often we need to write multiple sentences that have little to no variance. This takes unnecessary time.
 
 ## Solution
-- Using a sentence duplicator with a variable editing feature
+- Using a sentence repeater with a variable editing feature
