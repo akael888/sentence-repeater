@@ -29,6 +29,8 @@ function TextInput({
         type: "Integer",
         value: index,
         iterate: true,
+        interval: 1,
+        randomize: false,
       });
     });
 
