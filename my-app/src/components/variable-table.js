@@ -5,12 +5,16 @@ import css from "./variable.module.css";
 
 function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
   // const initializedName = useRef(new Set());
+
+
+
   const [typeValidator, setTypeValidator] = useState({
     Integer: false,
     String: false,
     Date: false,
     List: false,
   });
+  
 
   function handleincomingHandleVariableChanges(key, field, value) {
     const tempVarMap = new Map(incomingVariables);
@@ -187,7 +191,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                             <>
                               {values.type === "Integer" ? (
                                 <td
-                                  contentEditable="true"
+                                  // contentEditable="true"
                                   className={css["td-var-iterate"]}
                                 >
                                   <div>
