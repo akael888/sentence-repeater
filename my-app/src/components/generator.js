@@ -12,6 +12,12 @@ function Generator({
     setGeneratedSentenceAmount(amount);
   }
 
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   function generateSentence() {
     let tempPreviewText = incomingPreviewText;
     let localGeneratedSentence = [];
@@ -37,26 +43,34 @@ function Generator({
 
     //Generate the Sentences and pushes them into local generated sentence array
     let currentKeyIndex = 0;
+    let tempFirstValue = null;
     for (let i = 0; i < generatedSentenceAmount; i++) {
       let tempText = tempPreviewText;
-       console.log("PRE LOOP CONSOLE LOG-----");
+      console.log("PRE LOOP CONSOLE LOG-----");
       console.log("Text Pre Loop: " + tempText);
       console.log("TempPreviewText Pre Loop: " + tempPreviewText);
       const variableEntries = Array.from(localVariables.entries());
 
       while (tempText.includes("{}") && variableEntries.length > 0) {
-        const [key, value] =
+        const [key, values] =
           variableEntries[currentKeyIndex % variableEntries.length];
-        tempText = tempText.replace("{}", String(value.value));
+        tempText = tempText.replace("{}", String(values.value));
 
-        if (value.iterate === true) {
-          value.value = parseInt(value.value) + parseInt(value.interval);
+        if (values.iterate === true) {
+          values.value = parseInt(values.value) + parseInt(values.interval);
+        }
+
+        if (values.randomize === true) {
+          if (currentKeyIndex === 0) {
+            tempFirstValue = values.value;
+          }
+          values.value = getRandomInt(tempFirstValue, 10);
         }
 
         console.log(
           "Text: " + tempText + " (Variable Index: " + currentKeyIndex + ")"
         );
-        console.log("Value Iterate? :" + value.iterate);
+        console.log("Value Iterate? :" + values.iterate);
         currentKeyIndex++;
       }
 
