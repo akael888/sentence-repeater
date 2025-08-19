@@ -6,15 +6,12 @@ import css from "./variable.module.css";
 function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
   // const initializedName = useRef(new Set());
 
-
-
   const [typeValidator, setTypeValidator] = useState({
     Integer: false,
     String: false,
     Date: false,
     List: false,
   });
-  
 
   function handleincomingHandleVariableChanges(key, field, value) {
     const tempVarMap = new Map(incomingVariables);
@@ -78,6 +75,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
         incomingTargetVar.interval = 1;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = 0;
+        incomingTargetVar.maxValue = 0;
         // tempTypeValidator.Integer = true;
         break;
       case "String":
@@ -85,6 +83,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
         incomingTargetVar.interval = null;
         incomingTargetVar.randomize = null;
         incomingTargetVar.value = "String Here";
+        incomingTargetVar.maxValue = null;
         // tempTypeValidator.String = true;
         break;
       case "Date":
@@ -175,19 +174,26 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                 </Dropdown.Menu>
                               </Dropdown>{" "}
                             </td>
-                            <td
-                              contentEditable="true"
-                              onBlur={(e) =>
-                                handleincomingHandleVariableChanges(
-                                  key,
-                                  "value",
-                                  e.target.innerText
-                                )
-                              }
-                              className={css["td-var-value"]}
-                            >
-                              {values.value}
-                            </td>
+                            {values.randomize ? (
+                              <td>
+                                <input type="range" className={css['sliderMin']} min={values.value} max={values.maxValue}></input>
+                                <input type="range" className={css['sliderMax']} min={values.value} max={values.maxValue}></input>
+                              </td>
+                            ) : (
+                              <td
+                                contentEditable="true"
+                                onBlur={(e) =>
+                                  handleincomingHandleVariableChanges(
+                                    key,
+                                    "value",
+                                    e.target.innerText
+                                  )
+                                }
+                                className={css["td-var-value"]}
+                              >
+                                {values.value}
+                              </td>
+                            )}
                             <>
                               {values.type === "Integer" ? (
                                 <td
