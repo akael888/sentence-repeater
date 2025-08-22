@@ -12,6 +12,12 @@ function Generator({
     setGeneratedSentenceAmount(amount);
   }
 
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   function generateSentence() {
     let tempPreviewText = incomingPreviewText;
     let localGeneratedSentence = [];
@@ -37,26 +43,37 @@ function Generator({
 
     //Generate the Sentences and pushes them into local generated sentence array
     let currentKeyIndex = 0;
+    let tempFirstValue = null;
     for (let i = 0; i < generatedSentenceAmount; i++) {
       let tempText = tempPreviewText;
-       console.log("PRE LOOP CONSOLE LOG-----");
+      console.log("PRE LOOP CONSOLE LOG-----");
       console.log("Text Pre Loop: " + tempText);
       console.log("TempPreviewText Pre Loop: " + tempPreviewText);
       const variableEntries = Array.from(localVariables.entries());
 
       while (tempText.includes("{}") && variableEntries.length > 0) {
-        const [key, value] =
+        const [key, values] =
           variableEntries[currentKeyIndex % variableEntries.length];
-        tempText = tempText.replace("{}", String(value.value));
 
-        if (value.iterate === true) {
-          value.value = parseInt(value.value) + parseInt(value.interval);
+        if (values.iterate === true) {
+          tempText = tempText.replace("{}", String(values.value));
+          values.value = parseInt(values.value) + parseInt(values.interval);
+        } else if (values.randomize === true) {
+          if (currentKeyIndex === 0) {
+            tempFirstValue = values.minValue;
+          }
+          console.log("minValue =" + values.minValue);
+
+          values.value = getRandomInt(values.minValue, values.maxValue);
+          tempText = tempText.replace("{}", String(values.value));
+          console.log("values.value getrandomint =" + values.value);
         }
 
         console.log(
           "Text: " + tempText + " (Variable Index: " + currentKeyIndex + ")"
         );
-        console.log("Value Iterate? :" + value.iterate);
+        console.log("Value Iterate? :" + values.iterate);
+
         currentKeyIndex++;
       }
 

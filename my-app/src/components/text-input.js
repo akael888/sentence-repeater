@@ -28,6 +28,8 @@ function TextInput({
         name: "Variable " + index,
         type: "Integer",
         value: index,
+        minValue : index,
+        maxValue : 10,
         iterate: true,
         interval: 1,
         randomize: false,
