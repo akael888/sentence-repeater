@@ -54,23 +54,26 @@ function Generator({
       while (tempText.includes("{}") && variableEntries.length > 0) {
         const [key, values] =
           variableEntries[currentKeyIndex % variableEntries.length];
-        tempText = tempText.replace("{}", String(values.value));
 
         if (values.iterate === true) {
+          tempText = tempText.replace("{}", String(values.value));
           values.value = parseInt(values.value) + parseInt(values.interval);
-        }
-
-        if (values.randomize === true) {
+        } else if (values.randomize === true) {
           if (currentKeyIndex === 0) {
-            tempFirstValue = values.value;
+            tempFirstValue = values.minValue;
           }
-          values.value = getRandomInt(tempFirstValue, 10);
+          console.log("minValue =" + values.minValue);
+
+          values.value = getRandomInt(values.minValue, values.maxValue);
+          tempText = tempText.replace("{}", String(values.value));
+          console.log("values.value getrandomint =" + values.value);
         }
 
         console.log(
           "Text: " + tempText + " (Variable Index: " + currentKeyIndex + ")"
         );
         console.log("Value Iterate? :" + values.iterate);
+
         currentKeyIndex++;
       }
 
