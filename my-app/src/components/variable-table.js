@@ -105,6 +105,13 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
         break;
       case "List":
         console.log("List");
+        incomingTargetVar.iterate = true;
+        incomingTargetVar.interval = 1;
+        incomingTargetVar.randomize = false;
+        incomingTargetVar.value = "String Here";
+        incomingTargetVar.minValue = null;
+        incomingTargetVar.maxValue = null;
+        incomingTargetVar.list = [];
         // tempTypeValidator.List = true;
         break;
       default:
@@ -126,9 +133,21 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                     <th>Type</th>
                     <th>Start Value</th>
                     <>{otherValidator.Random ? <th>End Value</th> : null}</>
-                    <>{typeValidator.Integer ? <th>Iterate</th> : null}</>
-                    <>{typeValidator.Integer ? <th>Inteval</th> : null}</>
-                    <>{typeValidator.Integer ? <th>Randomize</th> : null}</>
+                    <>
+                      {typeValidator.Integer || typeValidator.List ? (
+                        <th>Iterate</th>
+                      ) : null}
+                    </>
+                    <>
+                      {typeValidator.Integer || typeValidator.List ? (
+                        <th>Inteval</th>
+                      ) : null}
+                    </>
+                    <>
+                      {typeValidator.Integer || typeValidator.List ? (
+                        <th>Randomize</th>
+                      ) : null}
+                    </>
                   </tr>
                 </thead>
                 <tbody className={css["tbody-name"]}>
@@ -162,7 +181,6 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
 
                                 <Dropdown.Menu>
                                   <Dropdown.Item
-                                    // href="#/action-1"
                                     onClick={() =>
                                       handleincomingHandleVariableChanges(
                                         key,
@@ -174,7 +192,6 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     Integer
                                   </Dropdown.Item>
                                   <Dropdown.Item
-                                    // href="#/action-2"
                                     onClick={() =>
                                       handleincomingHandleVariableChanges(
                                         key,
@@ -184,6 +201,17 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     }
                                   >
                                     String
+                                  </Dropdown.Item>
+                                  <Dropdown.Item
+                                    onClick={() =>
+                                      handleincomingHandleVariableChanges(
+                                        key,
+                                        "type",
+                                        "List"
+                                      )
+                                    }
+                                  >
+                                    List
                                   </Dropdown.Item>
                                 </Dropdown.Menu>
                               </Dropdown>{" "}
@@ -239,7 +267,8 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                             </>
 
                             <>
-                              {values.type === "Integer" ? (
+                              {values.type === "Integer" ||
+                              values.type === "List" ? (
                                 <td
                                   // contentEditable="true"
                                   className={css["td-var-iterate"]}
@@ -260,10 +289,13 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     </label>
                                   </div>
                                 </td>
-                              ) : <td></td>}
+                              ) : (
+                                <td></td>
+                              )}
                             </>
                             <>
-                              {values.type === "Integer" ? (
+                              {values.type === "Integer" ||
+                              values.type === "List" ? (
                                 <td
                                   contentEditable="true"
                                   onBlur={(e) =>
@@ -276,10 +308,13 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                 >
                                   {values.interval}
                                 </td>
-                              ) : <td></td>}
+                              ) : (
+                                <td></td>
+                              )}
                             </>
                             <>
-                              {values.type === "Integer" ? (
+                              {values.type === "Integer" ||
+                              values.type === "List" ? (
                                 <td>
                                   <div>
                                     <label>
@@ -297,7 +332,9 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     </label>
                                   </div>
                                 </td>
-                              ) : <td></td>}
+                              ) : (
+                                <td></td>
+                              )}
                             </>
                           </tr>
                         )
