@@ -44,8 +44,10 @@ function Generator({
     //Generate the Sentences and pushes them into local generated sentence array
     let currentKeyIndex = 0;
     let tempFirstValue = null;
+    let parsedText = [];
     for (let i = 0; i < generatedSentenceAmount; i++) {
       let tempText = tempPreviewText;
+      
       console.log("PRE LOOP CONSOLE LOG-----");
       console.log("Text Pre Loop: " + tempText);
       console.log("TempPreviewText Pre Loop: " + tempPreviewText);
@@ -56,14 +58,18 @@ function Generator({
           variableEntries[currentKeyIndex % variableEntries.length];
 
         if (values.randomize === true) {
-          if (currentKeyIndex === 0) {
-            tempFirstValue = values.minValue;
-          }
           console.log("minValue =" + values.minValue);
-
           values.value = getRandomInt(values.minValue, values.maxValue);
-
           console.log("values.value getrandomint =" + values.value);
+        }
+        if (values.type === "List") {
+          if (i === 0) {
+            parsedText = values.value;
+            parsedText = parsedText.split(",");
+            console.log("Parsed Text: " + parsedText);
+          }
+          console.log("Text ke-" + i + ":" + parsedText[i]);
+          values.value = parsedText[i];
         }
         tempText = tempText.replace("{}", String(values.value));
         if (values.iterate === true) {
