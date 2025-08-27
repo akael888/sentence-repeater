@@ -6,10 +6,12 @@ function Chip({ incomingChipList }) {
       <>
         {incomingChipList != null
           ? incomingChipList.map((value, index) => (
-              <span className={css["chip-object"]} contentEditable="false">
-                {" "}
-                {value}
-              </span>
+              <>
+                <span className={css["chip-object"]} contentEditable="false">
+                  {value}
+                </span>
+                <span> </span>
+              </>
             ))
           : ""}
       </>
