@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import css from "./variable.module.css";
+import Chip from "./chip-list";
 
 function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
   // const initializedName = useRef(new Set());
@@ -17,7 +18,11 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
     Random: false,
   });
 
-  function handleincomingHandleVariableChanges(key, field, value) {
+  const handleChipListChanges = (textValue) => {
+    return textValue.split(" ");
+  };
+
+  function handleVariableChanges(key, field, value) {
     const tempVarMap = new Map(incomingVariables);
     const targetVar = tempVarMap.get(key);
     if (targetVar) {
@@ -34,6 +39,12 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
           targetVar[inverseField] = false;
           tempVarMap.set(key, targetVar);
         }
+      }
+      if (targetVar["type"] === "List" && field === "value") {
+        targetVar["list"] = null;
+        targetVar["list"] = handleChipListChanges(value);
+        targetVar["value"] = "";
+        console.log("List in Target Var:" + targetVar["list"]);
       }
       // if (field === "iterate" && targetVar["randomize"] === true) {
       //   targetVar["randomize"] = false;
@@ -159,7 +170,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                             <td
                               contentEditable="true"
                               onBlur={(e) =>
-                                handleincomingHandleVariableChanges(
+                                handleVariableChanges(
                                   key,
                                   "name",
                                   e.target.innerText
@@ -182,7 +193,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                 <Dropdown.Menu>
                                   <Dropdown.Item
                                     onClick={() =>
-                                      handleincomingHandleVariableChanges(
+                                      handleVariableChanges(
                                         key,
                                         "type",
                                         "Integer"
@@ -193,7 +204,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                   </Dropdown.Item>
                                   <Dropdown.Item
                                     onClick={() =>
-                                      handleincomingHandleVariableChanges(
+                                      handleVariableChanges(
                                         key,
                                         "type",
                                         "String"
@@ -204,11 +215,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                   </Dropdown.Item>
                                   <Dropdown.Item
                                     onClick={() =>
-                                      handleincomingHandleVariableChanges(
-                                        key,
-                                        "type",
-                                        "List"
-                                      )
+                                      handleVariableChanges(key, "type", "List")
                                     }
                                   >
                                     List
@@ -222,7 +229,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                   <td
                                     contentEditable="true"
                                     onBlur={(e) =>
-                                      handleincomingHandleVariableChanges(
+                                      handleVariableChanges(
                                         key,
                                         "minValue",
                                         e.target.innerText
@@ -235,7 +242,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                   <td
                                     contentEditable="true"
                                     onBlur={(e) =>
-                                      handleincomingHandleVariableChanges(
+                                      handleVariableChanges(
                                         key,
                                         "maxValue",
                                         e.target.innerText
@@ -250,8 +257,8 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                 <>
                                   <td
                                     contentEditable="true"
-                                    onBlur={(e) =>
-                                      handleincomingHandleVariableChanges(
+                                    onInput={(e) =>
+                                      handleVariableChanges(
                                         key,
                                         "value",
                                         e.target.innerText
@@ -259,6 +266,13 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     }
                                     className={css["td-var-value"]}
                                   >
+                                    {values.list != null ? (
+                                      <Chip
+                                        incomingChipList={values.list}
+                                      ></Chip>
+                                    ) : (
+                                      ""
+                                    )}
                                     {values.value}
                                   </td>
                                   {otherValidator.Random && <td></td>}
@@ -279,7 +293,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                         type="checkbox"
                                         checked={values.iterate}
                                         onClick={() =>
-                                          handleincomingHandleVariableChanges(
+                                          handleVariableChanges(
                                             key,
                                             "iterate",
                                             !values.iterate
@@ -299,7 +313,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                 <td
                                   contentEditable="true"
                                   onBlur={(e) =>
-                                    handleincomingHandleVariableChanges(
+                                    handleVariableChanges(
                                       key,
                                       "interval",
                                       parseInt(e.target.innerText)
@@ -322,7 +336,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                         type="checkbox"
                                         checked={values.randomize}
                                         onClick={() =>
-                                          handleincomingHandleVariableChanges(
+                                          handleVariableChanges(
                                             key,
                                             "randomize",
                                             !values.randomize
