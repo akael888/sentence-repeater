@@ -27,6 +27,15 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
     const targetVar = tempVarMap.get(key);
     if (targetVar) {
       targetVar[field] = value;
+
+      if (targetVar["type"] === "List" && field === "value") {
+        targetVar["list"] = null;
+        targetVar["list"] = handleChipListChanges(value);
+        targetVar["value"] = null;
+        console.log("List in Target Var:" + targetVar["list"]);
+        console.log("Target Var [Value]:" + targetVar["value"]);
+      }
+
       tempVarMap.set(key, targetVar);
       if (field === "type") {
         processLocalVariableTypeChanges(key, value, targetVar, tempVarMap);
@@ -40,12 +49,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
           tempVarMap.set(key, targetVar);
         }
       }
-      if (targetVar["type"] === "List" && field === "value") {
-        targetVar["list"] = null;
-        targetVar["list"] = handleChipListChanges(value);
-        targetVar["value"] = "";
-        console.log("List in Target Var:" + targetVar["list"]);
-      }
+
       // if (field === "iterate" && targetVar["randomize"] === true) {
       //   targetVar["randomize"] = false;
       //   tempVarMap.set(key, targetVar);
@@ -255,17 +259,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                 </>
                               ) : (
                                 <>
-                                  <td
-                                    contentEditable="true"
-                                    onInput={(e) =>
-                                      handleVariableChanges(
-                                        key,
-                                        "value",
-                                        e.target.innerText
-                                      )
-                                    }
-                                    className={css["td-var-value"]}
-                                  >
+                                  <td>
                                     {values.list != null ? (
                                       <Chip
                                         incomingChipList={values.list}
@@ -273,7 +267,20 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     ) : (
                                       ""
                                     )}
-                                    {values.value}
+                                    <div
+                                      contentEditable="true"
+                                      onBlur={(e) =>
+                                        handleVariableChanges(
+                                          key,
+                                          "value",
+                                          e.target.innerText
+                                        )
+                                      }
+                                      className={css["td-var-value"]}
+                                    >
+                                      {" "}
+                                      {values.value}
+                                    </div>
                                   </td>
                                   {otherValidator.Random && <td></td>}
                                 </>
