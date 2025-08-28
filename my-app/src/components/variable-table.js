@@ -7,6 +7,22 @@ import Chip from "./chip-list";
 function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
   // const initializedName = useRef(new Set());
 
+  const editableRef = useRef(null);
+
+  const clearValue = () => {
+    if (editableRef.current) {
+      editableRef.current.innerText = "";
+    }
+  };
+
+  function popVariableList(event, poppedList) {
+    if (poppedList.size > 0 && event.key == "Backspace") {
+      poppedList = poppedList.pop();
+      handleVariableChanges();
+    }
+    console.log("Key Pressed: " + event.key);
+  }
+
   const [typeValidator, setTypeValidator] = useState({
     Integer: false,
     String: false,
@@ -19,7 +35,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
   });
 
   const handleChipListChanges = (textValue) => {
-    return textValue.split(" ");
+    return textValue.split(",");
   };
 
   function handleVariableChanges(key, field, value) {
@@ -29,11 +45,12 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
       targetVar[field] = value;
 
       if (targetVar["type"] === "List" && field === "value") {
-        targetVar["list"] = null;
-        targetVar["list"] = handleChipListChanges(value);
-        targetVar["value"] = null;
-        console.log("List in Target Var:" + targetVar["list"]);
-        console.log("Target Var [Value]:" + targetVar["value"]);
+        if (value.includes(" ") || value.includes("/n")) {
+          targetVar.list.push(handleChipListChanges(value));
+          targetVar["value"] = "";
+          console.log("List in Target Var:" + targetVar["list"]);
+          console.log("Target Var [Value]:" + targetVar["value"]);
+        }
       }
 
       tempVarMap.set(key, targetVar);
@@ -260,27 +277,28 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                               ) : (
                                 <>
                                   <td>
-                                    {values.list != null ? (
+                                    {values.list != null &&
+                                    values.type === "List" ? (
                                       <Chip
                                         incomingChipList={values.list}
                                       ></Chip>
                                     ) : (
                                       ""
                                     )}
-                                    <div
-                                      contentEditable="true"
-                                      onBlur={(e) =>
+
+                                    <input
+                                      ref={editableRef}
+                                      type="text"
+                                      value={values.value}
+                                      onChange={(e) =>
                                         handleVariableChanges(
                                           key,
                                           "value",
-                                          e.target.innerText
+                                          e.target.value
                                         )
                                       }
                                       className={css["td-var-value"]}
-                                    >
-                                      {" "}
-                                      {values.value}
-                                    </div>
+                                    ></input>
                                   </td>
                                   {otherValidator.Random && <td></td>}
                                 </>
