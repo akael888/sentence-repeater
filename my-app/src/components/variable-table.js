@@ -164,7 +164,11 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                     <th>Variable Name</th>
                     <th>Type</th>
                     <th>Start Value</th>
-                    <>{otherValidator.Random ? <th>End Value</th> : null}</>
+                    <>
+                      {otherValidator.Random && typeValidator.Integer ? (
+                        <th>End Value</th>
+                      ) : null}
+                    </>
                     <>
                       {typeValidator.Integer || typeValidator.List ? (
                         <th>Iterate</th>
@@ -245,7 +249,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                               </Dropdown>{" "}
                             </td>
                             <>
-                              {values.randomize ? (
+                              {values.randomize && values.type === "Integer" ? (
                                 <>
                                   <td
                                     contentEditable="true"
@@ -300,7 +304,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                       className={css["td-var-value"]}
                                     ></input>
                                   </td>
-                                  {otherValidator.Random && <td></td>}
+                                  {/* {otherValidator.Random && <td></td>} //apa ini? */}
                                 </>
                               )}
                             </>
@@ -348,7 +352,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                   {values.interval}
                                 </td>
                               ) : (
-                                <td></td>
+                                <td></td> //apa ini??
                               )}
                             </>
                             <>
