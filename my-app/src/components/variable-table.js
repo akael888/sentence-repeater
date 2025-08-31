@@ -4,10 +4,15 @@ import Dropdown from "react-bootstrap/Dropdown";
 import css from "./variable.module.css";
 import Chip from "./chip-list";
 
-function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
+function VariableTable({
+  incomingVariables,
+  incomingHandlevariableChanges,
+  incomingHandleHighestListVar,
+}) {
   // const initializedName = useRef(new Set());
 
   const editableRef = useRef(null);
+  let highestListVar = null;
 
   const clearValue = () => {
     if (editableRef.current) {
@@ -38,6 +43,21 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
     return textValue.split(",");
   };
 
+  function setMaxGeneratedSentencefromList(selectedVar) {
+    if (highestListVar !== null && highestListVar !== undefined) {
+      if (selectedVar.list.length > highestListVar.list.length) {
+        highestListVar = { ...selectedVar };
+      }
+    } else {
+      highestListVar = { ...selectedVar };
+    }
+    incomingHandleHighestListVar(highestListVar);
+    console.log("Highest List Var:" + highestListVar);
+    console.log(highestListVar);
+    console.log("Selected List Var:" + selectedVar);
+    console.log(selectedVar);
+  }
+
   function handleVariableChanges(key, field, value) {
     const tempVarMap = new Map(incomingVariables);
     const targetVar = tempVarMap.get(key);
@@ -65,6 +85,9 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
           targetVar[inverseField] = false;
           tempVarMap.set(key, targetVar);
         }
+      }
+      if (targetVar["type"] === "List" && targetVar["iterate"] === true) {
+        setMaxGeneratedSentencefromList(targetVar);
       }
 
       // if (field === "iterate" && targetVar["randomize"] === true) {
