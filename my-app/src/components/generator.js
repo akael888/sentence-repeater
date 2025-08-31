@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./generator.module.css";
 
 function Generator({
   incomingVariables,
   incomingPreviewText,
   incomingHandleGeneratedSentenceChanges,
+  incomingHighestListVar,
 }) {
   const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(0);
+
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (
+      incomingHighestListVar !== null &&
+      incomingHighestListVar !== undefined
+    ) {
+      setInputValue(incomingHighestListVar.list?.length || "");
+      setGeneratedSentenceAmount(inputValue);
+    }
+  }, [incomingHighestListVar]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
     setGeneratedSentenceAmount(amount);
@@ -62,11 +75,6 @@ function Generator({
         const [key, values] =
           variableEntries[currentKeyIndex % variableEntries.length];
 
-        if (values.randomize === true) {
-          console.log("minValue =" + values.minValue);
-          values.value = getRandomInt(values.minValue, values.maxValue);
-          console.log("values.value getrandomint =" + values.value);
-        }
         if (values.type === "List") {
           if (i === 0) {
             parsedText = values.list;
@@ -125,14 +133,14 @@ function Generator({
         <input
           id={css["amount-field"]}
           type="number"
-          onChange={(e) => handleGeneratedSentenceAmountChanges(e.target.value)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            handleGeneratedSentenceAmountChanges(e.target.value);
+          }}
           placeholder="Amount"
-        ></input>
-        <button
-          id={css["generate-button"]}
-          onClick={generateSentence}
-          // disabled={incomingPreviewText.length > 0}
-        >
+          value={inputValue}
+        />
+        <button id={css["generate-button"]} onClick={generateSentence}>
           Generate
         </button>
       </div>
