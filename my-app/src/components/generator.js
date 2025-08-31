@@ -18,6 +18,11 @@ function Generator({
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  function getRandomfromList(sourceList) {
+    const randomIndex = Math.floor(Math.random() * sourceList.length);
+    return sourceList[randomIndex];
+  }
+
   function generateSentence() {
     let tempPreviewText = incomingPreviewText;
     let localGeneratedSentence = [];
@@ -47,7 +52,7 @@ function Generator({
     let parsedText = [];
     for (let i = 0; i < generatedSentenceAmount; i++) {
       let tempText = tempPreviewText;
-      
+
       console.log("PRE LOOP CONSOLE LOG-----");
       console.log("Text Pre Loop: " + tempText);
       console.log("TempPreviewText Pre Loop: " + tempPreviewText);
@@ -64,14 +69,28 @@ function Generator({
         }
         if (values.type === "List") {
           if (i === 0) {
-            parsedText = values.value;
-            parsedText = parsedText.split(",");
+            parsedText = values.list;
+            // parsedText = parsedText.split(",");
             console.log("Parsed Text: " + parsedText);
           }
+
           console.log("Text ke-" + i + ":" + parsedText[i]);
           values.value = parsedText[i];
         }
+
+        if (values.randomize === true) {
+          if (values.type === "Integer") {
+            console.log("minValue =" + values.minValue);
+            values.value = getRandomInt(values.minValue, values.maxValue);
+            console.log("values.value getrandomint =" + values.value);
+          }
+          if (values.type === "List") {
+            values.value = getRandomfromList(values.list);
+          }
+        }
+
         tempText = tempText.replace("{}", String(values.value));
+
         if (values.iterate === true) {
           values.value = parseInt(values.value) + parseInt(values.interval);
         }
