@@ -1,6 +1,13 @@
 # react-first-app // Sentence Repeater
 > This is a repo for my first React App -- Sentence Repeater
 
+## Problem
+- Often, we need to write multiple sentences that have little to no variance. This takes unnecessary time. One might argue that we can just copy and paste the sentence. However what if there's a specific rules that we applied on that sentence? This is where the tool comes in handy.
+
+## Solution
+- Using a sentence repeater with a variable editing feature. Where the users can define the variable position within the sentence, and how its own set of rules when duplicating the sentence.
+
+
 ## Main Features
 - Variable definition: Able to define each variables that exist in the sentence. Each Variable has different types and attributes
 - To be added..
@@ -8,11 +15,6 @@
 ## Other Features
 - Dark Mode
 
-## Problem
-- Often we need to write multiple sentences that have little to no variance. This takes unnecessary time.
-
-## Solution
-- Using a sentence repeater with a variable editing feature
 
 ## How to use
 
