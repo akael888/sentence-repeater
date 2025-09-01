@@ -76,11 +76,12 @@ function VariableTable({
         let selectedField = field;
         let inverseField =
           selectedField === "iterate" ? "randomize" : "iterate";
+        if (incomingHighestListVar === targetVar) {
+          incomingHandleHighestListVar({ list: [] });
+        }
         if (targetVar[inverseField] === true) {
           targetVar[inverseField] = false;
-          if (incomingHighestListVar === targetVar) {
-            incomingHandleHighestListVar({ list: [] });
-          }
+
           tempVarMap.set(key, targetVar);
         }
       }
