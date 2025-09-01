@@ -79,7 +79,7 @@ function VariableTable({
         if (targetVar[inverseField] === true) {
           targetVar[inverseField] = false;
           if (incomingHighestListVar === targetVar) {
-            incomingHandleHighestListVar({list:[]});
+            incomingHandleHighestListVar({ list: [] });
           }
           tempVarMap.set(key, targetVar);
         }
@@ -307,7 +307,11 @@ function VariableTable({
                                     {values.list != null &&
                                     values.type === "List" ? (
                                       <Chip
+                                        incomingVariableIndex={key}
                                         incomingChipList={values.list}
+                                        incomingHandleVariableChanges={
+                                          handleVariableChanges
+                                        }
                                       ></Chip>
                                     ) : (
                                       ""
