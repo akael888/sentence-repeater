@@ -10,9 +10,16 @@ function Repeater() {
   const [previewText, setPreviewText] = useState(""); //For Text Preview
   const [variables, setVariables] = useState(new Map()); //To Count Each Variables
   const [generatedSentence, setGeneratedSentence] = useState([]); //For the created Sentences
-  const [highestListVar, setHighestListVar] = useState({});
+  const [highestListVar, setHighestListVar] = useState({ list: [] });
 
   //to update changes within the generated sentence in the parent component
+
+  useEffect(() => {
+    if (variables.size === 0) {
+      setHighestListVar({ list: [] });
+    }
+  }, [variables.size]);
+
   const handleGeneratedSentenceChanges = (textArrayData) => {
     setGeneratedSentence(textArrayData);
   };
@@ -106,7 +113,6 @@ function Repeater() {
                 handleGeneratedSentenceChanges
               }
               incomingHighestListVar={highestListVar}
-              
             />
           </div>
           <>
@@ -115,6 +121,7 @@ function Repeater() {
                 incomingVariables={variables}
                 incomingHandlevariableChanges={handleVariableChanges}
                 incomingHandleHighestListVar={handleHighestListVarChanges}
+                incomingHighestListVar={highestListVar}
               />
               <ShowResult
                 arrayResults={generatedSentence}
