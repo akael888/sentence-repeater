@@ -13,11 +13,14 @@ function Generator({
 
   useEffect(() => {
     setInputValue(incomingHighestListVar.list?.length || "");
+
     console.log(
       "incominghighestlistvar in gen len: " +
         incomingHighestListVar.list?.length || ""
     );
-    setGeneratedSentenceAmount(inputValue+1);
+    if (incomingHighestListVar.list.length > 0) {
+      setGeneratedSentenceAmount(incomingHighestListVar.list.length);
+    }
   }, [incomingHighestListVar.list.length]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
