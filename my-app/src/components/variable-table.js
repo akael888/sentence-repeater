@@ -8,25 +8,11 @@ function VariableTable({
   incomingVariables,
   incomingHandlevariableChanges,
   incomingHandleHighestListVar,
+  incomingHighestListVar,
 }) {
   // const initializedName = useRef(new Set());
 
   const editableRef = useRef(null);
-  let highestListVar = null;
-
-  const clearValue = () => {
-    if (editableRef.current) {
-      editableRef.current.innerText = "";
-    }
-  };
-
-  function popVariableList(event, poppedList) {
-    if (poppedList.size > 0 && event.key == "Backspace") {
-      poppedList = poppedList.pop();
-      handleVariableChanges();
-    }
-    console.log("Key Pressed: " + event.key);
-  }
 
   const [typeValidator, setTypeValidator] = useState({
     Integer: false,
@@ -44,18 +30,27 @@ function VariableTable({
   };
 
   function setMaxGeneratedSentencefromList(selectedVar) {
-    if (highestListVar !== null && highestListVar !== undefined) {
-      if (selectedVar.list.length > highestListVar.list.length) {
-        highestListVar = { ...selectedVar };
+    // console.log(
+    //   "Incoming Highest List Var:" +
+    //     incomingHighestListVar +
+    //     " with this len: " +
+    //     incomingHighestListVar.list.length
+    // );
+    // console.log(incomingHighestListVar);
+    // console.log(
+    //   "Selected List Var:" +
+    //     selectedVar +
+    //     " with this len: " +
+    //     selectedVar.list.length
+    // );
+    // console.log(selectedVar);
+
+    if (incomingHandleHighestListVar != null) {
+      if (selectedVar.list.length > incomingHighestListVar.list.length) {
+        incomingHandleHighestListVar(selectedVar);
+        console.log("Masuk Testing");
       }
-    } else {
-      highestListVar = { ...selectedVar };
     }
-    incomingHandleHighestListVar(highestListVar);
-    console.log("Highest List Var:" + highestListVar);
-    console.log(highestListVar);
-    console.log("Selected List Var:" + selectedVar);
-    console.log(selectedVar);
   }
 
   function handleVariableChanges(key, field, value) {
@@ -83,11 +78,16 @@ function VariableTable({
           selectedField === "iterate" ? "randomize" : "iterate";
         if (targetVar[inverseField] === true) {
           targetVar[inverseField] = false;
+          if (incomingHighestListVar === targetVar) {
+            incomingHandleHighestListVar({list:[]});
+          }
           tempVarMap.set(key, targetVar);
         }
       }
       if (targetVar["type"] === "List" && targetVar["iterate"] === true) {
         setMaxGeneratedSentencefromList(targetVar);
+        console.log("Target Var Type: " + targetVar["type"]);
+        console.log("Target Var iterate: " + targetVar["iterate"]);
       }
 
       // if (field === "iterate" && targetVar["randomize"] === true) {
