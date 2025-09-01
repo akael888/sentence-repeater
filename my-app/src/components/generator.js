@@ -9,17 +9,16 @@ function Generator({
 }) {
   const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(0);
 
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(0);
 
   useEffect(() => {
-    if (
-      incomingHighestListVar !== null &&
-      incomingHighestListVar !== undefined
-    ) {
-      setInputValue(incomingHighestListVar.list?.length || "");
-      setGeneratedSentenceAmount(inputValue);
-    }
-  }, [incomingHighestListVar]);
+    setInputValue(incomingHighestListVar.list?.length || "");
+    console.log(
+      "incominghighestlistvar in gen len: " +
+        incomingHighestListVar.list?.length || ""
+    );
+    setGeneratedSentenceAmount(inputValue+1);
+  }, [incomingHighestListVar.list.length]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
     setGeneratedSentenceAmount(amount);
