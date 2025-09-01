@@ -15,7 +15,6 @@
 ## Other Features
 - Dark Mode
 
-
 ## How to use
 
 ### Steps
@@ -29,3 +28,4 @@
 
 ### Variable Type
 - Currently, there are 4 types
+-- Integer
