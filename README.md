@@ -27,5 +27,8 @@
 2. Adjust the variable's name and attribute
 
 ### Variable Type
-- Currently, there are 4 types
--- Integer
+- Currently, there are 4 types:
+  - Integer
+  - String
+  - List (In Progress)
+  - and Date (In Progress)
