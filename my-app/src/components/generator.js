@@ -102,7 +102,19 @@ function Generator({
         tempText = tempText.replace("{}", String(values.value));
 
         if (values.iterate === true) {
-          values.value = parseInt(values.value) + parseInt(values.interval);
+          if (values.type === "Integer") {
+            values.value = parseInt(values.value) + parseInt(values.interval);
+          }
+          if (values.type === "Date") {
+            console.log("Value Date Value:" +values.dateValue)
+            console.log("Value in Date loop:" +values.value)
+            values.dateValue = new Date(
+              values.dateValue.setDate(
+                values.dateValue.getDate() + values.interval
+              )
+            );
+            values.value = values.dateValue.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+          }
         }
         console.log(
           "Text: " + tempText + " (Variable Index: " + currentKeyIndex + ")"
