@@ -1,5 +1,6 @@
-# react-first-app // Sentence Repeater
-> This is a repo for my first React App -- Sentence Repeater
+# Sentence Repeater
+> Tech Stack Used: React JS
+> Additional Libraries: To be added...
 
 ## Problem
 - Often, we need to write multiple sentences that have little to no variance. This takes unnecessary time. One might argue that we can just copy and paste the sentence. However, what if there's a specific rule that we applied to that sentence? This is where the tool comes in handy.
