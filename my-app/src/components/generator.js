@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./generator.module.css";
 
 function Generator({
   incomingVariables,
   incomingPreviewText,
   incomingHandleGeneratedSentenceChanges,
+  incomingHighestListVar,
 }) {
   const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(0);
+
+  const [inputValue, setInputValue] = useState(0);
+
+  useEffect(() => {
+    setInputValue(incomingHighestListVar.list?.length || "");
+
+    console.log(
+      "incominghighestlistvar in gen len: " +
+        incomingHighestListVar.list?.length || ""
+    );
+    if (incomingHighestListVar.list.length > 0) {
+      setGeneratedSentenceAmount(incomingHighestListVar.list.length);
+    }
+  }, [incomingHighestListVar.list.length]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
     setGeneratedSentenceAmount(amount);
@@ -16,6 +31,11 @@ function Generator({
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function getRandomfromList(sourceList) {
+    const randomIndex = Math.floor(Math.random() * sourceList.length);
+    return sourceList[randomIndex];
   }
 
   function generateSentence() {
@@ -44,8 +64,10 @@ function Generator({
     //Generate the Sentences and pushes them into local generated sentence array
     let currentKeyIndex = 0;
     let tempFirstValue = null;
+    let parsedText = [];
     for (let i = 0; i < generatedSentenceAmount; i++) {
       let tempText = tempPreviewText;
+
       console.log("PRE LOOP CONSOLE LOG-----");
       console.log("Text Pre Loop: " + tempText);
       console.log("TempPreviewText Pre Loop: " + tempPreviewText);
@@ -55,17 +77,30 @@ function Generator({
         const [key, values] =
           variableEntries[currentKeyIndex % variableEntries.length];
 
-        if (values.randomize === true) {
-          if (currentKeyIndex === 0) {
-            tempFirstValue = values.minValue;
+        if (values.type === "List") {
+          if (i === 0) {
+            parsedText = values.list;
+            // parsedText = parsedText.split(",");
+            console.log("Parsed Text: " + parsedText);
           }
-          console.log("minValue =" + values.minValue);
 
-          values.value = getRandomInt(values.minValue, values.maxValue);
-
-          console.log("values.value getrandomint =" + values.value);
+          console.log("Text ke-" + i + ":" + parsedText[i]);
+          values.value = parsedText[i];
         }
+
+        if (values.randomize === true) {
+          if (values.type === "Integer") {
+            console.log("minValue =" + values.minValue);
+            values.value = getRandomInt(values.minValue, values.maxValue);
+            console.log("values.value getrandomint =" + values.value);
+          }
+          if (values.type === "List") {
+            values.value = getRandomfromList(values.list);
+          }
+        }
+
         tempText = tempText.replace("{}", String(values.value));
+
         if (values.iterate === true) {
           values.value = parseInt(values.value) + parseInt(values.interval);
         }
@@ -100,14 +135,14 @@ function Generator({
         <input
           id={css["amount-field"]}
           type="number"
-          onChange={(e) => handleGeneratedSentenceAmountChanges(e.target.value)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            handleGeneratedSentenceAmountChanges(e.target.value);
+          }}
           placeholder="Amount"
-        ></input>
-        <button
-          id={css["generate-button"]}
-          onClick={generateSentence}
-          // disabled={incomingPreviewText.length > 0}
-        >
+          value={inputValue}
+        />
+        <button id={css["generate-button"]} onClick={generateSentence}>
           Generate
         </button>
       </div>

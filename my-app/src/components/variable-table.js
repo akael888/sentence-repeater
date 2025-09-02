@@ -2,9 +2,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import css from "./variable.module.css";
+import Chip from "./chip-list";
 
-function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
+function VariableTable({
+  incomingVariables,
+  incomingHandlevariableChanges,
+  incomingHandleHighestListVar,
+  incomingHighestListVar,
+}) {
   // const initializedName = useRef(new Set());
+
+  const editableRef = useRef(null);
 
   const [typeValidator, setTypeValidator] = useState({
     Integer: false,
@@ -17,11 +25,49 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
     Random: false,
   });
 
-  function handleincomingHandleVariableChanges(key, field, value) {
+  const handleChipListChanges = (textValue) => {
+    return textValue.split(",");
+  };
+
+  function setMaxGeneratedSentencefromList(selectedVar) {
+    // console.log(
+    //   "Incoming Highest List Var:" +
+    //     incomingHighestListVar +
+    //     " with this len: " +
+    //     incomingHighestListVar.list.length
+    // );
+    // console.log(incomingHighestListVar);
+    // console.log(
+    //   "Selected List Var:" +
+    //     selectedVar +
+    //     " with this len: " +
+    //     selectedVar.list.length
+    // );
+    // console.log(selectedVar);
+
+    if (incomingHandleHighestListVar != null) {
+      if (selectedVar.list.length > incomingHighestListVar.list.length) {
+        incomingHandleHighestListVar(selectedVar);
+        console.log("Masuk Testing");
+      }
+    }
+  }
+
+  function handleVariableChanges(key, field, value) {
     const tempVarMap = new Map(incomingVariables);
     const targetVar = tempVarMap.get(key);
     if (targetVar) {
       targetVar[field] = value;
+
+      if (targetVar["type"] === "List" && field === "value") {
+        if (value.includes(" ") || value.includes("/n")) {
+          targetVar.list.push(handleChipListChanges(value));
+          targetVar["value"] = "";
+          console.log("List in Target Var:" + targetVar["list"]);
+          console.log("Target Var [Value]:" + targetVar["value"]);
+        }
+      }
+
       tempVarMap.set(key, targetVar);
       if (field === "type") {
         processLocalVariableTypeChanges(key, value, targetVar, tempVarMap);
@@ -30,11 +76,21 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
         let selectedField = field;
         let inverseField =
           selectedField === "iterate" ? "randomize" : "iterate";
+        if (incomingHighestListVar === targetVar) {
+          incomingHandleHighestListVar({ list: [] });
+        }
         if (targetVar[inverseField] === true) {
           targetVar[inverseField] = false;
+
           tempVarMap.set(key, targetVar);
         }
       }
+      if (targetVar["type"] === "List" && targetVar["iterate"] === true) {
+        setMaxGeneratedSentencefromList(targetVar);
+        console.log("Target Var Type: " + targetVar["type"]);
+        console.log("Target Var iterate: " + targetVar["iterate"]);
+      }
+
       // if (field === "iterate" && targetVar["randomize"] === true) {
       //   targetVar["randomize"] = false;
       //   tempVarMap.set(key, targetVar);
@@ -105,6 +161,13 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
         break;
       case "List":
         console.log("List");
+        incomingTargetVar.iterate = true;
+        incomingTargetVar.interval = 1;
+        incomingTargetVar.randomize = false;
+        incomingTargetVar.value = "String Here";
+        incomingTargetVar.minValue = null;
+        incomingTargetVar.maxValue = null;
+        incomingTargetVar.list = [];
         // tempTypeValidator.List = true;
         break;
       default:
@@ -125,10 +188,26 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                     <th>Variable Name</th>
                     <th>Type</th>
                     <th>Start Value</th>
-                    <>{otherValidator.Random ? <th>End Value</th> : null}</>
-                    <>{typeValidator.Integer ? <th>Iterate</th> : null}</>
-                    <>{typeValidator.Integer ? <th>Inteval</th> : null}</>
-                    <>{typeValidator.Integer ? <th>Randomize</th> : null}</>
+                    <>
+                      {otherValidator.Random && typeValidator.Integer ? (
+                        <th>End Value</th>
+                      ) : null}
+                    </>
+                    <>
+                      {typeValidator.Integer || typeValidator.List ? (
+                        <th>Iterate</th>
+                      ) : null}
+                    </>
+                    <>
+                      {typeValidator.Integer || typeValidator.List ? (
+                        <th>Inteval</th>
+                      ) : null}
+                    </>
+                    <>
+                      {typeValidator.Integer || typeValidator.List ? (
+                        <th>Randomize</th>
+                      ) : null}
+                    </>
                   </tr>
                 </thead>
                 <tbody className={css["tbody-name"]}>
@@ -140,7 +219,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                             <td
                               contentEditable="true"
                               onBlur={(e) =>
-                                handleincomingHandleVariableChanges(
+                                handleVariableChanges(
                                   key,
                                   "name",
                                   e.target.innerText
@@ -162,9 +241,8 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
 
                                 <Dropdown.Menu>
                                   <Dropdown.Item
-                                    // href="#/action-1"
                                     onClick={() =>
-                                      handleincomingHandleVariableChanges(
+                                      handleVariableChanges(
                                         key,
                                         "type",
                                         "Integer"
@@ -174,9 +252,8 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     Integer
                                   </Dropdown.Item>
                                   <Dropdown.Item
-                                    // href="#/action-2"
                                     onClick={() =>
-                                      handleincomingHandleVariableChanges(
+                                      handleVariableChanges(
                                         key,
                                         "type",
                                         "String"
@@ -185,16 +262,23 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                   >
                                     String
                                   </Dropdown.Item>
+                                  <Dropdown.Item
+                                    onClick={() =>
+                                      handleVariableChanges(key, "type", "List")
+                                    }
+                                  >
+                                    List
+                                  </Dropdown.Item>
                                 </Dropdown.Menu>
                               </Dropdown>{" "}
                             </td>
                             <>
-                              {values.randomize ? (
+                              {values.randomize && values.type === "Integer" ? (
                                 <>
                                   <td
                                     contentEditable="true"
                                     onBlur={(e) =>
-                                      handleincomingHandleVariableChanges(
+                                      handleVariableChanges(
                                         key,
                                         "minValue",
                                         e.target.innerText
@@ -207,7 +291,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                   <td
                                     contentEditable="true"
                                     onBlur={(e) =>
-                                      handleincomingHandleVariableChanges(
+                                      handleVariableChanges(
                                         key,
                                         "maxValue",
                                         e.target.innerText
@@ -220,26 +304,42 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                 </>
                               ) : (
                                 <>
-                                  <td
-                                    contentEditable="true"
-                                    onBlur={(e) =>
-                                      handleincomingHandleVariableChanges(
-                                        key,
-                                        "value",
-                                        e.target.innerText
-                                      )
-                                    }
-                                    className={css["td-var-value"]}
-                                  >
-                                    {values.value}
+                                  <td>
+                                    {values.list != null &&
+                                    values.type === "List" ? (
+                                      <Chip
+                                        incomingVariableIndex={key}
+                                        incomingChipList={values.list}
+                                        incomingHandleVariableChanges={
+                                          handleVariableChanges
+                                        }
+                                      ></Chip>
+                                    ) : (
+                                      ""
+                                    )}
+
+                                    <input
+                                      ref={editableRef}
+                                      type="text"
+                                      value={values.value}
+                                      onChange={(e) =>
+                                        handleVariableChanges(
+                                          key,
+                                          "value",
+                                          e.target.value
+                                        )
+                                      }
+                                      className={css["td-var-value"]}
+                                    ></input>
                                   </td>
-                                  {otherValidator.Random && <td></td>}
+                                  {/* {otherValidator.Random && <td></td>} //apa ini? */}
                                 </>
                               )}
                             </>
 
                             <>
-                              {values.type === "Integer" ? (
+                              {values.type === "Integer" ||
+                              values.type === "List" ? (
                                 <td
                                   // contentEditable="true"
                                   className={css["td-var-iterate"]}
@@ -250,7 +350,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                         type="checkbox"
                                         checked={values.iterate}
                                         onClick={() =>
-                                          handleincomingHandleVariableChanges(
+                                          handleVariableChanges(
                                             key,
                                             "iterate",
                                             !values.iterate
@@ -260,14 +360,17 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     </label>
                                   </div>
                                 </td>
-                              ) : <td></td>}
+                              ) : (
+                                <td></td>
+                              )}
                             </>
                             <>
-                              {values.type === "Integer" ? (
+                              {values.type === "Integer" ||
+                              values.type === "List" ? (
                                 <td
                                   contentEditable="true"
                                   onBlur={(e) =>
-                                    handleincomingHandleVariableChanges(
+                                    handleVariableChanges(
                                       key,
                                       "interval",
                                       parseInt(e.target.innerText)
@@ -276,10 +379,13 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                 >
                                   {values.interval}
                                 </td>
-                              ) : <td></td>}
+                              ) : (
+                                <td></td> //apa ini??
+                              )}
                             </>
                             <>
-                              {values.type === "Integer" ? (
+                              {values.type === "Integer" ||
+                              values.type === "List" ? (
                                 <td>
                                   <div>
                                     <label>
@@ -287,7 +393,7 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                         type="checkbox"
                                         checked={values.randomize}
                                         onClick={() =>
-                                          handleincomingHandleVariableChanges(
+                                          handleVariableChanges(
                                             key,
                                             "randomize",
                                             !values.randomize
@@ -297,7 +403,9 @@ function VariableTable({ incomingVariables, incomingHandlevariableChanges }) {
                                     </label>
                                   </div>
                                 </td>
-                              ) : <td></td>}
+                              ) : (
+                                <td></td>
+                              )}
                             </>
                           </tr>
                         )
