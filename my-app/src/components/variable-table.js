@@ -12,7 +12,6 @@ function VariableTable({
 }) {
   // const initializedName = useRef(new Set());
 
-
   const editableRef = useRef(null);
 
   const [typeValidator, setTypeValidator] = useState({
@@ -300,32 +299,85 @@ function VariableTable({
                               (values.type === "Integer" ||
                                 values.type === "Date") ? (
                                 <>
-                                  <td
-                                    contentEditable="true"
-                                    onBlur={(e) =>
-                                      handleVariableChanges(
-                                        key,
-                                        "minValue",
-                                        e.target.innerText
-                                      )
-                                    }
-                                    className={css["td-var-value"]}
-                                  >
-                                    {values.minValue}
-                                  </td>
-                                  <td
-                                    contentEditable="true"
-                                    onBlur={(e) =>
-                                      handleVariableChanges(
-                                        key,
-                                        "maxValue",
-                                        e.target.innerText
-                                      )
-                                    }
-                                    className={css["td-var-value"]}
-                                  >
-                                    {values.maxValue}
-                                  </td>
+                                  {values.type === "Integer" ? (
+                                    <>
+                                      <td
+                                        contentEditable="true"
+                                        onBlur={(e) =>
+                                          handleVariableChanges(
+                                            key,
+                                            "minValue",
+                                            e.target.innerText
+                                          )
+                                        }
+                                        className={css["td-var-value"]}
+                                      >
+                                        {values.minValue}
+                                      </td>
+                                      <td
+                                        contentEditable="true"
+                                        onBlur={(e) =>
+                                          handleVariableChanges(
+                                            key,
+                                            "maxValue",
+                                            e.target.innerText
+                                          )
+                                        }
+                                        className={css["td-var-value"]}
+                                      >
+                                        {values.maxValue}
+                                      </td>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <td>
+                                        <input
+                                          type="date"
+                                          value={
+                                            values.minDateValue
+                                              ? values.minDateValue
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                              : ""
+                                          }
+                                          onChange={(e) => {
+                                            const selectedDate = e.target.value
+                                              ? new Date(e.target.value)
+                                              : null;
+                                            handleVariableChanges(
+                                              key,
+                                              "minDateValue",
+                                              selectedDate
+                                            );
+                                          }}
+                                          className={css["td-var-value"]}
+                                        />
+                                      </td>
+                                      <td>
+                                        <input
+                                          type="date"
+                                          value={
+                                            values.maxDateValue
+                                              ? values.maxDateValue
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                              : ""
+                                          }
+                                          onChange={(e) => {
+                                            const selectedDate = e.target.value
+                                              ? new Date(e.target.value)
+                                              : null;
+                                            handleVariableChanges(
+                                              key,
+                                              "maxDateValue",
+                                              selectedDate
+                                            );
+                                          }}
+                                          className={css["td-var-value"]}
+                                        />
+                                      </td>
+                                    </>
+                                  )}{" "}
                                 </>
                               ) : (
                                 <>
