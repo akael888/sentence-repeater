@@ -91,6 +91,7 @@ function Generator({
     let currentKeyIndex = 0;
     let tempFirstValue = null;
     let parsedText = [];
+    let tempDate = new Date();
     for (let i = 0; i < generatedSentenceAmount; i++) {
       let tempText = tempPreviewText;
 
@@ -102,7 +103,7 @@ function Generator({
       while (tempText.includes("{}") && variableEntries.length > 0) {
         const [key, values] =
           variableEntries[currentKeyIndex % variableEntries.length];
-          // WE NEED TO RESTRUCTURE THE WAY  WE GENERATE THE SENTENCE, IT HAS GONE TOO MESSY!
+        // WE NEED TO RESTRUCTURE THE WAY  WE GENERATE THE SENTENCE, IT HAS GONE TOO MESSY!
         if (values.type === "List") {
           if (i === 0) {
             parsedText = values.list;
@@ -150,12 +151,14 @@ function Generator({
           if (values.type === "Date") {
             console.log("Value Date Value:" + values.dateValue);
             console.log("Value in Date loop:" + values.value);
-            values.dateValue = new Date(
-              values.dateValue.setDate(
-                values.dateValue.getDate() + values.interval
-              )
-            );
-            values.value = values.dateValue.toLocaleDateString("en-US", {
+            tempDate = tempDate ? new Date(tempDate) : new Date(values.dateValue);
+            if (tempDate !== null) {
+              tempDate = new Date(
+                tempDate.setDate(tempDate.getDate() + values.interval)
+              );
+            }
+
+            values.value = tempDate.toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
