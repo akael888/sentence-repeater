@@ -138,6 +138,11 @@ function Generator({
               values.displayText = parsedText[i];
               break;
             case "Date":
+              values.displayText = tempDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              });
               tempDate = tempDate
                 ? new Date(tempDate)
                 : new Date(values.dateValue);
@@ -147,11 +152,6 @@ function Generator({
                 );
               }
 
-              values.displayText = tempDate.toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              });
               break;
             default:
               break;
@@ -192,7 +192,6 @@ function Generator({
       //Push Generated Sentence into a List of Generated Sentence
       localGeneratedSentence.push(generatedText);
     }
-
 
     // setGeneratedSentenceAmount(0);
     // console.log("Break Text: " + text);
