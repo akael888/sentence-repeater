@@ -33,6 +33,7 @@ function TextInput({
         iterate: true,
         interval: 1,
         randomize: false,
+        displayText:"Display Text"
       });
     });
 
