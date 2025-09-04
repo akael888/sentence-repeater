@@ -156,7 +156,15 @@ function VariableTable({
         // tempTypeValidator.String = true;
         break;
       case "Date":
-        console.log("Date");
+        incomingTargetVar.iterate = true;
+        incomingTargetVar.interval = 1;
+        incomingTargetVar.randomize = false;
+        incomingTargetVar.value = null;
+        incomingTargetVar.minValue = null;
+        incomingTargetVar.maxValue = null;
+        incomingTargetVar.dateValue = new Date();
+        incomingTargetVar.minDateValue = new Date();
+        incomingTargetVar.maxDateValue = new Date();
         // tempTypeValidator.Date = true;
         break;
       case "List":
@@ -189,22 +197,29 @@ function VariableTable({
                     <th>Type</th>
                     <th>Start Value</th>
                     <>
-                      {otherValidator.Random && typeValidator.Integer ? (
+                      {otherValidator.Random &&
+                      (typeValidator.Integer || typeValidator.Date) ? (
                         <th>End Value</th>
                       ) : null}
                     </>
                     <>
-                      {typeValidator.Integer || typeValidator.List ? (
+                      {typeValidator.Integer ||
+                      typeValidator.List ||
+                      typeValidator.Date ? (
                         <th>Iterate</th>
                       ) : null}
                     </>
                     <>
-                      {typeValidator.Integer || typeValidator.List ? (
+                      {typeValidator.Integer ||
+                      typeValidator.List ||
+                      typeValidator.Date ? (
                         <th>Inteval</th>
                       ) : null}
                     </>
                     <>
-                      {typeValidator.Integer || typeValidator.List ? (
+                      {typeValidator.Integer ||
+                      typeValidator.List ||
+                      typeValidator.Date ? (
                         <th>Randomize</th>
                       ) : null}
                     </>
@@ -264,6 +279,13 @@ function VariableTable({
                                   </Dropdown.Item>
                                   <Dropdown.Item
                                     onClick={() =>
+                                      handleVariableChanges(key, "type", "Date")
+                                    }
+                                  >
+                                    Date
+                                  </Dropdown.Item>
+                                  <Dropdown.Item
+                                    onClick={() =>
                                       handleVariableChanges(key, "type", "List")
                                     }
                                   >
@@ -273,34 +295,89 @@ function VariableTable({
                               </Dropdown>{" "}
                             </td>
                             <>
-                              {values.randomize && values.type === "Integer" ? (
+                              {values.randomize &&
+                              (values.type === "Integer" ||
+                                values.type === "Date") ? (
                                 <>
-                                  <td
-                                    contentEditable="true"
-                                    onBlur={(e) =>
-                                      handleVariableChanges(
-                                        key,
-                                        "minValue",
-                                        e.target.innerText
-                                      )
-                                    }
-                                    className={css["td-var-value"]}
-                                  >
-                                    {values.minValue}
-                                  </td>
-                                  <td
-                                    contentEditable="true"
-                                    onBlur={(e) =>
-                                      handleVariableChanges(
-                                        key,
-                                        "maxValue",
-                                        e.target.innerText
-                                      )
-                                    }
-                                    className={css["td-var-value"]}
-                                  >
-                                    {values.maxValue}
-                                  </td>
+                                  {values.type === "Integer" ? (
+                                    <>
+                                      <td
+                                        contentEditable="true"
+                                        onBlur={(e) =>
+                                          handleVariableChanges(
+                                            key,
+                                            "minValue",
+                                            e.target.innerText
+                                          )
+                                        }
+                                        className={css["td-var-value"]}
+                                      >
+                                        {values.minValue}
+                                      </td>
+                                      <td
+                                        contentEditable="true"
+                                        onBlur={(e) =>
+                                          handleVariableChanges(
+                                            key,
+                                            "maxValue",
+                                            e.target.innerText
+                                          )
+                                        }
+                                        className={css["td-var-value"]}
+                                      >
+                                        {values.maxValue}
+                                      </td>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <td>
+                                        <input
+                                          type="date"
+                                          value={
+                                            values.minDateValue
+                                              ? values.minDateValue
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                              : ""
+                                          }
+                                          onChange={(e) => {
+                                            const selectedDate = e.target.value
+                                              ? new Date(e.target.value)
+                                              : null;
+                                            handleVariableChanges(
+                                              key,
+                                              "minDateValue",
+                                              selectedDate
+                                            );
+                                          }}
+                                          className={css["td-var-value"]}
+                                        />
+                                      </td>
+                                      <td>
+                                        <input
+                                          type="date"
+                                          value={
+                                            values.maxDateValue
+                                              ? values.maxDateValue
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                              : ""
+                                          }
+                                          onChange={(e) => {
+                                            const selectedDate = e.target.value
+                                              ? new Date(e.target.value)
+                                              : null;
+                                            handleVariableChanges(
+                                              key,
+                                              "maxDateValue",
+                                              selectedDate
+                                            );
+                                          }}
+                                          className={css["td-var-value"]}
+                                        />
+                                      </td>
+                                    </>
+                                  )}{" "}
                                 </>
                               ) : (
                                 <>
@@ -318,19 +395,43 @@ function VariableTable({
                                       ""
                                     )}
 
-                                    <input
-                                      ref={editableRef}
-                                      type="text"
-                                      value={values.value}
-                                      onChange={(e) =>
-                                        handleVariableChanges(
-                                          key,
-                                          "value",
-                                          e.target.value
-                                        )
-                                      }
-                                      className={css["td-var-value"]}
-                                    ></input>
+                                    {values.type !== "Date" ? (
+                                      <input
+                                        ref={editableRef}
+                                        type="text"
+                                        value={values.value}
+                                        onChange={(e) =>
+                                          handleVariableChanges(
+                                            key,
+                                            "value",
+                                            e.target.value
+                                          )
+                                        }
+                                        className={css["td-var-value"]}
+                                      ></input>
+                                    ) : (
+                                      <input
+                                        type="date"
+                                        value={
+                                          values.dateValue
+                                            ? values.dateValue
+                                                .toISOString()
+                                                .split("T")[0]
+                                            : ""
+                                        }
+                                        onChange={(e) => {
+                                          const selectedDate = e.target.value
+                                            ? new Date(e.target.value)
+                                            : null;
+                                          handleVariableChanges(
+                                            key,
+                                            "dateValue",
+                                            selectedDate
+                                          );
+                                        }}
+                                        className={css["td-var-value"]}
+                                      />
+                                    )}
                                   </td>
                                   {/* {otherValidator.Random && <td></td>} //apa ini? */}
                                 </>
@@ -339,7 +440,8 @@ function VariableTable({
 
                             <>
                               {values.type === "Integer" ||
-                              values.type === "List" ? (
+                              values.type === "List" ||
+                              values.type === "Date" ? (
                                 <td
                                   // contentEditable="true"
                                   className={css["td-var-iterate"]}
@@ -366,7 +468,8 @@ function VariableTable({
                             </>
                             <>
                               {values.type === "Integer" ||
-                              values.type === "List" ? (
+                              values.type === "List" ||
+                              values.type === "Date" ? (
                                 <td
                                   contentEditable="true"
                                   onBlur={(e) =>
@@ -385,7 +488,8 @@ function VariableTable({
                             </>
                             <>
                               {values.type === "Integer" ||
-                              values.type === "List" ? (
+                              values.type === "List" ||
+                              values.type === "Date" ? (
                                 <td>
                                   <div>
                                     <label>

@@ -38,6 +38,32 @@ function Generator({
     return sourceList[randomIndex];
   }
 
+  function getRandomfromDate(minDate, maxDate) {
+    const minDateTimeStamp = minDate.getTime();
+    const maxDateTimeStamp = maxDate.getTime();
+
+    const randomTimeStamp =
+      minDateTimeStamp +
+      Math.random() * (maxDateTimeStamp - minDateTimeStamp + 1);
+    const randomDate = new Date(randomTimeStamp);
+    console.log("Min Time Stamp : " + minDateTimeStamp);
+    console.log("Min Time Stamp Date : " + minDate);
+    console.log("Max Time Stamp : " + maxDateTimeStamp);
+    console.log("Max Time Stamp Date : " + maxDate);
+    console.log("Random Time Stamp : " + randomTimeStamp);
+
+    // const formatYear = randomDate.getFullYear();
+    // const formatMonth = randomDate.getMonth()+1;
+    // const formatDate =randomDate.getDate();
+    // const formattedDate = `-${formatMonth} ${formatDate},${formatYear}`
+
+    const formattedDate = randomDate.toLocaleString("en-US", {
+      dateStyle: "long",
+    });
+
+    return formattedDate;
+  }
+
   function generateSentence() {
     let tempPreviewText = incomingPreviewText;
     let localGeneratedSentence = [];
@@ -65,6 +91,7 @@ function Generator({
     let currentKeyIndex = 0;
     let tempFirstValue = null;
     let parsedText = [];
+    let tempDate = new Date();
     for (let i = 0; i < generatedSentenceAmount; i++) {
       let tempText = tempPreviewText;
 
@@ -76,7 +103,7 @@ function Generator({
       while (tempText.includes("{}") && variableEntries.length > 0) {
         const [key, values] =
           variableEntries[currentKeyIndex % variableEntries.length];
-
+        // WE NEED TO RESTRUCTURE THE WAY  WE GENERATE THE SENTENCE, IT HAS GONE TOO MESSY!
         if (values.type === "List") {
           if (i === 0) {
             parsedText = values.list;
@@ -97,12 +124,46 @@ function Generator({
           if (values.type === "List") {
             values.value = getRandomfromList(values.list);
           }
+          if (values.type === "Date") {
+            values.value = getRandomfromDate(
+              values.minDateValue,
+              values.maxDateValue
+            );
+          }
+        }
+
+        if (
+          values.type === "Date" &&
+          values.randomize === false &&
+          values.iterate === false
+        ) {
+          values.value = values.dateValue.toLocaleString("en-US", {
+            dateStyle: "long",
+          });
         }
 
         tempText = tempText.replace("{}", String(values.value));
 
         if (values.iterate === true) {
-          values.value = parseInt(values.value) + parseInt(values.interval);
+          if (values.type === "Integer") {
+            values.value = parseInt(values.value) + parseInt(values.interval);
+          }
+          if (values.type === "Date") {
+            console.log("Value Date Value:" + values.dateValue);
+            console.log("Value in Date loop:" + values.value);
+            tempDate = tempDate ? new Date(tempDate) : new Date(values.dateValue);
+            if (tempDate !== null) {
+              tempDate = new Date(
+                tempDate.setDate(tempDate.getDate() + values.interval)
+              );
+            }
+
+            values.value = tempDate.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          }
         }
         console.log(
           "Text: " + tempText + " (Variable Index: " + currentKeyIndex + ")"
