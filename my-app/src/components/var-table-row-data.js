@@ -8,9 +8,15 @@ function VarTableRowData({
   incomingHandleVariableChanges,
 }) {
   const editableRef = useRef();
+  let selectedKey = null;
 
   const TableRowFormatRef = {
-    VarName: { type: "text", VarRef: "name" },
+    VarName: {
+      type: () => {
+        return "text";
+      },
+      VarRef: "name",
+    },
     VarStartValue: {
       type: () => {
         switch (incomingValues.type) {
@@ -39,6 +45,7 @@ function VarTableRowData({
       );
       if (tableDataType == key) {
         console.log(`TableRowFormatRefKeyIf: `, TableRowFormatRef[key]);
+        selectedKey = key;
         return TableRowFormatRef[key];
       }
     }
@@ -47,24 +54,37 @@ function VarTableRowData({
   function getTableRowDataAttribute(attributeType, eventCall) {
     let valueType = incomingValues.type;
     let result = null;
+
     switch (attributeType) {
       case "type":
         result = selectedTableData();
+        console.log("type:", result?.type(), "selectedkey", selectedKey);
         return result?.type();
       case "value":
-        switch (valueType) {
-          case "Integer":
-            return incomingValues[incomingchangedValues];
-          case "Date":
-            return incomingValues[incomingchangedValues]
-              ? incomingValues[incomingchangedValues].toISOString().split("T")[0]
-              : "";
-          case "List":
-            return incomingValues.value;
-          default:
-            break;
+        if (selectedKey == "VarName") {
+          console.log(
+            "varname incoming changed values :",
+            incomingValues[incomingchangedValues]
+          );
+          return incomingValues[incomingchangedValues];
+        } else {
+          switch (valueType) {
+            case "Integer":
+              return incomingValues[incomingchangedValues];
+            case "Date":
+              return incomingValues[incomingchangedValues]
+                ? incomingValues[incomingchangedValues]
+                    .toISOString()
+                    .split("T")[0]
+                : "";
+            case "List":
+              return incomingValues.value;
+            case "String":
+              return incomingValues.value;
+            default:
+              return incomingValues.incomingchangedValues;
+          }
         }
-        break;
       case "onChange":
         switch (valueType) {
           case "Integer":
@@ -104,7 +124,14 @@ function VarTableRowData({
         }
         break;
       default:
-        return null;
+        result = () => {
+          return incomingHandleVariableChanges(
+            incomingKey,
+            incomingchangedValues,
+            eventCall.target.value
+          );
+        };
+        return result();
     }
   }
   return (
