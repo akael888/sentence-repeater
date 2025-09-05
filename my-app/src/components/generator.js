@@ -138,14 +138,14 @@ function Generator({
               values.displayText = parsedText[i];
               break;
             case "Date":
+              if (i === 0) {
+                tempDate = new Date(values.dateValue);
+              }
               values.displayText = tempDate.toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
               });
-              tempDate = tempDate
-                ? new Date(tempDate)
-                : new Date(values.dateValue);
               if (tempDate !== null) {
                 tempDate = new Date(
                   tempDate.setDate(tempDate.getDate() + values.interval)
