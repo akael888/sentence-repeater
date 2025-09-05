@@ -148,7 +148,7 @@ function Generator({
               });
               if (tempDate !== null) {
                 tempDate = new Date(
-                  tempDate.setDate(tempDate.getDate() + values.interval)
+                  tempDate.setDate(tempDate.getDate() + parseInt(values.interval))
                 );
               }
 
