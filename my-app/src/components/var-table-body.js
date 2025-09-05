@@ -69,7 +69,7 @@ function VarTableBody({
                 <>
                   {values.type === "Integer" ? (
                     <>
-                      <td
+                      {/* <td
                         contentEditable="true"
                         onBlur={(e) =>
                           incomingHandleVariableChanges(
@@ -81,8 +81,17 @@ function VarTableBody({
                         className={css["td-var-value"]}
                       >
                         {values.minValue}
-                      </td>
-                      <td
+                      </td> */}
+                      <td><VarTableRowData
+                        incomingKey={key}
+                        incomingValues={values}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"minValue"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData></td>
+                      {/* <td
                         contentEditable="true"
                         onBlur={(e) =>
                           incomingHandleVariableChanges(
@@ -94,7 +103,16 @@ function VarTableBody({
                         className={css["td-var-value"]}
                       >
                         {values.maxValue}
-                      </td>
+                      </td> */}
+                      <td><VarTableRowData
+                        incomingKey={key}
+                        incomingValues={values}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"maxValue"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData></td>
                     </>
                   ) : (
                     <>
