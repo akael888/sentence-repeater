@@ -302,18 +302,31 @@ function VarTableBody({
               {values.type === "Integer" ||
               values.type === "List" ||
               values.type === "Date" ? (
-                <td
-                  contentEditable="true"
-                  onBlur={(e) =>
-                    incomingHandleVariableChanges(
-                      key,
-                      "interval",
-                      parseInt(e.target.innerText)
-                    )
-                  }
-                >
-                  {values.interval}
-                </td>
+                <>
+                  {/* <td
+                    contentEditable="true"
+                    onBlur={(e) =>
+                      incomingHandleVariableChanges(
+                        key,
+                        "interval",
+                        parseInt(e.target.innerText)
+                      )
+                    }
+                  >
+                    {values.interval}
+                  </td> */}
+                  <td>
+                    <VarTableRowData
+                      incomingKey={key}
+                      incomingValues={values}
+                      tableDataType={"VarInterval"}
+                      incomingchangedValues={"interval"}
+                      incomingHandleVariableChanges={
+                        incomingHandleVariableChanges
+                      }
+                    ></VarTableRowData>
+                  </td>
+                </>
               ) : (
                 <td></td> //apa ini??
               )}
