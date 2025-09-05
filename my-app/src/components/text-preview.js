@@ -1,4 +1,4 @@
-import css from './text-preview.module.css';
+import css from "./text-preview.module.css";
 
 function Preview({ incomingPreviewText, incomingVariables }) {
   function generatePreviewandVariables() {
@@ -7,18 +7,27 @@ function Preview({ incomingPreviewText, incomingVariables }) {
       const newincomingVariables = new Map();
       let currentKeyIndex = 0;
       for (const [key, value] of incomingVariables.entries()) {
-        newincomingVariables.set(key, { ...value }); 
+        newincomingVariables.set(key, { ...value });
       }
       const variableEntries = Array.from(incomingVariables.entries());
 
       while (text.includes("{}") && variableEntries.length > 0) {
         const [key, value] =
           variableEntries[currentKeyIndex % variableEntries.length];
-        text = text.replace("{}", "{" + String(value.name) + "}");
+
+        if (value.name !== "") {
+          text = text.replace("{}", "{" + String(value.name) + "}");
+        } else {
+          text = text.replace("{}", "{" + "Variable " + String(key) + "}");
+        }
 
         //DEBUG LOG--------------------------
         console.log(
-          "Text inside generatedPreview() : " + text + " (on this Variable Index: " + currentKeyIndex + ")"
+          "Text inside generatedPreview() : " +
+            text +
+            " (on this Variable Index: " +
+            currentKeyIndex +
+            ")"
         );
         //-------------------------------------
 
@@ -36,7 +45,9 @@ function Preview({ incomingPreviewText, incomingVariables }) {
   return (
     <>
       <div className={css["preview-container"]}>
-        <h1>{incomingPreviewText ? generatePreviewandVariables() : "Preview"}</h1>
+        <h1>
+          {incomingPreviewText ? generatePreviewandVariables() : "Preview"}
+        </h1>
       </div>
     </>
   );
