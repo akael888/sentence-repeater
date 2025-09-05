@@ -18,6 +18,8 @@ function VarTableRowData({
             return "number";
           case "Date":
             return "date";
+          case "List":
+            return "text";
           default:
             return "text";
         }
@@ -57,6 +59,8 @@ function VarTableRowData({
             return incomingValues.dateValue
               ? incomingValues.dateValue.toISOString().split("T")[0]
               : "";
+          case "List":
+            return incomingValues.value;
           default:
             break;
         }
@@ -82,6 +86,16 @@ function VarTableRowData({
                 incomingKey,
                 incomingchangedValues,
                 selectedDate
+              );
+            };
+
+            return result();
+          case "List":
+            result = () => {
+              return incomingHandleVariableChanges(
+                incomingKey,
+                incomingchangedValues,
+                eventCall.target.value
               );
             };
             return result();
