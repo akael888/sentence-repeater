@@ -14,7 +14,7 @@ function VarTableBody({
       <tbody className={css["tbody-name"]}>
         {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
           <tr key={key}>
-            <td
+            {/* <td
               contentEditable="true"
               onBlur={(e) =>
                 incomingHandleVariableChanges(key, "name", e.target.innerText)
@@ -22,6 +22,15 @@ function VarTableBody({
               className={css["td-var-name"]}
             >
               {values.name}
+            </td> */}
+            <td>
+              <VarTableRowData
+                incomingKey={key}
+                incomingValues={values}
+                tableDataType={"VarName"}
+                incomingchangedValues={"name"}
+                incomingHandleVariableChanges={incomingHandleVariableChanges}
+              ></VarTableRowData>
             </td>
 
             <td className={css["td-var-type"]}>
@@ -82,15 +91,17 @@ function VarTableBody({
                       >
                         {values.minValue}
                       </td> */}
-                      <td><VarTableRowData
-                        incomingKey={key}
-                        incomingValues={values}
-                        tableDataType={"VarStartValue"}
-                        incomingchangedValues={"minValue"}
-                        incomingHandleVariableChanges={
-                          incomingHandleVariableChanges
-                        }
-                      ></VarTableRowData></td>
+                      <td>
+                        <VarTableRowData
+                          incomingKey={key}
+                          incomingValues={values}
+                          tableDataType={"VarStartValue"}
+                          incomingchangedValues={"minValue"}
+                          incomingHandleVariableChanges={
+                            incomingHandleVariableChanges
+                          }
+                        ></VarTableRowData>
+                      </td>
                       {/* <td
                         contentEditable="true"
                         onBlur={(e) =>
@@ -104,15 +115,17 @@ function VarTableBody({
                       >
                         {values.maxValue}
                       </td> */}
-                      <td><VarTableRowData
-                        incomingKey={key}
-                        incomingValues={values}
-                        tableDataType={"VarStartValue"}
-                        incomingchangedValues={"maxValue"}
-                        incomingHandleVariableChanges={
-                          incomingHandleVariableChanges
-                        }
-                      ></VarTableRowData></td>
+                      <td>
+                        <VarTableRowData
+                          incomingKey={key}
+                          incomingValues={values}
+                          tableDataType={"VarStartValue"}
+                          incomingchangedValues={"maxValue"}
+                          incomingHandleVariableChanges={
+                            incomingHandleVariableChanges
+                          }
+                        ></VarTableRowData>
+                      </td>
                     </>
                   ) : (
                     <>
@@ -137,14 +150,14 @@ function VarTableBody({
                           className={css["td-var-value"]}
                         /> */}
                         <VarTableRowData
-                        incomingKey={key}
-                        incomingValues={values}
-                        tableDataType={"VarStartValue"}
-                        incomingchangedValues={"minDateValue"}
-                        incomingHandleVariableChanges={
-                          incomingHandleVariableChanges
-                        }
-                      ></VarTableRowData>
+                          incomingKey={key}
+                          incomingValues={values}
+                          tableDataType={"VarStartValue"}
+                          incomingchangedValues={"minDateValue"}
+                          incomingHandleVariableChanges={
+                            incomingHandleVariableChanges
+                          }
+                        ></VarTableRowData>
                       </td>
                       <td>
                         {/* <input
@@ -167,17 +180,15 @@ function VarTableBody({
                           className={css["td-var-value"]}
                         /> */}
                         <VarTableRowData
-                        incomingKey={key}
-                        incomingValues={values}
-                        tableDataType={"VarStartValue"}
-                        incomingchangedValues={"maxDateValue"}
-                        incomingHandleVariableChanges={
-                          incomingHandleVariableChanges
-                        }
-                      ></VarTableRowData>
+                          incomingKey={key}
+                          incomingValues={values}
+                          tableDataType={"VarStartValue"}
+                          incomingchangedValues={"maxDateValue"}
+                          incomingHandleVariableChanges={
+                            incomingHandleVariableChanges
+                          }
+                        ></VarTableRowData>
                       </td>
-                      
-                      
                     </>
                   )}
                 </>
