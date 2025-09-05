@@ -8,7 +8,7 @@ function VarTableBody({
   incomingVariablesBody,
   incomingHandleVariableChanges,
 }) {
-  const editableRef = useRef(null);
+  //   const editableRef = useRef(null);
   return (
     <>
       <tbody className={css["tbody-name"]}>
@@ -99,7 +99,7 @@ function VarTableBody({
                   ) : (
                     <>
                       <td>
-                        <input
+                        {/* <input
                           type="date"
                           value={
                             values.minDateValue
@@ -117,10 +117,19 @@ function VarTableBody({
                             );
                           }}
                           className={css["td-var-value"]}
-                        />
+                        /> */}
+                        <VarTableRowData
+                        incomingKey={key}
+                        incomingValues={values}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"minDateValue"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData>
                       </td>
                       <td>
-                        <input
+                        {/* <input
                           type="date"
                           value={
                             values.maxDateValue
@@ -138,10 +147,21 @@ function VarTableBody({
                             );
                           }}
                           className={css["td-var-value"]}
-                        />
+                        /> */}
+                        <VarTableRowData
+                        incomingKey={key}
+                        incomingValues={values}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"maxDateValue"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData>
                       </td>
+                      
+                      
                     </>
-                  )}{" "}
+                  )}
                 </>
               ) : (
                 <>
