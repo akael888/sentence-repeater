@@ -56,8 +56,8 @@ function VarTableRowData({
           case "Integer":
             return incomingValues.value;
           case "Date":
-            return incomingValues.dateValue
-              ? incomingValues.dateValue.toISOString().split("T")[0]
+            return incomingValues[incomingchangedValues]
+              ? incomingValues[incomingchangedValues].toISOString().split("T")[0]
               : "";
           case "List":
             return incomingValues.value;
