@@ -33,6 +33,7 @@ function TextInput({
         iterate: true,
         interval: 1,
         randomize: false,
+        displayText:"Display Text" //now that i think of it, should this be put inside a temp variable?
       });
     });
 

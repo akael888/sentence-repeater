@@ -93,93 +93,111 @@ function Generator({
     let parsedText = [];
     let tempDate = new Date();
     for (let i = 0; i < generatedSentenceAmount; i++) {
-      let tempText = tempPreviewText;
-
-      console.log("PRE LOOP CONSOLE LOG-----");
-      console.log("Text Pre Loop: " + tempText);
-      console.log("TempPreviewText Pre Loop: " + tempPreviewText);
+      let generatedText = tempPreviewText;
       const variableEntries = Array.from(localVariables.entries());
 
-      while (tempText.includes("{}") && variableEntries.length > 0) {
+      while (generatedText.includes("{}") && variableEntries.length > 0) {
         const [key, values] =
           variableEntries[currentKeyIndex % variableEntries.length];
-        // WE NEED TO RESTRUCTURE THE WAY  WE GENERATE THE SENTENCE, IT HAS GONE TOO MESSY!
-        if (values.type === "List") {
-          if (i === 0) {
-            parsedText = values.list;
-            // parsedText = parsedText.split(",");
-            console.log("Parsed Text: " + parsedText);
-          }
 
-          console.log("Text ke-" + i + ":" + parsedText[i]);
-          values.value = parsedText[i];
-        }
-
-        if (values.randomize === true) {
-          if (values.type === "Integer") {
-            console.log("minValue =" + values.minValue);
-            values.value = getRandomInt(values.minValue, values.maxValue);
-            console.log("values.value getrandomint =" + values.value);
-          }
-          if (values.type === "List") {
-            values.value = getRandomfromList(values.list);
-          }
-          if (values.type === "Date") {
-            values.value = getRandomfromDate(
-              values.minDateValue,
-              values.maxDateValue
-            );
-          }
-        }
-
-        if (
-          values.type === "Date" &&
-          values.randomize === false &&
-          values.iterate === false
-        ) {
-          values.value = values.dateValue.toLocaleString("en-US", {
-            dateStyle: "long",
-          });
-        }
-
-        tempText = tempText.replace("{}", String(values.value));
-
-        if (values.iterate === true) {
-          if (values.type === "Integer") {
-            values.value = parseInt(values.value) + parseInt(values.interval);
-          }
-          if (values.type === "Date") {
-            console.log("Value Date Value:" + values.dateValue);
-            console.log("Value in Date loop:" + values.value);
-            tempDate = tempDate ? new Date(tempDate) : new Date(values.dateValue);
-            if (tempDate !== null) {
-              tempDate = new Date(
-                tempDate.setDate(tempDate.getDate() + values.interval)
+        //If Randomize is True -------------------------------
+        if (values.randomize) {
+          switch (values.type) {
+            case "Integer":
+              values.displayText = getRandomInt(
+                values.minValue,
+                values.maxValue
               );
-            }
+              break;
 
-            values.value = tempDate.toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            });
+            case "List":
+              values.displayText = getRandomfromList(values.list);
+              break;
+            case "Date":
+              values.displayText = getRandomfromDate(
+                values.minDateValue,
+                values.maxDateValue
+              );
+              break;
+            default:
+              break;
           }
         }
-        console.log(
-          "Text: " + tempText + " (Variable Index: " + currentKeyIndex + ")"
-        );
-        console.log("Value Iterate? :" + values.iterate);
 
+        //If Iterate is True ----------------------------------
+        else if (values.iterate) {
+          switch (values.type) {
+            case "Integer":
+              values.displayText = parseInt(values.value);
+              values.value = parseInt(values.value) + parseInt(values.interval);
+              break;
+            case "List":
+              if (i === 0) {
+                parsedText = values.list;
+              }
+              values.displayText = parsedText[i];
+              break;
+            case "Date":
+              values.displayText = tempDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              });
+              tempDate = tempDate
+                ? new Date(tempDate)
+                : new Date(values.dateValue);
+              if (tempDate !== null) {
+                tempDate = new Date(
+                  tempDate.setDate(tempDate.getDate() + values.interval)
+                );
+              }
+
+              break;
+            default:
+              break;
+          }
+        }
+
+        //If Randomize and Iterate are false ----------------------------
+        else {
+          switch (values.type) {
+            case "Integer":
+              values.displayText = values.value;
+              break;
+            case "List":
+              values.displayText = values.list;
+              break;
+            case "Date":
+              values.displayText = values.dateValue.toLocaleString("en-US", {
+                dateStyle: "long",
+              });
+              break;
+            case "String":
+              values.displayText = values.value;
+              break;
+            default:
+              break;
+          }
+        }
+
+        //Replace Each Variable Marker with Display Text Value
+        generatedText = generatedText.replace("{}", String(values.displayText));
+
+        //Increase the Index of Variable
         currentKeyIndex++;
       }
 
-      console.log("New Text: " + tempText);
-      console.log("New tempPreviewText: " + tempPreviewText);
-      localGeneratedSentence.push(tempText);
+      console.log(`Generated Text: ${generatedText} with this order [${i}]`);
+
+      //Push Generated Sentence into a List of Generated Sentence
+      localGeneratedSentence.push(generatedText);
     }
+
     // setGeneratedSentenceAmount(0);
     // console.log("Break Text: " + text);
     //Passing the local generated sentence into the parent compoonents
+
+    //Push the List into the Parent Component
     incomingHandleGeneratedSentenceChanges(localGeneratedSentence);
     console.log("GenerateSentence END OF LOG---------");
     return localGeneratedSentence;
