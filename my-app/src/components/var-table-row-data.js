@@ -15,7 +15,6 @@ function VarTableRowData({
       type: () => {
         return "text";
       },
-      VarRef: "name",
     },
     VarStartValue: {
       type: () => {
@@ -30,7 +29,16 @@ function VarTableRowData({
             return "text";
         }
       },
-      VarRef: "value",
+    },
+    VarInterval: {
+      type: () => {
+        return "number";
+      },
+    },
+    VarBoolean: {
+      type: () => {
+        return "toggle";
+      },
     },
   };
 
@@ -67,6 +75,8 @@ function VarTableRowData({
             incomingValues[incomingchangedValues]
           );
           return incomingValues[incomingchangedValues];
+        } else if (selectedKey == "VarInterval") {
+          return incomingValues[incomingchangedValues];
         } else {
           switch (valueType) {
             case "Integer":
@@ -86,41 +96,70 @@ function VarTableRowData({
           }
         }
       case "onChange":
-        switch (valueType) {
-          case "Integer":
-            result = () => {
-              return incomingHandleVariableChanges(
-                incomingKey,
-                incomingchangedValues,
-                eventCall.target.value
-              );
-            };
-            return result();
-          case "Date":
-            result = () => {
-              const selectedDate = eventCall.target.value
-                ? new Date(eventCall.target.value)
-                : null;
+        if (selectedKey == "VarName") {
+          result = () =>
+            incomingHandleVariableChanges(
+              incomingKey,
+              incomingchangedValues,
+              eventCall.target.value
+            );
+          return result();
+        } else if (selectedKey == "VarInterval") {
+          result = () =>
+            incomingHandleVariableChanges(
+              incomingKey,
+              incomingchangedValues,
+              eventCall.target.value
+            );
 
-              return incomingHandleVariableChanges(
-                incomingKey,
-                incomingchangedValues,
-                selectedDate
-              );
-            };
+            console.log("EventCall Target Value:", eventCall.target.value)
+          return result();
+        } else {
+          switch (valueType) {
+            case "Integer":
+              result = () => {
+                return incomingHandleVariableChanges(
+                  incomingKey,
+                  incomingchangedValues,
+                  eventCall.target.value
+                );
+              };
+              return result();
+            case "Date":
+              result = () => {
+                const selectedDate = eventCall.target.value
+                  ? new Date(eventCall.target.value)
+                  : null;
 
-            return result();
-          case "List":
-            result = () => {
-              return incomingHandleVariableChanges(
-                incomingKey,
-                incomingchangedValues,
-                eventCall.target.value
-              );
-            };
-            return result();
-          default:
-            break;
+                return incomingHandleVariableChanges(
+                  incomingKey,
+                  incomingchangedValues,
+                  selectedDate
+                );
+              };
+
+              return result();
+            case "List":
+              result = () => {
+                return incomingHandleVariableChanges(
+                  incomingKey,
+                  incomingchangedValues,
+                  eventCall.target.value
+                );
+              };
+              return result();
+            case "String":
+              result = () => {
+                return incomingHandleVariableChanges(
+                  incomingKey,
+                  incomingchangedValues,
+                  eventCall.target.value
+                );
+              };
+              return result();
+            default:
+              break;
+          }
         }
         break;
       default:
