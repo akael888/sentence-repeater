@@ -7,6 +7,7 @@ import VarTableRowData from "./var-table-row-data";
 function VarTableBody({
   incomingVariablesBody,
   incomingHandleVariableChanges,
+  incomingOtherValidator
 }) {
   //   const editableRef = useRef(null);
   return (
@@ -161,8 +162,8 @@ function VarTableBody({
                       </>
                     )}
                   </td>
-                  {/* {otherValidator.Random && <td></td>} //apa ini? */}
-                </>
+                  {incomingOtherValidator.Random && <td></td>} 
+                </> //Untuk Munculin td tambahan kalau ada variable yang randomize
               )}
             </>
 
@@ -170,9 +171,7 @@ function VarTableBody({
               {values.type === "Integer" ||
               values.type === "List" ||
               values.type === "Date" ? (
-                <td
-                  className={css["td-var-iterate"]}
-                >
+                <td className={css["td-var-iterate"]}>
                   <VarTableRowData
                     incomingKey={key}
                     incomingValues={values}
