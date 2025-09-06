@@ -15,6 +15,9 @@ function VarTableRowData({
       type: () => {
         return "text";
       },
+      placeholder: () => {
+        return "Input Var Name for Var " + incomingKey;
+      },
     },
     VarStartValue: {
       type: () => {
@@ -29,10 +32,25 @@ function VarTableRowData({
             return "text";
         }
       },
+      placeholder: () => {
+        switch (incomingValues.type) {
+          case "Integer":
+            return "Enter Number Here..";
+          case "String":
+            return "Enter String Here..";
+          case "List":
+            return "Enter a Text and then press Space";
+          default:
+            return "text";
+        }
+      },
     },
     VarInterval: {
       type: () => {
         return "number";
+      },
+      placeholder: () => {
+        return "Enter Interval Number Here..";
       },
     },
     VarBoolean: {
@@ -176,6 +194,9 @@ function VarTableRowData({
           console.log("EventCall Target Value:", eventCall.target.value);
           return result();
         } else return null;
+      case "placeholder":
+        result = selectedTableData();
+        return result?.placeholder();
       default:
         result = () => {
           return incomingHandleVariableChanges(
@@ -200,6 +221,7 @@ function VarTableRowData({
           : {
               value: getTableRowDataAttribute("value", null),
               onChange: (e) => getTableRowDataAttribute("onChange", e),
+              placeholder: getTableRowDataAttribute("placeholder", null),
             })}
         // value={getTableRowDataAttribute("value", null)}
         // {...(tableDataType == "VarBoolean"
