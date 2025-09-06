@@ -278,21 +278,28 @@ function VarTableBody({
                   // contentEditable="true"
                   className={css["td-var-iterate"]}
                 >
-                  <div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={values.iterate}
-                        onClick={() =>
-                          incomingHandleVariableChanges(
-                            key,
-                            "iterate",
-                            !values.iterate
-                          )
-                        }
-                      />
-                    </label>
-                  </div>
+                  {/* <div>
+                    <input
+                      type="checkbox"
+                      checked={values.iterate}
+                      onClick={() =>
+                        incomingHandleVariableChanges(
+                          key,
+                          "iterate",
+                          !values.iterate
+                        )
+                      }
+                    />
+                  </div> */}
+                  <VarTableRowData
+                    incomingKey={key}
+                    incomingValues={values}
+                    tableDataType={"VarBoolean"}
+                    incomingchangedValues={"iterate"}
+                    incomingHandleVariableChanges={
+                      incomingHandleVariableChanges
+                    }
+                  ></VarTableRowData>
                 </td>
               ) : (
                 <td></td>
@@ -336,7 +343,7 @@ function VarTableBody({
               values.type === "List" ||
               values.type === "Date" ? (
                 <td>
-                  <div>
+                  {/* <div>
                     <label>
                       <input
                         type="checkbox"
@@ -350,7 +357,16 @@ function VarTableBody({
                         }
                       />
                     </label>
-                  </div>
+                  </div> */}
+                  <VarTableRowData
+                    incomingKey={key}
+                    incomingValues={values}
+                    tableDataType={"VarBoolean"}
+                    incomingchangedValues={"randomize"}
+                    incomingHandleVariableChanges={
+                      incomingHandleVariableChanges
+                    }
+                  ></VarTableRowData>
                 </td>
               ) : (
                 <td></td>
