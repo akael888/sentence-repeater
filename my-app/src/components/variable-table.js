@@ -195,6 +195,7 @@ function VariableTable({
             <VarTableBody
               incomingVariablesBody={incomingVariables}
               incomingHandleVariableChanges={handleVariableChanges}
+              incomingOtherValidator={otherValidator}
             ></VarTableBody>
           </table>
         </div>
