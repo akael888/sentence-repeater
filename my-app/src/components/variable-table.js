@@ -150,7 +150,7 @@ function VariableTable({
         incomingTargetVar.iterate = false;
         incomingTargetVar.interval = null;
         incomingTargetVar.randomize = null;
-        incomingTargetVar.value = "String Here";
+        incomingTargetVar.value = "This is a Test String";
         incomingTargetVar.minValue = null;
         incomingTargetVar.maxValue = null;
         // tempTypeValidator.String = true;
@@ -172,7 +172,7 @@ function VariableTable({
         incomingTargetVar.iterate = true;
         incomingTargetVar.interval = 1;
         incomingTargetVar.randomize = false;
-        incomingTargetVar.value = "String Here";
+        incomingTargetVar.value = "";
         incomingTargetVar.minValue = null;
         incomingTargetVar.maxValue = null;
         incomingTargetVar.list = [];
