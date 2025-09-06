@@ -37,7 +37,7 @@ function VarTableRowData({
     },
     VarBoolean: {
       type: () => {
-        return "toggle";
+        return "checkbox";
       },
     },
   };
@@ -77,6 +77,8 @@ function VarTableRowData({
           return incomingValues[incomingchangedValues];
         } else if (selectedKey == "VarInterval") {
           return incomingValues[incomingchangedValues];
+        } else if (selectedKey == "VarBoolean") {
+          return incomingValues[incomingchangedValues];
         } else {
           switch (valueType) {
             case "Integer":
@@ -112,7 +114,7 @@ function VarTableRowData({
               eventCall.target.value
             );
 
-            console.log("EventCall Target Value:", eventCall.target.value)
+          console.log("EventCall Target Value:", eventCall.target.value);
           return result();
         } else {
           switch (valueType) {
@@ -162,6 +164,18 @@ function VarTableRowData({
           }
         }
         break;
+      case "onClick":
+        if (selectedKey == "VarBoolean") {
+          result = () =>
+            incomingHandleVariableChanges(
+              incomingKey,
+              incomingchangedValues,
+              !incomingValues[incomingchangedValues]
+            );
+
+          console.log("EventCall Target Value:", eventCall.target.value);
+          return result();
+        } else return null;
       default:
         result = () => {
           return incomingHandleVariableChanges(
@@ -178,8 +192,20 @@ function VarTableRowData({
       <input
         ref={editableRef}
         type={getTableRowDataAttribute("type", null)}
-        value={getTableRowDataAttribute("value", null)}
-        onChange={(e) => getTableRowDataAttribute("onChange", e)}
+        {...(tableDataType == "VarBoolean"
+          ? {
+              checked: getTableRowDataAttribute("value", null),
+              onClick: (e) => getTableRowDataAttribute("onClick", e),
+            }
+          : {
+              value: getTableRowDataAttribute("value", null),
+              onChange: (e) => getTableRowDataAttribute("onChange", e),
+            })}
+        // value={getTableRowDataAttribute("value", null)}
+        // {...(tableDataType == "VarBoolean"
+        //   ? { checked: getTableRowDataAttribute("value", null) }
+        //   : { value: getTableRowDataAttribute("value", null) })}
+        // onChange={(e) => getTableRowDataAttribute("onChange", e)}
       ></input>
     </>
   );
