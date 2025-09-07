@@ -1,6 +1,8 @@
 import css from "./var-table-header.module.css";
 
-function VarTableHeader({ incomingTypeValidator , incomingOtherTypeValidator }) {
+function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
+
+  
   return (
     <>
       <thead className={css["thead-name"]}>
@@ -23,9 +25,10 @@ function VarTableHeader({ incomingTypeValidator , incomingOtherTypeValidator }) 
             ) : null}
           </>
           <>
-            {incomingTypeValidator.Integer ||
-            incomingTypeValidator.List ||
-            incomingTypeValidator.Date ? (
+            {(incomingTypeValidator.Integer ||
+              incomingTypeValidator.List ||
+              incomingTypeValidator.Date) &&
+            incomingOtherTypeValidator.Iterate ? (
               <th>Inteval</th>
             ) : null}
           </>
