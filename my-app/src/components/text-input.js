@@ -2,12 +2,10 @@ import { useRef, useState, useEffect } from "react";
 import css from "./text-input.module.css";
 
 function TextInput({
-
   incomingHandlePreviewTextChanges,
   incomingHandleVariablesChanges,
-
 }) {
-
+  const [tempVariables, setTempVariables] = useState(new Map());
   function addVariableOnInput(e) {
     const innerText = e.target.innerText;
 
@@ -21,25 +19,37 @@ function TextInput({
       searchPos = bracketPos + 1;
     }
 
-    const newVariables = new Map();
+    const updatedVariables = new Map(tempVariables);
+    
     allBracketPositions.forEach((position, index) => {
-      newVariables.set(index, {
-        id: position,
-        name: "Variable " + index,
-        type: "Integer",
-        value: index,
-        minValue : index,
-        maxValue : 10,
-        iterate: true,
-        interval: 1,
-        randomize: false,
-        displayText:"Display Text" //now that i think of it, should this be put inside a temp variable?
-      });
+      if (!updatedVariables.has(index)) {
+        updatedVariables.set(index, {
+          id: position,
+          name: "Variable " + index,
+          type: "Integer",
+          value: index,
+          minValue: index,
+          maxValue: 10,
+          iterate: true,
+          interval: 1,
+          randomize: false,
+          displayText: "Display Text", //now that i think of it, should this be put inside a temp variable?
+        });
+      }
     });
 
+
+    if (allBracketPositions.length < updatedVariables.size) {
+      console.log("Masuk Cut");
+      console.log("Masuk Cut - All Bracket", allBracketPositions);
+      console.log("Masuk Cut - updatedVariables", updatedVariables);
+      updatedVariables.delete(updatedVariables.size-1);
+    }
+
     incomingHandlePreviewTextChanges(innerText);
+    setTempVariables(updatedVariables);
     console.log("preview text:" + innerText);
-    incomingHandleVariablesChanges(newVariables);
+    incomingHandleVariablesChanges(updatedVariables);
   }
 
   // pass the contenteditable attribute when selected
