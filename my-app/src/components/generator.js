@@ -12,19 +12,29 @@ function Generator({
   const [inputValue, setInputValue] = useState(0);
 
   useEffect(() => {
-    setInputValue(incomingHighestListVar.list?.length || "");
+    let listTotalLength =
+      incomingHighestListVar.list.length * incomingHighestListVar.interval;
 
     console.log(
-      "incominghighestlistvar in gen len: " +
-        incomingHighestListVar.list?.length || ""
+      "List Before Total Len",
+      listTotalLength,
+      generatedSentenceAmount
     );
-    if (incomingHighestListVar.list.length > 0) {
-      setGeneratedSentenceAmount(incomingHighestListVar.list.length);
-    }
-  }, [incomingHighestListVar.list.length]);
+
+    setInputValue(listTotalLength || "");
+    handleGeneratedSentenceAmountChanges(listTotalLength);
+    console.log(
+      "List After Total Len",
+      listTotalLength,
+      generatedSentenceAmount
+    );
+  }, [incomingHighestListVar.list.length, incomingHighestListVar.interval]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
+    console.log("AMount Generated Sentence: ", amount);
     setGeneratedSentenceAmount(amount);
+    console.log("AMount Generated Sentence After: ", generatedSentenceAmount);
+    console.log("==== AMount Generated Sentence");
   }
 
   function getRandomInt(min, max) {
@@ -67,6 +77,7 @@ function Generator({
   function generateSentence() {
     let tempPreviewText = incomingPreviewText;
     let localGeneratedSentence = [];
+
     const localVariables = new Map();
 
     // console.log("Main Text in Generate Text : " + incomingPreviewText);
@@ -89,7 +100,8 @@ function Generator({
 
     //Generate the Sentences and pushes them into local generated sentence array
     let currentKeyIndex = 0;
-    let tempFirstValue = null;
+    let tempCurrentListIndex = 0; //for list if iterate
+    let tempListIterator = 1; //for list if iterate
     let parsedText = [];
     let tempDate = new Date();
     for (let i = 0; i < generatedSentenceAmount; i++) {
@@ -135,7 +147,14 @@ function Generator({
               if (i === 0) {
                 parsedText = values.list;
               }
-              values.displayText = parsedText[i];
+
+              values.displayText = parsedText[tempCurrentListIndex];
+              if (tempListIterator < values.interval) {
+                tempListIterator++;
+              } else {
+                tempCurrentListIndex++;
+                tempListIterator = 1;
+              }
               break;
             case "Date":
               if (i === 0) {
@@ -148,7 +167,9 @@ function Generator({
               });
               if (tempDate !== null) {
                 tempDate = new Date(
-                  tempDate.setDate(tempDate.getDate() + parseInt(values.interval))
+                  tempDate.setDate(
+                    tempDate.getDate() + parseInt(values.interval)
+                  )
                 );
               }
 
