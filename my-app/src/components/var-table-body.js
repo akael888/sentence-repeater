@@ -165,7 +165,7 @@ function VarTableBody({
                   </td>
                   {incomingOtherValidator.Random &&
                     (incomingTypeValidator.Integer ||
-                      incomingTypeValidator.Date) && <td>test</td>}
+                      incomingTypeValidator.Date) && <td></td>}
                 </> //Untuk Munculin td tambahan kalau ada variable yang randomize
               )}
             </>
@@ -210,7 +210,7 @@ function VarTableBody({
                   </td>
                 </>
               ) : (
-                incomingOtherValidator.Random &&
+                incomingOtherValidator.Iterate &&
                 (incomingTypeValidator.Integer ||
                   incomingTypeValidator.Date) && <td></td> //apa ini??
               )}
