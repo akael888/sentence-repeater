@@ -185,7 +185,7 @@ function VariableTable({
 
   return (
     <>
-      {incomingVariables !== undefined ? (
+      {incomingVariables !== undefined && incomingVariables.size > 0 ? (
         <div className={css["variable-container"]}>
           <table className={css["variable-table-name"]}>
             <VarTableHeader
@@ -195,6 +195,7 @@ function VariableTable({
             <VarTableBody
               incomingVariablesBody={incomingVariables}
               incomingHandleVariableChanges={handleVariableChanges}
+              incomingTypeValidator={typeValidator}
               incomingOtherValidator={otherValidator}
             ></VarTableBody>
           </table>
