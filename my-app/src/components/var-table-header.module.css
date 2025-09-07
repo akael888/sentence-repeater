@@ -1,0 +1,12 @@
+.thead-name {
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-color);
+    background: linear-gradient(180deg, var(--gradient-color-start) 0%, var(--gradient-color-end) 100%);
+}
+
+.thead-name th {
+    padding: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}

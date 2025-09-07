@@ -1,8 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useRef, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
+
 import css from "./variable.module.css";
-import Chip from "./chip-list";
+
+import VarTableHeader from "./var-table-header";
+import VarTableBody from "./var-table-body";
 
 function VariableTable({
   incomingVariables,
@@ -11,8 +13,6 @@ function VariableTable({
   incomingHighestListVar,
 }) {
   // const initializedName = useRef(new Set());
-
-  const editableRef = useRef(null);
 
   const [typeValidator, setTypeValidator] = useState({
     Integer: false,
@@ -23,6 +23,7 @@ function VariableTable({
 
   const [otherValidator, setOtherValidator] = useState({
     Random: false,
+    Iterate: false,
   });
 
   const handleChipListChanges = (textValue) => {
@@ -106,24 +107,24 @@ function VariableTable({
 
   useEffect(() => {
     if (incomingVariables) {
+      setTypeValidator({
+        Integer: getValidatorValue("type").includes("Integer"),
+        String: getValidatorValue("type").includes("String"),
+        Date: getValidatorValue("type").includes("Date"),
+        List: getValidatorValue("type").includes("List"),
+      });
+      setOtherValidator({
+        Random: getValidatorValue("randomize").includes(true),
+        Iterate: getValidatorValue("iterate").includes(true),
+      });
+    }
+
+    function getValidatorValue(variableField) {
       let validatorList = null;
       validatorList = Array.from(incomingVariables.values()).map(
-        (variable) => variable.type
+        (variable) => variable[variableField]
       );
-      console.log("Type :" + validatorList);
-      setTypeValidator({
-        Integer: validatorList.includes("Integer"),
-        String: validatorList.includes("String"),
-        Date: validatorList.includes("Date"),
-        List: validatorList.includes("List"),
-      });
-      validatorList = Array.from(incomingVariables.values()).map(
-        (variable) => variable.randomize
-      );
-      console.log("Randomize :" + validatorList);
-      setOtherValidator({
-        Random: validatorList.includes(true),
-      });
+      return validatorList;
     }
 
     // return typeList.includes("Integer");
@@ -150,7 +151,7 @@ function VariableTable({
         incomingTargetVar.iterate = false;
         incomingTargetVar.interval = null;
         incomingTargetVar.randomize = null;
-        incomingTargetVar.value = "String Here";
+        incomingTargetVar.value = "This is a Test String";
         incomingTargetVar.minValue = null;
         incomingTargetVar.maxValue = null;
         // tempTypeValidator.String = true;
@@ -172,7 +173,7 @@ function VariableTable({
         incomingTargetVar.iterate = true;
         incomingTargetVar.interval = 1;
         incomingTargetVar.randomize = false;
-        incomingTargetVar.value = "String Here";
+        incomingTargetVar.value = "";
         incomingTargetVar.minValue = null;
         incomingTargetVar.maxValue = null;
         incomingTargetVar.list = [];
@@ -185,341 +186,21 @@ function VariableTable({
 
   return (
     <>
-      {incomingVariables.size ? (
-        <>
-          {incomingVariables.size > 0 ? (
-            <div className={css["variable-container"]}>
-              <table className={css["variable-table-name"]}>
-                <thead className={css["thead-name"]}>
-                  <tr>
-                    {/* <th>id</th> */}
-                    <th>Variable Name</th>
-                    <th>Type</th>
-                    <th>Start Value</th>
-                    <>
-                      {otherValidator.Random &&
-                      (typeValidator.Integer || typeValidator.Date) ? (
-                        <th>End Value</th>
-                      ) : null}
-                    </>
-                    <>
-                      {typeValidator.Integer ||
-                      typeValidator.List ||
-                      typeValidator.Date ? (
-                        <th>Iterate</th>
-                      ) : null}
-                    </>
-                    <>
-                      {typeValidator.Integer ||
-                      typeValidator.List ||
-                      typeValidator.Date ? (
-                        <th>Inteval</th>
-                      ) : null}
-                    </>
-                    <>
-                      {typeValidator.Integer ||
-                      typeValidator.List ||
-                      typeValidator.Date ? (
-                        <th>Randomize</th>
-                      ) : null}
-                    </>
-                  </tr>
-                </thead>
-                <tbody className={css["tbody-name"]}>
-                  {incomingVariables != null
-                    ? Array.from(incomingVariables.entries()).map(
-                        ([key, values]) => (
-                          <tr key={key}>
-                            {/* <td>{values.id}</td> */}
-                            <td
-                              contentEditable="true"
-                              onBlur={(e) =>
-                                handleVariableChanges(
-                                  key,
-                                  "name",
-                                  e.target.innerText
-                                )
-                              }
-                              className={css["td-var-name"]}
-                            >
-                              {values.name}
-                            </td>
-
-                            <td className={css["td-var-type"]}>
-                              <Dropdown>
-                                <Dropdown.Toggle
-                                  variant="secondary"
-                                  id="dropdown-basic"
-                                >
-                                  {values.type}
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                  <Dropdown.Item
-                                    onClick={() =>
-                                      handleVariableChanges(
-                                        key,
-                                        "type",
-                                        "Integer"
-                                      )
-                                    }
-                                  >
-                                    Integer
-                                  </Dropdown.Item>
-                                  <Dropdown.Item
-                                    onClick={() =>
-                                      handleVariableChanges(
-                                        key,
-                                        "type",
-                                        "String"
-                                      )
-                                    }
-                                  >
-                                    String
-                                  </Dropdown.Item>
-                                  <Dropdown.Item
-                                    onClick={() =>
-                                      handleVariableChanges(key, "type", "Date")
-                                    }
-                                  >
-                                    Date
-                                  </Dropdown.Item>
-                                  <Dropdown.Item
-                                    onClick={() =>
-                                      handleVariableChanges(key, "type", "List")
-                                    }
-                                  >
-                                    List
-                                  </Dropdown.Item>
-                                </Dropdown.Menu>
-                              </Dropdown>{" "}
-                            </td>
-                            <>
-                              {values.randomize &&
-                              (values.type === "Integer" ||
-                                values.type === "Date") ? (
-                                <>
-                                  {values.type === "Integer" ? (
-                                    <>
-                                      <td
-                                        contentEditable="true"
-                                        onBlur={(e) =>
-                                          handleVariableChanges(
-                                            key,
-                                            "minValue",
-                                            e.target.innerText
-                                          )
-                                        }
-                                        className={css["td-var-value"]}
-                                      >
-                                        {values.minValue}
-                                      </td>
-                                      <td
-                                        contentEditable="true"
-                                        onBlur={(e) =>
-                                          handleVariableChanges(
-                                            key,
-                                            "maxValue",
-                                            e.target.innerText
-                                          )
-                                        }
-                                        className={css["td-var-value"]}
-                                      >
-                                        {values.maxValue}
-                                      </td>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <td>
-                                        <input
-                                          type="date"
-                                          value={
-                                            values.minDateValue
-                                              ? values.minDateValue
-                                                  .toISOString()
-                                                  .split("T")[0]
-                                              : ""
-                                          }
-                                          onChange={(e) => {
-                                            const selectedDate = e.target.value
-                                              ? new Date(e.target.value)
-                                              : null;
-                                            handleVariableChanges(
-                                              key,
-                                              "minDateValue",
-                                              selectedDate
-                                            );
-                                          }}
-                                          className={css["td-var-value"]}
-                                        />
-                                      </td>
-                                      <td>
-                                        <input
-                                          type="date"
-                                          value={
-                                            values.maxDateValue
-                                              ? values.maxDateValue
-                                                  .toISOString()
-                                                  .split("T")[0]
-                                              : ""
-                                          }
-                                          onChange={(e) => {
-                                            const selectedDate = e.target.value
-                                              ? new Date(e.target.value)
-                                              : null;
-                                            handleVariableChanges(
-                                              key,
-                                              "maxDateValue",
-                                              selectedDate
-                                            );
-                                          }}
-                                          className={css["td-var-value"]}
-                                        />
-                                      </td>
-                                    </>
-                                  )}{" "}
-                                </>
-                              ) : (
-                                <>
-                                  <td>
-                                    {values.list != null &&
-                                    values.type === "List" ? (
-                                      <Chip
-                                        incomingVariableIndex={key}
-                                        incomingChipList={values.list}
-                                        incomingHandleVariableChanges={
-                                          handleVariableChanges
-                                        }
-                                      ></Chip>
-                                    ) : (
-                                      ""
-                                    )}
-
-                                    {values.type !== "Date" ? (
-                                      <input
-                                        ref={editableRef}
-                                        type="text"
-                                        value={values.value}
-                                        onChange={(e) =>
-                                          handleVariableChanges(
-                                            key,
-                                            "value",
-                                            e.target.value
-                                          )
-                                        }
-                                        className={css["td-var-value"]}
-                                      ></input>
-                                    ) : (
-                                      <input
-                                        type="date"
-                                        value={
-                                          values.dateValue
-                                            ? values.dateValue
-                                                .toISOString()
-                                                .split("T")[0]
-                                            : ""
-                                        }
-                                        onChange={(e) => {
-                                          const selectedDate = e.target.value
-                                            ? new Date(e.target.value)
-                                            : null;
-                                          handleVariableChanges(
-                                            key,
-                                            "dateValue",
-                                            selectedDate
-                                          );
-                                        }}
-                                        className={css["td-var-value"]}
-                                      />
-                                    )}
-                                  </td>
-                                  {/* {otherValidator.Random && <td></td>} //apa ini? */}
-                                </>
-                              )}
-                            </>
-
-                            <>
-                              {values.type === "Integer" ||
-                              values.type === "List" ||
-                              values.type === "Date" ? (
-                                <td
-                                  // contentEditable="true"
-                                  className={css["td-var-iterate"]}
-                                >
-                                  <div>
-                                    <label>
-                                      <input
-                                        type="checkbox"
-                                        checked={values.iterate}
-                                        onClick={() =>
-                                          handleVariableChanges(
-                                            key,
-                                            "iterate",
-                                            !values.iterate
-                                          )
-                                        }
-                                      />
-                                    </label>
-                                  </div>
-                                </td>
-                              ) : (
-                                <td></td>
-                              )}
-                            </>
-                            <>
-                              {values.type === "Integer" ||
-                              values.type === "List" ||
-                              values.type === "Date" ? (
-                                <td
-                                  contentEditable="true"
-                                  onBlur={(e) =>
-                                    handleVariableChanges(
-                                      key,
-                                      "interval",
-                                      parseInt(e.target.innerText)
-                                    )
-                                  }
-                                >
-                                  {values.interval}
-                                </td>
-                              ) : (
-                                <td></td> //apa ini??
-                              )}
-                            </>
-                            <>
-                              {values.type === "Integer" ||
-                              values.type === "List" ||
-                              values.type === "Date" ? (
-                                <td>
-                                  <div>
-                                    <label>
-                                      <input
-                                        type="checkbox"
-                                        checked={values.randomize}
-                                        onClick={() =>
-                                          handleVariableChanges(
-                                            key,
-                                            "randomize",
-                                            !values.randomize
-                                          )
-                                        }
-                                      />
-                                    </label>
-                                  </div>
-                                </td>
-                              ) : (
-                                <td></td>
-                              )}
-                            </>
-                          </tr>
-                        )
-                      )
-                    : !(<div>empty</div>)}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
-        </>
+      {incomingVariables !== undefined && incomingVariables.size > 0 ? (
+        <div className={css["variable-container"]}>
+          <table className={css["variable-table-name"]}>
+            <VarTableHeader
+              incomingTypeValidator={typeValidator}
+              incomingOtherTypeValidator={otherValidator}
+            ></VarTableHeader>
+            <VarTableBody
+              incomingVariablesBody={incomingVariables}
+              incomingHandleVariableChanges={handleVariableChanges}
+              incomingTypeValidator={typeValidator}
+              incomingOtherValidator={otherValidator}
+            ></VarTableBody>
+          </table>
+        </div>
       ) : null}
     </>
   );
