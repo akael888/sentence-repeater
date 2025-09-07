@@ -23,6 +23,7 @@ function VariableTable({
 
   const [otherValidator, setOtherValidator] = useState({
     Random: false,
+    Iterate: false,
   });
 
   const handleChipListChanges = (textValue) => {
@@ -106,24 +107,24 @@ function VariableTable({
 
   useEffect(() => {
     if (incomingVariables) {
+      setTypeValidator({
+        Integer: getValidatorValue("type").includes("Integer"),
+        String: getValidatorValue("type").includes("String"),
+        Date: getValidatorValue("type").includes("Date"),
+        List: getValidatorValue("type").includes("List"),
+      });
+      setOtherValidator({
+        Random: getValidatorValue("randomize").includes(true),
+        Iterate: getValidatorValue("iterate").includes(true),
+      });
+    }
+
+    function getValidatorValue(variableField) {
       let validatorList = null;
       validatorList = Array.from(incomingVariables.values()).map(
-        (variable) => variable.type
+        (variable) => variable[variableField]
       );
-      console.log("Type :" + validatorList);
-      setTypeValidator({
-        Integer: validatorList.includes("Integer"),
-        String: validatorList.includes("String"),
-        Date: validatorList.includes("Date"),
-        List: validatorList.includes("List"),
-      });
-      validatorList = Array.from(incomingVariables.values()).map(
-        (variable) => variable.randomize
-      );
-      console.log("Randomize :" + validatorList);
-      setOtherValidator({
-        Random: validatorList.includes(true),
-      });
+      return validatorList;
     }
 
     // return typeList.includes("Integer");
