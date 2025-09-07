@@ -7,7 +7,8 @@ import VarTableRowData from "./var-table-row-data";
 function VarTableBody({
   incomingVariablesBody,
   incomingHandleVariableChanges,
-  incomingOtherValidator
+  incomingTypeValidator,
+  incomingOtherValidator,
 }) {
   //   const editableRef = useRef(null);
   return (
@@ -162,7 +163,9 @@ function VarTableBody({
                       </>
                     )}
                   </td>
-                  {incomingOtherValidator.Random && <td></td>} 
+                  {incomingOtherValidator.Random &&
+                    (incomingTypeValidator.Integer ||
+                      incomingTypeValidator.Date) && <td>test</td>}
                 </> //Untuk Munculin td tambahan kalau ada variable yang randomize
               )}
             </>
@@ -183,13 +186,16 @@ function VarTableBody({
                   ></VarTableRowData>
                 </td>
               ) : (
-                <td></td>
+                incomingOtherValidator.Random &&
+                (incomingTypeValidator.Integer ||
+                  incomingTypeValidator.Date) && <td></td>
               )}
             </>
             <>
-              {values.type === "Integer" ||
-              values.type === "List" ||
-              values.type === "Date" ? (
+              {(values.type === "Integer" ||
+                values.type === "List" ||
+                values.type === "Date") &&
+              values.iterate ? (
                 <>
                   <td>
                     <VarTableRowData
@@ -204,7 +210,9 @@ function VarTableBody({
                   </td>
                 </>
               ) : (
-                <td></td> //apa ini??
+                incomingOtherValidator.Random &&
+                (incomingTypeValidator.Integer ||
+                  incomingTypeValidator.Date) && <td></td> //apa ini??
               )}
             </>
             <>
@@ -223,7 +231,9 @@ function VarTableBody({
                   ></VarTableRowData>
                 </td>
               ) : (
-                <td></td>
+                incomingOtherValidator.Random &&
+                (incomingTypeValidator.Integer ||
+                  incomingTypeValidator.Date) && <td></td>
               )}
             </>
           </tr>
