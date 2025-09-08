@@ -1,6 +1,7 @@
 # Sentence Repeater
 > Tech Stack Used: React JS
 > Additional Libraries: To be added...
+> Link : https://sentence-repeater.vercel.app/
 
 ## Problem
 - Often, we need to write multiple sentences that have little to no variance. This takes unnecessary time. One might argue that we can just copy and paste the sentence. However, what if there's a specific rule that we applied to that sentence? This is where the tool comes in handy.
