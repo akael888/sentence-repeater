@@ -2,6 +2,7 @@ import css from "./text-preview.module.css";
 
 function Preview({ incomingPreviewText, incomingVariables }) {
   function generatePreviewandVariables() {
+    let previewText = "Preview Text";
     console.log(
       "Generated Text from incomingpreviewtext: " +
         "-" +
@@ -52,16 +53,14 @@ function Preview({ incomingPreviewText, incomingVariables }) {
         //-------------------------------------
 
         return String(text);
-      } else return "Preview Text";
-    }
+      } else return previewText;
+    } else return previewText;
   }
 
   return (
     <>
       <div className={css["preview-container"]}>
-        <h1>
-          {generatePreviewandVariables()}
-        </h1>
+        <h1>{generatePreviewandVariables()}</h1>
       </div>
     </>
   );
