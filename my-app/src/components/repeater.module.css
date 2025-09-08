@@ -3,7 +3,7 @@
 .all-container {
   /* background-image: url('https://picsum.photos/200/300'); */
   width: 100%;
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   background: linear-gradient(180deg, var(--gradient-color-start) 0%, var(--gradient-color-end) 100%);
   justify-content: center;

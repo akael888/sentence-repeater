@@ -44,11 +44,13 @@ function TitleHeader({ darkModeTitle, darkModeChangesTitle }) {
     <>
       <div className="title-container">
         <h1>Sentence Repeater</h1>
-        <Mode
+        
+        {/* <Mode
           currentState={darkModeTitle}
           darkModeChanges={darkModeChangesTitle}
-        />
+        /> */}
       </div>
+      
     </>
   );
 }

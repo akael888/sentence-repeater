@@ -45,9 +45,13 @@ function VariableTable({
     //     selectedVar.list.length
     // );
     // console.log(selectedVar);
+    let selectedVarListTotalLength =
+      selectedVar.list.length * selectedVar.interval;
+    let highestVarListTotalLength =
+      incomingHighestListVar.list.length * incomingHighestListVar.interval;
 
     if (incomingHandleHighestListVar != null) {
-      if (selectedVar.list.length > incomingHighestListVar.list.length) {
+      if (selectedVarListTotalLength > highestVarListTotalLength) {
         incomingHandleHighestListVar(selectedVar);
         console.log("Masuk Testing");
       }
