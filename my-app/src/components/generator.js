@@ -100,9 +100,6 @@ function Generator({
 
     //Generate the Sentences and pushes them into local generated sentence array
     let currentKeyIndex = 0;
-    let tempCurrentListIndex = 0; //for list if iterate
-    let tempListIterator = 1; //for list if iterate
-    let parsedText = [];
     let tempDate = new Date();
     for (let i = 0; i < generatedSentenceAmount; i++) {
       let generatedText = tempPreviewText;
@@ -145,16 +142,25 @@ function Generator({
               break;
             case "List":
               if (i === 0) {
-                parsedText = values.list;
+                let tempListContainer = [];
+                let totalListLen = values.list.length * values.interval;
+                for (let x = 0; x < totalListLen; x++) {
+                  let listIndex = Math.floor(x / values.interval);
+                  tempListContainer.push(values.list[listIndex]);
+                  console.log(
+                    "Temp List Parsed",
+                    tempListContainer,
+                    "and List Index :",
+                    listIndex,
+                    "mathfloor",
+                    x / values.interval
+                  );
+                }
+                values.listParsed = tempListContainer;
               }
 
-              values.displayText = parsedText[tempCurrentListIndex];
-              if (tempListIterator < values.interval) {
-                tempListIterator++;
-              } else {
-                tempCurrentListIndex++;
-                tempListIterator = 1;
-              }
+              values.displayText = values.listParsed[i];
+
               break;
             case "Date":
               if (i === 0) {
