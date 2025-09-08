@@ -1,6 +1,8 @@
 # Sentence Repeater
 > Tech Stack Used: React JS
+
 > Additional Libraries: To be added...
+
 > Link : https://sentence-repeater.vercel.app/
 
 ## Problem
