@@ -17,14 +17,14 @@ function Chip({
       <>
         {incomingChipList != null
           ? incomingChipList.map((value, index) => (
-              <>
-                <span className={css["chip-object"]} contentEditable="false">
+              <div key={index}>
+                <span className={css["chip-object"]} >
                   {value}
 
                   <button onClick={(e) => removeChip(index)}> X </button>
                 </span>
                 <span> </span>
-              </>
+              </div>
             ))
           : ""}
       </>
