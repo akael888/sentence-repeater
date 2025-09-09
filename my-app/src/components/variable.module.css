@@ -27,9 +27,11 @@
 }
 
 .variable-table th,
-td {
+.variable-table td {
     padding: 15px;
     padding-left: 20px;
     padding-right: 20px;
 }
+
+
 

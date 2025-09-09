@@ -134,6 +134,16 @@ function VarTableRowData({
 
           console.log("EventCall Target Value:", eventCall.target.value);
           return result();
+        } else if (selectedKey == "VarBoolean") {
+          result = () =>
+            incomingHandleVariableChanges(
+              incomingKey,
+              incomingchangedValues,
+              !incomingValues[incomingchangedValues]
+            );
+
+          console.log("EventCall Target Value:", eventCall.target.value);
+          return result();
         } else {
           switch (valueType) {
             case "Integer":
@@ -216,7 +226,7 @@ function VarTableRowData({
         {...(tableDataType == "VarBoolean"
           ? {
               checked: getTableRowDataAttribute("value", null),
-              onClick: (e) => getTableRowDataAttribute("onClick", e),
+              onChange: (e) => getTableRowDataAttribute("onChange", e),
             }
           : {
               value: getTableRowDataAttribute("value", null),
