@@ -26,12 +26,15 @@
     border-radius: 10px;
 }
 
-.variable-table th,
+
 .variable-table td {
     padding: 15px;
     padding-left: 20px;
     padding-right: 20px;
 }
 
-
-
+.variable-table th {
+    padding: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
