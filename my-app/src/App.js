@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import Repeater from "./components/repeater";
+import '../../global.css'
 import Mode from "./components/toggle-mode";
 
 
@@ -26,12 +27,12 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-header">
         <TitleHeader
           darkModeTitle={isDarkMode}
           darkModeChangesTitle={handleDarkModeChanges}
-        />
-      </header>
+        />  
+      </div>
       <div>
         <Repeater  />
       </div>

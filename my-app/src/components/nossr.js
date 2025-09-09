@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function NoSSR({ children, fallback = <div>Loading..</div> }) {
+function NoSSRComp({ children, fallback = <div>Loading..</div> }) {
   const [hasMounted, setHadMounted] = useState(false);
 
   useEffect(() => {
@@ -15,4 +15,4 @@ function NoSSR({ children, fallback = <div>Loading..</div> }) {
   return <>{children}</>
 }
 
-export default NoSSR;
+export default NoSSRComp;

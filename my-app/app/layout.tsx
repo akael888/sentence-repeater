@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import '../src/index.css'
+// import '../src/index.css'
+import './global.css'
  
 export const metadata: Metadata = {
   title: 'Sentence Repeater',

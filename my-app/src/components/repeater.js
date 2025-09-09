@@ -38,64 +38,10 @@ function Repeater() {
     setHighestListVar(passedVariable);
   };
 
-  // const handleMainTextBlur = () => {
-  //   if (mainTextRef.current) {
-  //     mainTextChange({ target: { value: mainTextRef.current.innerText } });
-  //   }
-  // };
-
-  //disable any enter happening on main text
-  // useEffect(() => {
-  //   const handleKeyDown = (event) => {
-  //     if (event.key === "Enter") {
-  //       event.preventDefault();
-  //       if (mainTextRef.current) {
-  //         mainTextRef.current.removeAttribute("contenteditable");
-  //       }
-  //     }
-  //   };
-
-  //   document.addEventListener("keydown", handleKeyDown);
-  //   return () => document.removeEventListener("keydown", handleKeyDown);
-  // }, []);
-
-  //enableEditing onclick
-  // function enableEditing(element) {
-  //   if (!element) return; // Prevent error if element is undefined
-  //   element.setAttribute("contenteditable", true); //Add content editable
-  //   element.focus(); //Focusing on the eelement
-  // }
-
-  // function addVariableOnInput(e) {
-  //   const innerText = e.target.innerText;
-
-  //   let searchPos = 0;
-  //   let allBracketPositions = [];
-
-  //   while (searchPos < innerText.length) {
-  //     const bracketPos = innerText.indexOf("{}", searchPos);
-  //     if (bracketPos === -1) break;
-  //     allBracketPositions.push(bracketPos);
-  //     searchPos = bracketPos + 1;
-  //   }
-
-  //   const newVariables = new Map();
-  //   allBracketPositions.forEach((position, index) => {
-  //     newVariables.set(index, {
-  //       id: position,
-  //       name: "Variable " + index,
-  //       type: "Integer",
-  //       value: index,
-  //       iterate: true,
-  //     });
-  //   });
-
-  //   setVariables(newVariables);
-  // }
 
   return (
     <>
-      <div className={css["all-container"]}>
+      <div className="h-screen w-screen bg-red">
         <div className={css["leftside-container"]}>
           <Preview
             incomingPreviewText={previewText}
@@ -116,7 +62,7 @@ function Repeater() {
             />
           </div>
           <>
-            <div className={css[["hidden-containers"]]}>
+            <div className="flex flex-row items-start bg-black place-items-start gap-[10vh]">
               <VariableTable
                 incomingVariables={variables}
                 incomingHandlevariableChanges={handleVariableChanges}
