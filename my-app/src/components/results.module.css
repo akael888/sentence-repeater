@@ -1,6 +1,7 @@
 .results-container {
     display: grid;
     gap: 10px;
+    place-content: center;
 
 }
 
@@ -16,6 +17,7 @@
     display: grid;
     text-align: center;
     place-items: center;
+
     /* background-color: var(--main-color); */
 
 
@@ -81,7 +83,7 @@
 
     /* background-color: color-mix(in srgb, var(--main-color) 50%, transparent);
     backdrop-filter: blur(10px); */
-
+    
 }
 
 .results-interaction-container {
