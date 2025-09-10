@@ -197,10 +197,10 @@ function VariableTable({
   return (
     <>
       {incomingVariables !== undefined && incomingVariables.size > 0 ? (
-        <div className={"w-auto rounded-[10px]"}>
+        <div className={"w-screen rounded-[10px]"}>
           <div
             className={
-              "rounded-[10px] w-fit  sm:w-full h-full border border-solid border-white border-spacing-[10px]" +
+              "rounded-[10px] w-screen h-full border border-solid border-white border-spacing-[10px]" +
               tw_varTable_glassMorphBG
             }
           >

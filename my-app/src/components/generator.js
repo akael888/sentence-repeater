@@ -252,13 +252,7 @@ function Generator({
 
   return (
     <>
-      <div
-        className={
-          "inline-flex gap-2.5 place-content-center rounded-[10px]" +
-          tw_generator_md +
-          tw_generator_lg
-        }
-      >
+      <div className={"inline-flex place-content-end rounded-[10px]"}>
         <input
           className={
             "bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +

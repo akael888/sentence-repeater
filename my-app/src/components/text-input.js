@@ -7,8 +7,6 @@ function TextInput({
 }) {
   //Tailwind Styles
 
-
-
   //Text Input
   let tw_textInput_md = " md:w-[100%] md:p-[10px]";
   let tw_textInput_lg = " lg:w-[50%]";
@@ -75,11 +73,9 @@ function TextInput({
       <div
         // contentEditable="true"
         className={
-          " h-full bg-main-color place-content-center border border-opposite-color cursor-text rounded-[10px] border-solid" +
+          "w-full h-full bg-main-color place-content-center border border-opposite-color cursor-text rounded-[10px] border-solid" +
           tw_textInput_hover +
-          tw_textInput_focus +
-          tw_textInput_md +
-          tw_textInput_lg
+          tw_textInput_focus
         }
         onClick={(e) => enableEditing(e.target)}
         onInput={(e) => addVariableOnInput(e)}
@@ -90,3 +86,12 @@ function TextInput({
   );
 }
 export default TextInput;
+
+//  // contentEditable="true"
+//     className={
+//       " h-full bg-main-color place-content-center border border-opposite-color cursor-text rounded-[10px] border-solid" +
+//       tw_textInput_hover +
+//       tw_textInput_focus +
+//       tw_textInput_md +
+//       tw_textInput_lg
+//     }

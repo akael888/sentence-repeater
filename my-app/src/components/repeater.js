@@ -21,7 +21,7 @@ function Repeater() {
   let tw_inputContainers_md =
     " md:grid md:w-full md:h-full md:content-center md:grid-row-2 md:place-content-center";
   let tw_inputContainers_lg =
-    " lg:inline-flex lg:w-screen lg:h-full lg:align-center lg:justify-center lg:m-auto lg:shrink-1";
+    " :lg:inline-flex lg:w-screen lg:h-full lgalign-center lg:justify-center lg:m-auto lg:shrink-1";
   let tw_inputContainers_xl = " ";
   let tw_inputContainers_2xl = " ";
 
@@ -63,20 +63,12 @@ function Repeater() {
         className="w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color shrink-1"
         style={{ backgroundImage: `url(${bg})` }}
       >
-        <div className="w-screen grid place-items-center m-auto gap-[30px]">
+        <div className="w-screen h-full grid place-items-center m-auto gap-[30px]">
           <Preview
             incomingPreviewText={previewText}
             incomingVariables={variables}
           />
-          <div
-            className={
-              tw_inputContainers_sm +
-              tw_inputContainers_md +
-              tw_inputContainers_lg +
-              tw_inputContainers_2xl +
-              tw_inputContainers_xl
-            }
-          >
+          <div className={"h-full w-full inline-flex items-start content-center"}>
             {/*Kurang Animasi*/}
             <TextInput
               incomingHandlePreviewTextChanges={handlePreviewTextChanges}
@@ -92,15 +84,7 @@ function Repeater() {
             />
           </div>
           <>
-            <div
-              className={
-                tw_hiddenContainers_sm +
-                tw_hiddenContainers_lg +
-                tw_hiddenContainers_md +
-                tw_hiddenContainers_xl +
-                tw_hiddenContainers_2xl
-              }
-            >
+            <div className={"grid w-full items-center content-center gap-[30px]"}>
               <VariableTable
                 incomingVariables={variables}
                 incomingHandlevariableChanges={handleVariableChanges}
@@ -120,3 +104,5 @@ function Repeater() {
 }
 
 export default Repeater;
+
+// "w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color shrink-1"

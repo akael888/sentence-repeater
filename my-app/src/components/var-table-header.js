@@ -8,22 +8,22 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
           "w-screen h-full text-white rounded-[10px] p-[15px] shrink-1"
         }
       >
-        <tr>
+        <tr className=" [&>*]:p-[15px]">
           {/* <th>id</th> */}
-          <th className="p-[15px]">Variable Name</th>
-          <th className="p-[15px]">Type</th>
-          <th className="p-[15px]">Start Value</th>
+          <th>Variable Name</th>
+          <th>Type</th>
+          <th>Start Value</th>
           <>
             {incomingOtherTypeValidator.Random &&
             (incomingTypeValidator.Integer || incomingTypeValidator.Date) ? (
-              <th className="p-[15px]">End Value</th>
+              <th>End Value</th>
             ) : null}
           </>
           <>
             {incomingTypeValidator.Integer ||
             incomingTypeValidator.List ||
             incomingTypeValidator.Date ? (
-              <th className="p-[15px]">Iterate</th>
+              <th>Iterate</th>
             ) : null}
           </>
           <>
@@ -31,14 +31,14 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
               incomingTypeValidator.List ||
               incomingTypeValidator.Date) &&
             incomingOtherTypeValidator.Iterate ? (
-              <th className="p-[15px]">Inteval</th>
+              <th>Inteval</th>
             ) : null}
           </>
           <>
             {incomingTypeValidator.Integer ||
             incomingTypeValidator.List ||
             incomingTypeValidator.Date ? (
-              <th className="p-[15px]">Randomize</th>
+              <th>Randomize</th>
             ) : null}
           </>
         </tr>

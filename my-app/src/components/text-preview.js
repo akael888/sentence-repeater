@@ -4,7 +4,8 @@ function Preview({ incomingPreviewText, incomingVariables }) {
   //Tailwind Styles
   let tw_preview_glassMorphBG =
     " bg-[color-mix(in_srgb,var(--main-color)_20%,transparent)] backdrop-blur-[10px]";
-  let tw_preview_animation = " animate-[fadeInTop_2s_ease_0s_1_normal_forwards]";
+  let tw_preview_animation =
+    " animate-[fadeInTop_2s_ease_0s_1_normal_forwards]";
 
   function generatePreviewandVariables() {
     let previewText = "Preview Text";
@@ -68,7 +69,6 @@ function Preview({ incomingPreviewText, incomingVariables }) {
         className={
           "w-fit h-full grid text-main-color m-auto p-2.5 rounded-[10px]" +
           tw_preview_glassMorphBG +
-          
           tw_preview_animation
         }
       >
@@ -79,3 +79,8 @@ function Preview({ incomingPreviewText, incomingVariables }) {
 }
 
 export default Preview;
+
+
+          // "w-fit h-full grid text-main-color m-auto p-2.5 rounded-[10px]" +
+          // tw_preview_glassMorphBG +
+          // tw_preview_animation

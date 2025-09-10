@@ -19,7 +19,7 @@ function VarTableRowData({
         return "Input Var Name for Var " + incomingKey;
       },
       widthCSS: () => {
-        return 20;
+        return 60;
       },
     },
     VarStartValue: {
@@ -235,7 +235,7 @@ function VarTableRowData({
     <>
       <input
         ref={editableRef}
-        className={` ${tw_varInputData_sm}  w-[${selectedWidthCSS}%] text-center bg-transparent text-white placeholder-sub-color shrink-1`}
+        className={`w-full text-center bg-transparent text-white placeholder-sub-color shrink-1`}
         type={getTableRowDataAttribute("type", null)}
         {...(tableDataType == "VarBoolean"
           ? {
