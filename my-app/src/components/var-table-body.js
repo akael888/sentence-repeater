@@ -13,7 +13,7 @@ function VarTableBody({
   //   const editableRef = useRef(null);
   return (
     <>
-      <tbody className={css["tbody-name"]}>
+      <tbody className="w-fit">
         {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
           <tr key={key}>
             <td>

@@ -1,5 +1,5 @@
 .tbody-name {
-    width: 100%;
+    width: 100vh;
     height: 100%;
     /* background-color: color-mix(in srgb, var(--main-color) 10%, transparent);
     backdrop-filter: blur(10px); */

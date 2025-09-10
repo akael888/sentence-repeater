@@ -42,16 +42,15 @@ function Repeater() {
   return (
     <>
       <div
-        className="w-full min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color"
+        className="w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color"
         style={{ backgroundImage: `url(${bg})` }}
       >
-        <div className="w-[80%] grid place-items-center m-auto gap-[30px]">
+        <div className="w-screen grid place-items-center m-auto gap-[30px]">
           <Preview
             incomingPreviewText={previewText}
             incomingVariables={variables}
           />
           <div className="inline-flex w-[50%] h-full m-auto gap-[20px]">
-            {" "}
             {/*Kurang Animasi*/}
             <TextInput
               incomingHandlePreviewTextChanges={handlePreviewTextChanges}
@@ -67,7 +66,7 @@ function Repeater() {
             />
           </div>
           <>
-            <div className="flex flex-row align-start place-items-start gap-[10vh]">
+            <div className="w-fit flex align-center justify-center place-items-start gap-[10vh]">
               <VariableTable
                 incomingVariables={variables}
                 incomingHandlevariableChanges={handleVariableChanges}
