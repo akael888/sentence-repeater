@@ -4,10 +4,11 @@
   margin: auto;
   display: grid;
   animation: fadeInTop 2s ease 0s 1 normal forwards;
-  background-color: color-mix(in srgb, var(--opposite-color) 10%, transparent);
+  
   color: var(--main-color) !important;
   border-radius: 10px;
   padding: 10px;
   /* border: 1px solid var(--opposite-color); */
+  background-color: color-mix(in srgb, var(--main-color) 20%, transparent);
   backdrop-filter: blur(10px);
 }

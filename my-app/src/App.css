@@ -14,7 +14,8 @@
 }
 
 .App-header {
-  background-color: #463f3a;
+  background-color: color-mix(in srgb, var(--color-foregroundc) 90%, transparent);
+  backdrop-filter: blur(10px);
 
   min-height: 10vh;
   width: 100%;
@@ -25,7 +26,7 @@
   font-size: calc(10px + 2vmin);
   color: #f4f3ee;
   position: absolute;
-  border: 1px solid #463f3a;
+  /* border: 1px solid #463f3a; */
 }
 
 .App-link {

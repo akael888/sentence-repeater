@@ -1,6 +1,7 @@
 .results-container {
     display: grid;
     gap: 10px;
+
 }
 
 
@@ -15,17 +16,25 @@
     display: grid;
     text-align: center;
     place-items: center;
-    background-color: var(--main-color);
+    /* background-color: var(--main-color); */
+
+
+    background-color: color-mix(in srgb, var(--main-color) 20%, transparent);
+    backdrop-filter: blur(10px);
+
     /* overflow-y: scroll; */
     /* box-shadow: 0px 0px 21px -6px var(--shadow-color);
     -webkit-box-shadow: 0px 0px 21px -6px var(--shadow-color);
     -moz-box-shadow: 0px 0px 21px -6px var(--shadow-color); */
     margin: auto;
+    border: 1px solid white;
     border-radius: 10px;
     display: grid;
-    border-width: 1px;
+    /* border-width: 1px;
     border-color: var(--opposite-color);
-    border-style:solid;
+    border-style: solid; */
+
+    color: white;
 
 }
 
@@ -35,12 +44,18 @@
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 1fr 0.09fr;
-    background-color: var(--main-color);
-    border-radius: 10px;
+    /* background-color: var(--main-color); */
 
+
+    /* background-color: color-mix(in srgb, var(--main-color) 50%, transparent);
+    backdrop-filter: blur(10px); */
+
+    /* border-radius: 10px; */
+    /* 
     border-bottom: 1px solid var(--opposite-color);
     border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0; */
+    /* box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
 
 .results-table-header-container * {
@@ -61,8 +76,11 @@
     margin: auto;
 
     display: grid;
-    background-color: var(--main-color);
-    background: linear-gradient(180deg, var(--gradient-color-start) 0%, var(--gradient-color-end) 100%);
+    /* background-color: var(--main-color);
+    background: linear-gradient(180deg, var(--gradient-color-start) 0%, var(--gradient-color-end) 100%); */
+
+    /* background-color: color-mix(in srgb, var(--main-color) 50%, transparent);
+    backdrop-filter: blur(10px); */
 
 }
 
@@ -70,7 +88,7 @@
     width: 100%;
     height: 100%;
     text-align: center;
-/* 
+    /* 
     background-color: rgba(255, 255, 255, 0.03); */
 
     margin: auto;
@@ -82,7 +100,7 @@
 
 
 .results-interaction-container button {
-    border: 1px solid var(--opposite-color) ;
+    border: 1px solid var(--opposite-color);
     background-color: var(--main-color);
     border-radius: 10px;
 }
