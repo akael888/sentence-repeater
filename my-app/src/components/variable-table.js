@@ -12,6 +12,10 @@ function VariableTable({
   incomingHandleHighestListVar,
   incomingHighestListVar,
 }) {
+  //tailwind css
+  let tw_varTable_glassMorphBG =
+    " bg-[color-mix(in srgb, var(--opposite-color) 20%, transparent] backdrop-blur-[10px]";
+
   // const initializedName = useRef(new Set());
 
   const [typeValidator, setTypeValidator] = useState({
@@ -125,9 +129,11 @@ function VariableTable({
 
     function getValidatorValue(variableField) {
       let validatorList = null;
-      validatorList = Array.from(incomingVariables.values()).map(
-        (variable) => variable[variableField]
-      );
+      validatorList = Array.from(incomingVariables.values()).map((variable) => {
+        if (variable.type == "List" && variableField == "randomize") {
+          return false;
+        } else return variable[variableField];
+      });
       return validatorList;
     }
 
@@ -191,8 +197,13 @@ function VariableTable({
   return (
     <>
       {incomingVariables !== undefined && incomingVariables.size > 0 ? (
-        <div className={css["variable-container"]}>
-          <div className={css["variable-table-name"]}>
+        <div className={"w-fit rounded-[10px]"}>
+          <div
+            className={
+              "rounded-[10px] w-fit h-full border border-solid border-white border-spacing-[10px]" +
+              tw_varTable_glassMorphBG
+            }
+          >
             <table>
               <VarTableHeader
                 incomingTypeValidator={typeValidator}
