@@ -192,18 +192,20 @@ function VariableTable({
     <>
       {incomingVariables !== undefined && incomingVariables.size > 0 ? (
         <div className={css["variable-container"]}>
-          <table className={css["variable-table-name"]}>
-            <VarTableHeader
-              incomingTypeValidator={typeValidator}
-              incomingOtherTypeValidator={otherValidator}
-            ></VarTableHeader>
-            <VarTableBody
-              incomingVariablesBody={incomingVariables}
-              incomingHandleVariableChanges={handleVariableChanges}
-              incomingTypeValidator={typeValidator}
-              incomingOtherValidator={otherValidator}
-            ></VarTableBody>
-          </table>
+          <div className={css["variable-table-name"]}>
+            <table>
+              <VarTableHeader
+                incomingTypeValidator={typeValidator}
+                incomingOtherTypeValidator={otherValidator}
+              ></VarTableHeader>
+              <VarTableBody
+                incomingVariablesBody={incomingVariables}
+                incomingHandleVariableChanges={handleVariableChanges}
+                incomingTypeValidator={typeValidator}
+                incomingOtherValidator={otherValidator}
+              ></VarTableBody>
+            </table>
+          </div>
         </div>
       ) : null}
     </>
