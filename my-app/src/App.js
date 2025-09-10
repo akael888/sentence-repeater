@@ -25,7 +25,7 @@ function App() {
   }, [isDarkMode]);
 
   return (
-    <div className="App">
+    <div className="w-screen h-screen text-center shrink-1">
       <header className="App-header">
         <TitleHeader
           darkModeTitle={isDarkMode}
@@ -42,7 +42,7 @@ function App() {
 function TitleHeader({ darkModeTitle, darkModeChangesTitle }) {
   return (
     <>
-      <div className="title-container">
+      <div className="w-full h-full">
         <h1>Sentence Repeater</h1>
         
         {/* <Mode

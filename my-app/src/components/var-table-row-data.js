@@ -235,7 +235,7 @@ function VarTableRowData({
     <>
       <input
         ref={editableRef}
-        className={`${tw_varInputData_md} ${tw_varInputData_lg} ${tw_varInputData_xl} ${tw_varInputData_sm} ${tw_varInputDatar_2xl} text-center bg-transparent text-white placeholder-sub-color shrink-1`}
+        className={` ${tw_varInputData_sm}  w-[${selectedWidthCSS}%] text-center bg-transparent text-white placeholder-sub-color shrink-1`}
         type={getTableRowDataAttribute("type", null)}
         {...(tableDataType == "VarBoolean"
           ? {

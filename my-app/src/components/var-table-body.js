@@ -16,9 +16,9 @@ function VarTableBody({
   //   const editableRef = useRef(null);
   return (
     <>
-      <tbody className="w-screen shrink-1">
+      <tbody className="w-screen sm:w-full shrink-1">
         {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
-          <tr key={key} className={("w-screen shrink-1 [&>*]:w-full [&>*]:shrink-1")}>
+          <tr key={key} className={("w-screen sm:w-full shrink-1 [&>*]:w-full [&>*]:shrink-1")}>
             <td>
               <VarTableRowData
                 incomingKey={key}
