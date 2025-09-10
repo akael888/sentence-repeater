@@ -7,7 +7,7 @@ module.exports = {
         "main-color": "#f4f3ee",
         "sub-color": "#bcb8b1",
         "opposite-color": "#8a817c",
-        "opposite-sub-color": "#463f3a",
+        "opposite-sub-color": "#996947ff",
         "color-background": "#FFFFFF",
         "color-foreground": "#282c34",
         "gradient-color-start": "#f4f3ee",

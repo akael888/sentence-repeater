@@ -7,6 +7,21 @@ function Generator({
   incomingHandleGeneratedSentenceChanges,
   incomingHighestListVar,
 }) {
+  // Tailwind CSS
+
+  //Generator
+  let tw_generator_sm = " ";
+  let tw_generator_md = " md:w-full";
+  let tw_generator_lg = " lg:w-3/12";
+  let tw_generator_xl = " ";
+  let tw_generator_2xl = " ";
+
+  let tw_generateButton_glassMorphBG = " bg-opposite-sub-color";
+  let tw_inputAmount_hover =
+    " hover:bg-[color:var(--opposite-color)] hover:text-[color:var(--main-color)] hover:border hover:border-[color:var(--main-color)] hover:border-solid";
+  let tw_generateButton_hover =
+    " hover:bg-[color:var(--main-color)] hover:text-[color:var(--opposite-color)]  hover:border-[color:var(--opposite-color)] ";
+
   const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(0);
 
   const [inputValue, setInputValue] = useState(0);
@@ -237,9 +252,18 @@ function Generator({
 
   return (
     <>
-      <div className={css["generator-container"]}>
+      <div
+        className={
+          "inline-flex gap-2.5 place-content-center rounded-[10px]" +
+          tw_generator_md +
+          tw_generator_lg
+        }
+      >
         <input
-          id={css["amount-field"]}
+          className={
+            "bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +
+            tw_inputAmount_hover
+          }
           type="number"
           onChange={(e) => {
             setInputValue(e.target.value);
@@ -248,9 +272,17 @@ function Generator({
           placeholder="Amount"
           value={inputValue}
         />
-        <button id={css["generate-button"]} onClick={generateSentence}>
-          Generate
-        </button>
+        <div
+          className={
+            "text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
+            tw_generateButton_glassMorphBG +
+            tw_generateButton_hover
+          }
+        >
+          <button className="p-[10px]" onClick={generateSentence}>
+            Generate
+          </button>
+        </div>
       </div>
     </>
   );

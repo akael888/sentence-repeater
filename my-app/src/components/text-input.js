@@ -5,6 +5,18 @@ function TextInput({
   incomingHandlePreviewTextChanges,
   incomingHandleVariablesChanges,
 }) {
+  //Tailwind Styles
+
+
+
+  //Text Input
+  let tw_textInput_md = " md:w-[100%] md:p-[10px]";
+  let tw_textInput_lg = " lg:w-[50%]";
+  let tw_textInput_focus =
+    " focus:bg-opposite-color focus:text-main-color focus:border focus:border-main-color focus:border-solid";
+  let tw_textInput_hover =
+    " hover:bg-opposite-color hover:text-main-color hover:border hover:border-main-color hover:border-solid";
+
   const [tempVariables, setTempVariables] = useState(new Map());
   function addVariableOnInput(e) {
     const innerText = e.target.innerText;
@@ -20,7 +32,7 @@ function TextInput({
     }
 
     const updatedVariables = new Map(tempVariables);
-    
+
     allBracketPositions.forEach((position, index) => {
       if (!updatedVariables.has(index)) {
         updatedVariables.set(index, {
@@ -38,12 +50,11 @@ function TextInput({
       }
     });
 
-
     if (allBracketPositions.length < updatedVariables.size) {
       console.log("Masuk Cut");
       console.log("Masuk Cut - All Bracket", allBracketPositions);
       console.log("Masuk Cut - updatedVariables", updatedVariables);
-      updatedVariables.delete(updatedVariables.size-1);
+      updatedVariables.delete(updatedVariables.size - 1);
     }
 
     incomingHandlePreviewTextChanges(innerText);
@@ -63,7 +74,13 @@ function TextInput({
     <>
       <div
         // contentEditable="true"
-        className={css["main-text-container"]}
+        className={
+          " h-full bg-main-color place-content-center border border-opposite-color cursor-text rounded-[10px] border-solid" +
+          tw_textInput_hover +
+          tw_textInput_focus +
+          tw_textInput_md +
+          tw_textInput_lg
+        }
         onClick={(e) => enableEditing(e.target)}
         onInput={(e) => addVariableOnInput(e)}
       >

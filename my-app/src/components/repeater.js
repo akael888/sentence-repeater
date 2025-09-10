@@ -15,6 +15,24 @@ function Repeater() {
 
   //to update changes within the generated sentence in the parent component
 
+  //tailwind css
+  //input containers
+  let tw_inputContainers_sm = " sm:grid";
+  let tw_inputContainers_md =
+    " md:grid md:w-full md:h-full md:content-center md:grid-row-2 md:place-content-center";
+  let tw_inputContainers_lg =
+    " lg:inline-flex lg:w-screen lg:h-full lg:align-center lg:justify-center lg:m-auto lg:shrink-1";
+  let tw_inputContainers_xl = " ";
+  let tw_inputContainers_2xl = " ";
+
+  //hidden containers
+  let tw_hiddenContainers_sm = " sm:grid sm:content-center sm:gap-[1vh]";
+  let tw_hiddenContainers_md = " md:grid md:content-center md:gap-[1vh]";
+  let tw_hiddenContainers_lg = " lg:grid lg:content-center lg:gap-[1vh]";
+  let tw_hiddenContainers_xl = " xl:grid xl:content-center xl:gap-[1vh]";
+  let tw_hiddenContainers_2xl =
+    " 2xl:w-screen 2xl:align-center 2xl:justify-center 2xl:place-items-start 2xl:gap-[5vw] 2xl:flex 2xl:shrink-1";
+
   useEffect(() => {
     if (variables.size === 0) {
       setHighestListVar({ list: [] });
@@ -42,7 +60,7 @@ function Repeater() {
   return (
     <>
       <div
-        className="w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color"
+        className="w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color shrink-1"
         style={{ backgroundImage: `url(${bg})` }}
       >
         <div className="w-screen grid place-items-center m-auto gap-[30px]">
@@ -50,7 +68,15 @@ function Repeater() {
             incomingPreviewText={previewText}
             incomingVariables={variables}
           />
-          <div className="inline-flex w-[50%] h-full m-auto gap-[20px]">
+          <div
+            className={
+              tw_inputContainers_sm +
+              tw_inputContainers_md +
+              tw_inputContainers_lg +
+              tw_inputContainers_2xl +
+              tw_inputContainers_xl
+            }
+          >
             {/*Kurang Animasi*/}
             <TextInput
               incomingHandlePreviewTextChanges={handlePreviewTextChanges}
@@ -66,7 +92,15 @@ function Repeater() {
             />
           </div>
           <>
-            <div className="w-fit flex align-center justify-center place-items-start gap-[10vh]">
+            <div
+              className={
+                tw_hiddenContainers_sm +
+                tw_hiddenContainers_lg +
+                tw_hiddenContainers_md +
+                tw_hiddenContainers_xl +
+                tw_hiddenContainers_2xl
+              }
+            >
               <VariableTable
                 incomingVariables={variables}
                 incomingHandlevariableChanges={handleVariableChanges}
