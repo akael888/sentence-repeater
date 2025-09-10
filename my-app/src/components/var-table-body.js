@@ -10,12 +10,15 @@ function VarTableBody({
   incomingTypeValidator,
   incomingOtherValidator,
 }) {
+
+
+
   //   const editableRef = useRef(null);
   return (
     <>
-      <tbody className="w-fit">
+      <tbody className="w-screen shrink-1">
         {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
-          <tr key={key}>
+          <tr key={key} className={("w-screen shrink-1 [&>*]:w-full [&>*]:shrink-1")}>
             <td>
               <VarTableRowData
                 incomingKey={key}
@@ -26,7 +29,7 @@ function VarTableBody({
               ></VarTableRowData>
             </td>
 
-            <td className={css["td-var-type"]}>
+            <td>
               <Dropdown>
                 <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                   {values.type}
@@ -174,7 +177,7 @@ function VarTableBody({
               {values.type === "Integer" ||
               values.type === "List" ||
               values.type === "Date" ? (
-                <td className={css["td-var-iterate"]}>
+                <td>
                   <VarTableRowData
                     incomingKey={key}
                     incomingValues={values}

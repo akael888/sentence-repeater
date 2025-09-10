@@ -1,27 +1,29 @@
 import css from "./var-table-header.module.css";
 
 function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
-
-  
   return (
     <>
-      <thead className={css["thead-name"]}>
+      <thead
+        className={
+          "w-screen h-full text-white rounded-[10px] p-[15px] shrink-1"
+        }
+      >
         <tr>
           {/* <th>id</th> */}
-          <th>Variable Name</th>
-          <th>Type</th>
-          <th>Start Value</th>
+          <th className="p-[15px]">Variable Name</th>
+          <th className="p-[15px]">Type</th>
+          <th className="p-[15px]">Start Value</th>
           <>
             {incomingOtherTypeValidator.Random &&
             (incomingTypeValidator.Integer || incomingTypeValidator.Date) ? (
-              <th>End Value</th>
+              <th className="p-[15px]">End Value</th>
             ) : null}
           </>
           <>
             {incomingTypeValidator.Integer ||
             incomingTypeValidator.List ||
             incomingTypeValidator.Date ? (
-              <th>Iterate</th>
+              <th className="p-[15px]">Iterate</th>
             ) : null}
           </>
           <>
@@ -29,14 +31,14 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
               incomingTypeValidator.List ||
               incomingTypeValidator.Date) &&
             incomingOtherTypeValidator.Iterate ? (
-              <th>Inteval</th>
+              <th className="p-[15px]">Inteval</th>
             ) : null}
           </>
           <>
             {incomingTypeValidator.Integer ||
             incomingTypeValidator.List ||
             incomingTypeValidator.Date ? (
-              <th>Randomize</th>
+              <th className="p-[15px]">Randomize</th>
             ) : null}
           </>
         </tr>

@@ -18,6 +18,9 @@ function VarTableRowData({
       placeholder: () => {
         return "Input Var Name for Var " + incomingKey;
       },
+      widthCSS: () => {
+        return 20;
+      },
     },
     VarStartValue: {
       type: () => {
@@ -35,14 +38,17 @@ function VarTableRowData({
       placeholder: () => {
         switch (incomingValues.type) {
           case "Integer":
-            return "Enter Number Here..";
+            return "Numbers Only";
           case "String":
-            return "Enter String Here..";
+            return "Strings Only";
           case "List":
-            return "Enter a Text and then press Space";
+            return "Strings with a space";
           default:
             return "text";
         }
+      },
+      widthCSS: () => {
+        return 20;
       },
     },
     VarInterval: {
@@ -50,12 +56,18 @@ function VarTableRowData({
         return "number";
       },
       placeholder: () => {
-        return "Enter Interval Number Here..";
+        return "Numbers Only";
+      },
+      widthCSS: () => {
+        return 100;
       },
     },
     VarBoolean: {
       type: () => {
         return "checkbox";
+      },
+      widthCSS: () => {
+        return 50;
       },
     },
   };
@@ -208,10 +220,22 @@ function VarTableRowData({
         return result();
     }
   }
+
+  //Tailwind Styles
+  let selectedWidthCSS = selectedTableData().widthCSS();
+
+  //Var Input Data
+  let tw_varInputData_sm = " sm:w-full";
+  let tw_varInputData_md = " md:w-full";
+  let tw_varInputData_lg =  ` lg:w-[${selectedWidthCSS}%]`;
+  let tw_varInputData_xl = ` xl:w-[${selectedWidthCSS}%]`;
+  let tw_varInputDatar_2xl = ` 2xl:w-[${selectedWidthCSS}%]`;
+
   return (
     <>
       <input
         ref={editableRef}
+        className={`${tw_varInputData_md} ${tw_varInputData_lg} ${tw_varInputData_xl} ${tw_varInputData_sm} ${tw_varInputDatar_2xl} text-center bg-transparent text-white placeholder-sub-color shrink-1`}
         type={getTableRowDataAttribute("type", null)}
         {...(tableDataType == "VarBoolean"
           ? {
