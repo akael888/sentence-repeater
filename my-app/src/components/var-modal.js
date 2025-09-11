@@ -1,5 +1,7 @@
 import { useState } from "react";
 import VarTableRowData from "./var-table-row-data";
+import Dropdown from "react-bootstrap/Dropdown";
+import Chip from "./chip-list";
 
 function VariableModal({
   modalState,
@@ -37,8 +39,65 @@ function VariableModal({
                     incomingCustomColorText="opposite-color"
                   ></VarTableRowData>
                 </h1>
-                <div>
+                <div className="w-full h-full">
                   <div className="w-full h-full grid place-items-center grid-cols-2">
+                    <div>
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant="secondary"
+                          id="dropdown-basic"
+                        >
+                          {incomingValues.type}
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                          <Dropdown.Item
+                            onClick={() =>
+                              incomingHandleVariableChanges(
+                                incomingIndex,
+                                "type",
+                                "Integer"
+                              )
+                            }
+                          >
+                            Integer
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              incomingHandleVariableChanges(
+                                incomingIndex,
+                                "type",
+                                "String"
+                              )
+                            }
+                          >
+                            String
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              incomingHandleVariableChanges(
+                                incomingIndex,
+                                "type",
+                                "Date"
+                              )
+                            }
+                          >
+                            Date
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              incomingHandleVariableChanges(
+                                incomingIndex,
+                                "type",
+                                "List"
+                              )
+                            }
+                          >
+                            List
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
                     <div>
                       Iterate
                       <VarTableRowData
@@ -64,18 +123,87 @@ function VariableModal({
                       ></VarTableRowData>
                     </div>
                     <div>
-                      <h2>
-                        Start Value
-                       <VarTableRowData
-                          incomingKey={incomingIndex}
-                          incomingValues={incomingValues}
-                          tableDataType={"VarStartValue"}
-                          incomingchangedValues={"value"}
-                          incomingHandleVariableChanges={
-                            incomingHandleVariableChanges
-                          }
-                        ></VarTableRowData>
-                      </h2>
+                      Interval
+                      <VarTableRowData
+                        incomingKey={incomingIndex}
+                        incomingValues={incomingValues}
+                        tableDataType={"VarInterval"}
+                        incomingchangedValues={"interval"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData>
+                    </div>
+                    <div>
+                      Chip List
+                      <Chip
+                        incomingVariableIndex={incomingIndex}
+                        incomingChipList={incomingValues.list}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></Chip>
+                    </div>
+
+                    <div>
+                      Start Value
+                      <VarTableRowData
+                        incomingKey={incomingIndex}
+                        incomingValues={incomingValues}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"value"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData>
+                    </div>
+                    <div>
+                      Min Value
+                      <VarTableRowData
+                        incomingKey={incomingIndex}
+                        incomingValues={incomingValues}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"minValue"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData>
+                    </div>
+                    <div>
+                      Max Value
+                      <VarTableRowData
+                        incomingKey={incomingIndex}
+                        incomingValues={incomingValues}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"maxValue"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData>
+                    </div>
+                    <div>
+                      Min Value
+                      <VarTableRowData
+                        incomingKey={incomingIndex}
+                        incomingValues={incomingValues}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"minDateValue"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData>
+                    </div>
+                    <div>
+                      Max Value
+                      <VarTableRowData
+                        incomingKey={incomingIndex}
+                        incomingValues={incomingValues}
+                        tableDataType={"VarStartValue"}
+                        incomingchangedValues={"maxDateValue"}
+                        incomingHandleVariableChanges={
+                          incomingHandleVariableChanges
+                        }
+                      ></VarTableRowData>
                     </div>
                   </div>
                 </div>
