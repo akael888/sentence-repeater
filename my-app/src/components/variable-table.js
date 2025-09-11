@@ -5,6 +5,7 @@ import css from "./variable.module.css";
 
 import VarTableHeader from "./var-table-header";
 import VarTableBody from "./var-table-body";
+import VariableModal from "./var-modal";
 
 function VariableTable({
   incomingVariables,
@@ -194,8 +195,36 @@ function VariableTable({
     }
   }
 
+  const [modalOn, setModalOn] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(null);
+  // const [currentVariable, setCurrentVariable] = useState(null);
+
+  function handleModalOnChanges(passedVariable) {
+    setModalOn(passedVariable);
+  }
+
+  function handleCurrentVariableSet(passedVariable, passedIndex) {
+    console.log(
+      "Setting current variable with index:",
+      passedIndex,
+      "variable:",
+      passedVariable
+    );
+    setCurrentIndex(passedIndex); // Store the index
+  }
+
+  // Get the current variable dynamically using the index
+  const currentVariable =
+    currentIndex !== null ? incomingVariables.get(currentIndex) : null;
   return (
     <>
+      <VariableModal
+        modalState={modalOn}
+        setModalState={setModalOn}
+        incomingIndex={currentIndex}
+        incomingValues={currentVariable}
+        incomingHandleVariableChanges={handleVariableChanges}
+      ></VariableModal>
       {incomingVariables !== undefined && incomingVariables.size > 0 ? (
         <div className={"w-screen rounded-[10px]"}>
           <div
@@ -214,6 +243,8 @@ function VariableTable({
                 incomingHandleVariableChanges={handleVariableChanges}
                 incomingTypeValidator={typeValidator}
                 incomingOtherValidator={otherValidator}
+                incomingHandleModalOnChange={handleModalOnChanges}
+                incomingHandleCurrentVariableSet={handleCurrentVariableSet}
               ></VarTableBody>
             </table>
           </div>
