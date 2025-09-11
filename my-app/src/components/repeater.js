@@ -6,12 +6,14 @@ import Preview from "./text-preview";
 // import css from "./repeater.module.css";
 import TextInput from "./text-input";
 import bg from "../img/background-img.jpg";
+import VariableModal from "./var-modal";
 
 function Repeater() {
   const [previewText, setPreviewText] = useState(""); //For Text Preview
   const [variables, setVariables] = useState(new Map()); //To Count Each Variables
   const [generatedSentence, setGeneratedSentence] = useState([]); //For the created Sentences
   const [highestListVar, setHighestListVar] = useState({ list: [] });
+
 
   //to update changes within the generated sentence in the parent component
 
@@ -57,8 +59,11 @@ function Repeater() {
     setHighestListVar(passedVariable);
   };
 
+
+
   return (
     <>
+
       <div
         className="w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color shrink-1"
         style={{ backgroundImage: `url(${bg})` }}
@@ -68,7 +73,9 @@ function Repeater() {
             incomingPreviewText={previewText}
             incomingVariables={variables}
           />
-          <div className={"h-full w-full inline-flex items-start content-center"}>
+          <div
+            className={"h-full w-full inline-flex items-start content-center"}
+          >
             {/*Kurang Animasi*/}
             <TextInput
               incomingHandlePreviewTextChanges={handlePreviewTextChanges}
@@ -84,12 +91,15 @@ function Repeater() {
             />
           </div>
           <>
-            <div className={"grid w-full items-center content-center gap-[30px]"}>
+            <div
+              className={"grid w-full items-center content-center gap-[30px]"}
+            >
               <VariableTable
                 incomingVariables={variables}
                 incomingHandlevariableChanges={handleVariableChanges}
                 incomingHandleHighestListVar={handleHighestListVarChanges}
                 incomingHighestListVar={highestListVar}
+
               />
               <ShowResult
                 arrayResults={generatedSentence}
