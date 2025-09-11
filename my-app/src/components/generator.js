@@ -252,10 +252,10 @@ function Generator({
 
   return (
     <>
-      <div className={"inline-flex place-content-end rounded-[10px]"}>
+      <div className={"w-[50%] inline-flex place-content-end rounded-[10px]"}>
         <input
           className={
-            "bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +
+            "w-full bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +
             tw_inputAmount_hover
           }
           type="number"
@@ -268,12 +268,12 @@ function Generator({
         />
         <div
           className={
-            "text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
+            "w-full text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
             tw_generateButton_glassMorphBG +
             tw_generateButton_hover
           }
         >
-          <button className="p-[10px]" onClick={generateSentence}>
+          <button className="w-full  p-[10px]" onClick={generateSentence}>
             Generate
           </button>
         </div>
