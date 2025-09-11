@@ -12,7 +12,8 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
           {/* <th>id</th> */}
           <th>Variable Name</th>
           <th>Type</th>
-          <th>Start Value</th>
+          <th>Open Variable</th>
+          {/* <th>Start Value</th>
           <>
             {incomingOtherTypeValidator.Random &&
             (incomingTypeValidator.Integer || incomingTypeValidator.Date) ? (
@@ -40,7 +41,7 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
             incomingTypeValidator.Date ? (
               <th>Randomize</th>
             ) : null}
-          </>
+          </> */}
         </tr>
       </thead>
     </>
