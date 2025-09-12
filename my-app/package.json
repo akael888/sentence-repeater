@@ -1,6 +1,6 @@
 {
   "name": "sentence-repeater",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "a tool to help duplicating a sentence that have specific rules to each iteration",
   "private": true,
   "dependencies": {
