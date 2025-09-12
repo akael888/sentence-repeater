@@ -15,7 +15,8 @@ function VariableModal({
     console.log("Modal:", incomingIndex, incomingValues);
     setModalState(!modalState);
   }
-
+  let tw_varModal_glassMorphBG =
+    " bg-[color-mix(in_srgb,var(--main-color)_90%,transparent)] backdrop-blur-[10px]";
   // function printIntervalProperTerm() {
   //   switch (incomingValues.type) {
   //     case "Integer":
@@ -27,6 +28,12 @@ function VariableModal({
   //   }
   // }
 
+  function handleBackdropClick(event) {
+    if (event.target === event.currentTarget) {
+      setModalState(false);
+    }
+  }
+
   if (!incomingValues) {
     return null;
   }
@@ -36,8 +43,13 @@ function VariableModal({
       {modalState ? (
         <>
           <div className="w-screen h-screen inset-0 fixed z-[100]">
-            <div className="w-screen h-screen inset-0 fixed bg-[rgba(49,49,49,0.8)]">
-              <div className=" absolute h[50vh] grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[600px] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 bg-main-color">
+            <div
+              className="w-screen h-screen inset-0 fixed bg-[rgba(49,49,49,0.8)]"
+              onClick={handleBackdropClick}
+            >
+              <div
+                className={` absolute h[50vh] grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[600px] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} border border-white`}
+              >
                 <div>
                   <h1>
                     <VarTableRowData
@@ -58,7 +70,7 @@ function VariableModal({
                       },0.5fr)] gap-[10px] auto-rows-auto`}
                     >
                       <div
-                        className={`w-full border [&>*]:w-[33%] grid place-items-center grid-cols-[repeat(${
+                        className={`w-full  [&>*]:w-[33%] grid place-items-center grid-cols-[repeat(${
                           incomingValues.type !== "String" ? 3 : 1
                         },0.5fr)]`}
                       >
@@ -153,7 +165,7 @@ function VariableModal({
                       {incomingValues.type == "List" ? (
                         <div className="w-full border  ">
                           Chip List
-                          <div>
+                          <div className="w-full grid grid-cols-3 gap-[10px]">
                             <Chip
                               incomingVariableIndex={incomingIndex}
                               incomingChipList={incomingValues.list}
