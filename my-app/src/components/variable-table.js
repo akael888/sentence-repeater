@@ -151,25 +151,25 @@ function VariableTable({
     switch (typeValue) {
       case "Integer":
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 1;
+        incomingTargetVar.interval = 0;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = 0;
         incomingTargetVar.minValue = 0;
-        incomingTargetVar.maxValue = 10;
+        incomingTargetVar.maxValue = 0;
         // tempTypeValidator.Integer = true;
         break;
       case "String":
         incomingTargetVar.iterate = false;
         incomingTargetVar.interval = null;
         incomingTargetVar.randomize = null;
-        incomingTargetVar.value = "This is a Test String";
+        incomingTargetVar.value = "";
         incomingTargetVar.minValue = null;
         incomingTargetVar.maxValue = null;
         // tempTypeValidator.String = true;
         break;
       case "Date":
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 1;
+        incomingTargetVar.interval = 0;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = null;
         incomingTargetVar.minValue = null;
@@ -182,7 +182,7 @@ function VariableTable({
       case "List":
         console.log("List");
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 1;
+        incomingTargetVar.interval = 0;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = "";
         incomingTargetVar.minValue = null;
@@ -196,7 +196,7 @@ function VariableTable({
   }
 
   const [modalOn, setModalOn] = useState(false);
-    const [currentIndex, setCurrentIndex] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
   // const [currentVariable, setCurrentVariable] = useState(null);
 
   function handleModalOnChanges(passedVariable) {
