@@ -233,7 +233,7 @@ function VariableTable({
               tw_varTable_glassMorphBG
             }
           >
-            <table>
+            <table className="w-full" >
               <VarTableHeader
                 incomingTypeValidator={typeValidator}
                 incomingOtherTypeValidator={otherValidator}
