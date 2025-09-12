@@ -77,7 +77,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                 </div>
               </div>
               <div className={css["results-interaction-container"]}>
-                <button onClick={handleCopyClick}>
+                <button className="w-full h-full" onClick={handleCopyClick}>
                   {isCopied ? "Copied!" : "Copy"}
                 </button>
                 <button>Test</button>
