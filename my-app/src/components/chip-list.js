@@ -21,13 +21,12 @@ function Chip({
           ? incomingChipList.map((value, index) => (
               <>
                 <div
-                  className={`w-full h-full inline-flex bg-opposite-color rounded-[10px] ${tw_chip_glassMorphBG}`}
+                  className={`w-full h-full inline-flex  items-center justify-center bg-opposite-color rounded-[10px] ${tw_chip_glassMorphBG}  gap-[5px]`}
                 >
-                  <span className={css["chip-object"]}>{value}</span>
-                  <span> </span>
+                  <div className={css["chip-object"]}>{value}</div>
                   <button
                     onClick={(e) => removeChip(index)}
-                    className="w-[30%] h-full text-main-color"
+                    className="w-[30%] h-full text-main-color  p-[5px]"
                   >
                     {" "}
                     X{" "}
