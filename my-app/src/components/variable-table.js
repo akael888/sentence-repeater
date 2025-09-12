@@ -15,7 +15,7 @@ function VariableTable({
 }) {
   //tailwind css
   let tw_varTable_glassMorphBG =
-    " bg-[color-mix(in srgb, var(--opposite-color) 20%, transparent] backdrop-blur-[10px]";
+    " bg-[color-mix(in_srgb,var(--opposite-color)_20%,transparent)] backdrop-blur-[10px]";
 
   // const initializedName = useRef(new Set());
 
@@ -233,7 +233,7 @@ function VariableTable({
               tw_varTable_glassMorphBG
             }
           >
-            <table className="w-full" >
+            <table className="w-full">
               <VarTableHeader
                 incomingTypeValidator={typeValidator}
                 incomingOtherTypeValidator={otherValidator}
