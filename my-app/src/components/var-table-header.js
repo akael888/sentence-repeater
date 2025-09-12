@@ -1,16 +1,19 @@
 import css from "./var-table-header.module.css";
 
 function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
-
-  
   return (
     <>
-      <thead className={css["thead-name"]}>
-        <tr>
+      <thead
+        className={
+          "w-screen h-full text-white rounded-[10px] p-[15px] shrink-1"
+        }
+      >
+        <tr className=" [&>*]:p-[15px]">
           {/* <th>id</th> */}
           <th>Variable Name</th>
           <th>Type</th>
-          <th>Start Value</th>
+          <th>Open Variable</th>
+          {/* <th>Start Value</th>
           <>
             {incomingOtherTypeValidator.Random &&
             (incomingTypeValidator.Integer || incomingTypeValidator.Date) ? (
@@ -38,7 +41,7 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
             incomingTypeValidator.Date ? (
               <th>Randomize</th>
             ) : null}
-          </>
+          </> */}
         </tr>
       </thead>
     </>

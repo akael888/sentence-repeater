@@ -5,6 +5,7 @@ import css from "./variable.module.css";
 
 import VarTableHeader from "./var-table-header";
 import VarTableBody from "./var-table-body";
+import VariableModal from "./var-modal";
 
 function VariableTable({
   incomingVariables,
@@ -12,6 +13,10 @@ function VariableTable({
   incomingHandleHighestListVar,
   incomingHighestListVar,
 }) {
+  //tailwind css
+  let tw_varTable_glassMorphBG =
+    " bg-[color-mix(in_srgb,var(--opposite-color)_20%,transparent)] backdrop-blur-[10px]";
+
   // const initializedName = useRef(new Set());
 
   const [typeValidator, setTypeValidator] = useState({
@@ -125,9 +130,11 @@ function VariableTable({
 
     function getValidatorValue(variableField) {
       let validatorList = null;
-      validatorList = Array.from(incomingVariables.values()).map(
-        (variable) => variable[variableField]
-      );
+      validatorList = Array.from(incomingVariables.values()).map((variable) => {
+        if (variable.type == "List" && variableField == "randomize") {
+          return false;
+        } else return variable[variableField];
+      });
       return validatorList;
     }
 
@@ -144,25 +151,25 @@ function VariableTable({
     switch (typeValue) {
       case "Integer":
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 1;
+        incomingTargetVar.interval = 0;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = 0;
         incomingTargetVar.minValue = 0;
-        incomingTargetVar.maxValue = 10;
+        incomingTargetVar.maxValue = 0;
         // tempTypeValidator.Integer = true;
         break;
       case "String":
         incomingTargetVar.iterate = false;
         incomingTargetVar.interval = null;
         incomingTargetVar.randomize = null;
-        incomingTargetVar.value = "This is a Test String";
+        incomingTargetVar.value = "";
         incomingTargetVar.minValue = null;
         incomingTargetVar.maxValue = null;
         // tempTypeValidator.String = true;
         break;
       case "Date":
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 1;
+        incomingTargetVar.interval = 0;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = null;
         incomingTargetVar.minValue = null;
@@ -175,7 +182,7 @@ function VariableTable({
       case "List":
         console.log("List");
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 1;
+        incomingTargetVar.interval = 0;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = "";
         incomingTargetVar.minValue = null;
@@ -188,22 +195,59 @@ function VariableTable({
     }
   }
 
+  const [modalOn, setModalOn] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(null);
+  // const [currentVariable, setCurrentVariable] = useState(null);
+
+  function handleModalOnChanges(passedVariable) {
+    setModalOn(passedVariable);
+  }
+
+  function handleCurrentVariableSet(passedVariable, passedIndex) {
+    console.log(
+      "Setting current variable with index:",
+      passedIndex,
+      "variable:",
+      passedVariable
+    );
+    setCurrentIndex(passedIndex); // Store the index
+  }
+
+  // Get the current variable dynamically using the index
+  const currentVariable =
+    currentIndex !== null ? incomingVariables.get(currentIndex) : null;
   return (
     <>
+      <VariableModal
+        modalState={modalOn}
+        setModalState={setModalOn}
+        incomingIndex={currentIndex}
+        incomingValues={currentVariable}
+        incomingHandleVariableChanges={handleVariableChanges}
+      ></VariableModal>
       {incomingVariables !== undefined && incomingVariables.size > 0 ? (
-        <div className={css["variable-container"]}>
-          <table className={css["variable-table-name"]}>
-            <VarTableHeader
-              incomingTypeValidator={typeValidator}
-              incomingOtherTypeValidator={otherValidator}
-            ></VarTableHeader>
-            <VarTableBody
-              incomingVariablesBody={incomingVariables}
-              incomingHandleVariableChanges={handleVariableChanges}
-              incomingTypeValidator={typeValidator}
-              incomingOtherValidator={otherValidator}
-            ></VarTableBody>
-          </table>
+        <div className={"w-screen rounded-[10px]"}>
+          <div
+            className={
+              "rounded-[10px] w-screen h-full border border-solid border-white border-spacing-[10px]" +
+              tw_varTable_glassMorphBG
+            }
+          >
+            <table className="w-full">
+              <VarTableHeader
+                incomingTypeValidator={typeValidator}
+                incomingOtherTypeValidator={otherValidator}
+              ></VarTableHeader>
+              <VarTableBody
+                incomingVariablesBody={incomingVariables}
+                incomingHandleVariableChanges={handleVariableChanges}
+                incomingTypeValidator={typeValidator}
+                incomingOtherValidator={otherValidator}
+                incomingHandleModalOnChange={handleModalOnChanges}
+                incomingHandleCurrentVariableSet={handleCurrentVariableSet}
+              ></VarTableBody>
+            </table>
+          </div>
         </div>
       ) : null}
     </>

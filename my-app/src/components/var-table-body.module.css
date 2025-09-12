@@ -1,18 +1,24 @@
 .tbody-name {
-    width: 100%;
+    width: 100vh;
     height: 100%;
-    background-color: var(--sub-color);
+    /* background-color: color-mix(in srgb, var(--main-color) 10%, transparent);
+    backdrop-filter: blur(10px); */
+    color: var(--opposite-color);
     border-radius: 10px;
 }
 
 .tbody-name td:hover {
-    background-color: var(--opposite-color);
-    color: var(--main-color);
+    /* background-color: var(--opposite-color); */
+    background-color: color-mix(in srgb, var(--opposite-color) 100%, transparent);
+    backdrop-filter: blur(10px);
+    
+    color: black;
 
 
     /* box-shadow: 0px 0px 21px -1px var(--opposite-color);
     -webkit-box-shadow: 0px 0px 21px -1px var(--opposite-color);
     -moz-box-shadow: 0px 0px 21px -1px var(--opposite-color); */
+    border-radius: 10px;
 }
 
 /* .variable-table td:hover {
@@ -24,7 +30,9 @@
 } */
 
 .tbody-name tr:hover {
-    background-color: var(--opposite-sub-color);
+    /* background-color: var(--opposite-sub-color); */
+    background-color: color-mix(in srgb, var(--opposite-sub-color) 10%, transparent);
+    backdrop-filter: blur(10px);
     color: var(--opposite-color);
     /* box-shadow: 0px 0px 21px -1px var(--shadow-color);
     -webkit-box-shadow: 0px 0px 21px -1px var(--shadow-color);

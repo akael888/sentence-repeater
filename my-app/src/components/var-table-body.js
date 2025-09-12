@@ -1,21 +1,26 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import Chip from "./chip-list";
 import css from "./var-table-body.module.css";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import VarTableRowData from "./var-table-row-data";
+import SpawnVarModal from "./spawn-var-modal-button";
+import VariableModal from "./var-modal";
 
 function VarTableBody({
   incomingVariablesBody,
   incomingHandleVariableChanges,
   incomingTypeValidator,
   incomingOtherValidator,
+  incomingHandleModalOnChange,
+  incomingHandleCurrentVariableSet,
 }) {
   //   const editableRef = useRef(null);
   return (
     <>
-      <tbody className={css["tbody-name"]}>
+      <div></div>
+      <tbody className="w-screen shrink-1">
         {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
-          <tr key={key}>
+          <tr key={key} className={"[&>*] [&>*]:shrink-1 "}>
             <td>
               <VarTableRowData
                 incomingKey={key}
@@ -23,10 +28,10 @@ function VarTableBody({
                 tableDataType={"VarName"}
                 incomingchangedValues={"name"}
                 incomingHandleVariableChanges={incomingHandleVariableChanges}
+                incomingCustomColorText="main-color"
               ></VarTableRowData>
             </td>
-
-            <td className={css["td-var-type"]}>
+            <td>
               <Dropdown>
                 <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                   {values.type}
@@ -64,8 +69,15 @@ function VarTableBody({
                 </Dropdown.Menu>
               </Dropdown>
             </td>
-
-            <>
+            <td>
+              <SpawnVarModal
+                incomingSelectedVariable={values}
+                incomingHandleModalOnChangeforSpawn={incomingHandleModalOnChange}
+                incomingHandleSelectedKey={key}
+                incomingHandleCurrentVariableSet={incomingHandleCurrentVariableSet}
+              ></SpawnVarModal>
+            </td>
+            {/* <>
               {values.randomize &&
               (values.type === "Integer" || values.type === "Date") ? (
                 <>
@@ -170,11 +182,11 @@ function VarTableBody({
               )}
             </>
 
-            <>
+            {/* <>
               {values.type === "Integer" ||
               values.type === "List" ||
               values.type === "Date" ? (
-                <td className={css["td-var-iterate"]}>
+                <td>
                   <VarTableRowData
                     incomingKey={key}
                     incomingValues={values}
@@ -235,7 +247,8 @@ function VarTableBody({
                 (incomingTypeValidator.Integer ||
                   incomingTypeValidator.Date) && <td></td>
               )}
-            </>
+            </> */}{" "}
+            */}
           </tr>
         ))}
       </tbody>

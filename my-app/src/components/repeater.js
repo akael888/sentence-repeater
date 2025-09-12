@@ -3,8 +3,10 @@ import VariableTable from "./variable-table";
 import Generator from "./generator";
 import ShowResult from "./result";
 import Preview from "./text-preview";
-import css from "./repeater.module.css";
+// import css from "./repeater.module.css";
 import TextInput from "./text-input";
+import bg from "../img/background-img.jpg";
+import VariableModal from "./var-modal";
 
 function Repeater() {
   const [previewText, setPreviewText] = useState(""); //For Text Preview
@@ -12,7 +14,26 @@ function Repeater() {
   const [generatedSentence, setGeneratedSentence] = useState([]); //For the created Sentences
   const [highestListVar, setHighestListVar] = useState({ list: [] });
 
+
   //to update changes within the generated sentence in the parent component
+
+  //tailwind css
+  //input containers
+  let tw_inputContainers_sm = " sm:grid";
+  let tw_inputContainers_md =
+    " md:grid md:w-full md:h-full md:content-center md:grid-row-2 md:place-content-center";
+  let tw_inputContainers_lg =
+    " :lg:inline-flex lg:w-screen lg:h-full lgalign-center lg:justify-center lg:m-auto lg:shrink-1";
+  let tw_inputContainers_xl = " ";
+  let tw_inputContainers_2xl = " ";
+
+  //hidden containers
+  let tw_hiddenContainers_sm = " sm:grid sm:content-center sm:gap-[1vh]";
+  let tw_hiddenContainers_md = " md:grid md:content-center md:gap-[1vh]";
+  let tw_hiddenContainers_lg = " lg:grid lg:content-center lg:gap-[1vh]";
+  let tw_hiddenContainers_xl = " xl:grid xl:content-center xl:gap-[1vh]";
+  let tw_hiddenContainers_2xl =
+    " 2xl:w-screen 2xl:align-center 2xl:justify-center 2xl:place-items-start 2xl:gap-[5vw] 2xl:flex 2xl:shrink-1";
 
   useEffect(() => {
     if (variables.size === 0) {
@@ -38,70 +59,24 @@ function Repeater() {
     setHighestListVar(passedVariable);
   };
 
-  // const handleMainTextBlur = () => {
-  //   if (mainTextRef.current) {
-  //     mainTextChange({ target: { value: mainTextRef.current.innerText } });
-  //   }
-  // };
 
-  //disable any enter happening on main text
-  // useEffect(() => {
-  //   const handleKeyDown = (event) => {
-  //     if (event.key === "Enter") {
-  //       event.preventDefault();
-  //       if (mainTextRef.current) {
-  //         mainTextRef.current.removeAttribute("contenteditable");
-  //       }
-  //     }
-  //   };
-
-  //   document.addEventListener("keydown", handleKeyDown);
-  //   return () => document.removeEventListener("keydown", handleKeyDown);
-  // }, []);
-
-  //enableEditing onclick
-  // function enableEditing(element) {
-  //   if (!element) return; // Prevent error if element is undefined
-  //   element.setAttribute("contenteditable", true); //Add content editable
-  //   element.focus(); //Focusing on the eelement
-  // }
-
-  // function addVariableOnInput(e) {
-  //   const innerText = e.target.innerText;
-
-  //   let searchPos = 0;
-  //   let allBracketPositions = [];
-
-  //   while (searchPos < innerText.length) {
-  //     const bracketPos = innerText.indexOf("{}", searchPos);
-  //     if (bracketPos === -1) break;
-  //     allBracketPositions.push(bracketPos);
-  //     searchPos = bracketPos + 1;
-  //   }
-
-  //   const newVariables = new Map();
-  //   allBracketPositions.forEach((position, index) => {
-  //     newVariables.set(index, {
-  //       id: position,
-  //       name: "Variable " + index,
-  //       type: "Integer",
-  //       value: index,
-  //       iterate: true,
-  //     });
-  //   });
-
-  //   setVariables(newVariables);
-  // }
 
   return (
     <>
-      <div className={css["all-container"]}>
-        <div className={css["leftside-container"]}>
+
+      <div
+        className="w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color shrink-1"
+        style={{ backgroundImage: `url(${bg})` }}
+      >
+        <div className="w-screen h-full grid place-items-center m-auto gap-[30px]">
           <Preview
             incomingPreviewText={previewText}
             incomingVariables={variables}
           />
-          <div className={css["repeater-container"]}>
+          <div
+            className={"h-full w-full inline-flex items-start content-center"}
+          >
+            {/*Kurang Animasi*/}
             <TextInput
               incomingHandlePreviewTextChanges={handlePreviewTextChanges}
               incomingHandleVariablesChanges={handleVariableChanges}
@@ -116,12 +91,15 @@ function Repeater() {
             />
           </div>
           <>
-            <div className={css[["hidden-containers"]]}>
+            <div
+              className={"grid w-full items-center content-center gap-[30px]"}
+            >
               <VariableTable
                 incomingVariables={variables}
                 incomingHandlevariableChanges={handleVariableChanges}
                 incomingHandleHighestListVar={handleHighestListVarChanges}
                 incomingHighestListVar={highestListVar}
+
               />
               <ShowResult
                 arrayResults={generatedSentence}
@@ -136,3 +114,5 @@ function Repeater() {
 }
 
 export default Repeater;
+
+// "w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color shrink-1"
