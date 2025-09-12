@@ -6,9 +6,15 @@ function VarTableRowData({
   tableDataType,
   incomingchangedValues,
   incomingHandleVariableChanges,
-  incomingCustomColorText,
+  incomingCustomColorText = "main-color",
+  incomingCustomBGColorText = "transparent",
 }) {
-  console.log("VarTableRowData render - Key:", incomingKey, "Values:", incomingValues);
+  console.log(
+    "VarTableRowData render - Key:",
+    incomingKey,
+    "Values:",
+    incomingValues
+  );
   const editableRef = useRef();
 
   const TableRowFormatRef = {
@@ -73,25 +79,25 @@ function VarTableRowData({
     if (tableDataType === "VarBoolean") {
       return incomingValues[incomingchangedValues] || false;
     }
-    
+
     if (tableDataType === "VarStartValue" && incomingValues.type === "Date") {
       return incomingValues[incomingchangedValues]
         ? incomingValues[incomingchangedValues].toISOString().split("T")[0]
         : "";
     }
-    
+
     return incomingValues[incomingchangedValues] || "";
   };
 
   // Handle change events
   const handleChange = (e) => {
     let value = e.target.value;
-    
+
     // Handle different data types
     if (tableDataType === "VarStartValue" && incomingValues.type === "Date") {
       value = value ? new Date(value) : null;
     }
-    
+
     incomingHandleVariableChanges(incomingKey, incomingchangedValues, value);
   };
 
@@ -99,7 +105,11 @@ function VarTableRowData({
   const handleClick = (e) => {
     if (tableDataType === "VarBoolean") {
       const newValue = !incomingValues[incomingchangedValues];
-      incomingHandleVariableChanges(incomingKey, incomingchangedValues, newValue);
+      incomingHandleVariableChanges(
+        incomingKey,
+        incomingchangedValues,
+        newValue
+      );
     }
   };
 
@@ -117,7 +127,7 @@ function VarTableRowData({
     <>
       <input
         ref={editableRef}
-        className={`w-full text-center bg-transparent text-${incomingCustomColorText} placeholder-sub-color shrink-1`}
+        className={`w-full text-center bg-${incomingCustomBGColorText} text-${incomingCustomColorText} placeholder-sub-color shrink-1`}
         type={getInputType()}
         {...(tableDataType === "VarBoolean"
           ? {
