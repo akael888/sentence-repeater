@@ -57,7 +57,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
             <div className={css["results-container"]}>
               <div className={css["results-all-container"]}>
                 <div className={css["results-table-header-container"]}>
-                  <h4>Sentence</h4>
+                  <h4 className="p-[5px]">Sentence</h4>
                   <CloseButton
                     onClick={() => {
                       handeArrayResultsChanges();
