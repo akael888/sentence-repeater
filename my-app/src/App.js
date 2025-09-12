@@ -27,7 +27,7 @@ function App() {
     <div className="w-screen h-screen text-center shrink-1">
       <header
         className={
-          "min-h-[10vh] w-screen flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color absolute text-center" +
+          "min-h-[10vh] w-screen flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color absolute text-center z-[100]" +
           tw_appHeader_glassMorphBG
         }
       >

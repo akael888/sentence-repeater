@@ -6,21 +6,22 @@ function VarTableRowData({
   tableDataType,
   incomingchangedValues,
   incomingHandleVariableChanges,
+  incomingCustomColorText = "main-color",
+  incomingCustomBGColorText = "transparent",
 }) {
+  console.log(
+    "VarTableRowData render - Key:",
+    incomingKey,
+    "Values:",
+    incomingValues
+  );
   const editableRef = useRef();
-  let selectedKey = null;
 
   const TableRowFormatRef = {
     VarName: {
-      type: () => {
-        return "text";
-      },
-      placeholder: () => {
-        return "Input Var Name for Var " + incomingKey;
-      },
-      widthCSS: () => {
-        return 60;
-      },
+      type: () => "text",
+      placeholder: () => "Input Var Name for Var " + incomingKey,
+      widthCSS: () => 60,
     },
     VarStartValue: {
       type: () => {
@@ -47,187 +48,78 @@ function VarTableRowData({
             return "text";
         }
       },
-      widthCSS: () => {
-        return 20;
-      },
+      widthCSS: () => 20,
     },
     VarInterval: {
-      type: () => {
-        return "number";
-      },
-      placeholder: () => {
-        return "Numbers Only";
-      },
-      widthCSS: () => {
-        return 100;
-      },
+      type: () => "number",
+      placeholder: () => "Numbers Only",
+      widthCSS: () => 100,
     },
     VarBoolean: {
-      type: () => {
-        return "checkbox";
-      },
-      widthCSS: () => {
-        return 50;
-      },
+      type: () => "checkbox",
+      widthCSS: () => 50,
     },
   };
 
-  const selectedTableData = () => {
-    console.log(`TableRowFormatRef: `, TableRowFormatRef);
-    for (const key in TableRowFormatRef) {
-      console.log(
-        `TableRowFormatRefKey: `,
-        TableRowFormatRef[key],
-        "Key:",
-        key
+  // Get the current table format configuration
+  const currentTableFormat = TableRowFormatRef[tableDataType];
+
+  // Get the input type
+  const getInputType = () => {
+    return currentTableFormat?.type() || "text";
+  };
+
+  // Get the placeholder
+  const getPlaceholder = () => {
+    return currentTableFormat?.placeholder?.() || "";
+  };
+
+  // Get the current value based on the data type
+  const getCurrentValue = () => {
+    if (tableDataType === "VarBoolean") {
+      return incomingValues[incomingchangedValues] || false;
+    }
+
+    if (tableDataType === "VarStartValue" && incomingValues.type === "Date") {
+      return incomingValues[incomingchangedValues]
+        ? incomingValues[incomingchangedValues].toISOString().split("T")[0]
+        : "";
+    }
+
+    return incomingValues[incomingchangedValues] || "";
+  };
+
+  // Handle change events
+  const handleChange = (e) => {
+    let value = e.target.value;
+
+    // Handle different data types
+    if (tableDataType === "VarStartValue" && incomingValues.type === "Date") {
+      value = value ? new Date(value) : null;
+    }
+
+    incomingHandleVariableChanges(incomingKey, incomingchangedValues, value);
+  };
+
+  // Handle click events (for checkboxes)
+  const handleClick = (e) => {
+    if (tableDataType === "VarBoolean") {
+      const newValue = !incomingValues[incomingchangedValues];
+      incomingHandleVariableChanges(
+        incomingKey,
+        incomingchangedValues,
+        newValue
       );
-      if (tableDataType == key) {
-        console.log(`TableRowFormatRefKeyIf: `, TableRowFormatRef[key]);
-        selectedKey = key;
-        return TableRowFormatRef[key];
-      }
     }
   };
 
-  function getTableRowDataAttribute(attributeType, eventCall) {
-    let valueType = incomingValues.type;
-    let result = null;
-
-    switch (attributeType) {
-      case "type":
-        result = selectedTableData();
-        console.log("type:", result?.type(), "selectedkey", selectedKey);
-        return result?.type();
-      case "value":
-        if (selectedKey == "VarName") {
-          console.log(
-            "varname incoming changed values :",
-            incomingValues[incomingchangedValues]
-          );
-          return incomingValues[incomingchangedValues];
-        } else if (selectedKey == "VarInterval") {
-          return incomingValues[incomingchangedValues];
-        } else if (selectedKey == "VarBoolean") {
-          return incomingValues[incomingchangedValues];
-        } else {
-          switch (valueType) {
-            case "Integer":
-              return incomingValues[incomingchangedValues];
-            case "Date":
-              return incomingValues[incomingchangedValues]
-                ? incomingValues[incomingchangedValues]
-                    .toISOString()
-                    .split("T")[0]
-                : "";
-            case "List":
-              return incomingValues.value;
-            case "String":
-              return incomingValues.value;
-            default:
-              return incomingValues.incomingchangedValues;
-          }
-        }
-      case "onChange":
-        if (selectedKey == "VarName") {
-          result = () =>
-            incomingHandleVariableChanges(
-              incomingKey,
-              incomingchangedValues,
-              eventCall.target.value
-            );
-          return result();
-        } else if (selectedKey == "VarInterval") {
-          result = () =>
-            incomingHandleVariableChanges(
-              incomingKey,
-              incomingchangedValues,
-              eventCall.target.value
-            );
-
-          console.log("EventCall Target Value:", eventCall.target.value);
-          return result();
-        } else {
-          switch (valueType) {
-            case "Integer":
-              result = () => {
-                return incomingHandleVariableChanges(
-                  incomingKey,
-                  incomingchangedValues,
-                  eventCall.target.value
-                );
-              };
-              return result();
-            case "Date":
-              result = () => {
-                const selectedDate = eventCall.target.value
-                  ? new Date(eventCall.target.value)
-                  : null;
-
-                return incomingHandleVariableChanges(
-                  incomingKey,
-                  incomingchangedValues,
-                  selectedDate
-                );
-              };
-
-              return result();
-            case "List":
-              result = () => {
-                return incomingHandleVariableChanges(
-                  incomingKey,
-                  incomingchangedValues,
-                  eventCall.target.value
-                );
-              };
-              return result();
-            case "String":
-              result = () => {
-                return incomingHandleVariableChanges(
-                  incomingKey,
-                  incomingchangedValues,
-                  eventCall.target.value
-                );
-              };
-              return result();
-            default:
-              break;
-          }
-        }
-        break;
-      case "onClick":
-        if (selectedKey == "VarBoolean") {
-          result = () =>
-            incomingHandleVariableChanges(
-              incomingKey,
-              incomingchangedValues,
-              !incomingValues[incomingchangedValues]
-            );
-
-          console.log("EventCall Target Value:", eventCall.target.value);
-          return result();
-        } else return null;
-      case "placeholder":
-        result = selectedTableData();
-        return result?.placeholder();
-      default:
-        result = () => {
-          return incomingHandleVariableChanges(
-            incomingKey,
-            incomingchangedValues,
-            eventCall.target.value
-          );
-        };
-        return result();
-    }
-  }
-
   //Tailwind Styles
-  let selectedWidthCSS = selectedTableData().widthCSS();
+  let selectedWidthCSS = currentTableFormat?.widthCSS() || 100;
 
   //Var Input Data
   let tw_varInputData_sm = " sm:w-full";
   let tw_varInputData_md = " md:w-full";
-  let tw_varInputData_lg =  ` lg:w-[${selectedWidthCSS}%]`;
+  let tw_varInputData_lg = ` lg:w-[${selectedWidthCSS}%]`;
   let tw_varInputData_xl = ` xl:w-[${selectedWidthCSS}%]`;
   let tw_varInputDatar_2xl = ` 2xl:w-[${selectedWidthCSS}%]`;
 
@@ -235,24 +127,19 @@ function VarTableRowData({
     <>
       <input
         ref={editableRef}
-        className={`w-full text-center bg-transparent text-white placeholder-sub-color shrink-1`}
-        type={getTableRowDataAttribute("type", null)}
-        {...(tableDataType == "VarBoolean"
+        className={`w-full text-center bg-${incomingCustomBGColorText} text-${incomingCustomColorText} placeholder-sub-color shrink-1`}
+        type={getInputType()}
+        {...(tableDataType === "VarBoolean"
           ? {
-              checked: getTableRowDataAttribute("value", null),
-              onClick: (e) => getTableRowDataAttribute("onClick", e),
+              checked: getCurrentValue(),
+              onClick: handleClick,
             }
           : {
-              value: getTableRowDataAttribute("value", null),
-              onChange: (e) => getTableRowDataAttribute("onChange", e),
-              placeholder: getTableRowDataAttribute("placeholder", null),
+              value: getCurrentValue(),
+              onChange: handleChange,
+              placeholder: getPlaceholder(),
             })}
-        // value={getTableRowDataAttribute("value", null)}
-        // {...(tableDataType == "VarBoolean"
-        //   ? { checked: getTableRowDataAttribute("value", null) }
-        //   : { value: getTableRowDataAttribute("value", null) })}
-        // onChange={(e) => getTableRowDataAttribute("onChange", e)}
-      ></input>
+      />
     </>
   );
 }

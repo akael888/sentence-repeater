@@ -1,4 +1,7 @@
-.chip-object{
+.chip-object {
     color: white;
-    background-color: coral;
+    padding: 5px;
+    width: 70%;
+    height: 100%;
+
 }

@@ -35,7 +35,7 @@
     /* border-width: 1px;
     border-color: var(--opposite-color);
     border-style: solid; */
-
+    z-index: 0;
     color: white;
 
 }
@@ -83,7 +83,7 @@
 
     /* background-color: color-mix(in srgb, var(--main-color) 50%, transparent);
     backdrop-filter: blur(10px); */
-    
+
 }
 
 .results-interaction-container {
