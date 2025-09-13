@@ -80,8 +80,8 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                 <button className="w-full h-full" onClick={handleCopyClick}>
                   {isCopied ? "Copied!" : "Copy"}
                 </button>
-                <button>Test</button>
-                <button>Test</button>
+                {/* <button>Test</button>
+                <button>Test</button> */}
               </div>
             </div>
           ) : null}

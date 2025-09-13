@@ -15,6 +15,8 @@
     max-width: 35vh;
     max-height: 25vh;
     display: grid;
+    grid-row: 2;
+    grid-row-start: auto;
     text-align: center;
     place-items: center;
 

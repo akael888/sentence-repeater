@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Repeater from "./components/repeater";
 import Mode from "./components/toggle-mode";
+import bg from "./img/background-img.jpg";
 
 function App() {
   // Repeater Components
@@ -24,10 +25,13 @@ function App() {
   }, [isDarkMode]);
 
   return (
-    <div className="w-screen h-screen text-center shrink-1">
+    <div
+      className="w-screen h-screen flex flex-col bg-center bg-repeat text-center shrink-1 overflow-scroll  "
+      style={{ backgroundImage: `url(${bg})` }}
+    >
       <header
         className={
-          "min-h-[10vh] w-screen flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color absolute text-center z-[100]" +
+          "h-[10%] min-h-[10vh] w-screen flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color  text-center z-[100]  sticky top-0" +
           tw_appHeader_glassMorphBG
         }
       >
@@ -36,7 +40,7 @@ function App() {
           darkModeChangesTitle={handleDarkModeChanges}
         />
       </header>
-      <div>
+      <div className="w-full h-full">
         <Repeater />
       </div>
     </div>
@@ -46,7 +50,7 @@ function App() {
 function TitleHeader({ darkModeTitle, darkModeChangesTitle }) {
   return (
     <>
-      <div className="w-full h-full">
+      <div className="w-full h-full grid content-center">
         <h1>Sentence Repeater</h1>
 
         {/* <Mode

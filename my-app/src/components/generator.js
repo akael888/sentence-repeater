@@ -252,30 +252,36 @@ function Generator({
 
   return (
     <>
-      <div className={"w-[50%] inline-flex place-content-end rounded-[10px]"}>
-        <input
-          className={
-            "w-full bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +
-            tw_inputAmount_hover
-          }
-          type="number"
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            handleGeneratedSentenceAmountChanges(e.target.value);
-          }}
-          placeholder="Amount"
-          value={inputValue}
-        />
+      <div className="w-full h-full">
         <div
           className={
-            "w-full text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
-            tw_generateButton_glassMorphBG +
-            tw_generateButton_hover
+            "w-full inline-flex max-w-[80%] [&>*]:max-w-[80%] place-content-end rounded-[10px]"
           }
         >
-          <button className="w-full  p-[10px]" onClick={generateSentence}>
-            Generate
-          </button>
+          <input
+            className={
+              "w-full bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +
+              tw_inputAmount_hover
+            }
+            type="number"
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              handleGeneratedSentenceAmountChanges(e.target.value);
+            }}
+            placeholder="Amount"
+            value={inputValue}
+          />
+          <div
+            className={
+              "w-full text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
+              tw_generateButton_glassMorphBG +
+              tw_generateButton_hover
+            }
+          >
+            <button className="w-full  p-[10px]" onClick={generateSentence}>
+              Generate
+            </button>
+          </div>
         </div>
       </div>
     </>

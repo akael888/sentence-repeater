@@ -48,7 +48,7 @@ function VariableModal({
               onClick={handleBackdropClick}
             >
               <div
-                className={` absolute h[50vh] grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[600px] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} border border-white`}
+                className={` text-center absolute h[50vh] grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[600px] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} border border-white`}
               >
                 <div>
                   <h1>

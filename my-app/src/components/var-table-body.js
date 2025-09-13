@@ -248,7 +248,7 @@ function VarTableBody({
                   incomingTypeValidator.Date) && <td></td>
               )}
             </> */}{" "}
-            */}
+            
           </tr>
         ))}
       </tbody>

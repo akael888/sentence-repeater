@@ -67,11 +67,11 @@ function Preview({ incomingPreviewText, incomingVariables }) {
     <>
       <div
         className={
-          "w-fit h-full grid text-main-color m-auto p-2.5 rounded-[10px]" +
+          "w-fit h-fit max-w-[80%] flex items-center text-center text-main-color m-auto p-2.5 rounded-[10px] overflow-auto" +
           tw_preview_glassMorphBG
         }
       >
-        <h1>{generatePreviewandVariables()}</h1>
+        <h1 className="w-full ">{generatePreviewandVariables()}</h1>
       </div>
     </>
   );
