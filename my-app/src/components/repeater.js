@@ -61,13 +61,13 @@ function Repeater() {
   return (
     <>
       <div
-        className={`w-full h-full grid place-items-center m-auto gap-[15px]`}
+        className={`w-auto grid place-items-center m-auto h-auto gap-[2vh]`}
       >
         <Preview
           incomingPreviewText={previewText}
           incomingVariables={variables}
         />
-        <div className={"h-full w-full grid grid-rows-2 place-self-center "}>
+        <div className={"h-auto w-full grid grid-rows-2 place-self-center gap-[10px] "}>
           {/*Kurang Animasi*/}
           <TextInput
             incomingHandlePreviewTextChanges={handlePreviewTextChanges}
@@ -83,7 +83,7 @@ function Repeater() {
           />
         </div>
         <>
-          <div className={"grid w-full items-center content-center gap-[30px]"}>
+          <div className={"grid w-full  items-center content-center gap-[30px]"}>
             <VariableTable
               incomingVariables={variables}
               incomingHandlevariableChanges={handleVariableChanges}
