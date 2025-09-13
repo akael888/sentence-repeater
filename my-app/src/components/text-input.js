@@ -74,7 +74,7 @@ function TextInput({
         <div
           // contentEditable="true"
           className={
-            "w-full h-[30%] max-w-[80%] flex overflow-auto bg-main-color justify-center text-opposite-color items-center border border-opposite-color cursor-text rounded-[10px] border-solid p-[10px]" +
+            "w-full h-[100%] max-w-[80%] flex overflow-auto bg-main-color justify-center text-opposite-color items-center border border-opposite-color cursor-text rounded-[10px] border-solid p-[10px]" +
             tw_textInput_hover +
             tw_textInput_focus
           }
