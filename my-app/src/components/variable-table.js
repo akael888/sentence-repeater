@@ -226,14 +226,14 @@ function VariableTable({
         incomingHandleVariableChanges={handleVariableChanges}
       ></VariableModal>
       {incomingVariables !== undefined && incomingVariables.size > 0 ? (
-        <div className={"w-screen rounded-[10px] grid justify-center"}>
+        <div className={"w-full h-full rounded-[10px] grid justify-center"}>
           <div
             className={
-              "rounded-[10px] w-[80vw] h-full border border-solid border-white border-spacing-[10px]" +
+              "rounded-[10px] w-[80vw] h-full border border-solid border-white border-spacing-[10px] " +
               tw_varTable_glassMorphBG
             }
           >
-            <table className="w-full">
+            <table className="w-full h-full  table-fixed ">
               <VarTableHeader
                 incomingTypeValidator={typeValidator}
                 incomingOtherTypeValidator={otherValidator}
