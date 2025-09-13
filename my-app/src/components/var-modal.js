@@ -65,14 +65,18 @@ function VariableModal({
                   </h1>
                   <div className="w-full ">
                     <div
-                      className={`w-full [$>*]:h-[25%] grid place-items-center grid-rows-[repeat(${
-                        incomingValues.iterate ? 3 : 2
+                      className={`w-full [$>*]:h-[25%] grid place-items-center ${
+                        incomingValues.type !== "String"
+                          ? "grid-rows-3"
+                          : "grid-rows-2"
                       },0.5fr)] gap-[10px] auto-rows-auto`}
                     >
                       <div
-                        className={`w-full  [&>*]:w-[33%] grid place-items-center grid-cols-[repeat(${
-                          incomingValues.type !== "String" ? 3 : 1
-                        },0.5fr)]`}
+                        className={`w-full [&>*]:w-[32%] grid place-items-center ${
+                          incomingValues.type !== "String"
+                            ? "grid-cols-3"
+                            : "grid-cols-1"
+                        }`}
                       >
                         <div>
                           <Dropdown>
@@ -177,8 +181,12 @@ function VariableModal({
                         </div>
                       ) : null}
                       <div
-                        className={`gap-[10px] border  w-full [&>*]:w-full grid place-items-center grid-cols-${
-                          !incomingValues.randomize ? 1 : 2
+                        className={`gap-[10px] border  w-full [&>*]:w-full grid place-items-center ${
+                          (incomingValues.type !== "String" &&
+                            incomingValues.type !== "List") &&
+                          incomingValues.randomize
+                            ? "grid-cols-2"
+                            : "grid-cols-1"
                         }`}
                       >
                         {incomingValues.type == "Integer" ||
