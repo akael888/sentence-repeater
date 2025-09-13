@@ -252,15 +252,15 @@ function Generator({
 
   return (
     <>
-      <div className="w-full h-full">
+      <div className="w-full h-full grid  place-items-center">
         <div
           className={
-            "w-full inline-flex max-w-[80%] [&>*]:max-w-[80%] place-content-end rounded-[10px]"
+            "w-full h-[100%] inline-flex max-w-[80%] [&>*]:max-w-[80%] place-content-center rounded-[10px]"
           }
         >
           <input
             className={
-              "w-full bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +
+              "w-full h-full bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +
               tw_inputAmount_hover
             }
             type="number"
@@ -273,12 +273,12 @@ function Generator({
           />
           <div
             className={
-              "w-full text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
+              "w-full h-full grid place-items-center text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
               tw_generateButton_glassMorphBG +
               tw_generateButton_hover
             }
           >
-            <button className="w-full  p-[10px]" onClick={generateSentence}>
+            <button className="w-full h-full p-[5px]" onClick={generateSentence}>
               Generate
             </button>
           </div>
