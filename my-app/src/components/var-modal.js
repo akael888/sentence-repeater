@@ -48,7 +48,7 @@ function VariableModal({
               onClick={handleBackdropClick}
             >
               <div
-                className={`w-[80%  ] text-center absolute h[50vh] grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[70%] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} border border-white`}
+                className={`w-[80%] text-center absolute h[50vh] grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[70%] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} border border-white`}
               >
                 <div>
                   <h1>
@@ -72,7 +72,7 @@ function VariableModal({
                       },0.5fr)] gap-[10px] auto-rows-auto`}
                     >
                       <div
-                        className={`w-auto gap-[10px] h-auto [&>*]:w-full [&>*]:text-sm [&>*]:w-full grid place-items-center ${
+                        className={`w-full gap-[10px] h-auto [&>*]:w-full [&>*]:text-sm [&>*]:w-full grid place-items-center ${
                           incomingValues.type !== "String"
                             ? "grid-cols-3"
                             : "grid-cols-1"
@@ -139,7 +139,8 @@ function VariableModal({
                         {incomingValues.type != "String" ? (
                           <>
                             <div>
-                              Randomize
+                              <div>Randomize</div>
+
                               <VarTableRowData
                                 incomingKey={incomingIndex}
                                 incomingValues={incomingValues}
@@ -151,7 +152,7 @@ function VariableModal({
                               ></VarTableRowData>
                             </div>
                             <div>
-                              Iterate
+                              <div>Iterate</div>
                               <VarTableRowData
                                 incomingKey={incomingIndex}
                                 incomingValues={incomingValues}
@@ -182,8 +183,8 @@ function VariableModal({
                       ) : null}
                       <div
                         className={`gap-[10px] border  w-full [&>*]:w-full grid place-items-center ${
-                          (incomingValues.type !== "String" &&
-                            incomingValues.type !== "List") &&
+                          incomingValues.type !== "String" &&
+                          incomingValues.type !== "List" &&
                           incomingValues.randomize
                             ? "grid-cols-2"
                             : "grid-cols-1"
