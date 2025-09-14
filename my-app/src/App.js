@@ -26,12 +26,12 @@ function App() {
 
   return (
     <div
-      className="w-screen h-screen flex flex-col bg-center bg-repeat text-center shrink-1 overflow-scroll  "
+      className="w-screen h-screen flex flex-col bg-center bg-repeat text-center shrink-1 overflow-scroll overflow-x-hidden overflow-y-auto"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <header
         className={
-          "h-[10%] min-h-[10vh] w-screen flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color  text-center z-[100]  sticky top-0" +
+          "h-[10%] min-h-[10vh] w-fullflex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color  text-center z-[100]  sticky top-0" +
           tw_appHeader_glassMorphBG
         }
       >
@@ -40,7 +40,7 @@ function App() {
           darkModeChangesTitle={handleDarkModeChanges}
         />
       </header>
-      <div className="w-full h-full">
+      <div className="w-full h-auto grid place-items-center p-[5%]">
         <Repeater />
       </div>
     </div>
