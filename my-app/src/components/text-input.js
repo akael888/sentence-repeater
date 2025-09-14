@@ -70,17 +70,19 @@ function TextInput({
 
   return (
     <>
-      <div
-        // contentEditable="true"
-        className={
-          "w-[70%] h-full bg-main-color place-content-center border border-opposite-color cursor-text rounded-[10px] border-solid" +
-          tw_textInput_hover +
-          tw_textInput_focus
-        }
-        onClick={(e) => enableEditing(e.target)}
-        onInput={(e) => addVariableOnInput(e)}
-      >
-        Type here...
+      <div className="w-full h-full flex justify-center items-center">
+        <div
+          // contentEditable="true"
+          className={
+            "w-full h-[100%] max-w-[80%] flex overflow-auto bg-main-color justify-center text-opposite-color items-center border border-opposite-color cursor-text rounded-[10px] border-solid p-[10px]" +
+            tw_textInput_hover +
+            tw_textInput_focus
+          }
+          onClick={(e) => enableEditing(e.target)}
+          onInput={(e) => addVariableOnInput(e)}
+        >
+          Type here...
+        </div>
       </div>
     </>
   );

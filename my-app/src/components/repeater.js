@@ -5,7 +5,7 @@ import ShowResult from "./result";
 import Preview from "./text-preview";
 // import css from "./repeater.module.css";
 import TextInput from "./text-input";
-import bg from "../img/background-img.jpg";
+
 import VariableModal from "./var-modal";
 
 function Repeater() {
@@ -13,7 +13,6 @@ function Repeater() {
   const [variables, setVariables] = useState(new Map()); //To Count Each Variables
   const [generatedSentence, setGeneratedSentence] = useState([]); //For the created Sentences
   const [highestListVar, setHighestListVar] = useState({ list: [] });
-
 
   //to update changes within the generated sentence in the parent component
 
@@ -59,55 +58,44 @@ function Repeater() {
     setHighestListVar(passedVariable);
   };
 
-
-
   return (
     <>
-
       <div
-        className="w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color shrink-1"
-        style={{ backgroundImage: `url(${bg})` }}
+        className={`w-auto grid place-items-center m-auto h-auto gap-[2vh]`}
       >
-        <div className="w-screen h-full grid place-items-center m-auto gap-[30px]">
-          <Preview
-            incomingPreviewText={previewText}
-            incomingVariables={variables}
+        <Preview
+          incomingPreviewText={previewText}
+          incomingVariables={variables}
+        />
+        <div className={"h-auto w-full grid grid-rows-2 place-self-center gap-[10px] "}>
+          {/*Kurang Animasi*/}
+          <TextInput
+            incomingHandlePreviewTextChanges={handlePreviewTextChanges}
+            incomingHandleVariablesChanges={handleVariableChanges}
           />
-          <div
-            className={"h-full w-full inline-flex items-start content-center"}
-          >
-            {/*Kurang Animasi*/}
-            <TextInput
-              incomingHandlePreviewTextChanges={handlePreviewTextChanges}
-              incomingHandleVariablesChanges={handleVariableChanges}
-            />
-            <Generator
+          <Generator
+            incomingVariables={variables}
+            incomingPreviewText={previewText}
+            incomingHandleGeneratedSentenceChanges={
+              handleGeneratedSentenceChanges
+            }
+            incomingHighestListVar={highestListVar}
+          />
+        </div>
+        <>
+          <div className={"grid w-full  items-center content-center gap-[30px]"}>
+            <VariableTable
               incomingVariables={variables}
-              incomingPreviewText={previewText}
-              incomingHandleGeneratedSentenceChanges={
-                handleGeneratedSentenceChanges
-              }
+              incomingHandlevariableChanges={handleVariableChanges}
+              incomingHandleHighestListVar={handleHighestListVarChanges}
               incomingHighestListVar={highestListVar}
             />
+            <ShowResult
+              arrayResults={generatedSentence}
+              arrayResultsChange={handleGeneratedSentenceChanges}
+            />
           </div>
-          <>
-            <div
-              className={"grid w-full items-center content-center gap-[30px]"}
-            >
-              <VariableTable
-                incomingVariables={variables}
-                incomingHandlevariableChanges={handleVariableChanges}
-                incomingHandleHighestListVar={handleHighestListVarChanges}
-                incomingHighestListVar={highestListVar}
-
-              />
-              <ShowResult
-                arrayResults={generatedSentence}
-                arrayResultsChange={handleGeneratedSentenceChanges}
-              />
-            </div>
-          </>
-        </div>
+        </>
       </div>
     </>
   );

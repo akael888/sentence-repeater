@@ -18,9 +18,9 @@ function VarTableBody({
   return (
     <>
       <div></div>
-      <tbody className="w-screen shrink-1">
+      <tbody className="shrink-1">
         {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
-          <tr key={key} className={"[&>*] [&>*]:shrink-1 "}>
+          <tr key={key} className={"[&>*]:shrink-1 "}>
             <td>
               <VarTableRowData
                 incomingKey={key}
@@ -248,7 +248,7 @@ function VarTableBody({
                   incomingTypeValidator.Date) && <td></td>
               )}
             </> */}{" "}
-            */}
+            
           </tr>
         ))}
       </tbody>
