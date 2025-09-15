@@ -1,6 +1,7 @@
 import { useState } from "react";
 import css from "./results.module.css";
 import CloseButton from "react-bootstrap/CloseButton";
+import { AnimatePresence, motion } from "motion/react";
 
 function ShowResult({ arrayResults, arrayResultsChange }) {
   const rows = [];
@@ -42,7 +43,8 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
         .join("\n");
       await navigator.clipboard.writeText(textToCopy);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Reset "Copied!" message after 2 seconds
+      setTimeout(() => setIsCopied(false), 2000); 
+      // Reset "Copied!" message after 2 seconds
     } catch (err) {
       console.error("Failed to copy text: ", err);
       // Handle potential errors (e.g., permission denied)
@@ -51,42 +53,50 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
 
   return (
     <>
-      {arrayResults ? (
-        <>
-          {arrayResults.length > 0 ? (
-            <div className={css["results-container"]}>
-              <div className={css["results-all-container"]}>
-                <div className={css["results-table-header-container"]}>
-                  <h4 className="p-[5px]">Sentence</h4>
-                  <CloseButton
-                    onClick={() => {
-                      handeArrayResultsChanges();
-                    }}
-                    variant="white"
-                  />
-                </div>
-                <div className={css["results-table-container"]}>
-                  <table>
-                    <thead>
-                      {/* <tr>
+      <AnimatePresence>
+        {arrayResults ? (
+          <>
+            {arrayResults.length > 0 ? (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <div className={css["results-container"]}>
+                  <div className={css["results-all-container"]}>
+                    <div className={css["results-table-header-container"]}>
+                      <h4 className="p-[5px]">Sentence</h4>
+                      <CloseButton
+                        onClick={() => {
+                          handeArrayResultsChanges();
+                        }}
+                        variant="white"
+                      />
+                    </div>
+                    <div className={css["results-table-container"]}>
+                      <table>
+                        <thead>
+                          {/* <tr>
               <th>Sentence</th>
             </tr> */}
-                    </thead>
-                    <tbody>{rows}</tbody>
-                  </table>
-                </div>
-              </div>
-              <div className={css["results-interaction-container"]}>
-                <button className="w-full h-full" onClick={handleCopyClick}>
-                  {isCopied ? "Copied!" : "Copy"}
-                </button>
-                {/* <button>Test</button>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div className={css["results-interaction-container"]}>
+                    <button className="w-full h-full" onClick={handleCopyClick}>
+                      {isCopied ? "Copied!" : "Copy"}
+                    </button>
+                    {/* <button>Test</button>
                 <button>Test</button> */}
-              </div>
-            </div>
-          ) : null}
-        </>
-      ) : null}
+                  </div>
+                </div>
+              </motion.div>
+            ) : null}
+          </>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }
