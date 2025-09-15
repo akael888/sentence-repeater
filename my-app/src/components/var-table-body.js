@@ -18,7 +18,7 @@ function VarTableBody({
   return (
     <>
       <div></div>
-      <tbody className="shrink-1">
+      <tbody className="shrink-1 w-full max-h-[12rem] overflow-y-auto">
         {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
           <tr key={key} className={"[&>*]:shrink-1 "}>
             <td>

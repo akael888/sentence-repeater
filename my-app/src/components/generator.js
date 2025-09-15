@@ -252,7 +252,7 @@ function Generator({
 
   return (
     <>
-      <div className="w-full h-full grid  place-items-center">
+      <div className="w-full h-auto grid  place-items-center">
         <div
           className={
             "w-full h-[100%] inline-flex max-w-[80%] [&>*]:max-w-[80%] place-content-center rounded-[10px]"
