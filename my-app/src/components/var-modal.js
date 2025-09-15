@@ -72,22 +72,27 @@ function VariableModal({
                       },0.5fr)] gap-[10px] auto-rows-auto`}
                     >
                       <div
-                        className={`w-full gap-[10px] h-auto [&>*]:w-full [&>*]:text-sm [&>*]:w-full grid place-items-center ${
+                        className={`w-full gap-[2%] h-auto [&>*]:w-full [&>*]:text-sm [&>*]:w-full grid place-items-center ${
                           incomingValues.type !== "String"
                             ? "grid-cols-3"
                             : "grid-cols-1"
-                        }`}
+                        } `}
                       >
                         <div className="w-full h-full">
                           <Dropdown>
                             <Dropdown.Toggle
                               variant="secondary"
                               id="dropdown-basic"
+                              style={{
+                                minWidth: "auto",
+                                width: "100%",
+                              }}
+                              className="!w-full"
                             >
                               {incomingValues.type}
                             </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
+                            <Dropdown.Menu className="!z-index-1">
                               <Dropdown.Item
                                 onClick={() =>
                                   incomingHandleVariableChanges(
@@ -138,7 +143,7 @@ function VariableModal({
 
                         {incomingValues.type != "String" ? (
                           <>
-                            <div>
+                            <div className="w-full h-full">
                               <div>Randomize</div>
 
                               <VarTableRowData
@@ -151,7 +156,7 @@ function VariableModal({
                                 }
                               ></VarTableRowData>
                             </div>
-                            <div>
+                            <div className="w-full h-full ">
                               <div>Iterate</div>
                               <VarTableRowData
                                 incomingKey={incomingIndex}
