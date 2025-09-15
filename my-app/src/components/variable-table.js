@@ -6,6 +6,7 @@ import css from "./variable.module.css";
 import VarTableHeader from "./var-table-header";
 import VarTableBody from "./var-table-body";
 import VariableModal from "./var-modal";
+import { AnimatePresence, motion } from "motion/react";
 
 function VariableTable({
   incomingVariables,
@@ -225,31 +226,36 @@ function VariableTable({
         incomingValues={currentVariable}
         incomingHandleVariableChanges={handleVariableChanges}
       ></VariableModal>
-      {incomingVariables !== undefined && incomingVariables.size > 0 ? (
-        <div className={"w-full h-auto rounded-[10px] grid justify-center"}>
-          <div
-            className={ 
-              "rounded-[10px] w-[80vw] h-auto border border-solid border-white border-spacing-[10px] " +
-              tw_varTable_glassMorphBG
-            }
-          >
-            <table className="w-full h-full  table-fixed ">
-              <VarTableHeader
-                incomingTypeValidator={typeValidator}
-                incomingOtherTypeValidator={otherValidator}
-              ></VarTableHeader>
-              <VarTableBody
-                incomingVariablesBody={incomingVariables}
-                incomingHandleVariableChanges={handleVariableChanges}
-                incomingTypeValidator={typeValidator}
-                incomingOtherValidator={otherValidator}
-                incomingHandleModalOnChange={handleModalOnChanges}
-                incomingHandleCurrentVariableSet={handleCurrentVariableSet}
-              ></VarTableBody>
-            </table>
+      <AnimatePresence>
+        {incomingVariables !== undefined && incomingVariables.size > 0 ? (
+          <div className={"w-full h-auto rounded-[10px] grid justify-center"}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={
+                "rounded-[10px] w-[80vw] h-auto border border-solid border-white border-spacing-[10px] " +
+                tw_varTable_glassMorphBG
+              }
+            >
+              <table className="w-full h-full  table-fixed ">
+                <VarTableHeader
+                  incomingTypeValidator={typeValidator}
+                  incomingOtherTypeValidator={otherValidator}
+                ></VarTableHeader>
+                <VarTableBody
+                  incomingVariablesBody={incomingVariables}
+                  incomingHandleVariableChanges={handleVariableChanges}
+                  incomingTypeValidator={typeValidator}
+                  incomingOtherValidator={otherValidator}
+                  incomingHandleModalOnChange={handleModalOnChanges}
+                  incomingHandleCurrentVariableSet={handleCurrentVariableSet}
+                ></VarTableBody>
+              </table>
+            </motion.div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }
