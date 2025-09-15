@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import VarTableRowData from "./var-table-row-data";
 import SpawnVarModal from "./spawn-var-modal-button";
 import VariableModal from "./var-modal";
+import { AnimatePresence, motion } from "motion/react";
 
 function VarTableBody({
   incomingVariablesBody,
@@ -15,69 +16,87 @@ function VarTableBody({
   incomingHandleCurrentVariableSet,
 }) {
   //   const editableRef = useRef(null);
+
   return (
     <>
-      <div></div>
-      <tbody className="shrink-1 w-full max-h-[12rem] overflow-y-auto">
-        {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
-          <tr key={key} className={"[&>*]:shrink-1 "}>
-            <td>
-              <VarTableRowData
-                incomingKey={key}
-                incomingValues={values}
-                tableDataType={"VarName"}
-                incomingchangedValues={"name"}
-                incomingHandleVariableChanges={incomingHandleVariableChanges}
-                incomingCustomColorText="main-color"
-              ></VarTableRowData>
-            </td>
-            <td>
-              <Dropdown>
-                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                  {values.type}
-                </Dropdown.Toggle>
+      <tbody className="shrink-1 w-full h-auto max-h-[12rem] ">
+        <AnimatePresence>
+          {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
+            <motion.tr
+              key={key}
+              className={"[&>*]:shrink-1 w-full h-[10px]"}
+              initial={{ opacity: 0, y: -100, height: 0 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{ opacity: 0, y: -10, height: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeInOut",
+              }}
+            >
+              <td>
+                <VarTableRowData
+                  incomingKey={key}
+                  incomingValues={values}
+                  tableDataType={"VarName"}
+                  incomingchangedValues={"name"}
+                  incomingHandleVariableChanges={incomingHandleVariableChanges}
+                  incomingCustomColorText="main-color"
+                ></VarTableRowData>
+              </td>
+              <td>
+                <Dropdown>
+                  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                    {values.type}
+                  </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() =>
-                      incomingHandleVariableChanges(key, "type", "Integer")
-                    }
-                  >
-                    Integer
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() =>
-                      incomingHandleVariableChanges(key, "type", "String")
-                    }
-                  >
-                    String
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() =>
-                      incomingHandleVariableChanges(key, "type", "Date")
-                    }
-                  >
-                    Date
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() =>
-                      incomingHandleVariableChanges(key, "type", "List")
-                    }
-                  >
-                    List
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </td>
-            <td>
-              <SpawnVarModal
-                incomingSelectedVariable={values}
-                incomingHandleModalOnChangeforSpawn={incomingHandleModalOnChange}
-                incomingHandleSelectedKey={key}
-                incomingHandleCurrentVariableSet={incomingHandleCurrentVariableSet}
-              ></SpawnVarModal>
-            </td>
-            {/* <>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() =>
+                        incomingHandleVariableChanges(key, "type", "Integer")
+                      }
+                    >
+                      Integer
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() =>
+                        incomingHandleVariableChanges(key, "type", "String")
+                      }
+                    >
+                      String
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() =>
+                        incomingHandleVariableChanges(key, "type", "Date")
+                      }
+                    >
+                      Date
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() =>
+                        incomingHandleVariableChanges(key, "type", "List")
+                      }
+                    >
+                      List
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </td>
+              <td>
+                <SpawnVarModal
+                  incomingSelectedVariable={values}
+                  incomingHandleModalOnChangeforSpawn={
+                    incomingHandleModalOnChange
+                  }
+                  incomingHandleSelectedKey={key}
+                  incomingHandleCurrentVariableSet={
+                    incomingHandleCurrentVariableSet
+                  }
+                ></SpawnVarModal>
+              </td>
+              {/* <>
               {values.randomize &&
               (values.type === "Integer" || values.type === "Date") ? (
                 <>
@@ -247,10 +266,10 @@ function VarTableBody({
                 (incomingTypeValidator.Integer ||
                   incomingTypeValidator.Date) && <td></td>
               )}
-            </> */}{" "}
-            
-          </tr>
-        ))}
+            </> */}
+            </motion.tr>
+          ))}
+        </AnimatePresence>
       </tbody>
     </>
   );
