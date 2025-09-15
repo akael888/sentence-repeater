@@ -61,6 +61,10 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                transition={{
+                duration: 0.5,
+                ease: "easeInOut",
+              }}
               >
                 <div className={css["results-container"]}>
                   <div className={css["results-all-container"]}>
