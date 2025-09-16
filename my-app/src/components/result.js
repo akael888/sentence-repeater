@@ -43,7 +43,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
         .join("\n");
       await navigator.clipboard.writeText(textToCopy);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); 
+      setTimeout(() => setIsCopied(false), 2000);
       // Reset "Copied!" message after 2 seconds
     } catch (err) {
       console.error("Failed to copy text: ", err);
@@ -62,12 +62,13 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{
-                duration: 0.5,
-                ease: "easeInOut",
-              }}
+                  duration: 0.5,
+                  ease: "easeInOut",
+                }}
+                className="w-full"
               >
-                <div className={css["results-container"]}>
-                  <div className={css["results-all-container"]}>
+                <div className="w-full grid gap-[10px] place-content-center">
+                  <div className="w-full h-full min-w-[30vw] min-h-[10vh] max-w-[100vw] max-h-[25vh] grid row-[2] row-start-auto text-center place-items-center bg-[color-mix(in_srgb,var(--main-color)_20%,transparent)] backdrop-blur-[10px] border grid z-0 text-[white] m-auto rounded-[10px] border-solid border-[white]">
                     <div className={css["results-table-header-container"]}>
                       <h4 className="p-[5px]">Sentence</h4>
                       <CloseButton
