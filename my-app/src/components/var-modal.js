@@ -369,12 +369,13 @@ function VariableModal({
                     </div>
                   </div>
                   <div className="w-full h-full">
-                    <button
+                    <motion.button
                       onClick={(e) => changeModalCondition()}
+                      whileTap={{ scale: 0.9 }}
                       className="bg-opposite-color text-main-color border-2 border-main-color p-[10px] hover:bg-main-color hover:border-opposite-color hover:text-opposite-color rounded-[10px]"
                     >
                       Close Variable
-                    </button>
+                    </motion.button>
                   </div>
                 </motion.div>
               </motion.div>

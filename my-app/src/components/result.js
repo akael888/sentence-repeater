@@ -75,6 +75,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                         onClick={() => {
                           handeArrayResultsChanges();
                         }}
+                        whileTap={{ scale: 0.9 }}
                         variant="white"
                       />
                     </div>
@@ -99,12 +100,13 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                     }}
                     className="w-full h-full text-center inline-flex flex-row-reverse gap-[5px] m-auto rounded-[10px]"
                   >
-                    <button
+                    <motion.button
                       className="w-full h-full border border-solid border-opposite-color rounded-[10px] bg-main-color hover:bg-opposite-color hover:text-main-color"
                       onClick={handleCopyClick}
+                      whileTap={{ scale: 0.9 }}
                     >
                       {isCopied ? "Copied!" : "Copy"}
-                    </button>
+                    </motion.button>
                     {/* <button>Test</button>
                 <button>Test</button> */}
                   </motion.div>
