@@ -54,11 +54,25 @@ function VariableModal({
               }}
               className="w-screen h-screen inset-0 fixed z-[100]"
             >
-              <div
+              <motion.div
                 className="w-screen h-screen inset-0 fixed bg-[rgba(49,49,49,0.8)]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeInOut",
+                }}
                 onClick={handleBackdropClick}
               >
-                <div
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    ease: "easeInOut",
+                  }}
                   className={`w-[80%] text-center absolute h-auto grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[70%] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} border border-white`}
                 >
                   <div className="w-full h-full">
@@ -74,12 +88,6 @@ function VariableModal({
                         incomingCustomColorText={"opposite-color"}
                       ></VarTableRowData>
                     </h1>
-                    <motion.div
-                      className="w-full h-auto"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    ></motion.div>
 
                     <div
                       className={`w-full [$>*]:w-full grid place-items-center ${
@@ -368,8 +376,8 @@ function VariableModal({
                       Close Variable
                     </button>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </motion.div>
           </>
         ) : null}
