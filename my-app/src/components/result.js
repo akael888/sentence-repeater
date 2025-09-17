@@ -57,19 +57,19 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
         {arrayResults ? (
           <>
             {arrayResults.length > 0 ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{
-                  duration: 0.5,
-                  ease: "easeInOut",
-                }}
-                className="w-full"
-              >
+              <motion.div className="w-full">
                 <div className="w-full grid gap-[10px] place-content-center">
-                  <div className="w-full h-full min-w-[30vw] min-h-[10vh] max-w-[100vw] max-h-[25vh] grid row-[2] row-start-auto text-center place-items-center bg-[color-mix(in_srgb,var(--main-color)_20%,transparent)] backdrop-blur-[10px] border grid z-0 text-[white] m-auto rounded-[10px] border-solid border-[white]">
-                    <div className={css["results-table-header-container"]}>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeInOut",
+                    }}
+                    className="w-full h-full min-w-[30vw] min-h-[10vh] max-w-[100vw] max-h-[25vh] grid row-[2] row-start-auto text-center place-items-center bg-[color-mix(in_srgb,var(--main-color)_20%,transparent)] backdrop-blur-[10px] border grid z-0 text-[white] m-auto rounded-[10px] border-solid border-[white]"
+                  >
+                    <div className="w-full h-full grid grid-flow-col grid-cols-[1fr_0.09fr]">
                       <h4 className="p-[5px]">Sentence</h4>
                       <CloseButton
                         onClick={() => {
@@ -78,7 +78,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                         variant="white"
                       />
                     </div>
-                    <div className={css["results-table-container"]}>
+                    <div className=" w-full h-full text-center place-items-center overflow-y-scroll grid m-auto rounded-t-none rounded-[10px]">
                       <table>
                         <thead>
                           {/* <tr>
@@ -88,14 +88,26 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                         <tbody>{rows}</tbody>
                       </table>
                     </div>
-                  </div>
-                  <div className={css["results-interaction-container"]}>
-                    <button className="w-full h-full" onClick={handleCopyClick}>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeInOut",
+                    }}
+                    className="w-full h-full text-center inline-flex flex-row-reverse gap-[5px] m-auto rounded-[10px]"
+                  >
+                    <button
+                      className="w-full h-full border border-solid border-opposite-color rounded-[10px] bg-main-color hover:bg-opposite-color hover:text-main-color"
+                      onClick={handleCopyClick}
+                    >
                       {isCopied ? "Copied!" : "Copy"}
                     </button>
                     {/* <button>Test</button>
                 <button>Test</button> */}
-                  </div>
+                  </motion.div>
                 </div>
               </motion.div>
             ) : null}
