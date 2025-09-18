@@ -20,17 +20,17 @@ function VarTableBody({
   return (
     <>
       <tbody className="shrink-1 w-full h-auto max-h-[12rem] ">
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
             <motion.tr
               key={key}
               className={"[&>*]:shrink-1 w-full h-[10px]"}
-              initial={{ opacity: 0, y: -100, height: 0 }}
+              initial={{ opacity: 0, y: -100 }}
               animate={{
                 opacity: 1,
                 y: 0,
               }}
-              exit={{ opacity: 0, y: -10, height: 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.2 } }}
               transition={{
                 duration: 0.6,
                 ease: "easeInOut",

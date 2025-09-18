@@ -6,7 +6,7 @@ import css from "./variable.module.css";
 import VarTableHeader from "./var-table-header";
 import VarTableBody from "./var-table-body";
 import VariableModal from "./var-modal";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 
 function VariableTable({
   incomingVariables,
@@ -228,32 +228,40 @@ function VariableTable({
       ></VariableModal>
       <AnimatePresence>
         {incomingVariables !== undefined && incomingVariables.size > 0 ? (
-          <div className={"w-full h-auto rounded-[10px] grid justify-center"}>
+          <LayoutGroup>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className={
-                "rounded-[10px] w-[80vw] h-auto border border-solid border-white border-spacing-[10px] " +
-                tw_varTable_glassMorphBG
-              }
+              className={"w-full h-auto rounded-[10px] grid justify-center"}
+              transition={{ duration: 0.8 }}
             >
-              <table className="w-full h-full  table-fixed ">
-                <VarTableHeader
-                  incomingTypeValidator={typeValidator}
-                  incomingOtherTypeValidator={otherValidator}
-                ></VarTableHeader>
-                <VarTableBody
-                  incomingVariablesBody={incomingVariables}
-                  incomingHandleVariableChanges={handleVariableChanges}
-                  incomingTypeValidator={typeValidator}
-                  incomingOtherValidator={otherValidator}
-                  incomingHandleModalOnChange={handleModalOnChanges}
-                  incomingHandleCurrentVariableSet={handleCurrentVariableSet}
-                ></VarTableBody>
-              </table>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                layout
+                className={
+                  "rounded-[10px] w-[80vw] h-auto border border-solid border-white border-spacing-[10px] " +
+                  tw_varTable_glassMorphBG
+                }
+                style={{ minHeight: "fit-content" }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.table className="w-full table-fixed">
+                  <VarTableHeader
+                    incomingTypeValidator={typeValidator}
+                    incomingOtherTypeValidator={otherValidator}
+                  />
+                  <VarTableBody
+                    incomingVariablesBody={incomingVariables}
+                    incomingHandleVariableChanges={handleVariableChanges}
+                    incomingTypeValidator={typeValidator}
+                    incomingOtherValidator={otherValidator}
+                    incomingHandleModalOnChange={handleModalOnChanges}
+                    incomingHandleCurrentVariableSet={handleCurrentVariableSet}
+                  />
+                </motion.table>
+              </motion.div>
             </motion.div>
-          </div>
+          </LayoutGroup>
         ) : null}
       </AnimatePresence>
     </>
