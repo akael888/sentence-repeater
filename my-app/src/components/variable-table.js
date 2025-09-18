@@ -1,7 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useRef, useState } from "react";
-
-import css from "./variable.module.css";
+import { useEffect, useState } from "react";
 
 import VarTableHeader from "./var-table-header";
 import VarTableBody from "./var-table-body";
@@ -132,7 +130,7 @@ function VariableTable({
     function getValidatorValue(variableField) {
       let validatorList = null;
       validatorList = Array.from(incomingVariables.values()).map((variable) => {
-        if (variable.type == "List" && variableField == "randomize") {
+        if (variable.type === "List" && variableField === "randomize") {
           return false;
         } else return variable[variableField];
       });
@@ -148,7 +146,7 @@ function VariableTable({
     incomingTargetVar,
     incomingVarMap
   ) {
-    const tempVarMap = new Map(incomingVarMap);
+    // const tempVarMap = new Map(incomingVarMap);
     switch (typeValue) {
       case "Integer":
         incomingTargetVar.iterate = true;
