@@ -1,10 +1,6 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import Chip from "./chip-list";
-import css from "./var-table-body.module.css";
-import { useState, useRef } from "react";
 import VarTableRowData from "./var-table-row-data";
 import SpawnVarModal from "./spawn-var-modal-button";
-import VariableModal from "./var-modal";
 import { AnimatePresence, motion } from "motion/react";
 
 function VarTableBody({
@@ -24,7 +20,7 @@ function VarTableBody({
           {Array.from(incomingVariablesBody.entries()).map(([key, values]) => (
             <motion.tr
               key={key}
-              className={"[&>*]:shrink-1 w-full h-[10px]"}
+              className={"[&>*]:shrink-1 w-full h-[10px] [&>*]:p-[15px] [&>*]:pr-[20px] [&>*]:pl-[20px]"}
               initial={{ opacity: 0, y: -100 }}
               animate={{
                 opacity: 1,

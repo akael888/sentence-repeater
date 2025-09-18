@@ -1,11 +1,9 @@
-import css from "./var-table-header.module.css";
-
 function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
   return (
     <>
       <thead
         className={
-          " h-full text-white rounded-[10px] p-[15px] shrink-1"
+          " h-full text-white rounded-[10px] shrink-1 p-[15px] pr-[20px] pl-[20px]"
         }
       >
         <tr className=" [&>*]:p-[15px]">
