@@ -35,30 +35,36 @@ function VariableTable({
   };
 
   function setMaxGeneratedSentencefromList(selectedVar) {
-    // console.log(
-    //   "Incoming Highest List Var:" +
-    //     incomingHighestListVar +
-    //     " with this len: " +
-    //     incomingHighestListVar.list.length
-    // );
-    // console.log(incomingHighestListVar);
-    // console.log(
-    //   "Selected List Var:" +
-    //     selectedVar +
-    //     " with this len: " +
-    //     selectedVar.list.length
-    // );
-    // console.log(selectedVar);
+    console.log(
+      "Incoming Highest List Var:" +
+        incomingHighestListVar +
+        " with this len: " +
+        incomingHighestListVar.list.length
+    );
+    console.log(incomingHighestListVar);
+    console.log(
+      "Selected List Var:" +
+        selectedVar +
+        " with this len: " +
+        selectedVar.list.length
+    );
+    console.log(selectedVar);
     let selectedVarListTotalLength =
       selectedVar.list.length * selectedVar.interval;
     let highestVarListTotalLength =
-      incomingHighestListVar.list.length * incomingHighestListVar.interval;
+      incomingHighestListVar.name != null
+        ? incomingHighestListVar.list.length * incomingHighestListVar.interval
+        : 0;
 
-    if (incomingHandleHighestListVar != null) {
-      if (selectedVarListTotalLength > highestVarListTotalLength) {
-        incomingHandleHighestListVar(selectedVar);
-        console.log("Masuk Testing");
-      }
+    console.log(
+      "selectedVarListTotalLength:" +
+        selectedVarListTotalLength +
+        "highestVarListTotalLength: " +
+        highestVarListTotalLength
+    );
+    if (selectedVarListTotalLength > highestVarListTotalLength) {
+      incomingHandleHighestListVar(selectedVar);
+      console.log("Masuk Testing");
     }
   }
 
@@ -68,6 +74,7 @@ function VariableTable({
     if (targetVar) {
       targetVar[field] = value;
 
+      // Change a Spaace into a New List
       if (targetVar["type"] === "List" && field === "value") {
         if (value.includes(" ") || value.includes("/n")) {
           targetVar.list.push(handleChipListChanges(value));
@@ -78,15 +85,20 @@ function VariableTable({
       }
 
       tempVarMap.set(key, targetVar);
+
+      //Change Variable Type
       if (field === "type") {
         processLocalVariableTypeChanges(key, value, targetVar, tempVarMap);
       }
+
+      // Switch Toggle a Randomize and Iterate Button
       if (field === "iterate" || field === "randomize") {
         let selectedField = field;
         let inverseField =
           selectedField === "iterate" ? "randomize" : "iterate";
         if (incomingHighestListVar === targetVar) {
           incomingHandleHighestListVar({ list: [] });
+          console.log("masuk pak eko");
         }
         if (targetVar[inverseField] === true) {
           targetVar[inverseField] = false;
@@ -94,6 +106,8 @@ function VariableTable({
           tempVarMap.set(key, targetVar);
         }
       }
+
+      
       if (targetVar["type"] === "List" && targetVar["iterate"] === true) {
         setMaxGeneratedSentencefromList(targetVar);
         console.log("Target Var Type: " + targetVar["type"]);
