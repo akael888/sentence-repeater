@@ -10,9 +10,12 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
   if (arrayResults) {
     for (let i = 0; i < arrayResults.length; i++) {
       rows.push(
-        <tr key={i}>
+        <div
+          key={i}
+          className="w-full h-full p-[5px] grid text-center gap-[5px] pl-[10px] pr-[10px]"
+        >
           <td>{arrayResults[i]}</td>
-        </tr>
+        </div>
       );
       console.log("Text Array Results" + { arrayResults });
     }
@@ -69,25 +72,13 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                     }}
                     className="w-full h-full min-w-[30vw] min-h-[10vh] max-w-[100vw] max-h-[25vh] grid row-[2] row-start-auto text-center place-items-center bg-[color-mix(in_srgb,var(--main-color)_20%,transparent)] backdrop-blur-[10px] border grid z-0 text-[white] m-auto rounded-[10px] border-solid border-[white]"
                   >
-                    <div className="w-full h-full grid grid-flow-col grid-cols-[1fr_0.09fr]">
-                      <h4 className="p-[5px]">Sentence</h4>
-                      <CloseButton
-                        onClick={() => {
-                          handeArrayResultsChanges();
-                        }}
-                        whileTap={{ scale: 0.9 }}
-                        variant="white"
-                      />
+                    <div className="w-full h-full grid p-[10px] place-items-center  text-center">
+                      <div className="w-full h-full">
+                        <h4>Sentence</h4>
+                      </div>
                     </div>
                     <div className=" w-full h-full text-center place-items-center overflow-y-scroll grid m-auto rounded-t-none rounded-[10px]">
-                      <table>
-                        <thead>
-                          {/* <tr>
-              <th>Sentence</th>
-            </tr> */}
-                        </thead>
-                        <tbody>{rows}</tbody>
-                      </table>
+                      {rows}
                     </div>
                   </motion.div>
                   <motion.div
@@ -107,6 +98,14 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                     >
                       {isCopied ? "Copied!" : "Copy"}
                     </motion.button>
+                    <CloseButton
+                      onClick={() => {
+                        handeArrayResultsChanges();
+                      }}
+                      whileTap={{ scale: 0.9 }}
+                      variant="white"
+                      className="w-full h-full"
+                    />
                     {/* <button>Test</button>
                 <button>Test</button> */}
                   </motion.div>
