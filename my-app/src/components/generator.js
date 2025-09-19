@@ -27,7 +27,7 @@ function Generator({
 
   const [inputValue, setInputValue] = useState(0);
 
-  let requiredFilled = inputValue != 0 && incomingPreviewText !== "\n";
+  let requiredFilled = inputValue != 0 && incomingPreviewText != "";
 
   useEffect(() => {
     let listTotalLength =
