@@ -164,11 +164,11 @@ function VariableTable({
     switch (typeValue) {
       case "Integer":
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 0;
+        incomingTargetVar.interval = 1;
         incomingTargetVar.randomize = false;
-        incomingTargetVar.value = 0;
-        incomingTargetVar.minValue = 0;
-        incomingTargetVar.maxValue = 0;
+        incomingTargetVar.value = 1;
+        incomingTargetVar.minValue = 1;
+        incomingTargetVar.maxValue = 10;
         // tempTypeValidator.Integer = true;
         break;
       case "String":
@@ -182,7 +182,7 @@ function VariableTable({
         break;
       case "Date":
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 0;
+        incomingTargetVar.interval = 1;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = null;
         incomingTargetVar.minValue = null;
@@ -195,7 +195,7 @@ function VariableTable({
       case "List":
         console.log("List");
         incomingTargetVar.iterate = true;
-        incomingTargetVar.interval = 0;
+        incomingTargetVar.interval = 1;
         incomingTargetVar.randomize = false;
         incomingTargetVar.value = "";
         incomingTargetVar.minValue = null;
