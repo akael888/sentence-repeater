@@ -1,3 +1,4 @@
+import { motion, scale } from "motion/react";
 import { useState } from "react";
 
 function SpawnVarModal({
@@ -17,12 +18,13 @@ function SpawnVarModal({
 
   return (
     <>
-      <button
+      <motion.button
         className="border-white text-white border rounded-[10px] p-[10px] hover:bg-black"
         onClick={(e) => OpenVarModal()}
+        whileTap={{ scale: 0.9 }}
       >
         Edit Variable
-      </button>
+      </motion.button>
     </>
   );
 }

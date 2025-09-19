@@ -1,6 +1,7 @@
 import { useState } from "react";
 import css from "./results.module.css";
 import CloseButton from "react-bootstrap/CloseButton";
+import { AnimatePresence, motion } from "motion/react";
 
 function ShowResult({ arrayResults, arrayResultsChange }) {
   const rows = [];
@@ -42,7 +43,8 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
         .join("\n");
       await navigator.clipboard.writeText(textToCopy);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Reset "Copied!" message after 2 seconds
+      setTimeout(() => setIsCopied(false), 2000);
+      // Reset "Copied!" message after 2 seconds
     } catch (err) {
       console.error("Failed to copy text: ", err);
       // Handle potential errors (e.g., permission denied)
@@ -51,42 +53,69 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
 
   return (
     <>
-      {arrayResults ? (
-        <>
-          {arrayResults.length > 0 ? (
-            <div className={css["results-container"]}>
-              <div className={css["results-all-container"]}>
-                <div className={css["results-table-header-container"]}>
-                  <h4 className="p-[5px]">Sentence</h4>
-                  <CloseButton
-                    onClick={() => {
-                      handeArrayResultsChanges();
+      <AnimatePresence>
+        {arrayResults ? (
+          <>
+            {arrayResults.length > 0 ? (
+              <motion.div className="w-full">
+                <div className="w-full grid gap-[10px] place-content-center">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeInOut",
                     }}
-                    variant="white"
-                  />
-                </div>
-                <div className={css["results-table-container"]}>
-                  <table>
-                    <thead>
-                      {/* <tr>
+                    className="w-full h-full min-w-[30vw] min-h-[10vh] max-w-[100vw] max-h-[25vh] grid row-[2] row-start-auto text-center place-items-center bg-[color-mix(in_srgb,var(--main-color)_20%,transparent)] backdrop-blur-[10px] border grid z-0 text-[white] m-auto rounded-[10px] border-solid border-[white]"
+                  >
+                    <div className="w-full h-full grid grid-flow-col grid-cols-[1fr_0.09fr]">
+                      <h4 className="p-[5px]">Sentence</h4>
+                      <CloseButton
+                        onClick={() => {
+                          handeArrayResultsChanges();
+                        }}
+                        whileTap={{ scale: 0.9 }}
+                        variant="white"
+                      />
+                    </div>
+                    <div className=" w-full h-full text-center place-items-center overflow-y-scroll grid m-auto rounded-t-none rounded-[10px]">
+                      <table>
+                        <thead>
+                          {/* <tr>
               <th>Sentence</th>
             </tr> */}
-                    </thead>
-                    <tbody>{rows}</tbody>
-                  </table>
-                </div>
-              </div>
-              <div className={css["results-interaction-container"]}>
-                <button className="w-full h-full" onClick={handleCopyClick}>
-                  {isCopied ? "Copied!" : "Copy"}
-                </button>
-                {/* <button>Test</button>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                      </table>
+                    </div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeInOut",
+                    }}
+                    className="w-full h-full text-center inline-flex flex-row-reverse gap-[5px] m-auto rounded-[10px]"
+                  >
+                    <motion.button
+                      className="w-full h-full border border-solid border-opposite-color rounded-[10px] bg-main-color hover:bg-opposite-color hover:text-main-color"
+                      onClick={handleCopyClick}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      {isCopied ? "Copied!" : "Copy"}
+                    </motion.button>
+                    {/* <button>Test</button>
                 <button>Test</button> */}
-              </div>
-            </div>
-          ) : null}
-        </>
-      ) : null}
+                  </motion.div>
+                </div>
+              </motion.div>
+            ) : null}
+          </>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

@@ -1,5 +1,5 @@
 import css from "./text-preview.module.css";
-
+import { motion } from "motion/react";
 function Preview({ incomingPreviewText, incomingVariables }) {
   //Tailwind Styles
   let tw_preview_glassMorphBG =
@@ -65,14 +65,23 @@ function Preview({ incomingPreviewText, incomingVariables }) {
 
   return (
     <>
-      <div
+      <motion.div
         className={
           "w-fit h-auto max-w-[80%] flex items-center text-center text-main-color m-auto p-2.5 rounded-[10px] overflow-auto" +
           tw_preview_glassMorphBG
         }
+        initial={{ opacity: 0, y: -100, height: 0 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 1.5,
+            ease: "easeInOut",
+          }}
       >
         <h1 className="w-full ">{generatePreviewandVariables()}</h1>
-      </div>
+      </motion.div>
     </>
   );
 }

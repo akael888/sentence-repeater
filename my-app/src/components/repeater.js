@@ -5,7 +5,7 @@ import ShowResult from "./result";
 import Preview from "./text-preview";
 // import css from "./repeater.module.css";
 import TextInput from "./text-input";
-
+import { motion } from "motion/react";
 import VariableModal from "./var-modal";
 
 function Repeater() {
@@ -60,17 +60,31 @@ function Repeater() {
 
   return (
     <>
-      <div className={`w-[80vw] grid place-items-center m-auto h-full gap-[2vh]`}>
-        <div className="h-auto w-full h-full grid  place-self-center gap-[10px]">
+      <div
+        className={`w-[80vw] grid place-items-center m-auto h-full gap-[2vh]`}
+      >
+        <motion.div
+          className="h-auto w-full h-full grid  place-self-center gap-[10px] z-[1]"
+          
+        >
           <Preview
             incomingPreviewText={previewText}
             incomingVariables={variables}
           />
-        </div>
-        <div
+        </motion.div>
+        <motion.div
           className={
             "h-auto w-full grid grid-rows-2 place-self-center gap-[10px] "
           }
+          initial={{ opacity: 0, y: -100, height: 0 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 1,
+            ease: "easeInOut",
+          }}
         >
           {/*Kurang Animasi*/}
           <TextInput
@@ -85,9 +99,9 @@ function Repeater() {
             }
             incomingHighestListVar={highestListVar}
           />
-        </div>
+        </motion.div>
         <>
-          <div
+          <motion.div
             className={
               "grid w-full h-full  items-center content-center gap-[30px]"
             }
@@ -102,7 +116,7 @@ function Repeater() {
               arrayResults={generatedSentence}
               arrayResultsChange={handleGeneratedSentenceChanges}
             />
-          </div>
+          </motion.div>
         </>
       </div>
     </>

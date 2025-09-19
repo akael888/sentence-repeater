@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import css from "./generator.module.css";
+import { motion } from "motion/react";
 
 function Generator({
   incomingVariables,
@@ -271,17 +272,21 @@ function Generator({
             placeholder="Amount"
             value={inputValue}
           />
-          <div
+          <motion.div
             className={
               "w-full h-full grid place-items-center text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
               tw_generateButton_glassMorphBG +
               tw_generateButton_hover
             }
+            whileTap={{ scale: 0.9 }}
           >
-            <button className="w-full h-full p-[5px]" onClick={generateSentence}>
+            <motion.button
+              className="w-full h-full p-[5px]"
+              onClick={generateSentence}
+            >
               Generate
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </div>
     </>
