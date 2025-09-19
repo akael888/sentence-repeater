@@ -18,21 +18,18 @@ function TextInput({
   const [tempVariables, setTempVariables] = useState(new Map());
 
   function addVariableOnInput(e) {
-    const innerText = e.target.innerText;
+    const textInput = e.target.value;
 
-    
+    // Search for {} in the text
     let searchPos = 0;
     let allBracketPositions = [];
-
-    while (searchPos < innerText.length) {
-      const bracketPos = innerText.indexOf("{}", searchPos);
+    while (searchPos < textInput.length) {
+      const bracketPos = textInput.indexOf("{}", searchPos);
       if (bracketPos === -1) break;
       allBracketPositions.push(bracketPos);
       searchPos = bracketPos + 1;
     }
-
     const updatedVariables = new Map(tempVariables);
-
     allBracketPositions.forEach((position, index) => {
       if (!updatedVariables.has(index)) {
         updatedVariables.set(index, {
@@ -50,6 +47,7 @@ function TextInput({
       }
     });
 
+    //delete variables
     if (allBracketPositions.length < updatedVariables.size) {
       console.log("Masuk Cut");
       console.log("Masuk Cut - All Bracket", allBracketPositions);
@@ -57,34 +55,37 @@ function TextInput({
       updatedVariables.delete(updatedVariables.size - 1);
     }
 
-    incomingHandlePreviewTextChanges(innerText);
+    console.log("preview text: before enter" + textInput);
+    incomingHandlePreviewTextChanges(textInput);
     setTempVariables(updatedVariables);
-    console.log("preview text:" + innerText);
+    console.log("preview text:" + textInput);
     incomingHandleVariablesChanges(updatedVariables);
   }
 
   
-  function enableEditing(element) {
-    if (!element) return; 
-    element.setAttribute("contenteditable", true); 
-    element.focus();
-  }
+  
+  // function enableEditing(element) {
+  //   if (!element) return; 
+  //   element.setAttribute("contenteditable", true); 
+  //   element.focus();
+  // }
 
   return (
     <>
       <div className="w-full h-full flex justify-center items-center">
-        <div
+        <input
           // contentEditable="true"
           className={
-            "w-full h-[100%] max-w-[80%] flex overflow-auto bg-main-color justify-center text-opposite-color items-center border border-opposite-color cursor-text rounded-[10px] border-solid p-[10px]" +
+            "w-full h-[100%] max-w-[80%] text-center flex overflow-auto bg-main-color justify-center text-opposite-color items-center border border-opposite-color cursor-text rounded-[10px] border-solid p-[10px]" +
             tw_textInput_hover +
             tw_textInput_focus
           }
-          onClick={(e) => enableEditing(e.target)}
-          onInput={(e) => addVariableOnInput(e)}
+          placeholder="Type Text here.."
+          // onClick={(e) => enableEditing(e.target)}
+          onChange={(e) => addVariableOnInput(e)}
         >
-          Type here...
-        </div>
+          
+        </input>
       </div>
     </>
   );
