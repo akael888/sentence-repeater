@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import css from "./generator.module.css";
-import { motion } from "motion/react";
+import { motion, scale } from "motion/react";
 
 function Generator({
   incomingVariables,
@@ -26,6 +26,8 @@ function Generator({
   const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(0);
 
   const [inputValue, setInputValue] = useState(0);
+
+  let requiredFilled = inputValue != 0 && incomingPreviewText !== "\n";
 
   useEffect(() => {
     let listTotalLength =
@@ -108,6 +110,20 @@ function Generator({
     console.log("Generate Text () Log----------");
     console.log("incomingVariables: " + incomingVariables);
     console.log("Temp Preview Text: " + tempPreviewText);
+    console.log(`Temp Preview Text:-${tempPreviewText}- `);
+    console.log("Type Preview Text: " + typeof tempPreviewText);
+    console.log(
+      "incomingPreviewText !=  Preview Text: " + (incomingPreviewText != "")
+    );
+    console.log(
+      "incomingPreviewText != null  Preview Text: " +
+        (incomingPreviewText != null)
+    );
+    console.log(
+      "incomingPreviewText != undefined  Preview Text: " +
+        (incomingPreviewText != undefined)
+    );
+    console.dir(incomingPreviewText);
     console.log("Temp Preview Text Size: " + tempPreviewText.length);
     console.log("Generated Sentence Amount: " + generatedSentenceAmount);
     // console.log("Text: " + text);
@@ -271,18 +287,21 @@ function Generator({
             }}
             placeholder="Amount"
             value={inputValue}
+            required="true"
           />
           <motion.div
             className={
               "w-full h-full grid place-items-center text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
-              tw_generateButton_glassMorphBG +
-              tw_generateButton_hover
+              (requiredFilled
+                ? tw_generateButton_glassMorphBG + tw_generateButton_hover
+                : "bg-opposite-color")
             }
-            whileTap={{ scale: 0.9 }}
+            whileTap={requiredFilled ? { scale: 0.9 } : { x: 10 }}
           >
             <motion.button
               className="w-full h-full p-[5px]"
               onClick={generateSentence}
+              disabled={!requiredFilled}
             >
               Generate
             </motion.button>

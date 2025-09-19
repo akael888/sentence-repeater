@@ -16,9 +16,11 @@ function TextInput({
     " hover:bg-opposite-color hover:text-main-color hover:border hover:border-main-color hover:border-solid";
 
   const [tempVariables, setTempVariables] = useState(new Map());
+
   function addVariableOnInput(e) {
     const innerText = e.target.innerText;
 
+    
     let searchPos = 0;
     let allBracketPositions = [];
 
@@ -61,11 +63,11 @@ function TextInput({
     incomingHandleVariablesChanges(updatedVariables);
   }
 
-  // pass the contenteditable attribute when selected
+  
   function enableEditing(element) {
-    if (!element) return; // Prevent error if element is undefined
-    element.setAttribute("contenteditable", true); //Add content editable
-    element.focus(); //Focusing on the eelement
+    if (!element) return; 
+    element.setAttribute("contenteditable", true); 
+    element.focus();
   }
 
   return (
