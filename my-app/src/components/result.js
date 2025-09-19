@@ -96,7 +96,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                       duration: 0.5,
                       ease: "easeInOut",
                     }}
-                    className="w-full h-full text-center inline-flex flex-row-reverse gap-[5px] m-auto rounded-[10px]"
+                    className="w-full h-full text-center inline-flex flex-row gap-[5px] m-auto rounded-[10px]"
                   >
                     <motion.button
                       className="w-full h-full border border-solid border-opposite-color rounded-[10px] bg-main-color hover:bg-opposite-color hover:text-main-color"
