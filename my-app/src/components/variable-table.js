@@ -1,11 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useRef, useState } from "react";
-
-import css from "./variable.module.css";
+import { useEffect, useState } from "react";
 
 import VarTableHeader from "./var-table-header";
 import VarTableBody from "./var-table-body";
 import VariableModal from "./var-modal";
+import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 
 function VariableTable({
   incomingVariables,
@@ -131,7 +130,7 @@ function VariableTable({
     function getValidatorValue(variableField) {
       let validatorList = null;
       validatorList = Array.from(incomingVariables.values()).map((variable) => {
-        if (variable.type == "List" && variableField == "randomize") {
+        if (variable.type === "List" && variableField === "randomize") {
           return false;
         } else return variable[variableField];
       });
@@ -147,7 +146,7 @@ function VariableTable({
     incomingTargetVar,
     incomingVarMap
   ) {
-    const tempVarMap = new Map(incomingVarMap);
+    // const tempVarMap = new Map(incomingVarMap);
     switch (typeValue) {
       case "Integer":
         incomingTargetVar.iterate = true;
@@ -225,31 +224,44 @@ function VariableTable({
         incomingValues={currentVariable}
         incomingHandleVariableChanges={handleVariableChanges}
       ></VariableModal>
-      {incomingVariables !== undefined && incomingVariables.size > 0 ? (
-        <div className={"w-full h-auto rounded-[10px] grid justify-center"}>
-          <div
-            className={ 
-              "rounded-[10px] w-[80vw] h-auto border border-solid border-white border-spacing-[10px] " +
-              tw_varTable_glassMorphBG
-            }
-          >
-            <table className="w-full h-full  table-fixed ">
-              <VarTableHeader
-                incomingTypeValidator={typeValidator}
-                incomingOtherTypeValidator={otherValidator}
-              ></VarTableHeader>
-              <VarTableBody
-                incomingVariablesBody={incomingVariables}
-                incomingHandleVariableChanges={handleVariableChanges}
-                incomingTypeValidator={typeValidator}
-                incomingOtherValidator={otherValidator}
-                incomingHandleModalOnChange={handleModalOnChanges}
-                incomingHandleCurrentVariableSet={handleCurrentVariableSet}
-              ></VarTableBody>
-            </table>
-          </div>
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {incomingVariables !== undefined && incomingVariables.size > 0 ? (
+          <LayoutGroup>
+            <motion.div
+              className={"w-full h-auto rounded-[10px] grid justify-center"}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                layout
+                className={
+                  "rounded-[10px] w-[80vw] h-auto border border-solid border-white border-spacing-[10px] " +
+                  tw_varTable_glassMorphBG
+                }
+                style={{ minHeight: "fit-content" }}
+                transition={{ duration: 0.2 }}
+              >
+                <motion.table className="w-full table-fixed">
+                  <VarTableHeader
+                    incomingTypeValidator={typeValidator}
+                    incomingOtherTypeValidator={otherValidator}
+                  />
+                  <VarTableBody
+                    incomingVariablesBody={incomingVariables}
+                    incomingHandleVariableChanges={handleVariableChanges}
+                    incomingTypeValidator={typeValidator}
+                    incomingOtherValidator={otherValidator}
+                    incomingHandleModalOnChange={handleModalOnChanges}
+                    incomingHandleCurrentVariableSet={handleCurrentVariableSet}
+                  />
+                </motion.table>
+              </motion.div>
+            </motion.div>
+          </LayoutGroup>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

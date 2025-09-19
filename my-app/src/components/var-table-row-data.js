@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import Form from "react-bootstrap/Form";
 
 function VarTableRowData({
   incomingKey,
@@ -125,21 +126,33 @@ function VarTableRowData({
 
   return (
     <>
-      <input
-        ref={editableRef}
-        className={`w-full text-center bg-${incomingCustomBGColorText} text-${incomingCustomColorText} placeholder-sub-color shrink-1`}
-        type={getInputType()}
-        {...(tableDataType === "VarBoolean"
-          ? {
-              checked: getCurrentValue(),
-              onClick: handleClick,
-            }
-          : {
-              value: getCurrentValue(),
-              onChange: handleChange,
-              placeholder: getPlaceholder(),
-            })}
-      />
+      {tableDataType == "VarBoolean" ? (
+        <Form>
+          <Form.Check
+            checked={getCurrentValue()}
+            onClick={handleClick}
+            type="switch"
+            id="custom-switch"
+            className="color  -opposite-color"
+          />
+        </Form>
+      ) : (
+        <input
+          ref={editableRef}
+          className={`w-full text-center bg-${incomingCustomBGColorText} text-${incomingCustomColorText} placeholder-sub-color shrink-1`}
+          type={getInputType()}
+          {...(tableDataType === "VarBoolean"
+            ? {
+                checked: getCurrentValue(),
+                onClick: handleClick,
+              }
+            : {
+                value: getCurrentValue(),
+                onChange: handleChange,
+                placeholder: getPlaceholder(),
+              })}
+        />
+      )}
     </>
   );
 }
