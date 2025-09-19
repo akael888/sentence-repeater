@@ -12,7 +12,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
       rows.push(
         <motion.div
           key={i}
-          className="w-full h-full p-[5px] grid text-center gap-[5px] pl-[10px] pr-[10px]"
+          className="w-full h-full p-[5px] grid text-center gap-[5px] pl-[10px] pr-[10px] "
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
