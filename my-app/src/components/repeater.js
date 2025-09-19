@@ -45,9 +45,7 @@ function Repeater() {
   };
 
   const handlePreviewTextChanges = (text) => {
-    if (text) {
-      setPreviewText(text);
-    }
+    setPreviewText(text);
   };
 
   const handleVariableChanges = (passedVariable) => {
@@ -63,10 +61,7 @@ function Repeater() {
       <div
         className={`w-[80vw] grid place-items-center m-auto h-full gap-[2vh]`}
       >
-        <motion.div
-          className="h-auto w-full h-full grid  place-self-center gap-[10px] z-[1]"
-          
-        >
+        <motion.div className="h-auto w-full h-full grid  place-self-center gap-[10px] z-[1]">
           <Preview
             incomingPreviewText={previewText}
             incomingVariables={variables}
