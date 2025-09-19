@@ -10,12 +10,19 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
   if (arrayResults) {
     for (let i = 0; i < arrayResults.length; i++) {
       rows.push(
-        <div
+        <motion.div
           key={i}
           className="w-full h-full p-[5px] grid text-center gap-[5px] pl-[10px] pr-[10px]"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{
+            duration: 0.1 + i * 0.1,
+            ease: "easeInOut",
+          }}
         >
           <td>{arrayResults[i]}</td>
-        </div>
+        </motion.div>
       );
       console.log("Text Array Results" + { arrayResults });
     }
