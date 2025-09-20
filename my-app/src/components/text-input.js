@@ -1,9 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, use } from "react";
 import css from "./text-input.module.css";
 
 function TextInput({
   incomingHandlePreviewTextChanges,
   incomingHandleVariablesChanges,
+  incomingVariables,
 }) {
   //Tailwind Styles
 
@@ -14,6 +15,8 @@ function TextInput({
     " focus:bg-opposite-color focus:text-main-color focus:border focus:border-main-color focus:border-solid";
   let tw_textInput_hover =
     " hover:bg-opposite-color hover:text-main-color hover:border hover:border-main-color hover:border-solid";
+  let incomVarSize =
+    incomingVariables != undefined ? incomingVariables.size : 0;
 
   const [tempVariables, setTempVariables] = useState(new Map());
 
@@ -23,13 +26,16 @@ function TextInput({
     // Search for {} in the text
     let searchPos = 0;
     let allBracketPositions = [];
+    console.log("bracket size before:" + allBracketPositions.length);
+
     while (searchPos < textInput.length) {
       const bracketPos = textInput.indexOf("{}", searchPos);
       if (bracketPos === -1) break;
-      allBracketPositions.push(bracketPos);
+      allBracketPositions.push(bracketPos + 1);
       searchPos = bracketPos + 1;
     }
     const updatedVariables = new Map(tempVariables);
+    console.log("updated size before:" + updatedVariables.size);
     allBracketPositions.forEach((position, index) => {
       if (!updatedVariables.has(index)) {
         updatedVariables.set(index, {
@@ -46,27 +52,51 @@ function TextInput({
         });
       }
     });
-
-    //delete variables
+    console.log("updated size after:" + updatedVariables.size);
+    console.log("bracket size after:" + allBracketPositions.length);
+    incomingHandlePreviewTextChanges(textInput);
     if (allBracketPositions.length < updatedVariables.size) {
-      console.log("Masuk Cut");
-      console.log("Masuk Cut - All Bracket", allBracketPositions);
-      console.log("Masuk Cut - updatedVariables", updatedVariables);
-      updatedVariables.delete(updatedVariables.size - 1);
-    }
+      console.log("reducetempvar");
+      // setTempVariables(new Map());
+      deleteLatestVar();
+    } else setTempVariables(updatedVariables);
+
+    incomingHandleVariablesChanges(updatedVariables);
 
     console.log("preview text: before enter" + textInput);
-    incomingHandlePreviewTextChanges(textInput);
-    setTempVariables(updatedVariables);
+    console.log("comvarsize: before enter" + incomVarSize);
+    console.log("tempvariables:\n");
+    console.log(tempVariables);
     console.log("preview text:" + textInput);
-    incomingHandleVariablesChanges(updatedVariables);
   }
 
-  
-  
+  function deleteLatestVar() {
+     if (tempVariables.size === 0) return;
+
+    const lastKey = Array.from(tempVariables.keys()).pop();
+    if (lastKey !== undefined) {
+      const tempMap = new Map(tempVariables);
+      tempMap.delete(lastKey);
+      setTempVariables(tempMap);
+      incomingHandleVariablesChanges(tempVariables);
+    }
+    // console.log("pakeEko");
+    // setTempVariables(incomingVariables);
+
+    // setTempVariables(tempVariables[tempVariables.size - 1);
+    // // console.log(updatedVariables);
+    // console.log("---------------");
+    // incomingHandleVariablesChanges(setTempVariables);
+    // console.log(incomingVariables);
+  }
+
+  // useEffect(() => {
+  //   //delete variables
+  // }, [incomVarSize]);
+
   // function enableEditing(element) {
-  //   if (!element) return; 
-  //   element.setAttribute("contenteditable", true); 
+  //   if (!element) return;
+  //   element.setAttribute("contenteditable", true);
   //   element.focus();
   // }
 
@@ -83,9 +113,7 @@ function TextInput({
           placeholder="Type Text here.."
           // onClick={(e) => enableEditing(e.target)}
           onChange={(e) => addVariableOnInput(e)}
-        >
-          
-        </input>
+        ></input>
       </div>
     </>
   );
