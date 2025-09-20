@@ -85,6 +85,7 @@ function Repeater() {
           <TextInput
             incomingHandlePreviewTextChanges={handlePreviewTextChanges}
             incomingHandleVariablesChanges={handleVariableChanges}
+            incomingVariables={variables}
           />
           <Generator
             incomingVariables={variables}
