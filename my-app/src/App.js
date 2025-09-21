@@ -53,6 +53,7 @@ function App() {
           <Repeater />
         </div>
       </div>
+      <footer className="w-full h-[10%] bg-black"></footer>
     </div>
   );
 }
