@@ -71,11 +71,11 @@ function App() {
               </div>
               <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-main-color">
                 <p className="text-sm ">© 2025 - Elgratio Latuihamallo</p>
-                <div className="w-[30%] sm:w-auto flex gap-[10px]">
+                <div className="w-fit h-fit sm:w-auto flex gap-[10px]">
                   <motion.a
                     href="https://www.linkedin.com/in/elgratiofc"
                     whileTap={{ scale: 0.9 }}
-                    className="text-opposite-color no-underline"
+                    className="text-opposite-color no-underline hover:text-opposite-sub-color h-fit"
                   >
                     <strong>
                       <p className="text-sm">Linkedin</p>
@@ -85,7 +85,7 @@ function App() {
                   <motion.a
                     href="https://github.com/akael888"
                     whileTap={{ scale: 0.9 }}
-                    className="text-opposite-color no-underline"
+                    className="text-opposite-color no-underline hover:text-opposite-sub-color h-fit"
                   >
                     <strong>
                       <p className="text-sm">Github</p>
