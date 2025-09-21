@@ -21,59 +21,47 @@ function TextInput({
   const [tempVariables, setTempVariables] = useState(new Map());
 
   function addVariableOnInput(e) {
-    const textInput = e.target.value;
-
-    // Search for {} in the text
-    let searchPos = 0;
-    let allBracketPositions = [];
-    console.log("bracket size before:" + allBracketPositions.length);
-
-    while (searchPos < textInput.length) {
-      const bracketPos = textInput.indexOf("{}", searchPos);
-      if (bracketPos === -1) break;
-      allBracketPositions.push(bracketPos + 1);
-      searchPos = bracketPos + 1;
-    }
-    let updatedVariables = new Map(incomingVariables);
-    console.log("updated size before:" + updatedVariables.size);
-    allBracketPositions.forEach((position, index) => {
-      if (!updatedVariables.has(index)) {
-        updatedVariables.set(index, {
-          id: position,
-          name: "Variable " + index,
-          type: "Integer",
-          value: index,
-          minValue: index,
-          maxValue: 10,
-          iterate: true,
-          interval: 1,
-          randomize: false,
-          displayText: "Display Text", //now that i think of it, should this be put inside a temp variable?
-        });
-      }
-    });
-    console.log("updated size after:" + updatedVariables.size);
-    console.log("bracket size after:" + allBracketPositions.length);
+    const textInput = e.currentTarget.value;
     incomingHandlePreviewTextChanges(textInput);
-    if (allBracketPositions.length < updatedVariables.size) {
-      console.log("loopv:" + updatedVariables.size);
-      console.log("loopb:" + allBracketPositions.length);
+    // Search for {} in the text
+    if (textInput.includes("{}") || incomVarSize != 0) {
+      let searchPos = 0;
+      let allBracketPositions = [];
+      console.log("bracket size before:" + allBracketPositions.length);
 
-      console.log("log");
-
-      while (allBracketPositions.length < updatedVariables.size) {
-        updatedVariables = deleteLatestVar(updatedVariables);
-        incomingHandleVariablesChanges(updatedVariables);
-        // console.log(incomingVariables.size);
+      while (searchPos < textInput.length) {
+        const bracketPos = textInput.indexOf("{}", searchPos);
+        if (bracketPos === -1) break;
+        allBracketPositions.push(bracketPos + 1);
+        searchPos = bracketPos + 1;
       }
-      console.log("log2");
-    } else incomingHandleVariablesChanges(updatedVariables);
+      let updatedVariables = new Map(incomingVariables);
 
-    console.log("preview text: before enter" + textInput);
-    console.log("comvarsize: before enter" + incomVarSize);
-    console.log("tempvariables:\n");
-    console.log(tempVariables);
-    console.log("preview text:" + textInput);
+      allBracketPositions.forEach((position, index) => {
+        if (!updatedVariables.has(index)) {
+          updatedVariables.set(index, {
+            id: position,
+            name: "Variable " + index,
+            type: "Integer",
+            value: index,
+            minValue: index,
+            maxValue: 10,
+            iterate: true,
+            interval: 1,
+            randomize: false,
+            displayText: "Display Text", //now that i think of it, should this be put inside a temp variable?
+          });
+        }
+      });
+
+      if (allBracketPositions.length < updatedVariables.size) {
+        while (allBracketPositions.length < updatedVariables.size) {
+          updatedVariables = deleteLatestVar(updatedVariables);
+          incomingHandleVariablesChanges(updatedVariables);
+          // console.log(incomingVariables.size);
+        }
+      } else incomingHandleVariablesChanges(updatedVariables);
+    }
   }
 
   function deleteLatestVar(updatedVariables) {
@@ -121,6 +109,7 @@ function TextInput({
           placeholder="Type Text here.."
           // onClick={(e) => enableEditing(e.target)}
           onChange={(e) => addVariableOnInput(e)}
+          type="text"
         ></input>
       </div>
     </>
