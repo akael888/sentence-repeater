@@ -55,28 +55,34 @@ function App() {
             <Repeater />
           </div>
 
-          <footer className="w-full h-auto bg-opposite-color mt-auto">
-            <div className="w-full h-auto flex flex-col sm:flex-row p-[2%] sm:p-[1%] text-main-color">
-              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px]">
+          <footer className="w-full h-auto bg-color-foreground mt-auto">
+            <div className="w-full h-auto flex flex-col sm:flex-row p-[2%] sm:p-[1%] ">
+              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-sub-color">
                 <p className="text-sm">
                   Build with React, Tailwindcss, React Bootstrap, and Motion
                 </p>
               </div>
-              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px]">
-                <p className="text-sm">© 2025 Elgratio Latuihamallo</p>
+              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-main-color">
+                <p className="text-sm ">© 2025 - Elgratio Latuihamallo</p>
                 <div className="w-[30%] sm:w-auto flex gap-[10px]">
                   <motion.a
                     href="https://www.linkedin.com/in/elgratiofc"
                     whileTap={{ scale: 0.9 }}
+                    className="text-opposite-color no-underline"
                   >
-                    <p className="text-sm">Linkedin</p>
+                    <strong>
+                      <p className="text-sm">Linkedin</p>
+                    </strong>
                   </motion.a>
                   <p className="text-sm">|</p>
                   <motion.a
                     href="https://github.com/akael888"
                     whileTap={{ scale: 0.9 }}
+                    className="text-opposite-color no-underline"
                   >
-                    <p className="text-sm">Github</p>
+                    <strong>
+                      <p className="text-sm">Github</p>
+                    </strong>
                   </motion.a>
                 </div>
               </div>
