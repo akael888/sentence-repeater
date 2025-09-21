@@ -61,7 +61,7 @@ function App() {
               duration: 0.5,
               ease: "easeInOut",
             }}
-            className="w-full h-auto bg-color-foreground mt-auto"
+            className="w-full h-auto bg-color-foreground mt-auto p-[2%]"
           >
             <div className="w-full h-auto flex flex-col sm:flex-row p-[2%] sm:p-[1%] ">
               <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-sub-color">
