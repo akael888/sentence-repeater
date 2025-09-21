@@ -39,7 +39,7 @@ function App() {
           ease: "easeInOut",
         }}
         className={
-          "h-[10%] min-h-[10vh] w-fullflex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color  text-center z-[100]  sticky top-0" +
+          "h-[10%] min-h-[10vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color  text-center z-[100]  sticky top-0" +
           tw_appHeader_glassMorphBG
         }
       >
@@ -48,12 +48,29 @@ function App() {
           darkModeChangesTitle={handleDarkModeChanges}
         />
       </motion.header>
-      <div className="w-screen h-[90%] flex flex-col justify-start items-start shrink-1 overflow-scroll overflow-x-hidden overflow-y-auto ">
+      <div className="w-full h-[90%] flex flex-col justify-start items-start shrink-1 overflow-scroll overflow-x-hidden overflow-y-auto ">
         <div className="w-full h-auto grid place-items-center p-[5%]">
           <Repeater />
         </div>
       </div>
-      <footer className="w-full h-[10%] bg-black"></footer>
+      <footer className="w-full h-fit bg-opposite-color">
+        <div className="w-full h-fit flex flex-column p-[5%] text-main-color">
+          <div className="w-full h-full  ">
+            <p>Build with React, Tailwindcss, React Bootstrap, and Motion</p>
+          </div>
+          <div className="w-full h-full grid place-items-center">
+            <p>© 2025 Elgratio Latuihamallo</p>
+            <div className="w-[30%] h-fit grid grid-cols-2 gap-[10px]">
+              <a href="https://www.linkedin.com/in/elgratiofc">
+                <img src="svg/linkedin.svg" alt="Linkedin Logo" />
+              </a>
+              <a href="https://github.com/akael888">
+                <img src="svg/github.svg" alt="GitHub Logo" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
