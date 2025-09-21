@@ -58,19 +58,16 @@ function Repeater() {
 
   return (
     <>
-      <div
-        className={`w-[80vw] grid place-items-center m-auto h-full gap-[2vh]`}
-      >
-        <motion.div className="h-auto w-full h-full grid  place-self-center gap-[10px] z-[1]">
+      <div className="w-[80vw] grid place-items-center m-auto min-h-0 gap-[2vh]">
+        <motion.div className="h-auto w-full grid place-self-center gap-[10px]">
           <Preview
             incomingPreviewText={previewText}
             incomingVariables={variables}
           />
         </motion.div>
+        
         <motion.div
-          className={
-            "h-auto w-full grid grid-rows-2 place-self-center gap-[10px] "
-          }
+          className="h-auto w-full grid grid-rows-2 place-self-center gap-[10px]"
           initial={{ opacity: 0, y: -100, height: 0 }}
           animate={{
             opacity: 1,
@@ -81,7 +78,6 @@ function Repeater() {
             ease: "easeInOut",
           }}
         >
-          {/*Kurang Animasi*/}
           <TextInput
             incomingHandlePreviewTextChanges={handlePreviewTextChanges}
             incomingHandleVariablesChanges={handleVariableChanges}
@@ -96,29 +92,22 @@ function Repeater() {
             incomingHighestListVar={highestListVar}
           />
         </motion.div>
-        <>
-          <motion.div
-            className={
-              "grid w-full h-full  items-center content-center gap-[30px]"
-            }
-          >
-            <VariableTable
-              incomingVariables={variables}
-              incomingHandlevariableChanges={handleVariableChanges}
-              incomingHandleHighestListVar={handleHighestListVarChanges}
-              incomingHighestListVar={highestListVar}
-            />
-            <ShowResult
-              arrayResults={generatedSentence}
-              arrayResultsChange={handleGeneratedSentenceChanges}
-            />
-          </motion.div>
-        </>
+        
+        <motion.div className="grid w-full h-auto items-start content-start gap-[30px]">
+          <VariableTable
+            incomingVariables={variables}
+            incomingHandlevariableChanges={handleVariableChanges}
+            incomingHandleHighestListVar={handleHighestListVarChanges}
+            incomingHighestListVar={highestListVar}
+          />
+          <ShowResult
+            arrayResults={generatedSentence}
+            arrayResultsChange={handleGeneratedSentenceChanges}
+          />
+        </motion.div>
       </div>
     </>
   );
 }
 
 export default Repeater;
-
-// "w-screen min-h-screen flex bg-center bg-repeat justify-center overflow-hidden text-opposite-color shrink-1"
