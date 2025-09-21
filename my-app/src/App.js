@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div
-      className="w-screen h-screen bg-center bg-repeat text-center "
+      className="w-screen h-screen bg-center bg-repeat text-center flex flex-col"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <motion.header
@@ -39,7 +39,7 @@ function App() {
           ease: "easeInOut",
         }}
         className={
-          "h-[10%] min-h-[10vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color  text-center z-[100]  sticky top-0" +
+          "h-[10%] min-h-[10vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0" +
           tw_appHeader_glassMorphBG
         }
       >
@@ -48,36 +48,41 @@ function App() {
           darkModeChangesTitle={handleDarkModeChanges}
         />
       </motion.header>
-      <div className="w-full h-[90%] overflow-y-auto overflow-scroll grid">
-        <div className="w-full h-full flex flex-col justify-start items-start shrink-1 ">
-          <div className="w-full h-auto grid place-items-center p-[5%]">
+
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="min-h-full flex flex-col">
+          <div className="flex-1 w-full grid place-items-center p-[5%]">
             <Repeater />
           </div>
-        </div>
-        <footer className="w-full h-fit bg-opposite-color">
-          <div className="w-full h-fit flex flex-column p-[5%] text-main-color">
-            <div className="w-full h-full  ">
-              <p>Build with React, Tailwindcss, React Bootstrap, and Motion</p>
-            </div>
-            <div className="w-full h-full grid place-items-center">
-              <p>© 2025 Elgratio Latuihamallo</p>
-              <div className="w-[30%] h-fit grid grid-cols-2 gap-[10px]">
-                <motion.a
-                  href="https://www.linkedin.com/in/elgratiofc"
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <img src="svg/linkedin.svg" alt="Linkedin Logo" />
-                </motion.a>
-                <motion.a
-                  href="https://github.com/akael888"
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <img src="svg/github.svg" alt="GitHub Logo" />
-                </motion.a>
+
+          <footer className="w-full h-auto bg-opposite-color mt-auto">
+            <div className="w-full h-auto flex flex-col sm:flex-row p-[2%] sm:p-[1%] text-main-color">
+              <div className="w-full">
+                <p className="text-sm">
+                  Build with React, Tailwindcss, React Bootstrap, and Motion
+                </p>
+              </div>
+              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-end sm:gap-[10px]">
+                <p className="text-sm">© 2025 Elgratio Latuihamallo</p>
+                <div className="w-[30%] sm:w-auto flex gap-[10px]">
+                  <motion.a
+                    href="https://www.linkedin.com/in/elgratiofc"
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <p className="text-sm">Linkedin</p>
+                  </motion.a>
+                  <p className="text-sm">|</p>
+                  <motion.a
+                    href="https://github.com/akael888"
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <p className="text-sm">Github</p>
+                  </motion.a>
+                </div>
               </div>
             </div>
-          </div>
-        </footer>
+          </footer>
+        </div>
       </div>
     </div>
   );
