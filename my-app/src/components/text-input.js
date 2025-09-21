@@ -34,7 +34,7 @@ function TextInput({
       allBracketPositions.push(bracketPos + 1);
       searchPos = bracketPos + 1;
     }
-    const updatedVariables = new Map(tempVariables);
+    let updatedVariables = new Map(incomingVariables);
     console.log("updated size before:" + updatedVariables.size);
     allBracketPositions.forEach((position, index) => {
       if (!updatedVariables.has(index)) {
@@ -56,12 +56,18 @@ function TextInput({
     console.log("bracket size after:" + allBracketPositions.length);
     incomingHandlePreviewTextChanges(textInput);
     if (allBracketPositions.length < updatedVariables.size) {
-      console.log("reducetempvar");
-      // setTempVariables(new Map());
-      deleteLatestVar();
-    } else setTempVariables(updatedVariables);
+      console.log("loopv:" + updatedVariables.size);
+      console.log("loopb:" + allBracketPositions.length);
 
-    incomingHandleVariablesChanges(updatedVariables);
+      console.log("log");
+
+      while (allBracketPositions.length < updatedVariables.size) {
+        updatedVariables = deleteLatestVar(updatedVariables);
+        incomingHandleVariablesChanges(updatedVariables);
+        // console.log(incomingVariables.size);
+      }
+      console.log("log2");
+    } else incomingHandleVariablesChanges(updatedVariables);
 
     console.log("preview text: before enter" + textInput);
     console.log("comvarsize: before enter" + incomVarSize);
@@ -70,15 +76,17 @@ function TextInput({
     console.log("preview text:" + textInput);
   }
 
-  function deleteLatestVar() {
-     if (tempVariables.size === 0) return;
+  function deleteLatestVar(updatedVariables) {
+    if (incomingVariables.size === 0) return;
 
-    const lastKey = Array.from(tempVariables.keys()).pop();
+    const lastKey = Array.from(updatedVariables.keys()).pop();
     if (lastKey !== undefined) {
-      const tempMap = new Map(tempVariables);
-      tempMap.delete(lastKey);
-      setTempVariables(tempMap);
-      incomingHandleVariablesChanges(tempVariables);
+      updatedVariables.delete(lastKey);
+      console.log("Updated Var Deleted : " + updatedVariables);
+      console.log(updatedVariables);
+      // setTempVariables(tempMap);
+      // incomingHandleVariablesChanges(updatedVariables);
+      return updatedVariables;
     }
     // console.log("pakeEko");
     // setTempVariables(incomingVariables);
