@@ -57,12 +57,12 @@ function App() {
 
           <footer className="w-full h-auto bg-opposite-color mt-auto">
             <div className="w-full h-auto flex flex-col sm:flex-row p-[2%] sm:p-[1%] text-main-color">
-              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-start sm:gap-[10px]">
+              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px]">
                 <p className="text-sm">
                   Build with React, Tailwindcss, React Bootstrap, and Motion
                 </p>
               </div>
-              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-end sm:gap-[10px]">
+              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px]">
                 <p className="text-sm">© 2025 Elgratio Latuihamallo</p>
                 <div className="w-[30%] sm:w-auto flex gap-[10px]">
                   <motion.a
