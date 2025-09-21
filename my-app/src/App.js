@@ -33,7 +33,6 @@ function App() {
       <motion.header
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
         transition={{
           duration: 0.5,
           ease: "easeInOut",
@@ -55,7 +54,15 @@ function App() {
             <Repeater />
           </div>
 
-          <footer className="w-full h-auto bg-color-foreground mt-auto">
+          <motion.footer
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            className="w-full h-auto bg-color-foreground mt-auto"
+          >
             <div className="w-full h-auto flex flex-col sm:flex-row p-[2%] sm:p-[1%] ">
               <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-sub-color">
                 <p className="text-sm">
@@ -87,7 +94,7 @@ function App() {
                 </div>
               </div>
             </div>
-          </footer>
+          </motion.footer>
         </div>
       </div>
     </div>
