@@ -61,12 +61,18 @@ function App() {
           <div className="w-full h-full grid place-items-center">
             <p>© 2025 Elgratio Latuihamallo</p>
             <div className="w-[30%] h-fit grid grid-cols-2 gap-[10px]">
-              <a href="https://www.linkedin.com/in/elgratiofc">
+              <motion.a
+                href="https://www.linkedin.com/in/elgratiofc"
+                whileTap={{ scale: 0.9 }}
+              >
                 <img src="svg/linkedin.svg" alt="Linkedin Logo" />
-              </a>
-              <a href="https://github.com/akael888">
+              </motion.a>
+              <motion.a
+                href="https://github.com/akael888"
+                whileTap={{ scale: 0.9 }}
+              >
                 <img src="svg/github.svg" alt="GitHub Logo" />
-              </a>
+              </motion.a>
             </div>
           </div>
         </div>
