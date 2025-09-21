@@ -48,8 +48,8 @@ function App() {
           darkModeChangesTitle={handleDarkModeChanges}
         />
       </motion.header>
-      <div className="w-full h-[90%] overflow-y-auto">
-        <div className="w-full h-full flex flex-col justify-start items-start shrink-1 overflow-scroll overflow-x-hidden ">
+      <div className="w-full h-[90%] overflow-y-auto overflow-scroll grid">
+        <div className="w-full h-full flex flex-col justify-start items-start shrink-1 ">
           <div className="w-full h-auto grid place-items-center p-[5%]">
             <Repeater />
           </div>
