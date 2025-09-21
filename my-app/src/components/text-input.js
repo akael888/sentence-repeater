@@ -41,10 +41,10 @@ function TextInput({
         if (!updatedVariables.has(index)) {
           updatedVariables.set(index, {
             id: position,
-            name: "Variable " + index,
+            name: "Variable " + (index + 1),
             type: "Integer",
-            value: index,
-            minValue: index,
+            value: 1,
+            minValue: 1,
             maxValue: 10,
             iterate: true,
             interval: 1,
