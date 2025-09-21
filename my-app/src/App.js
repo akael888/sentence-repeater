@@ -27,19 +27,18 @@ function App() {
 
   return (
     <div
-      className="w-screen h-screen bg-center bg-repeat text-center "
+      className="w-screen h-screen bg-center bg-repeat text-center flex flex-col"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <motion.header
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
         transition={{
           duration: 0.5,
           ease: "easeInOut",
         }}
         className={
-          "h-[10%] min-h-[10vh] w-fullflex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color  text-center z-[100]  sticky top-0" +
+          "h-[10%] min-h-[10vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0" +
           tw_appHeader_glassMorphBG
         }
       >
@@ -48,12 +47,56 @@ function App() {
           darkModeChangesTitle={handleDarkModeChanges}
         />
       </motion.header>
-      <div className="w-screen h-[90%] flex flex-col justify-start items-start shrink-1 overflow-scroll overflow-x-hidden overflow-y-auto ">
-        <div className="w-full h-auto grid place-items-center p-[5%]">
-          <Repeater />
+
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="min-h-full flex flex-col">
+          <div className="flex-1 w-full grid place-items-center p-[5%]">
+            <Repeater />
+          </div>
+
+          <motion.footer
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            className="w-full h-auto sm:h-[50%] bg-color-foreground mt-auto sm:p-[0] p-[2%]"
+          >
+            <div className="w-full h-auto sm:h-[50%] flex flex-col sm:flex-row p-[2%] sm:p-[1%] ">
+              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-sub-color">
+                <p className="text-sm">
+                  Build with React, Tailwindcss, React Bootstrap, and Motion
+                </p>
+              </div>
+              <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-main-color">
+                <p className="text-sm ">© 2025 - Elgratio Latuihamallo</p>
+                <div className="w-[30%] sm:w-auto flex gap-[10px]">
+                  <motion.a
+                    href="https://www.linkedin.com/in/elgratiofc"
+                    whileTap={{ scale: 0.9 }}
+                    className="text-opposite-color no-underline"
+                  >
+                    <strong>
+                      <p className="text-sm">Linkedin</p>
+                    </strong>
+                  </motion.a>
+                  <p className="text-sm">|</p>
+                  <motion.a
+                    href="https://github.com/akael888"
+                    whileTap={{ scale: 0.9 }}
+                    className="text-opposite-color no-underline"
+                  >
+                    <strong>
+                      <p className="text-sm">Github</p>
+                    </strong>
+                  </motion.a>
+                </div>
+              </div>
+            </div>
+          </motion.footer>
         </div>
       </div>
-      <footer className="w-full h-[10%] bg-black"></footer>
     </div>
   );
 }
