@@ -80,7 +80,7 @@ function Preview({ incomingPreviewText, incomingVariables }) {
             ease: "easeInOut",
           }}
       >
-        <h1 className="w-full ">{generatePreviewandVariables()}</h1>
+        <h1 className="w-full whitespace-pre-wrap ">{generatePreviewandVariables()}</h1>
       </motion.div>
     </>
   );
