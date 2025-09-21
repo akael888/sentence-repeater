@@ -48,35 +48,37 @@ function App() {
           darkModeChangesTitle={handleDarkModeChanges}
         />
       </motion.header>
-      <div className="w-full h-[90%] flex flex-col justify-start items-start shrink-1 overflow-scroll overflow-x-hidden overflow-y-auto ">
-        <div className="w-full h-auto grid place-items-center p-[5%]">
-          <Repeater />
-        </div>
-      </div>
-      <footer className="w-full h-fit bg-opposite-color">
-        <div className="w-full h-fit flex flex-column p-[5%] text-main-color">
-          <div className="w-full h-full  ">
-            <p>Build with React, Tailwindcss, React Bootstrap, and Motion</p>
+      <div className="w-full h-[90%] overflow-y-auto">
+        <div className="w-full h-full flex flex-col justify-start items-start shrink-1 overflow-scroll overflow-x-hidden ">
+          <div className="w-full h-auto grid place-items-center p-[5%]">
+            <Repeater />
           </div>
-          <div className="w-full h-full grid place-items-center">
-            <p>© 2025 Elgratio Latuihamallo</p>
-            <div className="w-[30%] h-fit grid grid-cols-2 gap-[10px]">
-              <motion.a
-                href="https://www.linkedin.com/in/elgratiofc"
-                whileTap={{ scale: 0.9 }}
-              >
-                <img src="svg/linkedin.svg" alt="Linkedin Logo" />
-              </motion.a>
-              <motion.a
-                href="https://github.com/akael888"
-                whileTap={{ scale: 0.9 }}
-              >
-                <img src="svg/github.svg" alt="GitHub Logo" />
-              </motion.a>
+        </div>
+        <footer className="w-full h-fit bg-opposite-color">
+          <div className="w-full h-fit flex flex-column p-[5%] text-main-color">
+            <div className="w-full h-full  ">
+              <p>Build with React, Tailwindcss, React Bootstrap, and Motion</p>
+            </div>
+            <div className="w-full h-full grid place-items-center">
+              <p>© 2025 Elgratio Latuihamallo</p>
+              <div className="w-[30%] h-fit grid grid-cols-2 gap-[10px]">
+                <motion.a
+                  href="https://www.linkedin.com/in/elgratiofc"
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <img src="svg/linkedin.svg" alt="Linkedin Logo" />
+                </motion.a>
+                <motion.a
+                  href="https://github.com/akael888"
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <img src="svg/github.svg" alt="GitHub Logo" />
+                </motion.a>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 }
