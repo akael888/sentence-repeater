@@ -45,23 +45,18 @@ function Generator({
   }, [inputValue]);
 
   useEffect(() => {
+    console.log("incomingHighestListVar changed:", incomingHighestListVar);
+    console.log("List length:", incomingHighestListVar?.list?.length);
+    console.log("Interval:", incomingHighestListVar?.interval);
+
+    if (!incomingHighestListVar?.list) return;
+
     let listTotalLength =
       incomingHighestListVar.list.length * incomingHighestListVar.interval;
 
-    console.log(
-      "List Before Total Len",
-      listTotalLength,
-      generatedSentenceAmount
-    );
-
     setInputValue(listTotalLength || "");
     handleGeneratedSentenceAmountChanges(listTotalLength);
-    console.log(
-      "List After Total Len",
-      listTotalLength,
-      generatedSentenceAmount
-    );
-  }, [incomingHighestListVar.list.length, incomingHighestListVar.interval]);
+  }, [incomingHighestListVar]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
     console.log("AMount Generated Sentence: ", amount);

@@ -10,12 +10,7 @@ function VarTableRowData({
   incomingCustomColorText = "main-color",
   incomingCustomBGColorText = "transparent",
 }) {
-  console.log(
-    "VarTableRowData render - Key:",
-    incomingKey,
-    "Values:",
-    incomingValues
-  );
+ 
   const editableRef = useRef();
 
   const TableRowFormatRef = {

@@ -35,37 +35,23 @@ function VariableTable({
   };
 
   function setMaxGeneratedSentencefromList(selectedVar) {
-    console.log(
-      "Incoming Highest List Var:" +
-        incomingHighestListVar +
-        " with this len: " +
-        incomingHighestListVar.list.length
-    );
-    console.log(incomingHighestListVar);
-    console.log(
-      "Selected List Var:" +
-        selectedVar +
-        " with this len: " +
-        selectedVar.list.length
-    );
-    console.log(selectedVar);
-    let selectedVarListTotalLength =
-      selectedVar.list.length * selectedVar.interval;
-    let highestVarListTotalLength =
-      incomingHighestListVar.name != null
-        ? incomingHighestListVar.list.length * incomingHighestListVar.interval
-        : 0;
-
-    console.log(
-      "selectedVarListTotalLength:" +
-        selectedVarListTotalLength +
-        "highestVarListTotalLength: " +
-        highestVarListTotalLength
-    );
-    if (selectedVarListTotalLength > highestVarListTotalLength) {
+    console.log("setMaxGeneratedSentencefromList()----- Start");
+    if (selectedVar.id == incomingHighestListVar.id) {
       incomingHandleHighestListVar(selectedVar);
-      console.log("Masuk Testing");
+      console.log(`Same Variable`);
+    } else {
+      let selectedVarListTotalLength =
+        selectedVar.list.length * selectedVar.interval;
+      let highestVarListTotalLength =
+        incomingHighestListVar.name != null
+          ? incomingHighestListVar.list.length * incomingHighestListVar.interval
+          : 0;
+      if (selectedVarListTotalLength > highestVarListTotalLength) {
+        incomingHandleHighestListVar(selectedVar);
+        console.log(`Set ${selectedVar} as the new Highest List Variable`);
+      }
     }
+    console.log("setMaxGeneratedSentencefromList()----- DONE");
   }
 
   function handleVariableChanges(key, field, value) {
@@ -107,7 +93,6 @@ function VariableTable({
         }
       }
 
-      
       if (targetVar["type"] === "List" && targetVar["iterate"] === true) {
         setMaxGeneratedSentencefromList(targetVar);
         console.log("Target Var Type: " + targetVar["type"]);
