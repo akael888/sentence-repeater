@@ -38,7 +38,7 @@ function App() {
           ease: "easeInOut",
         }}
         className={
-          "h-[10%] min-h-[10vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0" +
+          "h-[5%] min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0" +
           tw_appHeader_glassMorphBG
         }
       >
@@ -104,14 +104,25 @@ function App() {
 function TitleHeader({ darkModeTitle, darkModeChangesTitle }) {
   return (
     <>
-      <div className="w-full h-full grid content-center">
-        <h1>Sentence Repeater</h1>
-
+      <nav className="flex justify-between items-center">
+        <a href="/" class="logo">
+          <img
+            className="flex-shrink-0 w-auto h-full max-h-[5vh] object-contain "
+            src="./logo512.png"
+            alt="sentence-repeater-logo"
+          />
+        </a>
         {/* <Mode
           currentState={darkModeTitle}
           darkModeChanges={darkModeChangesTitle}
         /> */}
-      </div>
+        {/* <ul className="flex justify-between items-center gap-[10px] w-full h-full">
+          <li className="w-full h-full">
+            <a href="/">How to Use</a>
+          </li>
+          
+        </ul> */}
+      </nav>
     </>
   );
 }
