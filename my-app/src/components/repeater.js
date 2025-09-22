@@ -90,10 +90,13 @@ function Repeater() {
   useEffect(() => {
     localStorage.setItem("CURRENT_PREVIEW_TEXT", JSON.stringify(previewText));
   }, [previewText]);
-
+ 
   useEffect(() => {
-    localStorage.setItem("CURRENT_HIGHEST_LIST_VAR", JSON.stringify(highestListVar));
-  }, [highestListVar]);
+    localStorage.setItem(
+      "CURRENT_HIGHEST_LIST_VAR",
+      JSON.stringify(highestListVar)
+    );
+  }, [JSON.stringify(highestListVar)]);
 
   useEffect(() => {
     localStorage.setItem(
