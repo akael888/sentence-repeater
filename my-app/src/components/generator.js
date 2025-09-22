@@ -56,7 +56,7 @@ function Generator({
 
     setInputValue(listTotalLength || "");
     handleGeneratedSentenceAmountChanges(listTotalLength);
-  }, [incomingHighestListVar]);
+  }, [JSON.stringify(incomingHighestListVar)]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
     console.log("AMount Generated Sentence: ", amount);
