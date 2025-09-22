@@ -9,10 +9,57 @@ import { motion } from "motion/react";
 import VariableModal from "./var-modal";
 
 function Repeater() {
-  const [previewText, setPreviewText] = useState(""); //For Text Preview
-  const [variables, setVariables] = useState(new Map()); //To Count Each Variables
-  const [generatedSentence, setGeneratedSentence] = useState([]); //For the created Sentences
-  const [highestListVar, setHighestListVar] = useState({ list: [] });
+  const [previewText, setPreviewText] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_PREVIEW_TEXT");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (err) {
+      console.error("Failed to parse preview text from localStorage:", err);
+    }
+    return "";
+  }); //For Text Preview
+  const [variables, setVariables] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_VARIABLES");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return new Map(parsed);
+      }
+    } catch (err) {
+      console.error("Failed to parse variables from localStorage:", err);
+    }
+    return new Map();
+  }); //To Count Each Variables
+  const [generatedSentence, setGeneratedSentence] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_GEN_SENTENCES");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (err) {
+      console.error(
+        "Failed to parse generated sentence from localStorage:",
+        err
+      );
+    }
+    return [];
+  }); //For the created Sentences
+  const [highestListVar, setHighestListVar] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_HIGHEST_LIST_VAR");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (err) {
+      console.error("Failed to parse highest list var from localStorage:", err);
+    }
+    return { list: [] };
+  });
 
   //to update changes within the generated sentence in the parent component
 
@@ -40,6 +87,31 @@ function Repeater() {
     }
   }, [variables.size]);
 
+  useEffect(() => {
+    localStorage.setItem("CURRENT_PREVIEW_TEXT", JSON.stringify(previewText));
+  }, [previewText]);
+ 
+  useEffect(() => {
+    localStorage.setItem(
+      "CURRENT_HIGHEST_LIST_VAR",
+      JSON.stringify(highestListVar)
+    );
+  }, [JSON.stringify(highestListVar)]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "CURRENT_GEN_SENTENCES",
+      JSON.stringify(generatedSentence)
+    );
+  }, [generatedSentence]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "CURRENT_VARIABLES",
+      JSON.stringify(Array.from(variables.entries()))
+    );
+  }, [variables]);
+
   const handleGeneratedSentenceChanges = (textArrayData) => {
     setGeneratedSentence(textArrayData);
   };
@@ -49,7 +121,7 @@ function Repeater() {
   };
 
   const handleVariableChanges = (passedVariable) => {
-    setVariables(passedVariable);
+    setVariables(new Map(passedVariable));
   };
 
   const handleHighestListVarChanges = (passedVariable) => {
@@ -65,7 +137,7 @@ function Repeater() {
             incomingVariables={variables}
           />
         </motion.div>
-        
+
         <motion.div
           className="h-auto w-full grid grid-rows-2 place-self-center gap-[10px]"
           initial={{ opacity: 0, y: -100, height: 0 }}
@@ -79,6 +151,7 @@ function Repeater() {
           }}
         >
           <TextInput
+            incomingPreviewText={previewText}
             incomingHandlePreviewTextChanges={handlePreviewTextChanges}
             incomingHandleVariablesChanges={handleVariableChanges}
             incomingVariables={variables}
@@ -92,7 +165,7 @@ function Repeater() {
             incomingHighestListVar={highestListVar}
           />
         </motion.div>
-        
+
         <motion.div className="grid w-full h-auto items-start content-start gap-[30px]">
           <VariableTable
             incomingVariables={variables}

@@ -23,30 +23,42 @@ function Generator({
   let tw_generateButton_hover =
     " hover:bg-[color:var(--main-color)] hover:text-[color:var(--opposite-color)]  hover:border-[color:var(--opposite-color)] ";
 
+  //both of these seems redundant! need refactor later!
   const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(0);
-
-  const [inputValue, setInputValue] = useState(0);
+  const [inputValue, setInputValue] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_GEN_AMOUNT");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (err) {
+      console.error("Failed to parse generated amount from localStorage:", err);
+    }
+    return 0;
+  });
 
   let requiredFilled = inputValue != 0 && incomingPreviewText != "";
 
   useEffect(() => {
-    let listTotalLength =
-      incomingHighestListVar.list.length * incomingHighestListVar.interval;
+    localStorage.setItem("CURRENT_GEN_AMOUNT", JSON.stringify(inputValue));
+  }, [inputValue]);
 
-    console.log(
-      "List Before Total Len",
-      listTotalLength,
-      generatedSentenceAmount
-    );
+  useEffect(() => {
+    console.log("incomingHighestListVar changed:", incomingHighestListVar);
+    console.log("List length:", incomingHighestListVar?.list?.length);
+    console.log("Interval:", incomingHighestListVar?.interval);
 
-    setInputValue(listTotalLength || "");
-    handleGeneratedSentenceAmountChanges(listTotalLength);
-    console.log(
-      "List After Total Len",
-      listTotalLength,
-      generatedSentenceAmount
-    );
-  }, [incomingHighestListVar.list.length, incomingHighestListVar.interval]);
+    if (!incomingHighestListVar?.list) return;
+
+    if (incomingHighestListVar.list.length != 0) {
+      let listTotalLength =
+        incomingHighestListVar.list.length * incomingHighestListVar.interval;
+
+      setInputValue(listTotalLength || "");
+      handleGeneratedSentenceAmountChanges(listTotalLength);
+    }
+  }, [JSON.stringify(incomingHighestListVar)]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
     console.log("AMount Generated Sentence: ", amount);

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, use } from "react";
 import css from "./text-input.module.css";
 
 function TextInput({
+  incomingPreviewText,
   incomingHandlePreviewTextChanges,
   incomingHandleVariablesChanges,
   incomingVariables,
@@ -40,7 +41,7 @@ function TextInput({
       allBracketPositions.forEach((position, index) => {
         if (!updatedVariables.has(index)) {
           updatedVariables.set(index, {
-            id: position,
+            id: index,
             name: "Variable " + (index + 1),
             type: "Integer",
             value: 1,
@@ -107,6 +108,11 @@ function TextInput({
             tw_textInput_focus
           }
           placeholder="Type Text here.."
+          value={
+            incomingPreviewText != null
+              ? incomingPreviewText
+              : null
+          }
           // onClick={(e) => enableEditing(e.target)}
           onChange={(e) => addVariableOnInput(e)}
           type="text"
