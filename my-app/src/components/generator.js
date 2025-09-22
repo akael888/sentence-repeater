@@ -51,11 +51,13 @@ function Generator({
 
     if (!incomingHighestListVar?.list) return;
 
-    let listTotalLength =
-      incomingHighestListVar.list.length * incomingHighestListVar.interval;
+    if (incomingHighestListVar.list.length != 0) {
+      let listTotalLength =
+        incomingHighestListVar.list.length * incomingHighestListVar.interval;
 
-    setInputValue(listTotalLength || "");
-    handleGeneratedSentenceAmountChanges(listTotalLength);
+      setInputValue(listTotalLength || "");
+      handleGeneratedSentenceAmountChanges(listTotalLength);
+    }
   }, [JSON.stringify(incomingHighestListVar)]);
 
   function handleGeneratedSentenceAmountChanges(amount) {
