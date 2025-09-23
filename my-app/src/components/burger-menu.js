@@ -7,7 +7,7 @@ function BurgerMenu({ isOpen, darkModeChanges }) {
 
   return (
     <motion.div
-      className="fixed top-0 right-0 w-[70%] h-screen bg-white z-[100] shadow-lg [&>*]:text-black flex flex-col justify-center gap-[10px]"
+      className="fixed top-0 right-0 w-[70%] lg:w-[30%] h-screen bg-white z-[100] shadow-lg [&>*]:text-black flex flex-col justify-center gap-[10px]"
       initial={{ x: "100%" }}
       animate={{ x: isOpen ? 0 : "100%" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -36,7 +36,7 @@ function BurgerMenu({ isOpen, darkModeChanges }) {
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <motion.div
-            className="p-2 [&>*]:text-sm border-b border-gray-200"
+            className="p-2 [&>*]:text-sm border-b border-gray-200 lg:[&>*]:text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: isTutorialOpen ? 1 : 0 }}
             transition={{ duration: 0.3, delay: isTutorialOpen ? 0.1 : 0 }}
@@ -44,7 +44,9 @@ function BurgerMenu({ isOpen, darkModeChanges }) {
             <p>Write your Sentence in the Text Input</p>
             <p>Provide the Generate Amount</p>
             <p>Press Generate!</p>
-            <p>Write "{"{}"}" to define a Variable in the Text Input.</p>
+            <strong className="text-amber-600">
+              <p>Write "{"{}"}" to define a Variable in the Sentence inside the Text Input</p>
+            </strong>
           </motion.div>
         </motion.div>
       </div>
@@ -52,7 +54,7 @@ function BurgerMenu({ isOpen, darkModeChanges }) {
       <div className="w-full h-auto flex flex-row justify-center items-center text-center gap-2">
         <div>Dark Mode |</div>
 
-        <CustomToggle onChange={darkModeChanges}></CustomToggle>
+        <CustomToggle onChange={darkModeChanges} disabled={true}></CustomToggle>
       </div>
     </motion.div>
   );
