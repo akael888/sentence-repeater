@@ -77,7 +77,7 @@ function App() {
             <div className="w-full h-auto sm:h-[50%] flex flex-col sm:flex-row p-[2%] sm:p-[1%] ">
               <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-sub-color">
                 <p className="text-sm">
-                  Build with React, Tailwindcss, React Bootstrap, and Motion
+                  Build with React, Tailwindcss, React Bootstrap, and Framer Motion
                 </p>
               </div>
               <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-main-color">
