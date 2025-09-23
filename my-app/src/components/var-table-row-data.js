@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import Form from "react-bootstrap/Form";
+// import Form from "react-bootstrap/Form";
+import CustomToggle from "./toggle-custom";
 
 function VarTableRowData({
   incomingKey,
@@ -10,7 +11,6 @@ function VarTableRowData({
   incomingCustomColorText = "main-color",
   incomingCustomBGColorText = "transparent",
 }) {
- 
   const editableRef = useRef();
 
   const TableRowFormatRef = {
@@ -122,15 +122,19 @@ function VarTableRowData({
   return (
     <>
       {tableDataType == "VarBoolean" ? (
-        <Form>
-          <Form.Check
-            checked={getCurrentValue()}
-            onClick={handleClick}
-            type="switch"
-            id="custom-switch"
-            className="color  -opposite-color"
-          />
-        </Form>
+        // <Form>
+        //   <Form.Check
+        // checked={getCurrentValue()}
+        // onClick={handleClick}
+        //     type="switch"
+        //     id="custom-switch"
+        //     className="color  -opposite-color"
+        //   />
+        // </Form>
+        <CustomToggle
+          checked={getCurrentValue()}
+          onClick={handleClick}
+        ></CustomToggle>
       ) : (
         <input
           ref={editableRef}

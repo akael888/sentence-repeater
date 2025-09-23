@@ -1,20 +1,27 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Repeater from "./components/repeater";
 import Mode from "./components/toggle-mode";
 import bg from "./img/background-img.jpg";
 import { motion } from "motion/react";
+import Burger from "./components/burger";
+import BurgerMenu from "./components/burger-menu";
 
 function App() {
   // Repeater Components
 
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
   let tw_appHeader_glassMorphBG =
     " bg-[color-mix(in_srgb,var(--color-foreground)_20%,transparent)] backdrop-blur-[10px]";
 
   const handleDarkModeChanges = (event) => {
     setIsDarkMode(!isDarkMode);
     console.log("Current Mode is : " + isDarkMode);
+  };
+
+  const handleOpenBurgerMenuChanges = () => {
+    setIsOpenBurgerMenu(!isOpenBurgerMenu);
   };
 
   useEffect(() => {
@@ -30,6 +37,7 @@ function App() {
       className="w-screen h-screen bg-center bg-repeat text-center flex flex-col"
       style={{ backgroundImage: `url(${bg})` }}
     >
+      <BurgerMenu isOpen={isOpenBurgerMenu} darkModeChanges={handleDarkModeChanges} ></BurgerMenu>
       <motion.header
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -38,13 +46,16 @@ function App() {
           ease: "easeInOut",
         }}
         className={
-          "h-[10%] min-h-[10vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0" +
+          "h-[5%] min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0" +
           tw_appHeader_glassMorphBG
         }
+        
       >
         <TitleHeader
           darkModeTitle={isDarkMode}
           darkModeChangesTitle={handleDarkModeChanges}
+          isOpen={isOpenBurgerMenu}
+          handleOpenBurgerMenuChanges = {handleOpenBurgerMenuChanges}
         />
       </motion.header>
 
@@ -66,7 +77,7 @@ function App() {
             <div className="w-full h-auto sm:h-[50%] flex flex-col sm:flex-row p-[2%] sm:p-[1%] ">
               <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-sub-color">
                 <p className="text-sm">
-                  Build with React, Tailwindcss, React Bootstrap, and Motion
+                  Build with React, Tailwindcss, React Bootstrap, and Framer Motion
                 </p>
               </div>
               <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-main-color">
@@ -101,17 +112,29 @@ function App() {
   );
 }
 
-function TitleHeader({ darkModeTitle, darkModeChangesTitle }) {
+function TitleHeader({ darkModeTitle, darkModeChangesTitle, isOpen,handleOpenBurgerMenuChanges }) {
   return (
     <>
-      <div className="w-full h-full grid content-center">
-        <h1>Sentence Repeater</h1>
-
+      <nav className="w-full h-full flex justify-end items-center p-[10px]">
+        {/* <a href="/" class="logo">
+          <img
+            className="flex-shrink-0 w-auto h-full max-h-[5vh] object-contain "
+            src="./logo512.png"
+            alt="sentence-repeater-logo"
+          />
+        </a> */}
+        <Burger isOpen={isOpen} handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}></Burger>
         {/* <Mode
           currentState={darkModeTitle}
           darkModeChanges={darkModeChangesTitle}
         /> */}
-      </div>
+        {/* <ul className="flex justify-between items-center gap-[10px] w-full h-full">
+          <li className="w-full h-full">
+            <a href="/">How to Use</a>
+          </li>
+          
+        </ul> */}
+      </nav>
     </>
   );
 }
