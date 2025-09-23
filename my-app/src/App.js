@@ -1,20 +1,26 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Repeater from "./components/repeater";
 import Mode from "./components/toggle-mode";
 import bg from "./img/background-img.jpg";
 import { motion } from "motion/react";
+import Burger from "./components/burger";
 
 function App() {
   // Repeater Components
 
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
   let tw_appHeader_glassMorphBG =
     " bg-[color-mix(in_srgb,var(--color-foreground)_20%,transparent)] backdrop-blur-[10px]";
 
   const handleDarkModeChanges = (event) => {
     setIsDarkMode(!isDarkMode);
     console.log("Current Mode is : " + isDarkMode);
+  };
+
+  const handleOpenBurgerMenuChanges = () => {
+    setIsOpenBurgerMenu(!isOpenBurgerMenu);
   };
 
   useEffect(() => {
@@ -41,10 +47,13 @@ function App() {
           "h-[5%] min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0" +
           tw_appHeader_glassMorphBG
         }
+        
       >
         <TitleHeader
           darkModeTitle={isDarkMode}
           darkModeChangesTitle={handleDarkModeChanges}
+          isOpen={isOpenBurgerMenu}
+          handleOpenBurgerMenuChanges = {handleOpenBurgerMenuChanges}
         />
       </motion.header>
 
@@ -101,17 +110,18 @@ function App() {
   );
 }
 
-function TitleHeader({ darkModeTitle, darkModeChangesTitle }) {
+function TitleHeader({ darkModeTitle, darkModeChangesTitle, isOpen,handleOpenBurgerMenuChanges }) {
   return (
     <>
-      <nav className="flex justify-between items-center">
-        <a href="/" class="logo">
+      <nav className="w-full h-full flex justify-end items-center p-[10px]">
+        {/* <a href="/" class="logo">
           <img
             className="flex-shrink-0 w-auto h-full max-h-[5vh] object-contain "
             src="./logo512.png"
             alt="sentence-repeater-logo"
           />
-        </a>
+        </a> */}
+        <Burger isOpen={isOpen} handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}></Burger>
         {/* <Mode
           currentState={darkModeTitle}
           darkModeChanges={darkModeChangesTitle}
