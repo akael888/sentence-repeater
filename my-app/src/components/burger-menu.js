@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { useState } from "react";
-import Toggle from "react-bootstrap/Form";
+import CustomToggle from "./toggle-custom";
 
 function BurgerMenu({ isOpen, darkModeChanges }) {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
@@ -14,33 +14,45 @@ function BurgerMenu({ isOpen, darkModeChanges }) {
     >
       <div className="w-full h-auto">
         <motion.button
-          className="w-full h-auto"
+          className="w-full h-auto py-2 border-b border-gray-200"
           onClick={() => setIsTutorialOpen(!isTutorialOpen)}
         >
-          <h4>How to Use</h4>
+          <div className="w-full text-center flex justify-between items-center px-4">
+            <h4 className="w-full">How to Use</h4>
+            <motion.span
+              animate={{ rotate: isTutorialOpen ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-lg text-opposite-color"
+            >
+              ▼
+            </motion.span>
+          </div>
         </motion.button>
+
         <motion.div
-          className={
-            (isTutorialOpen ? "h-auto w-full" : "hidden") + " p-2 [&>*]:text-sm"
-          }
-          initial={{ y: "100%" }}
-          animate={{
-            y: isTutorialOpen ? 0 : "100%",
-            opacity: isTutorialOpen ? 1 : 0,
-          }}
+          className="overflow-hidden"
+          initial={{ height: 0 }}
+          animate={{ height: isTutorialOpen ? "auto" : 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <p>Write your Sentence in the Text Input</p>
-          <p>Provide the Generate Amount</p>
-          <p>Press Generate!</p>
-          <p>Write "{"{}"}" to define a Variable in the Text Input.</p>
+          <motion.div
+            className="p-2 [&>*]:text-sm border-b border-gray-200"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isTutorialOpen ? 1 : 0 }}
+            transition={{ duration: 0.3, delay: isTutorialOpen ? 0.1 : 0 }}
+          >
+            <p>Write your Sentence in the Text Input</p>
+            <p>Provide the Generate Amount</p>
+            <p>Press Generate!</p>
+            <p>Write "{"{}"}" to define a Variable in the Text Input.</p>
+          </motion.div>
         </motion.div>
       </div>
-      <div className="w-full h-auto flex flex-rows justify-center items-center text-center">
+
+      <div className="w-full h-auto flex flex-row justify-center items-center text-center gap-2">
         <div>Dark Mode |</div>
-        <Toggle>
-          <Toggle.Check onChange={darkModeChanges} type="switch" />
-        </Toggle>
+
+        <CustomToggle onChange={darkModeChanges}></CustomToggle>
       </div>
     </motion.div>
   );
