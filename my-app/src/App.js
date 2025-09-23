@@ -5,6 +5,7 @@ import Mode from "./components/toggle-mode";
 import bg from "./img/background-img.jpg";
 import { motion } from "motion/react";
 import Burger from "./components/burger";
+import BurgerMenu from "./components/burger-menu";
 
 function App() {
   // Repeater Components
@@ -36,6 +37,7 @@ function App() {
       className="w-screen h-screen bg-center bg-repeat text-center flex flex-col"
       style={{ backgroundImage: `url(${bg})` }}
     >
+      <BurgerMenu isOpen={isOpenBurgerMenu} darkModeChanges={handleDarkModeChanges} ></BurgerMenu>
       <motion.header
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -5,18 +5,18 @@ function Burger({ isOpen, handleOpenBurgerMenuChanges }) {
     <>
       <motion.button
         onClick={handleOpenBurgerMenuChanges}
-        className="w-8 h-8 flex justify-center items-center relative [&>*]:bg-opposite-color"
+        className="w-8 h-8 flex justify-center items-center relative [&>*]:bg-white z-[1000]"
       >
         <motion.span
-          className="absolute  block w-8 h-1 "
+          className="absolute  block w-8 h-1 rounded-[5px]"
           animate={isOpen ? { rotate: 45,y:0} : { rotate: 0, y: -8 }}
         ></motion.span>
         <motion.span
-          className="absolute  block w-8 h-1"
+          className="absolute  block w-8 h-1 rounded-[5px]"
           animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
         ></motion.span>
         <motion.span
-          className="absolute  block w-8 h-1"
+          className="absolute  block w-8 h-1 rounded-[5px]"
           animate={isOpen ? { rotate: -45, y:0} : { rotate: 0, y: 8 }}
         ></motion.span>
       </motion.button>
