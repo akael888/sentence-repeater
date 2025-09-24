@@ -14,7 +14,7 @@ function VariableTable({
 }) {
   //tailwind css
   let tw_varTable_glassMorphBG =
-    " bg-[color-mix(in_srgb,var(--opposite-color)_20%,transparent)] backdrop-blur-[10px]";
+    " shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px] ";
 
   // const initializedName = useRef(new Set());
 
@@ -236,7 +236,7 @@ function VariableTable({
                 exit={{ opacity: 0 }}
                 layout
                 className={
-                  "rounded-[10px] w-[80vw] h-auto border border-solid border-white border-spacing-[10px] " +
+                  "rounded-[10px] w-[80vw] h-auto   " +
                   tw_varTable_glassMorphBG
                 }
                 style={{ minHeight: "fit-content" }}
