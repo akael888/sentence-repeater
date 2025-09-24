@@ -81,7 +81,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                   >
                     <div className="w-full h-full grid p-[10px] place-items-center  text-center">
                       <div className="w-full h-full">
-                        <p>Results</p>
+                        Results
                       </div>
                     </div>
                     <div className=" w-full h-full text-center place-items-center overflow-y-scroll grid m-auto rounded-t-none rounded-[10px]">
