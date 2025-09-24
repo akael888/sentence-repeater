@@ -17,7 +17,7 @@ function VariableModal({
     setModalState(!modalState);
   }
   let tw_varModal_glassMorphBG =
-    " bg-[color-mix(in_srgb,var(--main-color)_90%,transparent)] backdrop-blur-[10px]";
+    " shadow-[0_0_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  ";
   // function printIntervalProperTerm() {
   //   switch (incomingValues.type) {
   //     case "Integer":
@@ -55,7 +55,7 @@ function VariableModal({
               className="w-screen h-screen inset-0 fixed z-[100]"
             >
               <motion.div
-                className="w-screen h-screen inset-0 fixed bg-[rgba(49,49,49,0.8)]"
+                className="w-screen h-screen inset-0 fixed bg-[rgba(49,49,49,0.8)] "
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -75,7 +75,7 @@ function VariableModal({
                       duration: 0.3,
                       ease: "easeInOut",
                     }}
-                    className={`w-[80%] text-center absolute h-auto grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[70%] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} border border-white`}
+                    className={`w-[80%] text-center absolute h-auto grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[70%] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} `}
                   >
                     <motion.div className="w-full h-full">
                       <motion.h1>
@@ -87,7 +87,7 @@ function VariableModal({
                           incomingHandleVariableChanges={
                             incomingHandleVariableChanges
                           }
-                          incomingCustomColorText={"opposite-color"}
+                          incomingCustomColorText={"white"}
                         ></VarTableRowData>
                       </motion.h1>
 
@@ -106,7 +106,7 @@ function VariableModal({
                           } `}
                         >
                           <motion.div className="w-full h-full">
-                            <Dropdown>
+                            <Dropdown className="flex h-full flex-col gap-1 justify-center items-center">
                               <Dropdown.Toggle
                                 variant="secondary"
                                 id="dropdown-basic"
@@ -114,7 +114,7 @@ function VariableModal({
                                   minWidth: "auto",
                                   width: "100%",
                                 }}
-                                className="!w-full"
+                                className="!w-full !h-full !text-sm !bg-transparent !border-none"
                               >
                                 {incomingValues.type}
                               </Dropdown.Toggle>
@@ -173,9 +173,9 @@ function VariableModal({
                               <motion.div
                                 initial={{ y: -10 }}
                                 animate={{ y: 0 }}
-                                className="w-full h-full"
+                                className="w-full h-full flex flex-col gap-1 justify-center items-center "
                               >
-                                <motion.div>Randomize</motion.div>
+                                <motion.div className="text-sm">Randomize</motion.div>
 
                                 <VarTableRowData
                                   incomingKey={incomingIndex}
@@ -188,11 +188,11 @@ function VariableModal({
                                 ></VarTableRowData>
                               </motion.div>
                               <motion.div
-                                className="w-full h-full "
+                                className="w-full h-full w-full h-full flex flex-col gap-1 justify-center items-center "
                                 initial={{ y: -10 }}
                                 animate={{ y: 0 }}
                               >
-                                <motion.div>Iterate</motion.div>
+                                <motion.div className="text-sm">Iterate</motion.div>
                                 <VarTableRowData
                                   incomingKey={incomingIndex}
                                   incomingValues={incomingValues}
@@ -208,7 +208,7 @@ function VariableModal({
                         </motion.div>
 
                         {incomingValues.type == "List" ? (
-                          <motion.div className="w-full border  ">
+                          <motion.div className="w-full   ">
                             Chip List
                             <motion.div className="w-full grid grid-cols-3 gap-[10px]">
                               <Chip
@@ -222,7 +222,7 @@ function VariableModal({
                           </motion.div>
                         ) : null}
                         <motion.div
-                          className={`gap-[10px] border  w-full [&>*]:w-full grid place-items-center ${
+                          className={`gap-[10px]   w-full [&>*]:w-full grid place-items-center ${
                             incomingValues.type !== "String" &&
                             incomingValues.type !== "List" &&
                             incomingValues.randomize
@@ -387,7 +387,7 @@ function VariableModal({
                         </motion.div>
                         {incomingValues.iterate ? (
                           <motion.div
-                            className="w-full border "
+                            className="w-full  "
                             initial={{ x: -10 }}
                             animate={{ x: 0 }}
                           >
@@ -411,9 +411,9 @@ function VariableModal({
                       <motion.button
                         onClick={(e) => changeModalCondition()}
                         whileTap={{ scale: 0.9 }}
-                        className="bg-opposite-color text-main-color border-2 border-main-color p-[10px] hover:bg-main-color hover:border-opposite-color hover:text-opposite-color rounded-[10px]"
+                        className="text-main-color border-1 border-main-color p-[10px] hover:bg-main-color hover:border-opposite-color hover:text-opposite-color rounded-[10px]"
                       >
-                        Close Variable
+                        ✕ Close Variable
                       </motion.button>
                     </motion.div>
                   </motion.div>
