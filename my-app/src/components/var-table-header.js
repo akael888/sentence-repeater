@@ -9,8 +9,8 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
         <tr className=" [&>*]:p-[15px]">
           {/* <th>id</th> */}
           <th className="w-1/3">Variable Name</th>
-          <th className="w-1/2">Type</th>
-          <th className="w-1/2">Open Variable</th>
+          {/* <th className="w-1/2">Type</th> */}
+          <th className="w-1/2">Edit Variable Button</th>
           {/* <th>Start Value</th>
           <>
             {incomingOtherTypeValidator.Random &&

@@ -42,7 +42,7 @@ function VarTableBody({
                   incomingCustomColorText="main-color"
                 ></VarTableRowData>
               </td>
-              <td>
+              {/* <td>
                 <Dropdown>
                   <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                     {values.type}
@@ -79,7 +79,7 @@ function VarTableBody({
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-              </td>
+              </td> */}
               <td>
                 <SpawnVarModal
                   incomingSelectedVariable={values}
