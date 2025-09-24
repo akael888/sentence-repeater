@@ -2,12 +2,12 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import CustomToggle from "./toggle-custom";
 
-function BurgerMenu({ isOpen, darkModeChanges }) {
+function BurgerMenu({ isOpen, darkModeChanges,isDarkMode }) {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
 
   return (
     <motion.div
-      className="fixed top-0 right-0 w-[70%] lg:w-[30%] h-screen bg-white z-[100] shadow-lg [&>*]:text-black flex flex-col justify-center gap-[10px]"
+      className="fixed top-0 right-0 w-[70%] lg:w-[30%] h-screen bg-white z-[100] shadow-lg [&>*]:text-black flex flex-col justify-center gap-[10px] z-[99]"
       initial={{ x: "100%" }}
       animate={{ x: isOpen ? 0 : "100%" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -54,7 +54,7 @@ function BurgerMenu({ isOpen, darkModeChanges }) {
       <div className="w-full h-auto flex flex-row justify-center items-center text-center gap-2">
         <div>Dark Mode |</div>
 
-        <CustomToggle onChange={darkModeChanges} disabled={true}></CustomToggle>
+        <CustomToggle onChange={darkModeChanges} checked={isDarkMode} ></CustomToggle>
       </div>
     </motion.div>
   );
