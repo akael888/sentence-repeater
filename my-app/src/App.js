@@ -1,4 +1,4 @@
-import "./App.css";
+// import "./App.css";
 import { use, useEffect, useState } from "react";
 import Repeater from "./components/repeater";
 import Mode from "./components/toggle-mode";
@@ -24,8 +24,7 @@ function App() {
     return false;
   });
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
-  let tw_appHeader_glassMorphBG =
-    "  backdrop-blur-[6px] backdrop-saturate-[100%] ";
+  let tw_appHeader_glassMorphBG = " ";
 
   const handleDarkModeChanges = (event) => {
     setIsDarkMode(!isDarkMode);
@@ -38,22 +37,37 @@ function App() {
   };
 
   useEffect(() => {
-    localStorage.setItem("IS_DARK_MODE", JSON.stringify(isDarkMode));
-    if (isDarkMode === true) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
+    try {
+      localStorage.setItem("IS_DARK_MODE", JSON.stringify(isDarkMode));
+    } catch (err) {
+      console.error("Failed to save dark mode to localStorage:", err);
     }
+
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    console.log("Dark mode is now:", isDarkMode);
   }, [isDarkMode]);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
 
   return (
     <>
       <WaveBackground isDarkMode={isDarkMode}></WaveBackground>
       <div
-        className="w-screen h-screen bg-center bg-cover text-center flex flex-col"
-        style={{ color: isDarkMode ? "white" : "grey" }}
+        className="w-screen h-screen bg-center bg-cover text-center flex flex-col text-white dark:text-gray-200"
         // style={{ backgroundImage: `url(${bg})` }}
       >
+        {/* <div className="p-10 bg-white text-black dark:bg-black dark:text-white z-[100000]">
+          Hello Dark Mode
+        </div> */}
         <BurgerMenu
           isOpen={isOpenBurgerMenu}
           darkModeChanges={handleDarkModeChanges}
