@@ -13,9 +13,9 @@ function TextInput({
   let tw_textInput_md = " md:w-[100%] md:p-[10px]";
   let tw_textInput_lg = " lg:w-[50%]";
   let tw_textInput_focus =
-    " focus:bg-opposite-color focus:text-main-color focus:border focus:border-main-color focus:border-solid";
+    " ";
   let tw_textInput_hover =
-    " hover:bg-opposite-color hover:text-main-color hover:border hover:border-main-color hover:border-solid";
+    " hover:shadow-[0_0_30px_rgba(100,100,100,0.35)] hover:text-main-color hover:border hover:border-main-color hover:border-solid";
   let incomVarSize =
     incomingVariables != undefined ? incomingVariables.size : 0;
 
@@ -103,7 +103,7 @@ function TextInput({
         <input
           // contentEditable="true"
           className={
-            "w-full h-[100%] max-w-[80%] text-center flex overflow-auto bg-main-color justify-center text-opposite-color items-center border border-opposite-color cursor-text rounded-[10px] border-solid p-[10px]" +
+            "placeholder-gray-300 w-full h-[100%] max-w-[80%] bg-white bg-opacity-10 text-center flex overflow-auto justify-center items-center cursor-text rounded-[10px] p-[10px] shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]" +
             tw_textInput_hover +
             tw_textInput_focus
           }
