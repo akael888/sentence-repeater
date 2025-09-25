@@ -19,7 +19,7 @@ function SpawnVarModal({
   return (
     <>
       <motion.button
-        className="border-white text-white border rounded-[10px] p-[10px] hover:shadow-[0_0_30px_rgba(100,100,100,0.35)] hover:bg-white hover:bg-opacity-10 text-sm"
+        className=" border rounded-[10px] p-[10px] hover:shadow-[0_0_30px_rgba(100,100,100,0.35)] hover:bg-white hover:bg-opacity-10 text-sm"
         onClick={(e) => OpenVarModal()}
         whileTap={{ scale: 0.9 }}
       >
