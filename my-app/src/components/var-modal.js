@@ -17,7 +17,7 @@ function VariableModal({
     setModalState(!modalState);
   }
   let tw_varModal_glassMorphBG =
-    " shadow-[0_0_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  ";
+    " shadow-[0_0_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  bg-white bg-opacity-10";
   // function printIntervalProperTerm() {
   //   switch (incomingValues.type) {
   //     case "Integer":
@@ -52,7 +52,7 @@ function VariableModal({
                 duration: 0.2,
                 ease: "easeInOut",
               }}
-              className="w-screen h-screen inset-0 fixed z-[100]"
+              className="w-screen h-screen inset-0 fixed z-[100] [&>*]:text-white"
             >
               <motion.div
                 className="w-screen h-screen inset-0 fixed bg-[rgba(49,49,49,0.8)] "
