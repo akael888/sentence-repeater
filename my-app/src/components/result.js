@@ -15,9 +15,8 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
           className="w-full h-full p-[5px] grid text-center gap-[5px] pl-[10px] pr-[10px] "
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
           transition={{
-            duration: 0.1 + i * 0.1,
+            duration: Math.min(0.1 + i * 0.1, 5),
             ease: "easeInOut",
           }}
         >
@@ -80,11 +79,10 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                     className="w-full h-full min-w-[20dvw] min-h-[10vh] max-w-[100dvw] max-h-[25vh] grid row-[2] row-start-auto text-center place-items-center shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]   grid z-0  m-auto rounded-[10px] "
                   >
                     <div className="w-full h-full grid p-[10px] place-items-center text-center">
-                      <div className="w-full h-full p-[5px]">
-                        Results
-                      </div>
+                      <div className="w-full h-full p-[5px]">Results</div>
                     </div>
-                    <div className=" w-full h-full text-center place-items-center overflow-y-scroll grid m-auto rounded-t-none rounded-[10px]">
+                    <div className=" w-full h-full text-center place-items-center overflow-y-scroll grid m-auto rounded-t-none rounded-[10px] [scrollbar-color:#4c2f66_#f4f3ee] 
+    [scrollbar-width:thin]">
                       {rows}
                     </div>
                   </motion.div>
