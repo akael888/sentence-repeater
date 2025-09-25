@@ -1,4 +1,3 @@
-import css from "./text-preview.module.css";
 import { motion } from "motion/react";
 function Preview({ incomingPreviewText, incomingVariables }) {
   //Tailwind Styles
@@ -32,7 +31,7 @@ function Preview({ incomingPreviewText, incomingVariables }) {
           if (value.name !== "") {
             text = text.replace("{}", "{" + String(value.name) + "}");
           } else {
-            text = text.replace("{}", "{" + "Variable " + String(key) + "}");
+            text = text.replace("{}", "{" + "Variable " + String(key+1) + "}");
           }
 
           //DEBUG LOG--------------------------

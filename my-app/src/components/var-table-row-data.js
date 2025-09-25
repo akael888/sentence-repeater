@@ -16,7 +16,7 @@ function VarTableRowData({
   const TableRowFormatRef = {
     VarName: {
       type: () => "text",
-      placeholder: () => "Input Var Name for Var " + incomingKey,
+      placeholder: () => "Input String as a Var Name ",
       widthCSS: () => 60,
     },
     VarStartValue: {
