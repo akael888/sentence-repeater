@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -50,6 +50,9 @@ module.exports = {
         floatB: "floatB 24s linear infinite reverse",
         floatC: "floatC 30s linear infinite",
         streakFlow: "streakFlow 28s linear infinite",
+      },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
       },
     },
   },
