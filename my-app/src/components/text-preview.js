@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 function Preview({ incomingPreviewText, incomingVariables }) {
   //Tailwind Styles
   let tw_preview_glassMorphBG =
-    " bg-[color-mix(in_srgb,var(--main-color)_20%,transparent)] backdrop-blur-[10px]";
+    " shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]";
   // let tw_preview_animation =
   //   " animate-[fadeInTop_2s_ease_0s_1_normal_forwards]";
 
@@ -67,7 +67,7 @@ function Preview({ incomingPreviewText, incomingVariables }) {
     <>
       <motion.div
         className={
-          "w-fit h-auto max-w-[80%] flex items-center text-center text-main-color m-auto p-2.5 rounded-[10px] overflow-auto" +
+          "w-fit h-auto max-w-[80%] flex items-center text-center m-auto p-2.5 rounded-[10px] overflow-auto" +
           tw_preview_glassMorphBG
         }
         initial={{ opacity: 0, y: -100, height: 0 }}

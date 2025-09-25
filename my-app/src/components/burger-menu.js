@@ -2,16 +2,21 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import CustomToggle from "./toggle-custom";
 
-function BurgerMenu({ isOpen, darkModeChanges }) {
+function BurgerMenu({ isOpen, darkModeChanges, isDarkMode }) {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
 
   return (
     <motion.div
-      className="fixed top-0 right-0 w-[70%] lg:w-[30%] h-screen bg-white z-[100] shadow-lg [&>*]:text-black flex flex-col justify-center gap-[10px]"
+      className="fixed top-0 right-0 w-[70%] lg:w-[30%] h-screen bg-amber-100 dark:!bg-stone-800  z-[100] shadow-lg [&>*]:text-stone-500  dark:[&>*]:!text-amber-200 flex flex-col justify-center gap-[10px] z-[99]"
       initial={{ x: "100%" }}
       animate={{ x: isOpen ? 0 : "100%" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
+      <div className="flex flex-row items-center justify-center">
+        <img src="./logo512.png" alt="sentence-repeater-logo" className="w-[10%] h-auto"></img>
+        
+      </div>
+
       <div className="w-full h-auto">
         <motion.button
           className="w-full h-auto py-2 border-b border-gray-200"
@@ -36,16 +41,20 @@ function BurgerMenu({ isOpen, darkModeChanges }) {
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <motion.div
-            className="p-2 [&>*]:text-sm border-b border-gray-200 lg:[&>*]:text-lg"
+            className="p-5 [&>*]:text-sm border-b border-gray-200 lg:[&>*]:text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: isTutorialOpen ? 1 : 0 }}
             transition={{ duration: 0.3, delay: isTutorialOpen ? 0.1 : 0 }}
           >
+            <p>Welcome to Sentence Repeater!</p>
             <p>Write your Sentence in the Text Input</p>
             <p>Provide the Generate Amount</p>
             <p>Press Generate!</p>
             <strong className="text-amber-600">
-              <p>Write "{"{}"}" to define a Variable in the Sentence inside the Text Input</p>
+              <p>
+                Write "{"{}"}" to define a Variable in the Sentence inside the
+                Text Input
+              </p>
             </strong>
           </motion.div>
         </motion.div>
@@ -54,7 +63,10 @@ function BurgerMenu({ isOpen, darkModeChanges }) {
       <div className="w-full h-auto flex flex-row justify-center items-center text-center gap-2">
         <div>Dark Mode |</div>
 
-        <CustomToggle onChange={darkModeChanges} disabled={true}></CustomToggle>
+        <CustomToggle
+          onChange={darkModeChanges}
+          checked={isDarkMode}
+        ></CustomToggle>
       </div>
     </motion.div>
   );

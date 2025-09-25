@@ -130,7 +130,7 @@ function Repeater() {
 
   return (
     <>
-      <div className="w-[80vw] grid place-items-center m-auto min-h-0 gap-[2vh]">
+      <div className="w-[80dvw] grid place-items-center m-auto min-h-0 gap-[2vh]">
         <motion.div className="h-auto w-full grid place-self-center gap-[10px]">
           <Preview
             incomingPreviewText={previewText}
@@ -166,7 +166,7 @@ function Repeater() {
           />
         </motion.div>
 
-        <motion.div className="grid w-full h-auto items-start content-start gap-[30px]">
+        <motion.div className="grid w-full h-auto items-start content-start sm:gap-[10px] gap-[20px] sm:flex sm:flex-rows">
           <VariableTable
             incomingVariables={variables}
             incomingHandlevariableChanges={handleVariableChanges}

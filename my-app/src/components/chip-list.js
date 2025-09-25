@@ -1,4 +1,4 @@
-import css from "./chip-list.module.css";
+import { motion } from "motion/react";
 
 function Chip({
   incomingVariableIndex,
@@ -20,18 +20,28 @@ function Chip({
         {incomingChipList != null
           ? incomingChipList.map((value, index) => (
               <>
-                <div
-                  className={`w-full h-full inline-flex  items-center justify-center bg-opposite-color rounded-[10px] ${tw_chip_glassMorphBG}  gap-[5px]`}
+                <motion.div
+                  initial={{ x: -10 }}
+                  animate={{ x: 0 }}
+                  exit={{ x: -10 }}
+                  className={`w-full h-full inline-flex items-center justify-center border-2 border-amber-600 rounded-[10px] ${tw_chip_glassMorphBG}   sm:gap-[5px]`}
                 >
-                  <div className={css["chip-object"]}>{value}</div>
-                  <button
-                    onClick={(e) => removeChip(index)}
-                    className="w-[30%] h-full text-main-color  p-[5px]"
+                  <motion.div
+                    className={
+                      "w-[70%] text-white text-sm sm:text-normal h-full p-[5px]"
+                    }
+                    
                   >
-                    {" "}
-                    X{" "}
-                  </button>
-                </div>
+                    {value}
+                  </motion.div>
+                  <motion.button
+                    onClick={(e) => removeChip(index)}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-[30%] h-full text-white p-[5px] hover:text-amber-600 text-sm sm:text-normal"
+                  >
+                    ✕
+                  </motion.button>
+                </motion.div>
               </>
             ))
           : ""}

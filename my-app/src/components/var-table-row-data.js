@@ -8,7 +8,7 @@ function VarTableRowData({
   tableDataType,
   incomingchangedValues,
   incomingHandleVariableChanges,
-  incomingCustomColorText = "main-color",
+  incomingCustomColorText,
   incomingCustomBGColorText = "transparent",
 }) {
   const editableRef = useRef();
@@ -138,7 +138,7 @@ function VarTableRowData({
       ) : (
         <input
           ref={editableRef}
-          className={`w-full text-center bg-${incomingCustomBGColorText} text-${incomingCustomColorText} placeholder-sub-color shrink-1`}
+          className={`w-full text-center bg-${incomingCustomBGColorText} text-${incomingCustomColorText} placeholder-sub-color shrink-1 bg-opacity-10 rounded-1`}
           type={getInputType()}
           {...(tableDataType === "VarBoolean"
             ? {

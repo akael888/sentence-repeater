@@ -3,14 +3,14 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
     <>
       <thead
         className={
-          " h-full text-white rounded-[10px] shrink-1 p-[15px] pr-[20px] pl-[20px]"
+          " h-full  rounded-[10px] shrink-1 p-[15px] pr-[20px] pl-[20px]"
         }
       >
         <tr className=" [&>*]:p-[15px]">
           {/* <th>id</th> */}
-          <th className="w-1/3">Variable Name</th>
-          <th className="w-1/2">Type</th>
-          <th className="w-1/2">Open Variable</th>
+          <th className="w-1/2">Variable Name</th>
+          {/* <th className="w-1/2">Type</th> */}
+          <th className="w-1/3">Edit Variable</th>
           {/* <th>Start Value</th>
           <>
             {incomingOtherTypeValidator.Random &&

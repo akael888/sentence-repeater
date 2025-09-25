@@ -17,14 +17,26 @@ function Generator({
   let tw_generator_xl = " ";
   let tw_generator_2xl = " ";
 
-  let tw_generateButton_glassMorphBG = " bg-opposite-sub-color";
+  let tw_generateButton_glassMorphBG =
+    " shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%] rounded-[18px] bg-stone-800 bg-opacity-30";
   let tw_inputAmount_hover =
-    " hover:bg-[color:var(--opposite-color)] hover:text-[color:var(--main-color)] hover:border hover:border-[color:var(--main-color)] hover:border-solid";
+    " hover:shadow-[0_0_30px_rgba(100,100,100,0.35)] hover:text-[color:var(--main-color)] hover:border hover:border-white hover:border-solid";
   let tw_generateButton_hover =
-    " hover:bg-[color:var(--main-color)] hover:text-[color:var(--opposite-color)]  hover:border-[color:var(--opposite-color)] ";
+    " hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:text-[color:var(--opposite-color)] hover:bg-white hover:bg-opacity-10";
 
   //both of these seems redundant! need refactor later!
-  const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(0);
+  const [generatedSentenceAmount, setGeneratedSentenceAmount] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_GEN_AMOUNT");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (err) {
+      console.error("Failed to parse generated amount from localStorage:", err);
+    }
+    return 0;
+  });
   const [inputValue, setInputValue] = useState(() => {
     try {
       const stored = localStorage.getItem("CURRENT_GEN_AMOUNT");
@@ -281,15 +293,15 @@ function Generator({
 
   return (
     <>
-      <div className="w-full h-auto grid  place-items-center">
+      <div className="w-full h-auto grid place-items-center">
         <div
           className={
-            "w-full h-[100%] inline-flex max-w-[80%] [&>*]:max-w-[80%] place-content-center rounded-[10px]"
+            "w-full h-[100%] inline-flex max-w-[80%] [&>*]:max-w-[80%] place-content-center rounded-[10px] gap-1"
           }
         >
           <input
             className={
-              "w-full h-full bg-[color:var(--main-color)] text-[color:var(--opposite-color)] text-center border border-[color:var(--opposite-color)] rounded-[10px] border-solid empty:bg-[color:var(--main-color)]" +
+              "placeholder-slate-100 dark:!placeholder-gray-300  w-full h-full  text-center rounded-[10px] bg-white bg-opacity-10 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]" +
               tw_inputAmount_hover
             }
             type="number"
@@ -303,19 +315,19 @@ function Generator({
           />
           <motion.div
             className={
-              "w-full h-full grid place-items-center text-main-color animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
+              "w-full h-full grid place-items-center animate-[scaleUp_2s_ease-in-out_infinite] rounded-[5px] border-[none] " +
               (requiredFilled
                 ? tw_generateButton_glassMorphBG + tw_generateButton_hover
-                : "bg-opposite-color")
+                : " shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%] rounded-[18px] bg-stone-700 bg-opacity-80")
             }
             whileTap={requiredFilled ? { scale: 0.9 } : { x: 10 }}
           >
             <motion.button
-              className="w-full h-full p-[5px]"
+              className="w-full h-full p-[5px] text-white"
               onClick={generateSentence}
               disabled={!requiredFilled}
             >
-              Generate
+              ˙˖✧ Generate
             </motion.button>
           </motion.div>
         </div>
