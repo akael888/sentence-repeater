@@ -18,7 +18,7 @@ function Generator({
   let tw_generator_2xl = " ";
 
   let tw_generateButton_glassMorphBG =
-    " shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]";
+    " shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%] rounded-[18px] bg-stone-800 bg-opacity-30";
   let tw_inputAmount_hover =
     " hover:shadow-[0_0_30px_rgba(100,100,100,0.35)] hover:text-[color:var(--main-color)] hover:border hover:border-white hover:border-solid";
   let tw_generateButton_hover =
@@ -301,7 +301,7 @@ function Generator({
         >
           <input
             className={
-              "placeholder-gray-300  w-full h-full  text-center rounded-[10px] bg-white bg-opacity-10 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]" +
+              "placeholder-slate-100 dark:!placeholder-gray-300  w-full h-full  text-center rounded-[10px] bg-white bg-opacity-10 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]" +
               tw_inputAmount_hover
             }
             type="number"
@@ -323,7 +323,7 @@ function Generator({
             whileTap={requiredFilled ? { scale: 0.9 } : { x: 10 }}
           >
             <motion.button
-              className="w-full h-full p-[5px]"
+              className="w-full h-full p-[5px] text-white"
               onClick={generateSentence}
               disabled={!requiredFilled}
             >
