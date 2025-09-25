@@ -62,7 +62,7 @@ function App() {
     <>
       <WaveBackground isDarkMode={isDarkMode}></WaveBackground>
       <div
-        className="w-screen h-screen bg-center bg-cover text-center flex flex-col text-white dark:text-gray-200"
+        className="w-screen h-screen bg-center bg-cover text-center flex flex-col [&>*]:text-stone-500 dark:[&>*]:!text-white"
         // style={{ backgroundImage: `url(${bg})` }}
       >
         {/* <div className="p-10 bg-white text-black dark:bg-black dark:text-white z-[100000]">
