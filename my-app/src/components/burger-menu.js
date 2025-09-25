@@ -41,7 +41,7 @@ function BurgerMenu({ isOpen, darkModeChanges, isDarkMode }) {
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <motion.div
-            className="p-2 [&>*]:text-sm border-b border-gray-200 lg:[&>*]:text-lg"
+            className="p-5 [&>*]:text-sm border-b border-gray-200 lg:[&>*]:text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: isTutorialOpen ? 1 : 0 }}
             transition={{ duration: 0.3, delay: isTutorialOpen ? 0.1 : 0 }}
