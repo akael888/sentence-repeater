@@ -39,7 +39,7 @@ function VarTableBody({
                   tableDataType={"VarName"}
                   incomingchangedValues={"name"}
                   incomingHandleVariableChanges={incomingHandleVariableChanges}
-                  incomingCustomColorText="main-color"
+                  
                 ></VarTableRowData>
               </td>
               {/* <td>

@@ -3,7 +3,7 @@ function VarTableHeader({ incomingTypeValidator, incomingOtherTypeValidator }) {
     <>
       <thead
         className={
-          " h-full text-white rounded-[10px] shrink-1 p-[15px] pr-[20px] pl-[20px]"
+          " h-full  rounded-[10px] shrink-1 p-[15px] pr-[20px] pl-[20px]"
         }
       >
         <tr className=" [&>*]:p-[15px]">

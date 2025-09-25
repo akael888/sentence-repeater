@@ -8,7 +8,7 @@ function VarTableRowData({
   tableDataType,
   incomingchangedValues,
   incomingHandleVariableChanges,
-  incomingCustomColorText = "main-color",
+  incomingCustomColorText,
   incomingCustomBGColorText = "transparent",
 }) {
   const editableRef = useRef();
