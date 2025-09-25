@@ -227,7 +227,7 @@ function VariableTable({
         {incomingVariables !== undefined && incomingVariables.size > 0 ? (
           <LayoutGroup>
             <motion.div
-              className={"w-full h-auto rounded-[10px] grid justify-center"}
+              className={"w-auto sm:w-[10%] h-auto rounded-[10px] flex justify-center"}
               transition={{ duration: 0.8 }}
             >
               <motion.div
@@ -236,7 +236,7 @@ function VariableTable({
                 exit={{ opacity: 0 }}
                 layout
                 className={
-                  "rounded-[10px] w-[80vw] h-auto   " +
+                  "rounded-[10px] w-[80vw] sm:w-full h-auto   " +
                   tw_varTable_glassMorphBG
                 }
                 style={{ minHeight: "fit-content" }}
