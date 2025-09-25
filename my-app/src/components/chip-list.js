@@ -23,20 +23,21 @@ function Chip({
                 <motion.div
                   initial={{ x: -10 }}
                   animate={{ x: 0 }}
-                  exit={{x:-10}}
-                  className={`w-full h-full inline-flex items-center justify-center border-2 border-amber-600 rounded-[10px] ${tw_chip_glassMorphBG}  gap-[5px]`}
+                  exit={{ x: -10 }}
+                  className={`w-full h-full inline-flex items-center justify-center border-2 border-amber-600 rounded-[10px] ${tw_chip_glassMorphBG}   sm:gap-[5px]`}
                 >
                   <motion.div
-                    className={"w-[70%] text-white h-full p-[5px]"}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
+                    className={
+                      "w-[70%] text-white text-sm sm:text-normal h-full p-[5px]"
+                    }
+                    
                   >
                     {value}
                   </motion.div>
                   <motion.button
                     onClick={(e) => removeChip(index)}
                     whileTap={{ scale: 0.9 }}
-                    className="w-[30%] h-full text-main-color p-[5px] hover:text-amber-600"
+                    className="w-[30%] h-full text-white p-[5px] hover:text-amber-600 text-sm sm:text-normal"
                   >
                     ✕
                   </motion.button>
