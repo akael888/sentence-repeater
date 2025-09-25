@@ -21,7 +21,7 @@ function App() {
     } catch (err) {
       console.error("Failed to parse Dark Mode from localStorage:", err);
     }
-    return false;
+    return true;
   });
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
   let tw_appHeader_glassMorphBG = " ";
