@@ -75,7 +75,7 @@ function VariableModal({
                       duration: 0.3,
                       ease: "easeInOut",
                     }}
-                    className={`w-[80%] text-center absolute h-auto grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[70%] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} `}
+                    className={`w-[80%] sm:w-[30%] text-center absolute h-auto grid gap-[10px] -translate-x-2/4 -translate-y-2/4 leading-[1.4] max-w-[70%] min-w-[300px] px-7 py-3.5 rounded-[3px] left-2/4 top-2/4 ${tw_varModal_glassMorphBG} `}
                   >
                     <motion.div className="w-full h-full">
                       <motion.h1>
