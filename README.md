@@ -1,5 +1,6 @@
 # Sentence Repeater
 > Tech Used: React JS, Tailwind CSS, React Bootstrap, Framer Motion
+
 > Link: https://sentence-repeater.vercel.app/
 
 ## Problem
