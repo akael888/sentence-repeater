@@ -35,6 +35,7 @@ Each variable has different operations that are available for use. By default, t
 - Iterate
   - Will generate a value based on the start value given and the addition of the interval.
     Example: Start Value (5) and Interval (1) -> Generate 5 -> Results: 5,6,7,8,9
+
 If all operations are disabled, the variable will be duplicated using its start value.
 
 ### Variable Type
