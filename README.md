@@ -3,6 +3,9 @@
 
 > Link: https://sentence-repeater.vercel.app/
 
+> Demo Video:
+[![Watch the video](https://img.youtube.com/vi/cbcB9gO0w480.jpg)](https://www.youtube.com/watch?v=cbcB9gO0w48) 
+
 ## Problem
 - Often, we need to write multiple sentences that have little to no variance. This takes unnecessary time. One might argue that we can copy and paste the sentence. However, what if there's a specific rule that we applied to that sentence? This is where the tool comes in handy.
 
