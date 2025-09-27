@@ -10,7 +10,8 @@
 - Using a sentence repeater with a variable editing feature. Where the users can define the variable position within the sentence, and how its own set of rules applies when duplicating the sentence.
 
 ## Main Features
-- Variable definition: The Ability to define a variable that exists within the sentence. Each Variable has different types, operation and rules
+- Variable Definition: The Ability to define a variable that exists within the sentence. Each Variable has different types, operations, and rules
+- Local Storage: Latest changes of the Sentence Input, Generate Amount, Variable Changes, and the Results will be stored in Local Storage. This way, the app remembers the user's latest input that persists upon refresh
 
 ## Other Features
 - Dark Mode
