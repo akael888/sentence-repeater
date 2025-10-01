@@ -257,7 +257,7 @@ function VariableModal({
                                         incomingHandleVariableChanges
                                       }
                                       incomingCustomColorText={"white"}
-                                      incomingCustomBGColorText={"white"}
+                                      incomingCustomBGColorText={"#FFFFFF"}
                                     ></VarTableRowData>
                                   </motion.div>
                                 ) : (
@@ -278,7 +278,7 @@ function VariableModal({
                                             incomingHandleVariableChanges
                                           }
                                           incomingCustomColorText={"white"}
-                                          incomingCustomBGColorText={"white"}
+                                          incomingCustomBGColorText={"#FFFFFF"}
                                         ></VarTableRowData>
                                       </motion.div>
                                     ) : null}
@@ -303,7 +303,7 @@ function VariableModal({
                                           incomingHandleVariableChanges
                                         }
                                         incomingCustomColorText={"white"}
-                                        incomingCustomBGColorText={"white"}
+                                        incomingCustomBGColorText={"#FFFFFF"}
                                       ></VarTableRowData>
                                     </motion.div>
 
@@ -322,7 +322,7 @@ function VariableModal({
                                           incomingHandleVariableChanges
                                         }
                                         incomingCustomColorText={"white"}
-                                        incomingCustomBGColorText={"white"}
+                                        incomingCustomBGColorText={"#FFFFFF"}
                                       ></VarTableRowData>
                                     </motion.div>
                                   </>
@@ -348,7 +348,7 @@ function VariableModal({
                                         incomingHandleVariableChanges
                                       }
                                       incomingCustomColorText={"opposite-color"}
-                                      incomingCustomBGColorText={"white"}
+                                      incomingCustomBGColorText={"#FFFFFF"}
                                     ></VarTableRowData>
                                   </motion.div>
                                 ) : null}
@@ -369,7 +369,7 @@ function VariableModal({
                                           incomingHandleVariableChanges
                                         }
                                         incomingCustomColorText={"white"}
-                                        incomingCustomBGColorText={"white"}
+                                        incomingCustomBGColorText={"#FFFFFF"}
                                       ></VarTableRowData>
                                     </motion.div>
                                     <motion.div
@@ -387,7 +387,7 @@ function VariableModal({
                                           incomingHandleVariableChanges
                                         }
                                         incomingCustomColorText={"white"}
-                                        incomingCustomBGColorText={"white"}
+                                        incomingCustomBGColorText={"#FFFFFF"}
                                       ></VarTableRowData>
                                     </motion.div>
                                   </>
@@ -411,7 +411,7 @@ function VariableModal({
                                   incomingHandleVariableChanges
                                 }
                                 incomingCustomColorText={"white"}
-                                incomingCustomBGColorText={"white"}
+                                incomingCustomBGColorText={"#FFFFFF"}
                               ></VarTableRowData>
                             </motion.div>
                           ) : null}

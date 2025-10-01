@@ -17,7 +17,6 @@ function VarTableRowData({
     VarName: {
       type: () => "text",
       placeholder: () => "Input String as a Var Name ",
-      widthCSS: () => 60,
     },
     VarStartValue: {
       type: () => {
@@ -39,21 +38,18 @@ function VarTableRowData({
           case "String":
             return "Strings Only";
           case "List":
-            return "Strings with a space";
+            return "Strings with a double space";
           default:
             return "text";
         }
       },
-      widthCSS: () => 20,
     },
     VarInterval: {
       type: () => "number",
       placeholder: () => "Numbers Only",
-      widthCSS: () => 100,
     },
     VarBoolean: {
       type: () => "checkbox",
-      widthCSS: () => 50,
     },
   };
 
@@ -109,28 +105,9 @@ function VarTableRowData({
     }
   };
 
-  //Tailwind Styles
-  let selectedWidthCSS = currentTableFormat?.widthCSS() || 100;
-
-  //Var Input Data
-  let tw_varInputData_sm = " sm:w-full";
-  let tw_varInputData_md = " md:w-full";
-  let tw_varInputData_lg = ` lg:w-[${selectedWidthCSS}%]`;
-  let tw_varInputData_xl = ` xl:w-[${selectedWidthCSS}%]`;
-  let tw_varInputDatar_2xl = ` 2xl:w-[${selectedWidthCSS}%]`;
-
   return (
     <>
       {tableDataType == "VarBoolean" ? (
-        // <Form>
-        //   <Form.Check
-        // checked={getCurrentValue()}
-        // onClick={handleClick}
-        //     type="switch"
-        //     id="custom-switch"
-        //     className="color  -opposite-color"
-        //   />
-        // </Form>
         <CustomToggle
           checked={getCurrentValue()}
           onClick={handleClick}
@@ -138,7 +115,14 @@ function VarTableRowData({
       ) : (
         <input
           ref={editableRef}
-          className={`w-full text-center bg-${incomingCustomBGColorText} text-${incomingCustomColorText} placeholder-sub-color shrink-1 bg-opacity-10 rounded-1`}
+          className={`w-full text-center placeholder-sub-color bg-opacity-10 rounded-1 hover:shadow-[0_0_50px_rgba(100,100,100,0.5)] hover:!bg-black hover:!bg-opacity-10`}
+          style={{
+            backgroundColor:
+              incomingCustomBGColorText === "transparent"
+                ? "transparent"
+                : `${incomingCustomBGColorText}1a`, // 1a is ~10% opacity in hex
+            color: incomingCustomColorText,
+          }}
           type={getInputType()}
           {...(tableDataType === "VarBoolean"
             ? {
