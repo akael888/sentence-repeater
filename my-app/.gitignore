@@ -1,9 +1,15 @@
-# Ignore dependencies for both client and server
+# Ignore dependency folders
 client/node_modules
 server/node_modules
 
 # Ignore build outputs
 client/build
 
-# Environment files
+# Environment variables
 *.env
+.env.local
+.env.production
+
+# Logs
+logs
+*.log
