@@ -1,0 +1,16 @@
+meta {
+  name: Login Account
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/auth/login
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
