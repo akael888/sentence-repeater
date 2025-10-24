@@ -7,6 +7,8 @@ function Chip({
 }) {
   let tw_chip_glassMorphBG =
     " bg-[color-mix(in_srgb,var(--opposite-color)_50%,transparent)] backdrop-blur-[10px]";
+
+    
   function removeChip(indexToRemove) {
     const removedList = incomingChipList.filter(
       (_, index) => index !== indexToRemove
@@ -30,7 +32,6 @@ function Chip({
                     className={
                       "w-[70%] text-white text-sm sm:text-normal h-full p-[5px]"
                     }
-                    
                   >
                     {value}
                   </motion.div>

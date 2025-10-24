@@ -60,9 +60,9 @@ function VariableTable({
     if (targetVar) {
       targetVar[field] = value;
 
-      // Change a Spaace into a New List
+      // Change a Space into a New List
       if (targetVar["type"] === "List" && field === "value") {
-        if (value.includes(" ") || value.includes("/n")) {
+        if (value.includes("  ")) {
           targetVar.list.push(handleChipListChanges(value));
           targetVar["value"] = "";
           console.log("List in Target Var:" + targetVar["list"]);
