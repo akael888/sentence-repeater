@@ -2,6 +2,12 @@
 client/node_modules
 server/node_modules
 
+# Ignore Root Folders
+node_modules
+
+# Ignore Bruno Environments
+bruno/environments/
+
 # Ignore build outputs
 client/build
 
