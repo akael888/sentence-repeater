@@ -1,0 +1,16 @@
+meta {
+  name: Edit Sentence
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{url}}/sentence/123
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

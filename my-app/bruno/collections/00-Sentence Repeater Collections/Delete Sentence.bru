@@ -1,0 +1,16 @@
+meta {
+  name: Delete Sentence
+  type: http
+  seq: 8
+}
+
+delete {
+  url: {{url}}/sentence/123
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

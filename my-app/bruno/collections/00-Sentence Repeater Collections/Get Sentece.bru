@@ -1,0 +1,16 @@
+meta {
+  name: Get Sentece
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{url}}/sentence/123
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
