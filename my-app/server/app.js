@@ -7,13 +7,14 @@ const authRouter = require("./routes/auth");
 const sentenceRouter = require("./routes/sentence");
 
 const notFoundMiddleware = require("./middleware/not-found");
+const authenticationMiddleware = require("./middleware/authentication");
 
 const port = process.env.PORT || 8000;
 
 app.use(express.json());
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/sentence", sentenceRouter);
+app.use("/api/v1/sentence", authenticationMiddleware, sentenceRouter);
 
 //middleware
 app.use(notFoundMiddleware);
