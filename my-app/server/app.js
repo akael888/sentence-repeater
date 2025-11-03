@@ -21,7 +21,7 @@ app.use(notFoundMiddleware);
 
 const start = async () => {
   try {
-    console.log(`MONGO_URI: ${process.env.MONGO_URI}`);
+    console.log(`Connecting to Mongo DB...`);
     await connectDB(process.env.MONGO_URI);
     app.listen(port, () => {
       console.log(`app is listening to port: ${port}`);
