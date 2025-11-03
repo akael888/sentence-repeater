@@ -21,10 +21,11 @@ app.use(notFoundMiddleware);
 
 const start = async () => {
   try {
-    console.log(`Connecting to Mongo DB...`);
+    console.log("Connecting to Mongo DB...");
     await connectDB(process.env.MONGO_URI);
+    console.log("Connected!");
     app.listen(port, () => {
-      console.log(`app is listening to port: ${port}`);
+      console.log(`App is listening to port: ${port}..!`);
     });
   } catch (error) {
     console.log(error);
