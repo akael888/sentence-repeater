@@ -1,5 +1,11 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("../models/user-model");
+const {
+  CustomAPIError,
+  BadRequestError,
+  NotFoundError,
+  UnauthenticatedError,
+} = require("../errors");
 
 const register = async (req, res) => {
   // const user = req.body;
@@ -11,18 +17,16 @@ const login = async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ msg: "Please provide Username and Password" });
+    throw new BadRequestError("Please provide Username and Password");
   }
 
   const user = await User.findOne({ username });
   if (!user) {
-    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Username not found" });
+    throw new UnauthenticatedError("Username not found");
   }
   const isMatch = await user.comparePassword(password);
   if (!isMatch) {
-    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Password Incorrect" });
+    throw new UnauthenticatedError("Password is incorrect");
   }
 
   const token = user.createJWT();
