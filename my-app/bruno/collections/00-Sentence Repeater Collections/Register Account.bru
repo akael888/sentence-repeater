@@ -6,8 +6,12 @@ meta {
 
 post {
   url: {{url}}/auth/register
-  body: none
+  body: json
   auth: inherit
+}
+
+body:json {
+  {"username":"{{adminUsername}}","password":"{{adminPassword}}","email":"{{adminEmail}}"}
 }
 
 settings {

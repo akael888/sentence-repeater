@@ -6,8 +6,17 @@ meta {
 
 post {
   url: {{url}}/auth/login
-  body: none
+  body: json
   auth: inherit
+}
+
+body:json {
+  {"username":"{{adminUsername}}","password":"{{adminPassword}}"}
+}
+
+tests {
+  const jsonData = res.getBody();
+  bru.setGlobalEnvVar("accessToken", jsonData.token)
 }
 
 settings {
