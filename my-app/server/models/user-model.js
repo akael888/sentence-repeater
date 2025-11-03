@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -23,5 +24,17 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
   },
 });
+
+UserSchema.methods.createJWT = function () {
+  return jwt.sign(
+    { userId: this._id, username: this.username },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_LIFETIME }
+  );
+};
+
+UserSchema.methods.comparePassword = function (incomingPassword) {
+  return incomingPassword === this.password;
+};
 
 module.exports = mongoose.model("User", UserSchema);
