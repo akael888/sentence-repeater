@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const Sentence = require("../models/sentence-model");
+const Variable = require("../models/variable-model");
 const {
   CustomAPIError,
   BadRequestError,
@@ -49,7 +50,7 @@ const editSentence = async (req, res) => {
     { new: true }
   );
 
-   if (!sentence) {
+  if (!sentence) {
     throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
   }
 
@@ -59,19 +60,19 @@ const editSentence = async (req, res) => {
 };
 
 const deleteSentece = async (req, res) => {
-  const sentence = await Sentence.findOneAndRemove(
-    {
-      createdBy: req.user.userId,
-      _id: req.params.id,
-    },
-    query
-  );
+  const sentence = await Sentence.findOneAndDelte({
+    createdBy: req.user.userId,
+    _id: req.params.id,
+  });
+  const variable = await Variable.deleteMany({ createdBy: req.params.id });
 
-   if (!sentence) {
+  if (!sentence) {
     throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
   }
-
-  res.status(StatusCodes.OK).json({ msg: `deleteSentece ${id}` });
+  res.status(StatusCodes.OK).json({
+    msg: `This sentence has been deleted ${id}`,
+    subMsg: `These variables are also deleted : ${variable}`,
+  });
 };
 
 module.exports = {
