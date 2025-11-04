@@ -7,11 +7,24 @@ import { motion } from "motion/react";
 import Burger from "./components/burger";
 import BurgerMenu from "./components/burger-menu";
 import WaveBackground from "./components/blob-background";
+import Login from "./components/login-form";
+import SentenceTempData from "./components/sentence-temp-data";
 
 function App() {
+  //Backend Variables and Other Details
+  const [sentenceDataTest, setSentenceDataTest] = useState();
+
+  useEffect(() => {
+    fetch("/api/v1/sentence").then((res) =>
+      res.json().then((data) => setSentenceDataTest(data.sentence))
+    );
+  }, []);
+
   // Repeater Components
 
+  //Dark Mode---------------------------------------------
   const [isDarkMode, setIsDarkMode] = useState(() => {
+    //Check whether we already have a value in the local storage
     try {
       const stored = localStorage.getItem("IS_DARK_MODE");
       if (stored) {
@@ -23,8 +36,10 @@ function App() {
     }
     return true;
   });
+
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState(false);
-  let tw_appHeader_glassMorphBG = " ";
+
+  // let tw_appHeader_glassMorphBG = " ";
 
   const handleDarkModeChanges = (event) => {
     setIsDarkMode(!isDarkMode);
@@ -52,11 +67,11 @@ function App() {
     console.log("Dark mode is now:", isDarkMode);
   }, [isDarkMode]);
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isDarkMode) {
+  //     document.documentElement.classList.add("dark");
+  //   }
+  // }, []);
 
   return (
     <>
@@ -81,8 +96,9 @@ function App() {
             ease: "easeInOut",
           }}
           className={
-            "h-[5%] min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0" +
-            tw_appHeader_glassMorphBG
+            "h-[5%] min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0"
+            // +
+            // tw_appHeader_glassMorphBG
           }
         >
           <TitleHeader
@@ -97,6 +113,8 @@ function App() {
           <div className="min-h-full flex flex-col">
             <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
               <Repeater />
+              <Login></Login>
+              <SentenceTempData></SentenceTempData>
             </div>
 
             <motion.footer
