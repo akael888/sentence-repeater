@@ -6,7 +6,7 @@ function SentenceTempData({}) {
 
   const refreshSentence = async () => {
     try {
-      const res = await fetch("sentence", {
+      const res = await fetch("api/v1/sentence", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
