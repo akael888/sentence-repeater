@@ -1,5 +1,18 @@
 const mongoose = require("mongoose");
 
-const SentenceSchema = new mongoose.Schema({
-  sentence: { type: String, required: [true, "Missing sentence!"] },
-});
+const SentenceSchema = new mongoose.Schema(
+  {
+    sentence: {
+      type: String,
+      required: [true, "Missing sentence"],
+    },
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "User", 
+      required: [true, "Please provide user"],
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("Sentence", SentenceSchema);
