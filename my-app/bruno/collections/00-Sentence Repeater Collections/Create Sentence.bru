@@ -5,13 +5,22 @@ meta {
 }
 
 post {
-  url: {{url}}/sentence/123
-  body: none
+  url: {{url}}/sentence/
+  body: json
   auth: bearer
 }
 
 auth:bearer {
   token: {{accessToken}}
+}
+
+body:json {
+  {"sentence":"Umur dia adalah : {}"}
+}
+
+tests {
+  const createdSentence = res.getBody().sentence
+  bru.setGlobalEnvVar("selectedSentence", createdSentence._id)
 }
 
 settings {
