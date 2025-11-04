@@ -10,14 +10,13 @@ const {
 } = require("../controller/sentence");
 
 // /api/v1/sentence
-Router.route("/").get(getAllSentence);
+Router.route("/").get(getAllSentence).post(createSentence);
 Router.route("/:id")
   .get(getSentence)
-  .post(createSentence)
   .patch(editSentence)
   .delete(deleteSentece);
 
-  // /api/v1/sentence
+// /api/v1/sentence
 Router.use("/:sentenceId/variable", variableRoute);
 
 module.exports = Router;
