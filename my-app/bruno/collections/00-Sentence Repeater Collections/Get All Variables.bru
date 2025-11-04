@@ -1,0 +1,20 @@
+meta {
+  name: Get All Variables
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{url}}/sentence/123/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

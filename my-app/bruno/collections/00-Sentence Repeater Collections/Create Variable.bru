@@ -1,0 +1,24 @@
+meta {
+  name: Create Variable
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{url}}/sentence/69099fddc936b59cccb72ed9/variable/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {"order":3,"variableName":"Test1","variableType":"integer","variableOperation":"iterate","variableStartValue":12,"usedBySentence":"69099fddc936b59cccb72ed9"}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
