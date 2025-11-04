@@ -47,7 +47,7 @@ const deleteVariable = async (req, res) => {
 
   res
     .status(StatusCodes.OK)
-    .json({ msg: `Deleted this variable ${req.params.id}`, variable });
+    .json({ msg: `Deleted this variable ${req.params.varId}`, variable });
 };
 
 module.exports = {
