@@ -17,7 +17,7 @@ const VariableSchema = mongoose.Schema({
     required: [true, "Please provide Variable Operation"],
   },
   variableStartValue: mongoose.Schema.Types.Mixed,
-  iterationCount: {
+  intervalCount: {
     type: Number,
     required: [
       function () {
