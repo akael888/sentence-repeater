@@ -114,7 +114,7 @@ function App() {
             <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
               <Repeater />
               <Login></Login>
-              <SentenceTempData></SentenceTempData>
+              
             </div>
 
             <motion.footer
