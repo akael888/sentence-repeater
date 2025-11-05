@@ -7,6 +7,7 @@ import Preview from "./text-preview";
 import TextInput from "./text-input";
 import { motion } from "motion/react";
 import VariableModal from "./var-modal";
+import SentenceTempData from "./sentence-temp-data";
 
 function Repeater() {
   const [previewText, setPreviewText] = useState(() => {
@@ -178,6 +179,7 @@ function Repeater() {
             arrayResultsChange={handleGeneratedSentenceChanges}
           />
         </motion.div>
+       <SentenceTempData sentenceData={previewText} variableData={variables}></SentenceTempData>
       </div>
     </>
   );
