@@ -142,9 +142,9 @@ function SentenceTempData({ sentenceData, variableData }) {
           onClick={() => {
             console.log(variableData);
           }}
-          className="bg-blue-500 text-black"
+          className="bg-red-500 text-black"
         >
-          Show Variable Data
+          Select Sentence
         </button>
         <button
           onClick={() => {
@@ -152,7 +152,7 @@ function SentenceTempData({ sentenceData, variableData }) {
           }}
           className="bg-blue-500 text-black"
         >
-          Refresh Variables
+          Show Variable Data
         </button>
       </div>
     </div>
