@@ -11,7 +11,7 @@ function Login({}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("api/v1/auth/login", {
+      const res = await fetch("https://sentence-repeater-backend.vercel.app/api/v1/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
