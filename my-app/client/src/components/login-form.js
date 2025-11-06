@@ -11,13 +11,16 @@ function Login({}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("https://sentence-repeater-backend.vercel.app/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://sentence-repeater-backend.vercel.app/api/v1/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json();
 
@@ -26,7 +29,7 @@ function Login({}) {
 
       if (res.ok) {
         localStorage.setItem("token", data.token);
-        setMessage(`Login Successful, ${data.token}`);
+        setMessage(data.msg);
       } else {
         setMessage(`Login Failed : ${data.msg}`);
       }
@@ -37,6 +40,7 @@ function Login({}) {
 
   return (
     <>
+      <p>{message}</p>
       <form onSubmit={handleSubmit} className="text-black">
         <input
           name="username"
@@ -52,7 +56,6 @@ function Login({}) {
         ></input>
         <button type="submit">Login</button>
       </form>
-      <p>{message}</p>
     </>
   );
 }
