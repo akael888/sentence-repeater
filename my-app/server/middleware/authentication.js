@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const authenticationMiddleware = async (req, res, next) => {
   const authHead = req.headers.authorization;
   if (!authHead || !authHead.startsWith("Bearer ")) {
-    res.status(StatusCodes.UNAUTHORIZED).send("No Token Provided");
+    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "No Token Provided" });
   }
 
   const token = authHead.split(" ")[1];
@@ -15,7 +15,7 @@ const authenticationMiddleware = async (req, res, next) => {
     req.user = { userId, username };
     next();
   } catch (error) {
-    res.status(StatusCodes.UNAUTHORIZED).send("Invalid Token");
+    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Invalid Token" });
   }
 };
 
