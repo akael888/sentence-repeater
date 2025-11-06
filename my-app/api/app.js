@@ -9,6 +9,7 @@ const cors = require("cors");
 
 const notFoundMiddleware = require("./middleware/not-found");
 const authenticationMiddleware = require("./middleware/authentication");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
 const port = process.env.PORT || 8000;
 
@@ -30,6 +31,7 @@ app.use("/api/v1/sentence", authenticationMiddleware, sentenceRouter);
 
 //middleware
 app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
 
 const start = async () => {
   try {
@@ -45,5 +47,3 @@ const start = async () => {
 };
 
 start();
-
-
