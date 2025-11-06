@@ -1,0 +1,29 @@
+meta {
+  name: Create Variable
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{url}}/sentence/{{selectedSentence}}/variable
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {"order":1,"variableName":"umurSaya","variableType":"string","variableOperation":"none","variableStartValue":"Nama dia adalah","usedBySentence":"{{selectedSentence}}","intervalCount":3}
+}
+
+tests {
+  const createdVariable = res.getBody().variable
+  bru.setGlobalEnvVar("selectedVariable", createdVariable._id)
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

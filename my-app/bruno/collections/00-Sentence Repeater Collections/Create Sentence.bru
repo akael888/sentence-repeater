@@ -1,0 +1,29 @@
+meta {
+  name: Create Sentence
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{url}}/sentence/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {"sentence":"Umur dia adalah : {}"}
+}
+
+tests {
+  const createdSentence = res.getBody().sentence
+  bru.setGlobalEnvVar("selectedSentence", createdSentence._id)
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

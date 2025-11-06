@@ -1,0 +1,20 @@
+meta {
+  name: Edit Sentence
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{url}}/sentence/{{selectedSentence}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

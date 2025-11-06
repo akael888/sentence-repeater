@@ -1,0 +1,20 @@
+meta {
+  name: Get Sentece
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{url}}/sentence/{{selectedSentence}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

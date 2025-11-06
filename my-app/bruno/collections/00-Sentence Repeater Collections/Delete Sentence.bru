@@ -1,0 +1,20 @@
+meta {
+  name: Delete Sentence
+  type: http
+  seq: 8
+}
+
+delete {
+  url: {{url}}/sentence/{{selectedSentence}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
