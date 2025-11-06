@@ -172,14 +172,14 @@ function SentenceTempData({ sentenceData, variableData }) {
         <button onClick={submitSentence} className="bg-green-500 text-black">
           Submit Sentence
         </button>
-        <button
+        {/* <button
           onClick={() => {
             console.log(variableData);
           }}
           className="bg-red-500 text-black"
         >
           Select Sentence
-        </button>
+        </button> */}
       </div>
     </div>
   );
