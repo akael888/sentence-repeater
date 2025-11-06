@@ -7,7 +7,7 @@ function SentenceTempData({ sentenceData, variableData }) {
 
   const refreshSentence = async () => {
     try {
-      const res = await fetch("api/v1/sentence", {
+      const res = await fetch("https://sentence-repeater-backend.vercel.app/api/v1/sentence", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ function SentenceTempData({ sentenceData, variableData }) {
   const submitSentence = async () => {
     try {
       const submitSentenceData = { sentence: sentenceData };
-      const resSentence = await fetch("api/v1/sentence", {
+      const resSentence = await fetch("https://sentence-repeater-backend.vercel.app/api/v1/sentence", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
