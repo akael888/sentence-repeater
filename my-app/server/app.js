@@ -5,11 +5,19 @@ const connectDB = require("./db/connect");
 const app = express();
 const authRouter = require("./routes/auth");
 const sentenceRouter = require("./routes/sentence");
+const cors = require("cors");
 
 const notFoundMiddleware = require("./middleware/not-found");
 const authenticationMiddleware = require("./middleware/authentication");
 
 const port = process.env.PORT || 8000;
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://sentence-repeater.vercel.app"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
