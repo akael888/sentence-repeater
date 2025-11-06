@@ -14,7 +14,11 @@ const port = process.env.PORT || 8000;
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://sentence-repeater.vercel.app"],
+    origin: [
+      "http://localhost:3000",
+      "https://sentence-repeater.vercel.app",
+      "https://sentence-repeater-git-features-back-end-akael888s-projects.vercel.app",
+    ],
     credentials: true,
   })
 );
