@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function SentenceTempData({ sentenceData, variableData, currentLink }) {
+function BackEndDebugger({ sentenceData, variableData, currentLink }) {
   const token = localStorage.getItem("token");
   const [sentence, setSentence] = useState({});
   const [variables, setVariables] = useState({});
@@ -9,6 +9,7 @@ function SentenceTempData({ sentenceData, variableData, currentLink }) {
   const link = currentLink;
 
   const refreshSentence = async () => {
+    console.log("Refreshing Sentence..");
     try {
       const res = await fetch(`${link}/api/v1/sentence`, {
         method: "GET",
@@ -38,6 +39,7 @@ function SentenceTempData({ sentenceData, variableData, currentLink }) {
   };
 
   const submitSentence = async () => {
+    console.log("Submitting Sentence..");
     try {
       const submitSentenceData = { sentence: sentenceData };
       const resSentence = await fetch(`${link}/api/v1/sentence`, {
@@ -130,12 +132,15 @@ function SentenceTempData({ sentenceData, variableData, currentLink }) {
     } catch (error) {
       console.log(error);
     }
+
+    refreshSentence();
   };
 
-  const refreshVariables = async () => {
+  const refreshVariables = async (targetSentence = null) => {
+    console.log("Refresing Variables..");
     try {
       const resVar = await fetch(
-        `${link}/api/v1/sentence/${currentSentence}/variable`,
+        `${link}/api/v1/sentence/${targetSentence || currentSentence}/variable`,
         {
           method: "GET",
           headers: {
@@ -149,7 +154,7 @@ function SentenceTempData({ sentenceData, variableData, currentLink }) {
       if (resVar.ok) {
         let listVar = {};
         dataVariable.variable.forEach((element) => {
-          listVar[element.variableName] = element.variableStartValue;
+          listVar[element._id] = element.variableName;
         });
         console.log(dataVariable);
         setVariables(listVar);
@@ -160,6 +165,73 @@ function SentenceTempData({ sentenceData, variableData, currentLink }) {
     } catch (error) {}
   };
 
+  const deleteSentence = async (targetSentence = null) => {
+    console.log("Deleting Sentence..");
+    const refSentence = targetSentence || currentSentence;
+    try {
+      const resSentence = await fetch(
+        `${link}/api/v1/sentence/${refSentence}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const dataSentence = await resSentence.json();
+      if (resSentence.ok) {
+        console.log(dataSentence);
+        console.log(
+          `Successfully Deleted ${refSentence}`
+        );
+      } else {
+        console.log(dataSentence);
+        console.log(`Failed deleting ${refSentence}`);
+      }
+
+      if (variables != null) {
+        Object.entries(variables).forEach(async (index, value) => {
+          console.log("index and value");
+          console.log(index);
+          console.log(value);
+          try {
+            const resVar = await fetch(
+              `${link}/api/v1/sentence/${
+                targetSentence || currentSentence
+              }/variable/${index[0]}`,
+              {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            const dataVar = await resVar.json();
+
+            if (resVar.ok) {
+              console.log(dataVar);
+              console.log(`${index} : ${value} variable successfully deleted!`);
+            } else {
+              console.log(dataVar);
+              console.log(
+                `${index} : ${value} variable are failed to be deleted!`
+              );
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      }
+
+      refreshSentence();
+      refreshVariables(refSentence);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="">
       <p>Current Link: {link}</p>
@@ -167,22 +239,33 @@ function SentenceTempData({ sentenceData, variableData, currentLink }) {
       <div className="grid">
         {Object.keys(variables).map((keys, index) => (
           <div key={index} className="bg-blue-800 hover:bg-blue-600">
-            {keys} : {variables[keys]}
+            {variables[keys]} : {keys}
           </div>
         ))}
       </div>
       <div>-----</div>
-      <div className="grid">
+      <div className="grid gap-1 place-items-strech">
         {Object.keys(sentence).map((value, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              setCurrentSentence(String(value));
-            }}
-            className="bg-yellow-800 hover:bg-yellow-600"
-          >
-            {sentence[value]} : {value}
-          </button>
+          <div className="flex w-full border-1 gap-2 ">
+            <button
+              key={index}
+              onClick={() => {
+                setCurrentSentence(String(value));
+                refreshVariables(value);
+              }}
+              className="bg-yellow-800 hover:bg-yellow-600 w-[90%]"
+            >
+              {sentence[value]} : {value}
+            </button>
+            <button
+              className="bg-red-800 hover:bg-red-600 place-self-end w-[10%] h-full"
+              onClick={() => {
+                deleteSentence(value);
+              }}
+            >
+              🗑️
+            </button>
+          </div>
         ))}
       </div>
 
@@ -210,4 +293,4 @@ function SentenceTempData({ sentenceData, variableData, currentLink }) {
   );
 }
 
-export default SentenceTempData;
+export default BackEndDebugger;

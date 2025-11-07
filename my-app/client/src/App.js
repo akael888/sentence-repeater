@@ -8,7 +8,7 @@ import Burger from "./components/burger";
 import BurgerMenu from "./components/burger-menu";
 import WaveBackground from "./components/blob-background";
 import Login from "./components/login-form";
-import SentenceTempData from "./components/sentence-temp-data";
+
 
 function App() {
   //Backend Variables and Other Details
