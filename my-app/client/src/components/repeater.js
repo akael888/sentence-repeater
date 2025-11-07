@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import VariableModal from "./var-modal";
 import SentenceTempData from "./sentence-temp-data";
 
-function Repeater() {
+function Repeater({currentLink}) {
   const [previewText, setPreviewText] = useState(() => {
     try {
       const stored = localStorage.getItem("CURRENT_PREVIEW_TEXT");
@@ -179,7 +179,7 @@ function Repeater() {
             arrayResultsChange={handleGeneratedSentenceChanges}
           />
         </motion.div>
-       <SentenceTempData sentenceData={previewText} variableData={variables}></SentenceTempData>
+       <SentenceTempData sentenceData={previewText} variableData={variables} currentLink={currentLink}></SentenceTempData>
       </div>
     </>
   );

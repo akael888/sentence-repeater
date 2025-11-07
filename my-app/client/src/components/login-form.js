@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-function Login({}) {
+function Login({ currentLink }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [message, setMessage] = useState("");
+  const link = currentLink;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -11,16 +12,13 @@ function Login({}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(
-        "https://sentence-repeater-backend.vercel.app/api/v1/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${link}/api/v1/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       const data = await res.json();
 
