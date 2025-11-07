@@ -127,6 +127,7 @@ function App() {
                   console.log("linkcounter:", linkCounter);
                   setCurrentLink(link[linkCounter]);
                 }}
+                className="border-1 rounded-1 bg-purple-600 hover:bg-purple-300"
               >
                 Change Link
               </button>

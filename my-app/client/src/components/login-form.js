@@ -38,22 +38,25 @@ function Login({ currentLink }) {
 
   return (
     <>
-      <p>{message}</p>
-      <form onSubmit={handleSubmit} className="text-black">
-        <input
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-        ></input>
-        <input
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        ></input>
-        <button type="submit">Login</button>
-      </form>
+      <div className="border-1">
+        <h3>Login Debugger</h3>
+        <p>{message}</p>
+        <form onSubmit={handleSubmit} className="text-black">
+          <input
+            name="username"
+            placeholder="Username"
+            value={formData.username}
+            onChange={handleChange}
+          ></input>
+          <input
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+          ></input>
+          <button type="submit">Login</button>
+        </form>
+      </div>
     </>
   );
 }

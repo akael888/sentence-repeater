@@ -182,9 +182,7 @@ function BackEndDebugger({ sentenceData, variableData, currentLink }) {
       const dataSentence = await resSentence.json();
       if (resSentence.ok) {
         console.log(dataSentence);
-        console.log(
-          `Successfully Deleted ${refSentence}`
-        );
+        console.log(`Successfully Deleted ${refSentence}`);
       } else {
         console.log(dataSentence);
         console.log(`Failed deleting ${refSentence}`);
@@ -233,7 +231,8 @@ function BackEndDebugger({ sentenceData, variableData, currentLink }) {
   };
 
   return (
-    <div className="">
+    <div className="border-1">
+      <h3>Back End Debugger</h3>
       <p>Current Link: {link}</p>
       <p>Current Sentence: {currentSentence}</p>
       <div className="grid">
@@ -269,15 +268,14 @@ function BackEndDebugger({ sentenceData, variableData, currentLink }) {
         ))}
       </div>
 
-      <div className="gap-1 flex">
-        {" "}
-        <button onClick={refreshSentence} className="bg-white text-black">
+      <div className="gap-1 flex grid grid-cols-3">
+        <button onClick={refreshSentence} className="bg-amber-500 text-black p-1 hover:bg-amber-200">
           Refresh Sentence
         </button>
-        <button onClick={refreshVariables} className="bg-blue-500 text-black">
+        <button onClick={refreshVariables} className="bg-blue-500 text-black p-1 hover:bg-blue-200">
           Refresh Variables
         </button>
-        <button onClick={submitSentence} className="bg-green-500 text-black">
+        <button onClick={submitSentence} className="bg-green-500 text-black p-1 hover:bg-green-200">
           Submit Sentence
         </button>
         {/* <button
