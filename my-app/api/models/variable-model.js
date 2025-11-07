@@ -21,7 +21,9 @@ const VariableSchema = mongoose.Schema({
     type: Number,
     required: [
       function () {
-        return this.variableOperation !== "iterate";
+        return (
+          this.variableOperation == "iterate" || this.variableType != "string"
+        );
       },
       "Please provide Iteration Count",
     ],
