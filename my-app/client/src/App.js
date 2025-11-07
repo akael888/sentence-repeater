@@ -14,6 +14,13 @@ function App() {
   //Backend Variables and Other Details
   const [sentenceDataTest, setSentenceDataTest] = useState();
 
+  //Toggle Link
+  const [linkCounter, setLinkCounter] = useState(1);
+  const link = [
+    "https://sentence-repeater-backend.vercel.app",
+    "http://localhost:8000",
+  ];
+  const [currentLink, setCurrentLink] = useState(link[linkCounter]);
   useEffect(() => {
     fetch("/api/v1/sentence").then((res) =>
       res.json().then((data) => setSentenceDataTest(data.sentence))
@@ -112,9 +119,17 @@ function App() {
         <div className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="min-h-full flex flex-col">
             <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
-              <Repeater />
-              <Login></Login>
-              
+              <Repeater currentLink={currentLink} />
+              <Login currentLink={currentLink}></Login>
+              <button
+                onClick={() => {
+                  setLinkCounter(linkCounter >= 1 ? 0 : linkCounter + 1);
+                  console.log("linkcounter:", linkCounter);
+                  setCurrentLink(link[linkCounter]);
+                }}
+              >
+                Change Link
+              </button>
             </div>
 
             <motion.footer
