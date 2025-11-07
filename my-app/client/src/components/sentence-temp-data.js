@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 
-function SentenceTempData({ sentenceData, variableData }) {
+function SentenceTempData({ sentenceData, variableData, currentLink }) {
   const token = localStorage.getItem("token");
   const [sentence, setSentence] = useState({});
   const [variables, setVariables] = useState({});
   const [currentSentence, setCurrentSentence] = useState();
 
+  const link = currentLink;
+
   const refreshSentence = async () => {
     try {
-      const res = await fetch(
-        "https://sentence-repeater-backend.vercel.app/api/v1/sentence",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`${link}/api/v1/sentence`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = await res.json();
+      console.log(data);
 
       if (res.ok) {
         let listSentence = {};
@@ -40,17 +40,14 @@ function SentenceTempData({ sentenceData, variableData }) {
   const submitSentence = async () => {
     try {
       const submitSentenceData = { sentence: sentenceData };
-      const resSentence = await fetch(
-        "https://sentence-repeater-backend.vercel.app/api/v1/sentence",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(submitSentenceData),
-        }
-      );
+      const resSentence = await fetch(`${link}/api/v1/sentence`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(submitSentenceData),
+      });
       const dataSentence = await resSentence.json();
       const sentenceID = String(dataSentence.sentence._id);
 
@@ -62,23 +59,50 @@ function SentenceTempData({ sentenceData, variableData }) {
         console.log("Sentence Data Failed!");
       }
 
-      try {
-        let indexCounter = 1;
-        variableData.forEach(async (element) => {
+      variableData.forEach(async (element) => {
+        try {
           if (element) {
             console.log(element);
             // let varType = String(element.type).toLowerCase;
             const submitVariableData = {
-              order: indexCounter,
+              order: element.id + 1,
               variableName: element.name,
-              variableOperation: "none",
-              variableStartValue: element.value,
+              variableOperation: (() => {
+                let filterOperation = ["iterate", "randomize"];
+                let filterObject = Object.entries(element).filter(
+                  ([key, value]) =>
+                    filterOperation.includes(key) && value === true
+                );
+                let matchedKeys = filterObject.map(([key]) => key);
+                console.log("matchedkeys:");
+                console.log(matchedKeys);
+                return matchedKeys.length > 0 ? matchedKeys.join(",") : "none";
+              })(),
+              variableStartValue:
+                element.type != "Date"
+                  ? element.value
+                  : element.iterate
+                  ? element.dateValue.toISOString()
+                  : null,
+              variableMinValue:
+                element.type != "Date"
+                  ? element.minValue
+                  : element.randomize
+                  ? element.minDateValue.toISOString()
+                  : null,
+              variableMaxValue:
+                element.type != "Date"
+                  ? element.maxValue
+                  : element.randomize
+                  ? element.maxDateValue.toISOString()
+                  : null,
+              variableList: element.list ? element.list.flat() : null,
               variableType: element.type.toLowerCase(),
               usedBySentence: sentenceID,
-              intervalCount: 3,
+              intervalCount: element.interval,
             };
             const resVariable = await fetch(
-              `https://sentence-repeater-backend.vercel.app/api/v1/sentence/${sentenceID}/variable`,
+              `${link}/api/v1/sentence/${sentenceID}/variable`,
               {
                 method: "POST",
                 headers: {
@@ -95,14 +119,14 @@ function SentenceTempData({ sentenceData, variableData }) {
               console.log(dataVariable);
               console.log(`${element.name} variable is submitted`);
             } else {
-              console.log("Failed to submit");
+              console.log(dataVariable);
+              console.log(`Failed to submit variable ${element.name}`);
             }
-            indexCounter++;
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
+          } else console.log("Empty Data");
+        } catch (error) {
+          console.log(error);
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -111,7 +135,7 @@ function SentenceTempData({ sentenceData, variableData }) {
   const refreshVariables = async () => {
     try {
       const resVar = await fetch(
-        `https://sentence-repeater-backend.vercel.app/api/v1/sentence/${currentSentence}/variable`,
+        `${link}/api/v1/sentence/${currentSentence}/variable`,
         {
           method: "GET",
           headers: {
@@ -138,6 +162,7 @@ function SentenceTempData({ sentenceData, variableData }) {
 
   return (
     <div className="">
+      <p>Current Link: {link}</p>
       <p>Current Sentence: {currentSentence}</p>
       <div className="grid">
         {Object.keys(variables).map((keys, index) => (
