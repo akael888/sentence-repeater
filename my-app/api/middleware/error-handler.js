@@ -6,7 +6,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.msg || "Something went wrong, please try again later..",
   };
   console.log("error");
-  console.log();
+  console.log(err);
   console.log(err.name);
 
   if (err.name === "ValidationError") {
