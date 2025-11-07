@@ -60,7 +60,7 @@ const editSentence = async (req, res) => {
 };
 
 const deleteSentece = async (req, res) => {
-  const sentence = await Sentence.findOneAndDelte({
+  const sentence = await Sentence.findOneAndDelete({
     createdBy: req.user.userId,
     _id: req.params.id,
   });
@@ -70,7 +70,7 @@ const deleteSentece = async (req, res) => {
     throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
   }
   res.status(StatusCodes.OK).json({
-    msg: `This sentence has been deleted ${id}`,
+    msg: `This sentence has been deleted ${_id}`,
     subMsg: `These variables are also deleted : ${variable}`,
   });
 };
