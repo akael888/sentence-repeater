@@ -393,6 +393,14 @@ function BackEndDebugger({
           Refresh Variables
         </button>
         <button
+          onClick={() => {
+            console.log("editsentence");
+          }}
+          className="bg-pink-500 text-black"
+        >
+          Edit Sentence
+        </button>
+        <button
           onClick={submitSentence}
           className="bg-green-500 text-black p-1 hover:bg-green-200"
         >
