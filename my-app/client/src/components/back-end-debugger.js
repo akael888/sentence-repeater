@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 
-function BackEndDebugger({ sentenceData, variableData, currentLink }) {
+function BackEndDebugger({
+  sentenceData,
+  variableData,
+  currentLink,
+  incomingHandleVariableChanges,
+  incomingHandlePreviewTextChanges,
+}) {
   const token = localStorage.getItem("token");
   const [sentence, setSentence] = useState({});
-  const [variables, setVariables] = useState({});
+  const [variables, setVariables] = useState(new Map());
   const [currentSentence, setCurrentSentence] = useState();
 
   const link = currentLink;
@@ -136,7 +142,7 @@ function BackEndDebugger({ sentenceData, variableData, currentLink }) {
     refreshSentence();
   };
 
-  const refreshVariables = async (targetSentence = null) => {
+  const refreshVariables = async (targetSentence = currentSentence) => {
     console.log("Refresing Variables..");
     try {
       const resVar = await fetch(
@@ -151,12 +157,23 @@ function BackEndDebugger({ sentenceData, variableData, currentLink }) {
       );
 
       const dataVariable = await resVar.json();
+      console.log("dataVariable");
+      console.log(dataVariable);
       if (resVar.ok) {
-        let listVar = {};
-        dataVariable.variable.forEach((element) => {
-          listVar[element._id] = element.variableName;
+        console.log("ResVar OK");
+        let listVar = new Map();
+        dataVariable.variable.forEach((element, index) => {
+          console.log(`ListVar Before assigining ${element}`);
+          console.log(listVar);
+          listVar.set(
+            index,
+            convertDatabaseVariableIntoFrontEndVariable(element)
+          );
+          console.log(`ListVar after assigining ${element}`);
+          console.log(listVar);
         });
-        console.log(dataVariable);
+        console.log("listvar:");
+        console.log(listVar);
         setVariables(listVar);
         console.log("done get variable data");
       } else {
@@ -230,17 +247,111 @@ function BackEndDebugger({ sentenceData, variableData, currentLink }) {
     }
   };
 
+  const loadSentence = async () => {
+    incomingHandlePreviewTextChanges(sentence[currentSentence]);
+    incomingHandleVariableChanges(variables);
+  };
+
+  const convertDatabaseVariableIntoFrontEndVariable = (databaseVariable) => {
+    console.log("Converting Database Variable into Front End Variable...");
+    console.log(databaseVariable);
+    let temptVariable = {};
+    temptVariable = {
+      id: databaseVariable._id,
+      name: databaseVariable.variableName,
+      type: capitalizeFirstLetter(databaseVariable.variableType),
+      iterate: databaseVariable.variableOperation === "iterate",
+      randomize: databaseVariable.variableOperation === "randomize",
+      value: databaseVariable.variableStartValue,
+      interval: databaseVariable.intervalCount,
+      minValue: databaseVariable.variableMinValue,
+      maxValue: databaseVariable.variableMaxValue,
+      dateValue:
+        databaseVariable.variableType === "date"
+          ? databaseVariable.variableStartValue
+          : null,
+      minDateValue:
+        databaseVariable.variableType === "date"
+          ? databaseVariable.variableMinValue
+          : null,
+      maxDateValue:
+        databaseVariable.variableType === "date"
+          ? databaseVariable.variableMaxValue
+          : null,
+      list: databaseVariable.variableList,
+    };
+
+    return temptVariable;
+
+    // const typeValue = databaseVariable.variableType;
+    // const tempVariable = {};
+    // Object.entries;
+    // switch (typeValue) {
+    //   case "Integer":
+    //     incomingTargetVar.iterate = true;
+    //     incomingTargetVar.interval = 1;
+    //     incomingTargetVar.randomize = false;
+    //     incomingTargetVar.value = 1;
+    //     incomingTargetVar.minValue = 1;
+    //     incomingTargetVar.maxValue = 10;
+    //     // tempTypeValidator.Integer = true;
+    //     break;
+    //   case "String":
+    //     incomingTargetVar.iterate = false;
+    //     incomingTargetVar.interval = null;
+    //     incomingTargetVar.randomize = null;
+    //     incomingTargetVar.value = "";
+    //     incomingTargetVar.minValue = null;
+    //     incomingTargetVar.maxValue = null;
+    //     // tempTypeValidator.String = true;
+    //     break;
+    //   case "Date":
+    //     incomingTargetVar.iterate = true;
+    //     incomingTargetVar.interval = 1;
+    //     incomingTargetVar.randomize = false;
+    //     incomingTargetVar.value = null;
+    //     incomingTargetVar.minValue = null;
+    //     incomingTargetVar.maxValue = null;
+    //     incomingTargetVar.dateValue = new Date();
+    //     incomingTargetVar.minDateValue = new Date();
+    //     incomingTargetVar.maxDateValue = new Date();
+    //     // tempTypeValidator.Date = true;
+    //     break;
+    //   case "List":
+    //     console.log("List");
+    //     incomingTargetVar.iterate = true;
+    //     incomingTargetVar.interval = 1;
+    //     incomingTargetVar.randomize = false;
+    //     incomingTargetVar.value = "";
+    //     incomingTargetVar.minValue = null;
+    //     incomingTargetVar.maxValue = null;
+    //     incomingTargetVar.list = [];
+    //     // tempTypeValidator.List = true;
+    //     break;
+    //   default:
+    //     break;
+    // }
+  };
+
+  function capitalizeFirstLetter(str) {
+    if (!str) {
+      return "";
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   return (
     <div className="border-1">
       <h3>Back End Debugger</h3>
       <p>Current Link: {link}</p>
       <p>Current Sentence: {currentSentence}</p>
       <div className="grid">
-        {Object.keys(variables).map((keys, index) => (
-          <div key={index} className="bg-blue-800 hover:bg-blue-600">
-            {variables[keys]} : {keys}
+        {Array.from(variables.entries()).map(([key, value]) => (
+          <div key={key} className="bg-blue-800 hover:bg-blue-600">
+            {key} : {value.name} ( {value.value} )
           </div>
         ))}
+        <div>VarLeng:{variables.size}</div>
       </div>
       <div>-----</div>
       <div className="grid gap-1 place-items-strech">
@@ -269,23 +380,27 @@ function BackEndDebugger({ sentenceData, variableData, currentLink }) {
       </div>
 
       <div className="gap-1 flex grid grid-cols-3">
-        <button onClick={refreshSentence} className="bg-amber-500 text-black p-1 hover:bg-amber-200">
+        <button
+          onClick={refreshSentence}
+          className="bg-amber-500 text-black p-1 hover:bg-amber-200"
+        >
           Refresh Sentence
         </button>
-        <button onClick={refreshVariables} className="bg-blue-500 text-black p-1 hover:bg-blue-200">
+        <button
+          onClick={refreshVariables}
+          className="bg-blue-500 text-black p-1 hover:bg-blue-200"
+        >
           Refresh Variables
         </button>
-        <button onClick={submitSentence} className="bg-green-500 text-black p-1 hover:bg-green-200">
+        <button
+          onClick={submitSentence}
+          className="bg-green-500 text-black p-1 hover:bg-green-200"
+        >
           Submit Sentence
         </button>
-        {/* <button
-          onClick={() => {
-            console.log(variableData);
-          }}
-          className="bg-red-500 text-black"
-        >
-          Select Sentence
-        </button> */}
+        <button onClick={loadSentence} className="bg-red-500 text-black">
+          Load Sentence
+        </button>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import VariableModal from "./var-modal";
 import BackEndDebugger from "./back-end-debugger";
 
-function Repeater({currentLink}) {
+function Repeater({ currentLink }) {
   const [previewText, setPreviewText] = useState(() => {
     try {
       const stored = localStorage.getItem("CURRENT_PREVIEW_TEXT");
@@ -91,7 +91,7 @@ function Repeater({currentLink}) {
   useEffect(() => {
     localStorage.setItem("CURRENT_PREVIEW_TEXT", JSON.stringify(previewText));
   }, [previewText]);
- 
+
   useEffect(() => {
     localStorage.setItem(
       "CURRENT_HIGHEST_LIST_VAR",
@@ -122,7 +122,12 @@ function Repeater({currentLink}) {
   };
 
   const handleVariableChanges = (passedVariable) => {
+    console.log("incoming passed variables:");
+    console.log(passedVariable);
+
     setVariables(new Map(passedVariable));
+    console.log("changed variables:");
+    console.log(variables);
   };
 
   const handleHighestListVarChanges = (passedVariable) => {
@@ -179,7 +184,13 @@ function Repeater({currentLink}) {
             arrayResultsChange={handleGeneratedSentenceChanges}
           />
         </motion.div>
-       <BackEndDebugger sentenceData={previewText} variableData={variables} currentLink={currentLink}></BackEndDebugger>
+        <BackEndDebugger
+          sentenceData={previewText}
+          variableData={variables}
+          currentLink={currentLink}
+          incomingHandlePreviewTextChanges={handlePreviewTextChanges}
+          incomingHandleVariableChanges={handleVariableChanges}
+        ></BackEndDebugger>
       </div>
     </>
   );
