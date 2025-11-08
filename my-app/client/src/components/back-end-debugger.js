@@ -62,11 +62,12 @@ function BackEndDebugger({
       if (resSentence.ok) {
         console.log(dataSentence.sentence._id);
         console.log(resSentence);
-        console.log("Is Submitted!");
+        console.log("Sentence Is Submitted!");
       } else {
-        console.log("Sentence Data Failed!");
+        console.log("Sentence Failed to be Submitted!");
       }
 
+      console.log("Submitting Variables");
       variableData.forEach(async (element) => {
         try {
           if (element) {
@@ -142,11 +143,12 @@ function BackEndDebugger({
     refreshSentence();
   };
 
-  const refreshVariables = async (targetSentence = currentSentence) => {
+  const refreshVariables = async (targetSentence) => {
     console.log("Refresing Variables..");
+    const refSentence = targetSentence;
     try {
       const resVar = await fetch(
-        `${link}/api/v1/sentence/${targetSentence || currentSentence}/variable`,
+        `${link}/api/v1/sentence/${refSentence}/variable`,
         {
           method: "GET",
           headers: {
@@ -175,16 +177,16 @@ function BackEndDebugger({
         console.log("listvar:");
         console.log(listVar);
         setVariables(listVar);
-        console.log("done get variable data");
+        console.log(`Refreshed variable data of sentence: ${refSentence}`);
       } else {
-        console.log("failed to get variable data");
+        console.log(`Failed to get variable data of sentence: ${refSentence}`);
       }
     } catch (error) {}
   };
 
-  const deleteSentence = async (targetSentence = null) => {
+  const deleteSentence = async (targetSentence) => {
     console.log("Deleting Sentence..");
-    const refSentence = targetSentence || currentSentence;
+    const refSentence = targetSentence;
     try {
       const resSentence = await fetch(
         `${link}/api/v1/sentence/${refSentence}`,
@@ -204,42 +206,6 @@ function BackEndDebugger({
         console.log(dataSentence);
         console.log(`Failed deleting ${refSentence}`);
       }
-
-      if (variables != null) {
-        Object.entries(variables).forEach(async (index, value) => {
-          console.log("index and value");
-          console.log(index);
-          console.log(value);
-          try {
-            const resVar = await fetch(
-              `${link}/api/v1/sentence/${
-                targetSentence || currentSentence
-              }/variable/${index[0]}`,
-              {
-                method: "DELETE",
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-            const dataVar = await resVar.json();
-
-            if (resVar.ok) {
-              console.log(dataVar);
-              console.log(`${index} : ${value} variable successfully deleted!`);
-            } else {
-              console.log(dataVar);
-              console.log(
-                `${index} : ${value} variable are failed to be deleted!`
-              );
-            }
-          } catch (error) {
-            console.log(error);
-          }
-        });
-      }
-
       refreshSentence();
       refreshVariables(refSentence);
     } catch (error) {
@@ -257,7 +223,7 @@ function BackEndDebugger({
     console.log(databaseVariable);
     let temptVariable = {};
     temptVariable = {
-      id: databaseVariable._id,
+      _id: databaseVariable._id,
       name: databaseVariable.variableName,
       type: capitalizeFirstLetter(databaseVariable.variableType),
       iterate: databaseVariable.variableOperation === "iterate",
@@ -282,55 +248,6 @@ function BackEndDebugger({
     };
 
     return temptVariable;
-
-    // const typeValue = databaseVariable.variableType;
-    // const tempVariable = {};
-    // Object.entries;
-    // switch (typeValue) {
-    //   case "Integer":
-    //     incomingTargetVar.iterate = true;
-    //     incomingTargetVar.interval = 1;
-    //     incomingTargetVar.randomize = false;
-    //     incomingTargetVar.value = 1;
-    //     incomingTargetVar.minValue = 1;
-    //     incomingTargetVar.maxValue = 10;
-    //     // tempTypeValidator.Integer = true;
-    //     break;
-    //   case "String":
-    //     incomingTargetVar.iterate = false;
-    //     incomingTargetVar.interval = null;
-    //     incomingTargetVar.randomize = null;
-    //     incomingTargetVar.value = "";
-    //     incomingTargetVar.minValue = null;
-    //     incomingTargetVar.maxValue = null;
-    //     // tempTypeValidator.String = true;
-    //     break;
-    //   case "Date":
-    //     incomingTargetVar.iterate = true;
-    //     incomingTargetVar.interval = 1;
-    //     incomingTargetVar.randomize = false;
-    //     incomingTargetVar.value = null;
-    //     incomingTargetVar.minValue = null;
-    //     incomingTargetVar.maxValue = null;
-    //     incomingTargetVar.dateValue = new Date();
-    //     incomingTargetVar.minDateValue = new Date();
-    //     incomingTargetVar.maxDateValue = new Date();
-    //     // tempTypeValidator.Date = true;
-    //     break;
-    //   case "List":
-    //     console.log("List");
-    //     incomingTargetVar.iterate = true;
-    //     incomingTargetVar.interval = 1;
-    //     incomingTargetVar.randomize = false;
-    //     incomingTargetVar.value = "";
-    //     incomingTargetVar.minValue = null;
-    //     incomingTargetVar.maxValue = null;
-    //     incomingTargetVar.list = [];
-    //     // tempTypeValidator.List = true;
-    //     break;
-    //   default:
-    //     break;
-    // }
   };
 
   function capitalizeFirstLetter(str) {
@@ -387,7 +304,9 @@ function BackEndDebugger({
           Refresh Sentence
         </button>
         <button
-          onClick={refreshVariables}
+          onClick={() => {
+            refreshVariables(currentSentence);
+          }}
           className="bg-blue-500 text-black p-1 hover:bg-blue-200"
         >
           Refresh Variables
