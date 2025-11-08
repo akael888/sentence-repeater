@@ -64,13 +64,13 @@ const deleteSentece = async (req, res) => {
     createdBy: req.user.userId,
     _id: req.params.id,
   });
-  const variable = await Variable.deleteMany({ createdBy: req.params.id });
+  const variable = await Variable.deleteMany({ usedBySentence: req.params.id });
 
   if (!sentence) {
     throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
   }
   res.status(StatusCodes.OK).json({
-    msg: `This sentence has been deleted ${_id}`,
+    msg: `This sentence has been deleted ${req.params.id}`,
     subMsg: `These variables are also deleted : ${variable}`,
   });
 };
