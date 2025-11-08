@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function BackEndDebugger({
   sentenceData,
@@ -87,19 +87,19 @@ function BackEndDebugger({
                 return matchedKeys.length > 0 ? matchedKeys.join(",") : "none";
               })(),
               variableStartValue:
-                element.type != "Date"
+                element.type !== "Date"
                   ? element.value
                   : element.iterate
                   ? element.dateValue.toISOString()
                   : null,
               variableMinValue:
-                element.type != "Date"
+                element.type !== "Date"
                   ? element.minValue
                   : element.randomize
                   ? element.minDateValue.toISOString()
                   : null,
               variableMaxValue:
-                element.type != "Date"
+                element.type !== "Date"
                   ? element.maxValue
                   : element.randomize
                   ? element.maxDateValue.toISOString()
