@@ -6,12 +6,16 @@ meta {
 
 patch {
   url: {{url}}/sentence/{{selectedSentence}}
-  body: none
+  body: json
   auth: bearer
 }
 
 auth:bearer {
   token: {{accessToken}}
+}
+
+body:json {
+  {"sentence":"ABC{}","variables":{"variableName":"Tikus"}}
 }
 
 settings {
