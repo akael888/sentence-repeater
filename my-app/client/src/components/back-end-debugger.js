@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 function BackEndDebugger({
-  sentenceData,
-  variableData,
+  incomingPreviewText,
+  incomingVariables,
   currentLink,
   incomingHandleVariableChanges,
   incomingHandlePreviewTextChanges,
@@ -47,7 +47,7 @@ function BackEndDebugger({
   const submitSentence = async () => {
     console.log("Submitting Sentence..");
     try {
-      const submitSentenceData = { sentence: sentenceData };
+      const submitSentenceData = { sentence: incomingPreviewText };
       const resSentence = await fetch(`${link}/api/v1/sentence`, {
         method: "POST",
         headers: {
@@ -68,48 +68,13 @@ function BackEndDebugger({
       }
 
       console.log("Submitting Variables");
-      variableData.forEach(async (element) => {
+      incomingVariables.forEach(async (element) => {
         try {
           if (element) {
             console.log(element);
             // let varType = String(element.type).toLowerCase;
-            const submitVariableData = {
-              order: element.id + 1,
-              variableName: element.name,
-              variableOperation: (() => {
-                let filterOperation = ["iterate", "randomize"];
-                let filterObject = Object.entries(element).filter(
-                  ([key, value]) =>
-                    filterOperation.includes(key) && value === true
-                );
-                let matchedKeys = filterObject.map(([key]) => key);
-                console.log("matchedkeys:");
-                console.log(matchedKeys);
-                return matchedKeys.length > 0 ? matchedKeys.join(",") : "none";
-              })(),
-              variableStartValue:
-                element.type !== "Date"
-                  ? element.value
-                  : element.iterate
-                  ? element.dateValue.toISOString()
-                  : null,
-              variableMinValue:
-                element.type !== "Date"
-                  ? element.minValue
-                  : element.randomize
-                  ? element.minDateValue.toISOString()
-                  : null,
-              variableMaxValue:
-                element.type !== "Date"
-                  ? element.maxValue
-                  : element.randomize
-                  ? element.maxDateValue.toISOString()
-                  : null,
-              variableList: element.list ? element.list.flat() : null,
-              variableType: element.type.toLowerCase(),
-              usedBySentence: sentenceID,
-              intervalCount: element.interval,
-            };
+            const submitVariableData =
+              convertFrontEndVariableIntoDatabaseVariable(element, sentenceID);
             const resVariable = await fetch(
               `${link}/api/v1/sentence/${sentenceID}/variable`,
               {
@@ -213,9 +178,118 @@ function BackEndDebugger({
     }
   };
 
-  const loadSentence = async () => {
-    incomingHandlePreviewTextChanges(sentence[currentSentence]);
-    incomingHandleVariableChanges(variables);
+  const updateSentence = async (targetSentence) => {
+    try {
+      const refSentence = targetSentence;
+      const variableArray = Array.from(incomingVariables.values());
+      const variableData = variableArray.map((element) => {
+        return convertFrontEndVariableIntoDatabaseVariable(
+          element,
+          refSentence
+        );
+      });
+      console.log("variableData");
+      console.log(variableData);
+      const submitSentenceandVariableData = {
+        sentence: incomingPreviewText,
+        variables: variableData,
+      };
+      const resSentence = await fetch(
+        `${link}/api/v1/sentence/${refSentence}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitSentenceandVariableData),
+        }
+      );
+      const data = resSentence.json();
+      console.log(data);
+
+      if (resSentence.ok) {
+        console.log(data);
+        console.log("Data Successfully Updated!");
+      } else {
+        console.log(data);
+        console.log("Data is not Updated!");
+      }
+
+      refreshSentence();
+      refreshVariables(refSentence);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadSentence = (targetSentence) => {
+    console.log("Loading Sentence..");
+
+    const selectedText = sentence[targetSentence];
+    if (selectedText) {
+      incomingHandlePreviewTextChanges(selectedText);
+    }
+
+    const clonedMap = new Map(
+      Array.from(variables.entries()).map(([key, value]) => [key, { ...value }])
+    );
+    console.log("cloneMap:");
+    console.log(clonedMap);
+    console.log("variables:");
+    console.log(variables);
+    incomingHandleVariableChanges(clonedMap);
+
+    console.log("Loading Successful!..");
+  };
+
+  const convertFrontEndVariableIntoDatabaseVariable = (
+    frontendVariable,
+    sentenceID
+  ) => {
+    console.log("Converting Front End Variable into Database Variable...");
+    console.log(frontendVariable);
+    let temptVariable = {};
+    temptVariable = {
+      _id: frontendVariable._id,
+      order: frontendVariable.id
+        ? frontendVariable.id + 1
+        : frontendVariable.order,
+      variableName: frontendVariable.name,
+      variableOperation: (() => {
+        let filterOperation = ["iterate", "randomize"];
+        let filterObject = Object.entries(frontendVariable).filter(
+          ([key, value]) => filterOperation.includes(key) && value === true
+        );
+        let matchedKeys = filterObject.map(([key]) => key);
+        console.log("matchedkeys:");
+        console.log(matchedKeys);
+        return matchedKeys.length > 0 ? matchedKeys.join(",") : "none";
+      })(),
+      variableStartValue:
+        frontendVariable.type !== "Date"
+          ? frontendVariable.value
+          : frontendVariable.iterate
+          ? frontendVariable.dateValue.toISOString()
+          : null,
+      variableMinValue:
+        frontendVariable.type !== "Date"
+          ? frontendVariable.minValue
+          : frontendVariable.randomize
+          ? frontendVariable.minDateValue.toISOString()
+          : null,
+      variableMaxValue:
+        frontendVariable.type !== "Date"
+          ? frontendVariable.maxValue
+          : frontendVariable.randomize
+          ? frontendVariable.maxDateValue.toISOString()
+          : null,
+      variableList: frontendVariable.list ? frontendVariable.list.flat() : null,
+      variableType: frontendVariable.type.toLowerCase(),
+      usedBySentence: sentenceID,
+      intervalCount: frontendVariable.interval,
+    };
+    return temptVariable;
   };
 
   const convertDatabaseVariableIntoFrontEndVariable = (databaseVariable) => {
@@ -224,6 +298,7 @@ function BackEndDebugger({
     let temptVariable = {};
     temptVariable = {
       _id: databaseVariable._id,
+      order: databaseVariable.order,
       name: databaseVariable.variableName,
       type: capitalizeFirstLetter(databaseVariable.variableType),
       iterate: databaseVariable.variableOperation === "iterate",
@@ -313,11 +388,11 @@ function BackEndDebugger({
         </button>
         <button
           onClick={() => {
-            console.log("editsentence");
+            updateSentence(currentSentence);
           }}
           className="bg-pink-500 text-black"
         >
-          Edit Sentence
+          Update Sentence
         </button>
         <button
           onClick={submitSentence}
@@ -325,7 +400,12 @@ function BackEndDebugger({
         >
           Submit Sentence
         </button>
-        <button onClick={loadSentence} className="bg-red-500 text-black">
+        <button
+          onClick={() => {
+            loadSentence(currentSentence);
+          }}
+          className="bg-red-500 text-black"
+        >
           Load Sentence
         </button>
       </div>

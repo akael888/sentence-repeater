@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import VariableTable from "./variable-table";
 import Generator from "./generator";
 import ShowResult from "./result";
@@ -95,10 +95,7 @@ function Repeater({ currentLink }) {
   const highestListVarintoJSON = JSON.stringify(highestListVar);
 
   useEffect(() => {
-    localStorage.setItem(
-      "CURRENT_HIGHEST_LIST_VAR",
-      highestListVarintoJSON
-    );
+    localStorage.setItem("CURRENT_HIGHEST_LIST_VAR", highestListVarintoJSON);
   }, [highestListVarintoJSON]);
 
   useEffect(() => {
@@ -115,26 +112,26 @@ function Repeater({ currentLink }) {
     );
   }, [variables]);
 
-  const handleGeneratedSentenceChanges = (textArrayData) => {
+  const handleGeneratedSentenceChanges = useCallback((textArrayData) => {
     setGeneratedSentence(textArrayData);
-  };
+  }, []);
 
-  const handlePreviewTextChanges = (text) => {
+  const handlePreviewTextChanges = useCallback((text) => {
     setPreviewText(text);
-  };
+  }, []);
 
-  const handleVariableChanges = (passedVariable) => {
+  const handleVariableChanges = useCallback((passedVariable) => {
     console.log("incoming passed variables:");
     console.log(passedVariable);
 
     setVariables(new Map(passedVariable));
     console.log("changed variables:");
     console.log(variables);
-  };
+  }, []);
 
-  const handleHighestListVarChanges = (passedVariable) => {
+  const handleHighestListVarChanges = useCallback((passedVariable) => {
     setHighestListVar(passedVariable);
-  };
+  }, []);
 
   return (
     <>
@@ -187,8 +184,8 @@ function Repeater({ currentLink }) {
           />
         </motion.div>
         <BackEndDebugger
-          sentenceData={previewText}
-          variableData={variables}
+          incomingPreviewText={previewText}
+          incomingVariables={variables}
           currentLink={currentLink}
           incomingHandlePreviewTextChanges={handlePreviewTextChanges}
           incomingHandleVariableChanges={handleVariableChanges}
