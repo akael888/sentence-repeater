@@ -54,9 +54,45 @@ const editSentence = async (req, res) => {
     throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
   }
 
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: `${req.params.id} Sentence Edited!`, sentence });
+  const { variables } = req.body;
+  console.log(variables);
+
+  if (variables) {
+    const variableIds = variables.filter((v) => v._id).map((v) => v._id);
+
+    await Variable.deleteMany({
+      usedBySentence: req.params.id,
+      _id: { $nin: variableIds },
+    });
+
+    const updatedOps = variables.map((v) => {
+      const hasId = Boolean(v._id);
+
+      return hasId
+        ? {
+            updateOne: {
+              filter: { _id: v._id, usedBySentence: req.params.id },
+              update: { $set: v },
+              upsert: false,
+            },
+          }
+        : {
+            insertOne: {
+              document: { ...v, usedBySentence: req.params.id },
+            },
+          };
+    });
+
+    const variable = await Variable.bulkWrite(updatedOps);
+  }
+
+  res.status(StatusCodes.OK).json({
+    msg: `${req.params.id} Sentence Edited!`,
+    subMsg: variables
+      ? `Variable fields that is changed: ${Object.keys(variables).join(",")}`
+      : "no variablies changed",
+    sentence,
+  });
 };
 
 const deleteSentece = async (req, res) => {
