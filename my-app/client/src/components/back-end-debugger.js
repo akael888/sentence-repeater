@@ -9,10 +9,36 @@ function BackEndDebugger({
 }) {
   const token = localStorage.getItem("token");
   const [sentence, setSentence] = useState({});
+  const [sentenceData, setSentenceData] = useState({
+    sentenceName: "",
+    sentenceDescription: "",
+  });
   const [variables, setVariables] = useState(new Map());
-  const [currentSentence, setCurrentSentence] = useState();
+  const [currentSentence, setCurrentSentence] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_SENTENCE_ID");
+      if (stored) {
+        return stored;
+      }
+    } catch (err) {
+      console.error(
+        "Failed to parse CURRENT SENTENCE ID from localStorage:",
+        err
+      );
+    }
+    return true;
+  });
 
   const link = currentLink;
+
+  const handleSentenceDataChanges = (e) => {
+    setSentenceData({ ...sentenceData, [e.target.name]: e.target.value });
+  };
+
+  const handleCurrentSentenceChanges = (sentenceID) => {
+    setCurrentSentence(sentenceID);
+    localStorage.setItem("CURRENT_SENTENCE_ID", sentenceID);
+  };
 
   const refreshSentence = async () => {
     console.log("Refreshing Sentence..");
@@ -31,7 +57,11 @@ function BackEndDebugger({
       if (res.ok) {
         let listSentence = {};
         data.sentence.forEach((element) => {
-          listSentence[element._id] = element.sentence;
+          listSentence[element._id] = {};
+          listSentence[element._id]["sentence"] = element.sentence;
+          listSentence[element._id]["name"] = element.sentenceName;
+          listSentence[element._id]["description"] =
+            element.sentenceDescription;
         });
         setSentence(listSentence);
         console.log("Succesfully Refreshing Data");
@@ -44,10 +74,23 @@ function BackEndDebugger({
     }
   };
 
-  const submitSentence = async () => {
+  const submitSentence = async (
+    incomingSentenceName,
+    incomingSentenceDescription,
+    e
+  ) => {
+    e.preventDefault();
     console.log("Submitting Sentence..");
     try {
-      const submitSentenceData = { sentence: incomingPreviewText };
+      const submitSentenceData = {
+        sentence: incomingPreviewText,
+        sentenceName: incomingSentenceName,
+        sentenceDescription: incomingSentenceDescription,
+      };
+
+      // Clear the Form Value After Submit
+      setSentenceData({ sentenceName: "", sentenceDescription: "" });
+
       const resSentence = await fetch(`${link}/api/v1/sentence`, {
         method: "POST",
         headers: {
@@ -179,6 +222,8 @@ function BackEndDebugger({
   };
 
   const updateSentence = async (targetSentence) => {
+    //Gak bakalan bisa Update Sentence Kalau Refresh, karena Sentencenya gak nyimpen ID
+
     try {
       const refSentence = targetSentence;
       const variableArray = Array.from(incomingVariables.values());
@@ -224,10 +269,12 @@ function BackEndDebugger({
   };
 
   const loadSentence = (targetSentence) => {
+    // Taking sentence that is downloaded into Front End and apply it into the Repeater
+
     console.log("Loading Sentence..");
     refreshVariables(targetSentence);
 
-    const selectedText = sentence[targetSentence];
+    const selectedText = sentence[targetSentence].sentence;
     if (selectedText) {
       incomingHandlePreviewTextChanges(selectedText);
     }
@@ -351,18 +398,20 @@ function BackEndDebugger({
         <div>VarLeng:{variables.size}</div>
       </div>
       <div>-----</div>
+
       <div className="grid gap-1 place-items-strech">
         {Object.keys(sentence).map((value, index) => (
           <div className="flex w-full border-1 gap-2 ">
             <button
               key={index}
               onClick={() => {
-                setCurrentSentence(String(value));
+                handleCurrentSentenceChanges(String(value));
                 refreshVariables(value);
               }}
               className="bg-yellow-800 hover:bg-yellow-600 w-[90%]"
             >
-              {sentence[value]} : {value}
+              {sentence[value].name} : {sentence[value].description} | Sentence
+              : {sentence[value].sentence}
             </button>
             <button
               className="bg-red-800 hover:bg-red-600 place-self-end w-[10%] h-full"
@@ -399,12 +448,36 @@ function BackEndDebugger({
         >
           Update Sentence
         </button>
-        <button
-          onClick={submitSentence}
-          className="bg-green-500 text-black p-1 hover:bg-green-200"
+        <form
+          onSubmit={(e) => {
+            submitSentence(
+              sentenceData.sentenceName,
+              sentenceData.sentenceDescription,
+              e
+            );
+          }}
+          className="text-black"
         >
-          Submit Sentence
-        </button>
+          <input
+            name="sentenceName"
+            placeholder="Sentence Name"
+            value={sentenceData.sentenceName}
+            onChange={handleSentenceDataChanges}
+          ></input>
+          <input
+            name="sentenceDescription"
+            placeholder="Sentence Description"
+            value={sentenceData.sentenceDescription}
+            onChange={handleSentenceDataChanges}
+          ></input>
+          <button
+            type="submit"
+            className="bg-green-500 text-black p-1 hover:bg-green-200"
+          >
+            Submit Sentence
+          </button>
+        </form>
+
         <button
           onClick={() => {
             loadSentence(currentSentence);
