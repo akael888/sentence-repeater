@@ -6,9 +6,21 @@ const SentenceSchema = new mongoose.Schema(
       type: String,
       required: [true, "Missing sentence"],
     },
+    sentenceName: {
+      type: String,
+      required: [true, "Missing Sentence Name"],
+      minlength: 3,
+      maxlength: 15,
+    },
+    sentenceDescription: {
+      type: String,
+      required: [true, "Missing Sentence Description"],
+      minlength: 3,
+      maxlength: 100,
+    },
     createdBy: {
       type: mongoose.Types.ObjectId,
-      ref: "User", 
+      ref: "User",
       required: [true, "Please provide user"],
     },
   },
