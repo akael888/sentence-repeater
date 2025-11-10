@@ -225,6 +225,7 @@ function BackEndDebugger({
 
   const loadSentence = (targetSentence) => {
     console.log("Loading Sentence..");
+    refreshVariables(targetSentence);
 
     const selectedText = sentence[targetSentence];
     if (selectedText) {
@@ -248,13 +249,12 @@ function BackEndDebugger({
     sentenceID
   ) => {
     console.log("Converting Front End Variable into Database Variable...");
+    console.log("Front End Variable Before Convert:");
     console.log(frontendVariable);
     let temptVariable = {};
     temptVariable = {
       _id: frontendVariable._id,
-      order: frontendVariable.id
-        ? frontendVariable.id + 1
-        : frontendVariable.order,
+      order: frontendVariable.id,
       variableName: frontendVariable.name,
       variableOperation: (() => {
         let filterOperation = ["iterate", "randomize"];
@@ -270,35 +270,38 @@ function BackEndDebugger({
         frontendVariable.type !== "Date"
           ? frontendVariable.value
           : frontendVariable.iterate
-          ? frontendVariable.dateValue.toISOString()
+          ? new Date(frontendVariable.value).toISOString()
           : null,
       variableMinValue:
         frontendVariable.type !== "Date"
           ? frontendVariable.minValue
           : frontendVariable.randomize
-          ? frontendVariable.minDateValue.toISOString()
+          ? new Date(frontendVariable.minDateValue).toISOString()
           : null,
       variableMaxValue:
         frontendVariable.type !== "Date"
           ? frontendVariable.maxValue
           : frontendVariable.randomize
-          ? frontendVariable.maxDateValue.toISOString()
+          ? new Date(frontendVariable.maxDateValue).toISOString()
           : null,
       variableList: frontendVariable.list ? frontendVariable.list.flat() : null,
       variableType: frontendVariable.type.toLowerCase(),
       usedBySentence: sentenceID,
       intervalCount: frontendVariable.interval,
     };
+    console.log("Database Variable After Convert:");
+    console.log(temptVariable);
     return temptVariable;
   };
 
   const convertDatabaseVariableIntoFrontEndVariable = (databaseVariable) => {
     console.log("Converting Database Variable into Front End Variable...");
+    console.log("Database Variable Before Convert:");
     console.log(databaseVariable);
     let temptVariable = {};
     temptVariable = {
       _id: databaseVariable._id,
-      order: databaseVariable.order,
+      id: databaseVariable.order,
       name: databaseVariable.variableName,
       type: capitalizeFirstLetter(databaseVariable.variableType),
       iterate: databaseVariable.variableOperation === "iterate",
@@ -309,18 +312,20 @@ function BackEndDebugger({
       maxValue: databaseVariable.variableMaxValue,
       dateValue:
         databaseVariable.variableType === "date"
-          ? databaseVariable.variableStartValue
+          ? new Date(databaseVariable.variableStartValue).toISOString()
           : null,
       minDateValue:
         databaseVariable.variableType === "date"
-          ? databaseVariable.variableMinValue
+          ? new Date(databaseVariable.variableMinValue).toISOString()
           : null,
       maxDateValue:
         databaseVariable.variableType === "date"
-          ? databaseVariable.variableMaxValue
+          ? new Date(databaseVariable.variableMaxValue).toISOString()
           : null,
       list: databaseVariable.variableList,
     };
+    console.log("Front End Variable After Convert:");
+    console.log(temptVariable);
 
     return temptVariable;
   };
