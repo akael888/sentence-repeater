@@ -3,12 +3,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user-model");
 
 const authenticationMiddleware = async (req, res, next) => {
-  const authHead = req.headers.authorization;
-  if (!authHead || !authHead.startsWith("Bearer ")) {
-    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "No Token Provided" });
-  }
+  // const authHead = req.headers.authorization;
+  // if (!authHead || !authHead.startsWith("Bearer ")) {
+  //   res.status(StatusCodes.UNAUTHORIZED).json({ msg: "No Token Provided" });
+  // }
 
-  const token = authHead.split(" ")[1];
+  // const token = authHead.split(" ")[1];
+
+  const token = req.cookies.token;
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
