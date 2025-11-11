@@ -18,6 +18,7 @@ function Login({ currentLink }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        credentials:'include'
       });
 
       const data = await res.json();
@@ -26,7 +27,6 @@ function Login({ currentLink }) {
       console.log(data.object);
 
       if (res.ok) {
-        localStorage.setItem("token", data.token);
         setMessage(data.msg);
       } else {
         setMessage(`Login Failed : ${data.msg}`);

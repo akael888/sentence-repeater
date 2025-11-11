@@ -7,7 +7,6 @@ function BackEndDebugger({
   incomingHandleVariableChanges,
   incomingHandlePreviewTextChanges,
 }) {
-  const token = localStorage.getItem("token");
   const [sentence, setSentence] = useState({});
   const [sentenceData, setSentenceData] = useState({
     sentenceName: "",
@@ -46,9 +45,10 @@ function BackEndDebugger({
       const res = await fetch(`${link}/api/v1/sentence`, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        credentials: "include",
       });
 
       const data = await res.json();
@@ -95,9 +95,10 @@ function BackEndDebugger({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(submitSentenceData),
+        credentials: "include",
       });
       const dataSentence = await resSentence.json();
       const sentenceID = String(dataSentence.sentence._id);
@@ -124,9 +125,10 @@ function BackEndDebugger({
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
+                  // Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(submitVariableData),
+                credentials: "include",
               }
             );
             const dataVariable = await resVariable.json();
@@ -160,9 +162,10 @@ function BackEndDebugger({
         {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
+          credentials: "include",
         }
       );
 
@@ -201,9 +204,10 @@ function BackEndDebugger({
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
+          credentials: "include",
         }
       );
       const dataSentence = await resSentence.json();
@@ -223,7 +227,6 @@ function BackEndDebugger({
 
   const updateSentence = async (targetSentence) => {
     //Gak bakalan bisa Update Sentence Kalau Refresh, karena Sentencenya gak nyimpen ID
-
     try {
       const refSentence = targetSentence;
       const variableArray = Array.from(incomingVariables.values());
@@ -244,10 +247,11 @@ function BackEndDebugger({
         {
           method: "PATCH",
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(submitSentenceandVariableData),
+          credentials: "include",
         }
       );
       const data = resSentence.json();
