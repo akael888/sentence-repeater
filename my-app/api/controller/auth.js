@@ -31,9 +31,14 @@ const login = async (req, res) => {
 
   const token = user.createJWT();
 
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: `Hellow ${user.email}`, token: token });
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 3600000,
+  });
+
+  res.status(StatusCodes.OK).json({ msg: `Hellow ${user.email}` });
 };
 
 module.exports = { register, login };
