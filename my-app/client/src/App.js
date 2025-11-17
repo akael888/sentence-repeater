@@ -7,8 +7,9 @@ import { motion } from "motion/react";
 import Burger from "./components/burger";
 import BurgerMenu from "./components/burger-menu";
 import WaveBackground from "./components/blob-background";
+import LoginDebugger from "./components/login-form-debugger";
 import Login from "./components/login-form";
-
+import Register from "./components/register-form";
 
 function App() {
   //Backend Variables and Other Details
@@ -90,6 +91,7 @@ function App() {
         {/* <div className="p-10 bg-white text-black dark:bg-black dark:text-white z-[100000]">
           Hello Dark Mode
         </div> */}
+
         <BurgerMenu
           isOpen={isOpenBurgerMenu}
           darkModeChanges={handleDarkModeChanges}
@@ -103,7 +105,7 @@ function App() {
             ease: "easeInOut",
           }}
           className={
-            "h-[5%] min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0"
+            "h-fit min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0"
             // +
             // tw_appHeader_glassMorphBG
           }
@@ -120,7 +122,7 @@ function App() {
           <div className="min-h-full flex flex-col">
             <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
               <Repeater currentLink={currentLink} />
-              <Login currentLink={currentLink}></Login>
+              <LoginDebugger currentLink={currentLink}></LoginDebugger>
               <button
                 onClick={() => {
                   setLinkCounter(linkCounter >= 1 ? 0 : linkCounter + 1);
@@ -190,7 +192,7 @@ function TitleHeader({
 }) {
   return (
     <>
-      <nav className="w-full h-full flex justify-end items-center p-[10px]">
+      <nav className="w-full h-full sm:flex sm:justify-end items-center p-[10px] gap-1 flow-root">
         {/* <a href="/" class="logo">
           <img
             className="flex-shrink-0 w-auto h-full max-h-[5vh] object-contain "
@@ -198,10 +200,18 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
-        <Burger
-          isOpen={isOpen}
-          handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
-        ></Burger>
+        <div className="w-fit h-fit sm:float-none float-left">
+          <Register></Register>
+          <Login></Login>
+        </div>
+
+        <div className="w-fit h-fit float-end sm:float-none">
+          <Burger
+            isOpen={isOpen}
+            handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
+          ></Burger>
+        </div>
+
         {/* <Mode
           currentState={darkModeTitle}
           darkModeChanges={darkModeChangesTitle}
