@@ -16,7 +16,11 @@ const getAllSentence = async (req, res) => {
   if (!sentence) {
     throw new NotFoundError("No Sentence Found");
   }
-  res.status(StatusCodes.OK).json({ sentence, sentenceCount: sentence.length });
+  res.status(StatusCodes.OK).json({
+    sentence,
+    sentenceCount: sentence.length,
+    createdBy: req.user.userId,
+  });
 };
 
 const getSentence = async (req, res) => {
@@ -29,15 +33,21 @@ const getSentence = async (req, res) => {
     throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
   }
 
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: `Found this ${req.params.id} sentence`, sentence });
+  res.status(StatusCodes.OK).json({
+    msg: `Found this ${req.params.id} sentence`,
+    sentence,
+    createdBy: req.user.userId,
+  });
 };
 
 const createSentence = async (req, res) => {
   req.body.createdBy = req.user.userId;
   const sentence = await Sentence.create(req.body);
-  res.status(StatusCodes.OK).json({ msg: `New Sentence Created!`, sentence });
+  res.status(StatusCodes.OK).json({
+    msg: `New Sentence Created!`,
+    sentence,
+    createdBy: req.user.userId,
+  });
 };
 
 const editSentence = async (req, res) => {
@@ -92,6 +102,7 @@ const editSentence = async (req, res) => {
       ? `Variable fields that is changed: ${Object.keys(variables).join(",")}`
       : "no variablies changed",
     sentence,
+    createdBy: req.user.userId,
   });
 };
 
@@ -108,6 +119,7 @@ const deleteSentece = async (req, res) => {
   res.status(StatusCodes.OK).json({
     msg: `This sentence has been deleted ${req.params.id}`,
     subMsg: `These variables are also deleted : ${variable}`,
+    createdBy: req.user.userId,
   });
 };
 
