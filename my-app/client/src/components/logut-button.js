@@ -1,16 +1,17 @@
-function Logout({ incomingHandeCurrentUserChanges, incomingCurrentLink }) {
+function Logout({ incomingHandleCurrentUserChanges, incomingCurrentLink }) {
   const logoutUser = async () => {
     try {
       const res = await fetch(`${incomingCurrentLink}/api/v1/auth/logout`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
 
       const data = res.json();
       console.log(data);
       if (res.ok) {
         console.log(data.msg);
-        incomingHandeCurrentUserChanges(undefined);
+        incomingHandleCurrentUserChanges(undefined);
       } else {
         console.log(data.msg);
       }

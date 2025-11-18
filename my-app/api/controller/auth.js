@@ -35,7 +35,7 @@ const login = async (req, res) => {
 
   if (process.env.NODE_ENV === "production") {
     cookieOptions.secure = true;
-    cookieOptions.sameSite = "none";
+    cookieOptions.sameSite = "None";
     cookieOptions.path = "/";
   }
 
@@ -50,15 +50,16 @@ const logout = async (req, res) => {
 
   if (process.env.NODE_ENV === "production") {
     cookieOptions.secure = true;
-    cookieOptions.sameSite = "none";
+    cookieOptions.sameSite = "None";
     cookieOptions.path = "/";
   }
 
-  logutResult = await res.clearCookie("token", cookieOptions);
+  res.clearCookie("token", cookieOptions);
+  // console.log(logutResult);
 
-  if (!logutResult) {
-    res.status(StatusCodes.NOT_FOUND).json({ msg: "Failed Logging Out" });
-  }
+  // if (!logutResult) {
+  //   res.status(StatusCodes.NOT_FOUND).json({ msg: "Failed Logging Out" });
+  // }
 
   res.status(StatusCodes.OK).json({ msg: "Successfully Logged Out!" });
 };
