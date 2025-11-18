@@ -10,6 +10,7 @@ import WaveBackground from "./components/blob-background";
 import LoginDebugger from "./components/login-form-debugger";
 import Login from "./components/login-form";
 import Register from "./components/register-form";
+import Logout from "./components/logut-button";
 
 function App() {
   //Backend Variables and Other Details
@@ -22,6 +23,32 @@ function App() {
     "http://localhost:8000",
   ];
   const [currentLink, setCurrentLink] = useState(link[linkCounter]);
+
+  const [currentUser, setCurrentUser] = useState();
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const res = await fetch(`${currentLink}/api/v1/user/username`, {
+          method: "GET",
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          setCurrentUser(data.username);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUserName();
+  }, []);
+
   useEffect(() => {
     fetch("/api/v1/sentence").then((res) =>
       res.json().then((data) => setSentenceDataTest(data.sentence))
@@ -115,6 +142,9 @@ function App() {
             darkModeChangesTitle={handleDarkModeChanges}
             isOpen={isOpenBurgerMenu}
             handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
+            incomingCurrentUser={currentUser}
+            incomingSetCurrentUser={setCurrentUser}
+            incomingCurrentLink={currentLink}
           />
         </motion.header>
 
@@ -189,10 +219,13 @@ function TitleHeader({
   darkModeChangesTitle,
   isOpen,
   handleOpenBurgerMenuChanges,
+  incomingCurrentUser,
+  incomingSetCurrentUser,
+  incomingCurrentLink,
 }) {
   return (
     <>
-      <nav className="w-full h-full sm:flex sm:justify-end items-center p-[10px] gap-1 flow-root">
+      <nav className="w-full h-full sm:flex sm:justify-end items-center p-[10px] gap-3 flow-root">
         {/* <a href="/" class="logo">
           <img
             className="flex-shrink-0 w-auto h-full max-h-[5vh] object-contain "
@@ -200,9 +233,21 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
-        <div className="w-fit h-fit sm:float-none float-left">
-          <Register></Register>
-          <Login></Login>
+        <div className="w-fit h-fit sm:float-none float-left sm:flex sm:gap-1 sm:items-center">
+          {incomingCurrentUser ? (
+            <div className="flex gap-2 h-full">
+              <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
+              <Logout
+                incomingSetCurrentUser={incomingSetCurrentUser}
+                incomingCurrentLink={incomingCurrentLink}
+              ></Logout>
+            </div>
+          ) : (
+            <>
+              <Register></Register>
+              <Login></Login>
+            </>
+          )}
         </div>
 
         <div className="w-fit h-fit float-end sm:float-none">
