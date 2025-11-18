@@ -160,7 +160,7 @@ function App() {
               <Repeater currentLink={currentLink} />
               <LoginDebugger
                 currentLink={currentLink}
-                incomingSetCurrentUser={handleCurrentUserChanges}
+                incomingHandleCurrentUserChanges={handleCurrentUserChanges}
               ></LoginDebugger>
               <button
                 onClick={() => {
