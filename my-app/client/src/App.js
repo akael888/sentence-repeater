@@ -47,7 +47,7 @@ function App() {
       }
     };
     fetchUserName();
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     fetch("/api/v1/sentence").then((res) =>
@@ -152,7 +152,10 @@ function App() {
           <div className="min-h-full flex flex-col">
             <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
               <Repeater currentLink={currentLink} />
-              <LoginDebugger currentLink={currentLink}></LoginDebugger>
+              <LoginDebugger
+                currentLink={currentLink}
+                incomingSetCurrentUser={setCurrentUser}
+              ></LoginDebugger>
               <button
                 onClick={() => {
                   setLinkCounter(linkCounter >= 1 ? 0 : linkCounter + 1);

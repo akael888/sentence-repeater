@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function LoginDebugger({ currentLink }) {
+function LoginDebugger({ currentLink, incomingSetCurrentUser }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [message, setMessage] = useState("");
   const link = currentLink;
@@ -18,7 +18,7 @@ function LoginDebugger({ currentLink }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-        credentials:'include'
+        credentials: "include",
       });
 
       const data = await res.json();
@@ -28,6 +28,7 @@ function LoginDebugger({ currentLink }) {
 
       if (res.ok) {
         setMessage(data.msg);
+        incomingSetCurrentUser(data.username);
       } else {
         setMessage(`Login Failed : ${data.msg}`);
       }

@@ -40,7 +40,9 @@ const login = async (req, res) => {
     maxAge: 3600000,
   });
 
-  res.status(StatusCodes.OK).json({ msg: `Hellow ${user.email}` });
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: `Hellow ${user.email}`, username: user.username });
 };
 const logout = async (req, res) => {
   logutResult = await res.clearCookie("token", {
