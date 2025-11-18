@@ -41,6 +41,8 @@ function App() {
         const data = await res.json();
         if (res.ok) {
           setCurrentUser(data.username);
+        } else {
+          console.log(data);
         }
       } catch (error) {
         console.log(error);

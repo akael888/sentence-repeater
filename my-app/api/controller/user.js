@@ -14,7 +14,9 @@ const getUserName = async (req, res) => {
       .status(StatusCodes.NOT_FOUND)
       .json({ msg: `Do not found any user with ${req.user.userId}` });
   }
-  res.status(StatusCodes.OK).json({ username: user.username });
+  res
+    .status(StatusCodes.OK)
+    .json({ username: user.username, msg: "Sucessfully Get the Username" });
 };
 
 module.exports = { getUserName };
