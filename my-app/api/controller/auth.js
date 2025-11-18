@@ -42,5 +42,18 @@ const login = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ msg: `Hellow ${user.email}` });
 };
+const logout = async (req, res) => {
+  logutResult = await res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
 
-module.exports = { register, login };
+  if (!logutResult) {
+    res.status(StatusCodes.NOT_FOUND).json({ msg: "Failed Logging Out" });
+  }
+
+  res.status(StatusCodes.OK).json({ msg: "Successfully Logged Out!" });
+};
+
+module.exports = { register, login, logout };
