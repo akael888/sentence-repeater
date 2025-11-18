@@ -1,9 +1,11 @@
 import { motion } from "motion/react";
 import { useState } from "react";
 import CustomToggle from "./toggle-custom";
+import SentenceList from "./sentence-list";
 
 function BurgerMenu({ isOpen, darkModeChanges, isDarkMode }) {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
+  
 
   return (
     <motion.div
@@ -12,11 +14,16 @@ function BurgerMenu({ isOpen, darkModeChanges, isDarkMode }) {
       animate={{ x: isOpen ? 0 : "100%" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
+      {/* Logo Sentence Repeater */}
       <div className="flex flex-row items-center justify-center">
-        <img src="./logo512.png" alt="sentence-repeater-logo" className="w-[10%] h-auto"></img>
-        
+        <img
+          src="./logo512.png"
+          alt="sentence-repeater-logo"
+          className="w-[10%] h-auto"
+        ></img>
       </div>
 
+      {/* Help Sentence Repeater */}
       <div className="w-full h-auto">
         <motion.button
           className="w-full h-auto py-2 border-b border-gray-200"
@@ -60,6 +67,7 @@ function BurgerMenu({ isOpen, darkModeChanges, isDarkMode }) {
         </motion.div>
       </div>
 
+      {/* Dark Mode Repeater */}
       <div className="w-full h-auto flex flex-row justify-center items-center text-center gap-2">
         <div>Dark Mode |</div>
 
@@ -68,6 +76,8 @@ function BurgerMenu({ isOpen, darkModeChanges, isDarkMode }) {
           checked={isDarkMode}
         ></CustomToggle>
       </div>
+
+      <SentenceList></SentenceList>
     </motion.div>
   );
 }
