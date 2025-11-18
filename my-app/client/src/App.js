@@ -242,7 +242,7 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
-        <div className="w-fit h-fit sm:float-none float-left sm:flex sm:gap-1 sm:items-center">
+        <div className="w-fit h-fit sm:float-none float-left sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
           {incomingCurrentUser ? (
             <div className="flex gap-2 h-full">
               <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
