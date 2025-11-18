@@ -28,7 +28,7 @@ function Logout({ incomingHandleCurrentUserChanges, incomingCurrentLink }) {
           logoutUser();
         }}
       >
-        ➜]
+        ➜] Logout
       </button>
     </>
   );
