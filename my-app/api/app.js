@@ -15,6 +15,8 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 const port = process.env.PORT || 8000;
 
+app.set('trust proxy', 1);
+
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://sentence-repeater.vercel.app","https://sentence-repeater-git-features-back-end-akael888s-projects.vercel.app"],

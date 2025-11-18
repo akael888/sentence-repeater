@@ -36,6 +36,7 @@ const login = async (req, res) => {
   if (process.env.NODE_ENV === "production") {
     cookieOptions.secure = true;
     cookieOptions.sameSite = "none";
+    cookieOptions.path = "/";
   }
 
   res.cookie("token", token, cookieOptions);
@@ -50,6 +51,7 @@ const logout = async (req, res) => {
   if (process.env.NODE_ENV === "production") {
     cookieOptions.secure = true;
     cookieOptions.sameSite = "none";
+    cookieOptions.path = "/";
   }
 
   logutResult = await res.clearCookie("token", cookieOptions);
