@@ -33,7 +33,7 @@ const login = async (req, res) => {
 
   const cookieOptions = { httpOnly: true, maxAge: 3600000 };
 
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV === "production") {
     cookieOptions.secure = true;
     cookieOptions.sameSite = "none";
   }
@@ -47,7 +47,7 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
   const cookieOptions = { httpOnly: true, maxAge: 3600000 };
 
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV === "production") {
     cookieOptions.secure = true;
     cookieOptions.sameSite = "none";
   }
