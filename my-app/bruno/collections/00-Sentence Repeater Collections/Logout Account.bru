@@ -1,0 +1,25 @@
+meta {
+  name: Logout Account
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{url}}/auth/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {"username":"{{adminUsername}}","password":"{{adminPassword}}"}
+}
+
+tests {
+  const jsonData = res.getBody();
+  bru.setGlobalEnvVar("accessToken", jsonData.token)
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
