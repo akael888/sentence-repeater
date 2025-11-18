@@ -31,25 +31,28 @@ const login = async (req, res) => {
 
   const token = user.createJWT();
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    // secure: process.env.NODE_ENV === "production",
-    // sameSite: "strict",
-    secure: true,
-    sameSite: "none",
-    maxAge: 3600000,
-  });
+  const cookieOptions = { httpOnly: true, maxAge: 3600000 };
+
+  if (process.env.NODE_ENV !== "development") {
+    cookieOptions.secure = true;
+    cookieOptions.sameSite = "none";
+  }
+
+  res.cookie("token", token, cookieOptions);
 
   res
     .status(StatusCodes.OK)
     .json({ msg: `Hellow ${user.email}`, username: user.username });
 };
 const logout = async (req, res) => {
-  logutResult = await res.clearCookie("token", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-  });
+  const cookieOptions = { httpOnly: true, maxAge: 3600000 };
+
+  if (process.env.NODE_ENV !== "development") {
+    cookieOptions.secure = true;
+    cookieOptions.sameSite = "none";
+  }
+
+  logutResult = await res.clearCookie("token", cookieOptions);
 
   if (!logutResult) {
     res.status(StatusCodes.NOT_FOUND).json({ msg: "Failed Logging Out" });
