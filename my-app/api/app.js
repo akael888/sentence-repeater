@@ -5,6 +5,7 @@ const connectDB = require("./db/connect");
 const app = express();
 const authRouter = require("./routes/auth");
 const sentenceRouter = require("./routes/sentence");
+const userRouter = require("./routes/user");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/sentence", authenticationMiddleware, sentenceRouter);
+app.use("/api/v1/user", authenticationMiddleware, userRouter);
 
 //middleware
 app.use(notFoundMiddleware);
