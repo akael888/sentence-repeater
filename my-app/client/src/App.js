@@ -149,7 +149,7 @@ function App() {
             isOpen={isOpenBurgerMenu}
             handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
             incomingCurrentUser={currentUser}
-            incomingSetCurrentUser={handleCurrentUserChanges}
+            incomingHandleCurrentUserChanges={handleCurrentUserChanges}
             incomingCurrentLink={currentLink}
           />
         </motion.header>
@@ -229,7 +229,7 @@ function TitleHeader({
   isOpen,
   handleOpenBurgerMenuChanges,
   incomingCurrentUser,
-  incomingHandeCurrentUserChanges,
+  incomingHandleCurrentUserChanges,
   incomingCurrentLink,
 }) {
   return (
@@ -247,7 +247,7 @@ function TitleHeader({
             <div className="flex gap-2 h-full">
               <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
               <Logout
-                incomingHandeCurrentUserChanges={incomingHandeCurrentUserChanges}
+                incomingHandleCurrentUserChanges={incomingHandleCurrentUserChanges}
                 incomingCurrentLink={incomingCurrentLink}
               ></Logout>
             </div>
