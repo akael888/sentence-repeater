@@ -1,4 +1,4 @@
-function Logout({ incomingSetCurrentUser, incomingCurrentLink }) {
+function Logout({ incomingHandeCurrentUserChanges, incomingCurrentLink }) {
   const logoutUser = async () => {
     try {
       const res = await fetch(`${incomingCurrentLink}/api/v1/auth/logout`, {
@@ -10,7 +10,7 @@ function Logout({ incomingSetCurrentUser, incomingCurrentLink }) {
       console.log(data);
       if (res.ok) {
         console.log(data.msg);
-        incomingSetCurrentUser(undefined);
+        incomingHandeCurrentUserChanges(undefined);
       } else {
         console.log(data.msg);
       }

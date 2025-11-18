@@ -88,6 +88,10 @@ function App() {
     setIsOpenBurgerMenu(!isOpenBurgerMenu);
   };
 
+  const handleCurrentUserChanges = (newUser) => {
+    setCurrentUser(newUser);
+  };
+
   useEffect(() => {
     try {
       localStorage.setItem("IS_DARK_MODE", JSON.stringify(isDarkMode));
@@ -145,7 +149,7 @@ function App() {
             isOpen={isOpenBurgerMenu}
             handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
             incomingCurrentUser={currentUser}
-            incomingSetCurrentUser={setCurrentUser}
+            incomingSetCurrentUser={handleCurrentUserChanges}
             incomingCurrentLink={currentLink}
           />
         </motion.header>
@@ -156,7 +160,7 @@ function App() {
               <Repeater currentLink={currentLink} />
               <LoginDebugger
                 currentLink={currentLink}
-                incomingSetCurrentUser={setCurrentUser}
+                incomingSetCurrentUser={handleCurrentUserChanges}
               ></LoginDebugger>
               <button
                 onClick={() => {
@@ -225,7 +229,7 @@ function TitleHeader({
   isOpen,
   handleOpenBurgerMenuChanges,
   incomingCurrentUser,
-  incomingSetCurrentUser,
+  incomingHandeCurrentUserChanges,
   incomingCurrentLink,
 }) {
   return (
@@ -243,7 +247,7 @@ function TitleHeader({
             <div className="flex gap-2 h-full">
               <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
               <Logout
-                incomingSetCurrentUser={incomingSetCurrentUser}
+                incomingHandeCurrentUserChanges={incomingHandeCurrentUserChanges}
                 incomingCurrentLink={incomingCurrentLink}
               ></Logout>
             </div>

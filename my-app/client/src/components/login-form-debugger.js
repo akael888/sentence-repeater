@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function LoginDebugger({ currentLink, incomingSetCurrentUser }) {
+function LoginDebugger({ currentLink, incomingHandeCurrentUserChanges }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [message, setMessage] = useState("");
   const link = currentLink;
@@ -28,7 +28,7 @@ function LoginDebugger({ currentLink, incomingSetCurrentUser }) {
 
       if (res.ok) {
         setMessage(data.msg);
-        incomingSetCurrentUser(data.username);
+        incomingHandeCurrentUserChanges(data.username);
       } else {
         setMessage(`Login Failed : ${data.msg}`);
       }
