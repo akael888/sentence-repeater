@@ -7,7 +7,7 @@ function Logout({ incomingSetCurrentUser, incomingCurrentLink }) {
       });
 
       const data = res.json();
-
+      console.log(data);
       if (res.ok) {
         console.log(data.msg);
         incomingSetCurrentUser(undefined);
