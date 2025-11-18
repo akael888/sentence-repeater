@@ -47,7 +47,7 @@ function App() {
       }
     };
     fetchUserName();
-  }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     fetch("/api/v1/sentence").then((res) =>
