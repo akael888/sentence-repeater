@@ -59,7 +59,18 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
       isOptionOpened: false,
     },
   });
-  const [variableList, setVariableList] = useState(new Map());
+  const [variableList, setVariableList] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_VARIABLES");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return new Map(parsed);
+      }
+    } catch (err) {
+      console.error("Failed to parse variables from localStorage:", err);
+    }
+    return new Map();
+  });
 
   const [currentSentence, setCurrentSentence] = useState(() => {
     try {
@@ -96,6 +107,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     console.log(incomingCurrentUser);
     if (incomingCurrentUser) {
       refreshSentence();
+      // refreshVariables(currentSentence);
     }
   }, [incomingCurrentUser]);
 
@@ -294,85 +306,92 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
 
   return (
     <>
-      <div className="sm:p-10 p-2 [&>*]:text-xs [&>*]:sm:text-base">
-        <div className=" w-full flex flex-col gap-1">
-          <div className="p-1 flex w-full  h-full">
-            <div className="p-1 w-[80dvh]">
-              <h5>Sentence List</h5>
+      {incomingCurrentUser ? (
+        <div className="sm:p-10 p-2 [&>*]:text-xs [&>*]:sm:text-base">
+          <div className=" w-full flex flex-col gap-1">
+            <div className="p-1 flex w-full  h-full">
+              <div className="p-1 w-[80dvh]">
+                <h5>Sentence List</h5>
+              </div>
+              <button
+                className="bg-amber-700 w-[10dvh] h-full p-1 rounded-1 sm:h-full"
+                onClick={refreshSentence}
+              >
+                ⟳
+              </button>
             </div>
-            <button
-              className="bg-amber-700 w-[10dvh] h-full p-1 rounded-1 sm:h-full"
-              onClick={refreshSentence}
-            >
-              ⟳
-            </button>
-          </div>
-          <div>Current Sentence : {currentSentence}</div>
-          {Array.from(variableList.entries()).map(([key, value]) => (
-            <div key={key} className="bg-blue-800 hover:bg-blue-600">
-              {key} : {value.name} ( {value.value} )
-            </div>
-          ))}
-          <div className="flex justify-center gap-2 p-1">
-            {/* <button className="bg-amber-900 w-fit h-fit f p-1 rounded-1">
-              ⇓ Load
-            </button> */}
-          </div>
-          <div className="grid gap-1 max-h-[20dvh] overflow-y-scroll h-full  max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black border-1 p-1">
-            {Object.keys(sentenceList).map((value, index) => (
-              <div className="flex w-full gap-2">
-                <button
-                  key={index}
-                  className="bg-yellow-800 hover:bg-yellow-600 w-full rounded-1 p-1 overflow-hidden"
-                  onClick={() => {
-                    handleCurrentSentenceChanges(value);
-                    refreshVariables(value);
-                  }}
-                >
-                  {sentenceList[value].name} : {sentenceList[value].description}{" "}
-                  | Sentence : {sentenceList[value].sentence}
-                </button>
-                <button
-                  className="bg-amber-900 w-fit h-full f p-1 rounded-1"
-                  onClick={() => {
-                    handleCurrentSentenceChanges(value);
-                    loadSentence(value);
-                  }}
-                >
-                  ⇓ Load
-                </button>
-
-                {sentenceList[value].isOptionOpened ? (
-                  <>
-                    <button className="bg-red-800 hover:bg-red-600 place-self-end w-full h-full rounded-1 p-1">
-                      ✖ Delete
-                    </button>
-                    <button
-                      className="w-full bg-gray-900 p-1"
-                      onClick={() => {
-                        toggleOption(value);
-                      }}
-                    >
-                      ⋮
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      className="w-[10%] bg-gray-900 p-1"
-                      onClick={() => {
-                        toggleOption(value);
-                      }}
-                    >
-                      ⋮
-                    </button>
-                  </>
-                )}
+            <div>Current Sentence : {currentSentence}</div>
+            {Array.from(variableList.entries()).map(([key, value]) => (
+              <div key={key} className="bg-blue-800 hover:bg-blue-600">
+                {key} : {value.name} ( {value.value} )
               </div>
             ))}
+            <div className="flex justify-center gap-2 p-1">
+              {/* <button className="bg-amber-900 w-fit h-fit f p-1 rounded-1">
+              ⇓ Load
+            </button> */}
+            </div>
+            <div className="grid gap-1 max-h-[20dvh] overflow-y-scroll h-full  max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black border-1 p-1">
+              {Object.keys(sentenceList).map((value, index) => (
+                <div className="flex w-full gap-2">
+                  <button
+                    key={index}
+                    className="bg-yellow-800 hover:bg-yellow-600 w-full rounded-1 p-1 overflow-hidden"
+                    onClick={() => {
+                      refreshVariables(value);
+                    }}
+                  >
+                    {sentenceList[value].name} :{" "}
+                    {sentenceList[value].description} | Sentence :{" "}
+                    {sentenceList[value].sentence}
+                  </button>
+                  <button
+                    className="bg-amber-900 w-fit h-full f p-1 rounded-1"
+                    onClick={() => {
+                      handleCurrentSentenceChanges(value);
+                      loadSentence(value);
+                    }}
+                  >
+                    ⇓ Load
+                  </button>
+
+                  {sentenceList[value].isOptionOpened ? (
+                    <>
+                      <button className="bg-red-800 hover:bg-red-600 place-self-end w-full h-full rounded-1 p-1">
+                        ✖ Delete
+                      </button>
+                      <button
+                        className="w-full bg-gray-900 p-1"
+                        onClick={() => {
+                          toggleOption(value);
+                        }}
+                      >
+                        ⋮
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        className="w-[10%] bg-gray-900 p-1"
+                        onClick={() => {
+                          toggleOption(value);
+                        }}
+                      >
+                        ⋮
+                      </button>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <strong>Not Logged In</strong>{" "}
+          <p>Please Log In to Access Stored Sentence Data</p>
+        </div>
+      )}
     </>
   );
 }
