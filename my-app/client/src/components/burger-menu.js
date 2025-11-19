@@ -3,9 +3,14 @@ import { useState } from "react";
 import CustomToggle from "./toggle-custom";
 import SentenceList from "./sentence-list";
 
-function BurgerMenu({ isOpen, darkModeChanges, isDarkMode }) {
+function BurgerMenu({
+  isOpen,
+  darkModeChanges,
+  isDarkMode,
+  incomingLink,
+  incomingCurrentUser,
+}) {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
-  
 
   return (
     <motion.div
@@ -77,7 +82,10 @@ function BurgerMenu({ isOpen, darkModeChanges, isDarkMode }) {
         ></CustomToggle>
       </div>
 
-      <SentenceList></SentenceList>
+      <SentenceList
+        incomingLink={incomingLink}
+        incomingCurrentUser={incomingCurrentUser}
+      ></SentenceList>
     </motion.div>
   );
 }
