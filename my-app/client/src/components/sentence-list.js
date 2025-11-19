@@ -9,6 +9,8 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     handlePreviewTextChanges: incomingHandlePreviewTextChanges,
   } = useRepeaterData();
 
+  const [dbMessage, setDbMessage] = useState([]);
+
   const [sentenceList, setSentenceList] = useState({
     0: {
       name: "Test 1",
@@ -102,6 +104,10 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     localStorage.setItem("CURRENT_SENTENCE_ID", sentenceID);
   };
 
+  const handleDbMessageChanges = (message) => {
+    setDbMessage([...dbMessage, message]);
+  };
+
   useEffect(() => {
     console.log("incomingCurrentUser");
     console.log(incomingCurrentUser);
@@ -136,6 +142,9 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             element.sentenceDescription;
         });
         setSentenceList(listSentence);
+        if (data.msg) {
+          handleDbMessageChanges(data.msg);
+        }
         console.log("Succesfully Refreshing Data");
         console.log(listSentence);
       } else {
@@ -181,8 +190,11 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
         console.log("listvar:");
         console.log(listVar);
         setVariableList(listVar);
-        return listVar;
+        if (dataVariable.msg) {
+          handleDbMessageChanges(dataVariable.msg);
+        }
         console.log(`Refreshed variable data of sentence: ${refSentence}`);
+        return listVar;
       } else {
         console.log(`Failed to get variable data of sentence: ${refSentence}`);
       }
@@ -209,6 +221,39 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     incomingHandleVariableChanges(clonedMap);
 
     console.log("Loading Successful!..");
+  };
+
+  const deleteSentence = async (targetSentence) => {
+    console.log("Deleting Sentence..");
+    const refSentence = targetSentence;
+    try {
+      const resSentence = await fetch(
+        `${incomingLink}/api/v1/sentence/${refSentence}`,
+        {
+          method: "DELETE",
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const dataSentence = await resSentence.json();
+      if (resSentence.ok) {
+        console.log(dataSentence);
+        if (dataSentence.msg) {
+          handleDbMessageChanges(dataSentence.msg);
+        }
+        console.log(`Successfully Deleted ${refSentence}`);
+      } else {
+        console.log(dataSentence);
+        console.log(`Failed deleting ${refSentence}`);
+      }
+      refreshSentence();
+      refreshVariables(refSentence);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const convertFrontEndVariableIntoDatabaseVariable = (
@@ -333,10 +378,10 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             </div>
             <div className="grid gap-1 max-h-[20dvh] overflow-y-scroll h-full  max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black border-1 p-1">
               {Object.keys(sentenceList).map((value, index) => (
-                <div className="flex w-full gap-2">
+                <div className="flex w-full gap-2 sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh]">
                   <button
                     key={index}
-                    className="bg-yellow-800 hover:bg-yellow-600 w-full rounded-1 p-1 overflow-hidden"
+                    className="bg-yellow-800 hover:bg-yellow-600 w-full rounded-1 p-1"
                     onClick={() => {
                       refreshVariables(value);
                     }}
@@ -346,22 +391,28 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                     {sentenceList[value].sentence}
                   </button>
                   <button
-                    className="bg-amber-900 w-fit h-full f p-1 rounded-1"
+                    className="bg-amber-900 sm:w-[5dvw] w-[15dvw] p-1 rounded-1 disabled:bg-green-600 hover:bg-amber-800"
                     onClick={() => {
                       handleCurrentSentenceChanges(value);
                       loadSentence(value);
                     }}
+                    disabled={currentSentence === value}
                   >
-                    ⇓ Load
+                    {currentSentence === value ? "✔" : "⇓"}
                   </button>
 
                   {sentenceList[value].isOptionOpened ? (
                     <>
-                      <button className="bg-red-800 hover:bg-red-600 place-self-end w-full h-full rounded-1 p-1">
+                      <button
+                        className="bg-red-800 hover:bg-red-600  w-full h-full rounded-1 p-1"
+                        onClick={() => {
+                          deleteSentence(value);
+                        }}
+                      >
                         ✖ Delete
                       </button>
                       <button
-                        className="w-full bg-gray-900 p-1"
+                        className="w-full bg-gray-900 p-1 hover:bg-gray-800"
                         onClick={() => {
                           toggleOption(value);
                         }}
@@ -372,7 +423,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                   ) : (
                     <>
                       <button
-                        className="w-[10%] bg-gray-900 p-1"
+                        className="sm:w-[5dvw] w-[15dvw] bg-gray-900 p-1 hover:bg-gray-800"
                         onClick={() => {
                           toggleOption(value);
                         }}
@@ -384,6 +435,11 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                 </div>
               ))}
             </div>
+          </div>
+          <div>
+            {dbMessage.map((value) => (
+              <p>{value}</p>
+            ))}
           </div>
         </div>
       ) : (
