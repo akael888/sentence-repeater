@@ -11,6 +11,7 @@ import LoginDebugger from "./components/login-form-debugger";
 import Login from "./components/login-form";
 import Register from "./components/register-form";
 import Logout from "./components/logut-button";
+import { RepeaterDataProvider } from "./components/repeater-context";
 
 function App() {
   //Backend Variables and Other Details
@@ -125,99 +126,106 @@ function App() {
           Hello Dark Mode
         </div> */}
 
-        <BurgerMenu
-          isOpen={isOpenBurgerMenu}
-          darkModeChanges={handleDarkModeChanges}
-          isDarkMode={isDarkMode}
-        ></BurgerMenu>
-        <motion.header
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: 0.5,
-            ease: "easeInOut",
-          }}
-          className={
-            "h-fit min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0"
-            // +
-            // tw_appHeader_glassMorphBG
-          }
-        >
-          <TitleHeader
-            darkModeTitle={isDarkMode}
-            darkModeChangesTitle={handleDarkModeChanges}
+        <RepeaterDataProvider>
+          <BurgerMenu
             isOpen={isOpenBurgerMenu}
-            handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
+            darkModeChanges={handleDarkModeChanges}
+            isDarkMode={isDarkMode}
+            incomingLink={currentLink}
             incomingCurrentUser={currentUser}
-            incomingHandleCurrentUserChanges={handleCurrentUserChanges}
-            incomingCurrentLink={currentLink}
-          />
-        </motion.header>
+          ></BurgerMenu>
+          <motion.header
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            className={
+              "h-fit min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0"
+              // +
+              // tw_appHeader_glassMorphBG
+            }
+          >
+            <TitleHeader
+              darkModeTitle={isDarkMode}
+              darkModeChangesTitle={handleDarkModeChanges}
+              isOpen={isOpenBurgerMenu}
+              handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
+              incomingCurrentUser={currentUser}
+              incomingHandleCurrentUserChanges={handleCurrentUserChanges}
+              incomingCurrentLink={currentLink}
+            />
+          </motion.header>
 
-        <div className="flex-1 overflow-y-auto overflow-x-hidden">
-          <div className="min-h-full flex flex-col">
-            <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
-              <Repeater currentLink={currentLink} />
-              <LoginDebugger
-                currentLink={currentLink}
-                incomingHandleCurrentUserChanges={handleCurrentUserChanges}
-              ></LoginDebugger>
-              <button
-                onClick={() => {
-                  setLinkCounter(linkCounter >= 1 ? 0 : linkCounter + 1);
-                  console.log("linkcounter:", linkCounter);
-                  setCurrentLink(link[linkCounter]);
+          <div className="flex-1 overflow-y-auto overflow-x-hidden">
+            <div className="min-h-full flex flex-col">
+              <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
+                <Repeater
+                  currentLink={currentLink}
+                  incomingCurrentUser={currentUser}
+                />
+                <LoginDebugger
+                  currentLink={currentLink}
+                  incomingHandleCurrentUserChanges={handleCurrentUserChanges}
+                ></LoginDebugger>
+                <button
+                  onClick={() => {
+                    setLinkCounter(linkCounter >= 1 ? 0 : linkCounter + 1);
+                    console.log("linkcounter:", linkCounter);
+                    setCurrentLink(link[linkCounter]);
+                  }}
+                  className="border-1 rounded-1 bg-purple-600 hover:bg-purple-300"
+                >
+                  Change Link
+                </button>
+              </div>
+
+              <motion.footer
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeInOut",
                 }}
-                className="border-1 rounded-1 bg-purple-600 hover:bg-purple-300"
+                className="w-full h-auto sm:h-[50%] bg-transparent mt-auto sm:p-[0] p-[2%] z-[98]"
               >
-                Change Link
-              </button>
-            </div>
-
-            <motion.footer
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                duration: 0.5,
-                ease: "easeInOut",
-              }}
-              className="w-full h-auto sm:h-[50%] bg-transparent mt-auto sm:p-[0] p-[2%] z-[98]"
-            >
-              <div className="w-full h-auto sm:h-[50%] flex flex-col sm:flex-row p-[2%] sm:p-[1%] ">
-                <div className="w-full grid place-items-center text-opposite-color sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] ">
-                  <p className="text-sm">
-                    Build with React, Tailwindcss, React Bootstrap, and Framer
-                    Motion
-                  </p>
-                </div>
-                <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-white ">
-                  <p className="text-sm ">© 2025 - Elgratio Latuihamallo</p>
-                  <div className="w-fit h-fit sm:w-auto flex gap-[10px]">
-                    <motion.a
-                      href="https://www.linkedin.com/in/elgratiofc"
-                      whileTap={{ scale: 0.9 }}
-                      className="text-opposite-color no-underline hover:text-opposite-sub-color h-fit"
-                    >
-                      <strong>
-                        <p className="text-sm">Linkedin</p>
-                      </strong>
-                    </motion.a>
-                    <p className="text-sm">|</p>
-                    <motion.a
-                      href="https://github.com/akael888"
-                      whileTap={{ scale: 0.9 }}
-                      className="text-opposite-color no-underline hover:text-opposite-sub-color h-fit"
-                    >
-                      <strong>
-                        <p className="text-sm">Github</p>
-                      </strong>
-                    </motion.a>
+                <div className="w-full h-auto sm:h-[50%] flex flex-col sm:flex-row p-[2%] sm:p-[1%] ">
+                  <div className="w-full grid place-items-center text-opposite-color sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] ">
+                    <p className="text-sm">
+                      Build with React, Tailwindcss, React Bootstrap, and Framer
+                      Motion
+                    </p>
+                  </div>
+                  <div className="w-full grid place-items-center sm:flex sm:flex-row sm:items-center sm:justify-center sm:gap-[10px] text-white ">
+                    <p className="text-sm ">© 2025 - Elgratio Latuihamallo</p>
+                    <div className="w-fit h-fit sm:w-auto flex gap-[10px]">
+                      <motion.a
+                        href="https://www.linkedin.com/in/elgratiofc"
+                        whileTap={{ scale: 0.9 }}
+                        className="text-opposite-color no-underline hover:text-opposite-sub-color h-fit"
+                      >
+                        <strong>
+                          <p className="text-sm">Linkedin</p>
+                        </strong>
+                      </motion.a>
+                      <p className="text-sm">|</p>
+                      <motion.a
+                        href="https://github.com/akael888"
+                        whileTap={{ scale: 0.9 }}
+                        className="text-opposite-color no-underline hover:text-opposite-sub-color h-fit"
+                      >
+                        <strong>
+                          <p className="text-sm">Github</p>
+                        </strong>
+                      </motion.a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.footer>
+              </motion.footer>
+            </div>
           </div>
-        </div>
+        </RepeaterDataProvider>
       </div>
     </>
   );
@@ -247,7 +255,9 @@ function TitleHeader({
             <div className="flex gap-2 h-full">
               <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
               <Logout
-                incomingHandleCurrentUserChanges={incomingHandleCurrentUserChanges}
+                incomingHandleCurrentUserChanges={
+                  incomingHandleCurrentUserChanges
+                }
                 incomingCurrentLink={incomingCurrentLink}
               ></Logout>
             </div>
