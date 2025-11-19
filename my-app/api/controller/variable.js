@@ -14,7 +14,12 @@ const getAllVariables = async (req, res) => {
   if (!variable) {
     throw new NotFoundError("Variable not Found");
   }
-  res.status(StatusCodes.OK).json({ msg: "getAllVariables", variable });
+  res
+    .status(StatusCodes.OK)
+    .json({
+      msg: `Succesfully Fetch Variables related to ${req.params.sentenceId}`,
+      variable,
+    });
 };
 
 const getVariable = async (req, res) => {

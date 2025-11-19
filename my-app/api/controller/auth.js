@@ -11,7 +11,9 @@ const register = async (req, res) => {
   // const user = req.body;
   // console.log(user);
   const user = await User.create({ ...req.body });
-  res.status(StatusCodes.OK).json({ status: "connected", user: user });
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: `New User Created! Hello ${user.username}`, user: user });
 };
 const login = async (req, res) => {
   const { username, password } = req.body;

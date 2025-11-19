@@ -17,6 +17,7 @@ const getAllSentence = async (req, res) => {
     throw new NotFoundError("No Sentence Found");
   }
   res.status(StatusCodes.OK).json({
+    msg: "Succesfuly Fetch All Sentences..",
     sentence,
     sentenceCount: sentence.length,
     createdBy: req.user.userId,
@@ -51,17 +52,19 @@ const createSentence = async (req, res) => {
 };
 
 const editSentence = async (req, res) => {
+  const sentenceID = req.params.id;
+
   const sentence = await Sentence.findOneAndUpdate(
     {
       createdBy: req.user.userId,
-      _id: req.params.id,
+      _id: sentenceID,
     },
     req.body,
     { new: true }
   );
 
   if (!sentence) {
-    throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
+    throw new NotFoundError(`No Sentence Found with this ID: ${sentenceID}`);
   }
 
   const { variables } = req.body;
@@ -71,7 +74,7 @@ const editSentence = async (req, res) => {
     const variableIds = variables.filter((v) => v._id).map((v) => v._id);
 
     await Variable.deleteMany({
-      usedBySentence: req.params.id,
+      usedBySentence: sentenceID,
       _id: { $nin: variableIds },
     });
 
@@ -81,14 +84,14 @@ const editSentence = async (req, res) => {
       return hasId
         ? {
             updateOne: {
-              filter: { _id: v._id, usedBySentence: req.params.id },
+              filter: { _id: v._id, usedBySentence: sentenceID },
               update: { $set: v },
               upsert: false,
             },
           }
         : {
             insertOne: {
-              document: { ...v, usedBySentence: req.params.id },
+              document: { ...v, usedBySentence: sentenceID },
             },
           };
     });
@@ -97,7 +100,7 @@ const editSentence = async (req, res) => {
   }
 
   res.status(StatusCodes.OK).json({
-    msg: `${req.params.id} Sentence Edited!`,
+    msg: `${sentenceID} Sentence Edited!`,
     subMsg: variables
       ? `Variable fields that is changed: ${Object.keys(variables).join(",")}`
       : "no variablies changed",
