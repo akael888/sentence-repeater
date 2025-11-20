@@ -72,14 +72,14 @@ function Repeater({ currentLink }) {
             arrayResultsChange={handleGeneratedSentenceChanges}
           />
         </motion.div>
-
+{/* 
         <BackEndDebugger
           incomingPreviewText={previewText}
           incomingVariables={variables}
           currentLink={currentLink}
           incomingHandlePreviewTextChanges={handlePreviewTextChanges}
           incomingHandleVariableChanges={handleVariableChanges}
-        ></BackEndDebugger>
+        ></BackEndDebugger> */}
       </div>
     </>
   );
