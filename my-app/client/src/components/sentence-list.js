@@ -5,11 +5,19 @@ import { useRepeaterData } from "./repeater-context";
 function SentenceList({ incomingLink, incomingCurrentUser }) {
   const {
     variables: incomingVariables,
+    previewText: incomingPreviewText,
     handleVariableChanges: incomingHandleVariableChanges,
     handlePreviewTextChanges: incomingHandlePreviewTextChanges,
   } = useRepeaterData();
 
   const [dbMessage, setDbMessage] = useState([]);
+
+  const [sentenceData, setSentenceData] = useState({
+    sentenceName: "",
+    sentenceDescription: "",
+  });
+
+  const [isSubmitNewSentence, setIsSubmitNewSentence] = useState(false);
 
   const [sentenceList, setSentenceList] = useState({
     0: {
@@ -108,6 +116,10 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     setDbMessage([...dbMessage, message]);
   };
 
+  const handleSentenceDataChanges = (e) => {
+    setSentenceData({ ...sentenceData, [e.target.name]: e.target.value });
+  };
+
   useEffect(() => {
     console.log("incomingCurrentUser");
     console.log(incomingCurrentUser);
@@ -116,6 +128,85 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
       // refreshVariables(currentSentence);
     }
   }, [incomingCurrentUser]);
+
+  const submitSentence = async (
+    incomingSentenceName,
+    incomingSentenceDescription,
+    e
+  ) => {
+    e.preventDefault();
+    console.log("Submitting Sentence..");
+    try {
+      const submitSentenceData = {
+        sentence: incomingPreviewText,
+        sentenceName: incomingSentenceName,
+        sentenceDescription: incomingSentenceDescription,
+      };
+
+      // Clear the Form Value After Submit
+      setSentenceData({ sentenceName: "", sentenceDescription: "" });
+
+      const resSentence = await fetch(`${incomingLink}/api/v1/sentence`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(submitSentenceData),
+        credentials: "include",
+      });
+      const dataSentence = await resSentence.json();
+      const sentenceID = String(dataSentence.sentence._id);
+
+      if (resSentence.ok) {
+        console.log(dataSentence.sentence._id);
+        console.log(resSentence);
+        console.log("Sentence Is Submitted!");
+      } else {
+        console.log("Sentence Failed to be Submitted!");
+      }
+
+      console.log("Submitting Variables");
+      incomingVariables.forEach(async (element) => {
+        try {
+          if (element) {
+            console.log(element);
+            // let varType = String(element.type).toLowerCase;
+            const submitVariableData =
+              convertFrontEndVariableIntoDatabaseVariable(element, sentenceID);
+            const resVariable = await fetch(
+              `${incomingLink}/api/v1/sentence/${sentenceID}/variable`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  // Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(submitVariableData),
+                credentials: "include",
+              }
+            );
+            const dataVariable = await resVariable.json();
+            console.log("submitvardata");
+            console.log(resVariable);
+            if (resVariable.ok) {
+              console.log(dataVariable);
+              console.log(`${element.name} variable is submitted`);
+            } else {
+              console.log(dataVariable);
+              console.log(`Failed to submit variable ${element.name}`);
+            }
+          } else console.log("Empty Data");
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    refreshSentence();
+  };
 
   const refreshSentence = async () => {
     console.log("Refreshing Sentence..");
@@ -256,6 +347,54 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     }
   };
 
+  const updateSentence = async (targetSentence) => {
+    //Gak bakalan bisa Update Sentence Kalau Refresh, karena Sentencenya gak nyimpen ID
+    try {
+      const refSentence = targetSentence;
+      const variableArray = Array.from(incomingVariables.values());
+      const variableData = variableArray.map((element) => {
+        return convertFrontEndVariableIntoDatabaseVariable(
+          element,
+          refSentence
+        );
+      });
+      console.log("variableData");
+      console.log(variableData);
+      const submitSentenceandVariableData = {
+        sentence: incomingPreviewText,
+        variables: variableData,
+      };
+      const resSentence = await fetch(
+        `${incomingLink}/api/v1/sentence/${refSentence}`,
+        {
+          method: "PATCH",
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitSentenceandVariableData),
+          credentials: "include",
+        }
+      );
+      const data = resSentence.json();
+      console.log(data);
+
+      if (resSentence.ok) {
+        console.log(data);
+
+        console.log("Data Successfully Updated!");
+      } else {
+        console.log(data);
+        console.log("Data is not Updated!");
+      }
+
+      refreshSentence();
+      refreshVariables(refSentence);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const convertFrontEndVariableIntoDatabaseVariable = (
     frontendVariable,
     sentenceID
@@ -365,13 +504,69 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                 ⟳
               </button>
             </div>
-            <div>Current Sentence : {currentSentence}</div>
+            <div className="flex w-full h-full gap-2 items-center">
+              <div className="flex flex-col w-full">
+                <p>Current Sentence: </p>
+                <strong>{currentSentence}</strong>
+              </div>
+              <button
+                className="bg-green-800 hover:bg-green-900 p-2 rounded-1"
+                onClick={() => {
+                  updateSentence(currentSentence);
+                }}
+              >
+                ↑ Update Sentence
+              </button>
+            </div>
             {Array.from(variableList.entries()).map(([key, value]) => (
               <div key={key} className="bg-blue-800 hover:bg-blue-600">
                 {key} : {value.name} ( {value.value} )
               </div>
             ))}
-            <div className="flex justify-center gap-2 p-1">
+            <div className="flex flex-col justify-center gap-2 p-1">
+              {isSubmitNewSentence ? (
+                <div className="flex flex-col gap-2">
+                  <form
+                    className="gap-10"
+                    onSubmit={(e) => {
+                      submitSentence(
+                        sentenceData.sentenceName,
+                        sentenceData.sentenceDescription,
+                        e
+                      );
+                    }}
+                  >
+                    <input
+                      name="sentenceName"
+                      placeholder="Sentence Name"
+                      value={sentenceData.sentenceName}
+                      onChange={handleSentenceDataChanges}
+                    ></input>
+                    <input
+                      name="sentenceDescription"
+                      placeholder="Sentence Description"
+                      alue={sentenceData.sentenceDescription}
+                      onChange={handleSentenceDataChanges}
+                    ></input>
+                    <button
+                      type="submit"
+                      className="bg-green-800 hover:bg-green-700"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <></>
+              )}
+              <button
+                onClick={() => {
+                  setIsSubmitNewSentence(!isSubmitNewSentence);
+                }}
+                className="bg-green-800 hover:bg-green-700"
+              >
+                Submit New Sentence
+              </button>
               {/* <button className="bg-amber-900 w-fit h-fit f p-1 rounded-1">
               ⇓ Load
             </button> */}
@@ -436,7 +631,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
               ))}
             </div>
           </div>
-          <div>
+          <div className="w-full max-h-[10dvh] overflow-y-scroll p-2">
             {dbMessage.map((value) => (
               <p>{value}</p>
             ))}
