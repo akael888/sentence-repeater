@@ -43,9 +43,9 @@ function Login({
 
   return (
     <>
-      <form className="w-fit h-full flex border-1" onSubmit={handleSubmit}>
+      <form className="w-fit h-full flex" onSubmit={handleSubmit}>
         {isLoginFormOpen ? (
-          <div className="text-black w-full h-full border-1 border-black">
+          <div className="text-black w-full h-full border-black">
             <input
               className="max-w-[10dvh] h-full"
               name="username"
@@ -61,7 +61,7 @@ function Login({
               onChange={handleLoginDataChanges}
             ></input>
             <button
-              className="border-1 rounded-1 p-1 hover:bg-white hover:text-black"
+              className="border-1 rounded-1 p-1 hover:bg-white bg-green-500 hover:text-black"
               type="submit"
             >
               Submit
