@@ -262,10 +262,10 @@ function TitleHeader({
               ></Logout>
             </div>
           ) : (
-            <>
+            <div className="flex items-start">
               <Register></Register>
               <Login></Login>
-            </>
+            </div>
           )}
         </div>
 
