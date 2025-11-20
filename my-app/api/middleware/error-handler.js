@@ -3,7 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const errorHandlerMiddleware = (err, req, res, next) => {
   let customError = {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
-    msg: err.msg || "Something went wrong, please try again later..",
+    msg: err.message || "Something went wrong, please try again later..",
   };
   console.log("error");
   console.log(err);
@@ -13,7 +13,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     // Kalau data yang dimasukan belum sesuai validatornya
     customError.msg = Object.values(err.errors)
       .map((items) => {
-        items.message;
+        return items.message;
       })
       .join(",");
     customError.statusCode = 400;
