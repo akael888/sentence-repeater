@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-function Login({ currentLink }) {
+function Login({
+  currentLink,
+  incomingHandleCurrentUserChanges,
+  incomingAuthMessageChanges,
+}) {
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
 
   const [loginData, setLoginData] = useState({ username: "", password: "" });
@@ -9,9 +13,37 @@ function Login({ currentLink }) {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${currentLink}/api/v1/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      console.log("this is Data");
+      console.log(data.object);
+
+      if (res.ok) {
+        incomingAuthMessageChanges(data.msg);
+        incomingHandleCurrentUserChanges(data.username);
+      } else {
+        incomingAuthMessageChanges(`Login Failed : ${data.msg}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <form className="w-fit h-full flex border-1">
+      <form className="w-fit h-full flex border-1" onSubmit={handleSubmit}>
         {isLoginFormOpen ? (
           <div className="text-black w-full h-full border-1 border-black">
             <input
@@ -28,6 +60,12 @@ function Login({ currentLink }) {
               value={loginData.password}
               onChange={handleLoginDataChanges}
             ></input>
+            <button
+              className="border-1 rounded-1 p-1 hover:bg-white hover:text-black"
+              type="submit"
+            >
+              Submit
+            </button>
           </div>
         ) : null}
         <button

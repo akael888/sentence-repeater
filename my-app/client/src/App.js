@@ -12,6 +12,7 @@ import Login from "./components/login-form";
 import Register from "./components/register-form";
 import Logout from "./components/logut-button";
 import { RepeaterDataProvider } from "./components/repeater-context";
+import AuthActions from "./components/auth-actions";
 
 function App() {
   //Backend Variables and Other Details
@@ -165,10 +166,11 @@ function App() {
                   currentLink={currentLink}
                   incomingCurrentUser={currentUser}
                 />
-                <LoginDebugger
+                {/* <LoginDebugger
                   currentLink={currentLink}
                   incomingHandleCurrentUserChanges={handleCurrentUserChanges}
-                ></LoginDebugger>
+                ></LoginDebugger> */}
+                <div>{currentLink}</div>
                 <button
                   onClick={() => {
                     setLinkCounter(linkCounter >= 1 ? 0 : linkCounter + 1);
@@ -250,7 +252,7 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
-        <div className="w-fit h-fit sm:float-none float-left sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
+        <div className="w-fit h-full sm:float-none float-left sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
           {incomingCurrentUser ? (
             <div className="flex gap-2 h-full">
               <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
@@ -262,10 +264,12 @@ function TitleHeader({
               ></Logout>
             </div>
           ) : (
-            <div className="flex items-start">
-              <Register></Register>
-              <Login></Login>
-            </div>
+            <AuthActions
+              incomingCurrentLink={incomingCurrentLink}
+              incomingHandleCurrentUserChanges={
+                incomingHandleCurrentUserChanges
+              }
+            ></AuthActions>
           )}
         </div>
 
