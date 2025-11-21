@@ -22,7 +22,11 @@ function AuthActions({
             </div>
           ) : null}
 
-          <Register></Register>
+          <Register
+            currentLink={incomingCurrentLink}
+            incomingHandleCurrentUserChanges={incomingHandleCurrentUserChanges}
+            incomingAuthMessageChanges={handleAuthMessageChanges}
+          ></Register>
           <Login
             currentLink={incomingCurrentLink}
             incomingHandleCurrentUserChanges={incomingHandleCurrentUserChanges}
