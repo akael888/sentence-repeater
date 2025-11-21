@@ -19,7 +19,7 @@ function App() {
   const [sentenceDataTest, setSentenceDataTest] = useState();
 
   //Toggle Link
-  const [linkCounter, setLinkCounter] = useState(1);
+  const [linkCounter, setLinkCounter] = useState(0);
   const link = [
     "https://sentence-repeater-backend.vercel.app",
     "http://localhost:8000",
@@ -170,7 +170,9 @@ function App() {
                   currentLink={currentLink}
                   incomingHandleCurrentUserChanges={handleCurrentUserChanges}
                 ></LoginDebugger> */}
-                <div>{currentLink}</div>
+
+
+                {/* <div>{currentLink}</div>
                 <button
                   onClick={() => {
                     setLinkCounter(linkCounter >= 1 ? 0 : linkCounter + 1);
@@ -180,7 +182,9 @@ function App() {
                   className="border-1 rounded-1 bg-purple-600 hover:bg-purple-300"
                 >
                   Change Link
-                </button>
+                </button> */}
+
+
               </div>
 
               <motion.footer
