@@ -1,6 +1,7 @@
 // import "./App.css";
 import { use, useEffect, useState } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/react"; //Vercel Tracker
+import { Analytics } from "@vercel/analytics/react";
 import Repeater from "./components/repeater";
 import Mode from "./components/toggle-mode";
 import bg from "./img/background-img.jpg";
@@ -231,6 +232,7 @@ function App() {
           </div>
         </RepeaterDataProvider>
         <SpeedInsights />
+        <Analytics />
       </div>
     </>
   );
