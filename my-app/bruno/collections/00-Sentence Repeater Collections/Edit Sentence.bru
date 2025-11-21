@@ -1,17 +1,21 @@
 meta {
   name: Edit Sentence
   type: http
-  seq: 7
+  seq: 9
 }
 
 patch {
   url: {{url}}/sentence/{{selectedSentence}}
-  body: none
+  body: json
   auth: bearer
 }
 
 auth:bearer {
   token: {{accessToken}}
+}
+
+body:json {
+  {"sentence":"ABC{}","variables":{"variableName":"Tikus"}}
 }
 
 settings {

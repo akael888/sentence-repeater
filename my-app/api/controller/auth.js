@@ -11,7 +11,9 @@ const register = async (req, res) => {
   // const user = req.body;
   // console.log(user);
   const user = await User.create({ ...req.body });
-  res.status(StatusCodes.OK).json({ status: "connected", user: user });
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: `New User Created! Hello ${user.username}`, user: user });
 };
 const login = async (req, res) => {
   const { username, password } = req.body;
@@ -31,9 +33,37 @@ const login = async (req, res) => {
 
   const token = user.createJWT();
 
+  const cookieOptions = { httpOnly: true, maxAge: 3600000 };
+
+  if (process.env.NODE_ENV === "production") {
+    cookieOptions.secure = true;
+    cookieOptions.sameSite = "None";
+    cookieOptions.path = "/";
+  }
+
+  res.cookie("token", token, cookieOptions);
+
   res
     .status(StatusCodes.OK)
-    .json({ msg: `Hellow ${user.email}`, token: token });
+    .json({ msg: `Hellow ${user.email}`, username: user.username });
+};
+const logout = async (req, res) => {
+  const cookieOptions = { httpOnly: true, maxAge: 3600000 };
+
+  if (process.env.NODE_ENV === "production") {
+    cookieOptions.secure = true;
+    cookieOptions.sameSite = "None";
+    cookieOptions.path = "/";
+  }
+
+  res.clearCookie("token", cookieOptions);
+  // console.log(logutResult);
+
+  // if (!logutResult) {
+  //   res.status(StatusCodes.NOT_FOUND).json({ msg: "Failed Logging Out" });
+  // }
+
+  res.status(StatusCodes.OK).json({ msg: "Successfully Logged Out!" });
 };
 
-module.exports = { register, login };
+module.exports = { register, login, logout };

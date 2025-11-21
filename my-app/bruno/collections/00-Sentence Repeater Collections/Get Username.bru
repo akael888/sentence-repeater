@@ -1,11 +1,11 @@
 meta {
-  name: Delete Sentence
+  name: Get Username
   type: http
-  seq: 10
+  seq: 5
 }
 
-delete {
-  url: {{url}}/sentence/{{selectedSentence}}
+get {
+  url: {{url}}/user/username
   body: none
   auth: bearer
 }

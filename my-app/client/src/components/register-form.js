@@ -1,27 +1,31 @@
 import { useState } from "react";
 
-function Login({
+function Register({
   currentLink,
   incomingHandleCurrentUserChanges,
   incomingAuthMessageChanges,
 }) {
-  const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
+  const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
 
-  const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
 
   const handleLoginDataChanges = (e) => {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${currentLink}/api/v1/auth/login`, {
+      const res = await fetch(`${currentLink}/api/v1/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(loginData),
+        body: JSON.stringify(registerData),
         credentials: "include",
       });
 
@@ -44,22 +48,29 @@ function Login({
   return (
     <>
       <form className="w-fit h-full flex" onSubmit={handleSubmit}>
-        {isLoginFormOpen ? (
+        {isRegisterFormOpen ? (
           <div className="text-black w-full h-full border-black">
             <input
               className="max-w-[10dvh] h-full"
               name="username"
               placeholder="Username"
-              value={loginData.username}
+              value={registerData.username}
+              onChange={handleLoginDataChanges}
+            ></input>
+            <input
+              className="max-w-[10dvh] h-full"
+              name="email"
+              placeholder="Email"
+              value={registerData.email}
               onChange={handleLoginDataChanges}
             ></input>
             <input
               className="max-w-[10dvh] h-full"
               name="password"
               placeholder="Password"
-              type="password"
-              value={loginData.password}
+              value={registerData.password}
               onChange={handleLoginDataChanges}
+              type="password"
             ></input>
             <button
               className="border-1 rounded-1 p-1 hover:bg-white bg-green-500 hover:text-black"
@@ -73,13 +84,13 @@ function Login({
           className="border-1 rounded-1 p-1 hover:bg-white hover:text-black"
           type="button"
           onClick={() => {
-            setIsLoginFormOpen(!isLoginFormOpen);
+            setIsRegisterFormOpen(!isRegisterFormOpen);
           }}
         >
-          Login
+          Register
         </button>
       </form>
     </>
   );
 }
-export default Login;
+export default Register;

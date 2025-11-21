@@ -14,7 +14,12 @@ const getAllVariables = async (req, res) => {
   if (!variable) {
     throw new NotFoundError("Variable not Found");
   }
-  res.status(StatusCodes.OK).json({ msg: "getAllVariables", variable });
+  res
+    .status(StatusCodes.OK)
+    .json({
+      msg: `Succesfully Fetch Variables related to ${req.params.sentenceId}`,
+      variable,
+    });
 };
 
 const getVariable = async (req, res) => {
@@ -30,6 +35,10 @@ const getVariable = async (req, res) => {
 
 const createVariable = async (req, res) => {
   req.body.usedBySentence = req.params.sentenceId;
+  const { _id } = req.body;
+  if (_id) {
+    req.body._id = null;
+  }
   const variable = await Variable.create(req.body);
   res
     .status(StatusCodes.OK)

@@ -1,0 +1,159 @@
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
+const RepeaterContext = createContext();
+
+export const useRepeaterData = () => {
+  const context = useContext(RepeaterContext);
+  if (!context) {
+    throw new Error("useRepeaterData must be used with RepeaterDataProvider");
+  }
+  return context;
+};
+
+export function RepeaterDataProvider({ children }) {
+  const [previewText, setPreviewText] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_PREVIEW_TEXT");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (err) {
+      console.error("Failed to parse preview text from localStorage:", err);
+    }
+    return "";
+  }); //For Text Preview
+  const [variables, setVariables] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_VARIABLES");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return new Map(parsed);
+      }
+    } catch (err) {
+      console.error("Failed to parse variables from localStorage:", err);
+    }
+    return new Map();
+  }); //To Count Each Variables
+  const [generatedSentence, setGeneratedSentence] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_GEN_SENTENCES");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (err) {
+      console.error(
+        "Failed to parse generated sentence from localStorage:",
+        err
+      );
+    }
+    return [];
+  }); //For the created Sentences
+  const [highestListVar, setHighestListVar] = useState(() => {
+    try {
+      const stored = localStorage.getItem("CURRENT_HIGHEST_LIST_VAR");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (err) {
+      console.error("Failed to parse highest list var from localStorage:", err);
+    }
+    return { list: [] };
+  });
+
+  //to update changes within the generated sentence in the parent component
+
+  //tailwind css
+  // //input containers
+  // let tw_inputContainers_sm = " sm:grid";
+  // let tw_inputContainers_md =
+  //   " md:grid md:w-full md:h-full md:content-center md:grid-row-2 md:place-content-center";
+  // let tw_inputContainers_lg =
+  //   " :lg:inline-flex lg:w-screen lg:h-full lgalign-center lg:justify-center lg:m-auto lg:shrink-1";
+  // let tw_inputContainers_xl = " ";
+  // let tw_inputContainers_2xl = " ";
+
+  // //hidden containers
+  // let tw_hiddenContainers_sm = " sm:grid sm:content-center sm:gap-[1vh]";
+  // let tw_hiddenContainers_md = " md:grid md:content-center md:gap-[1vh]";
+  // let tw_hiddenContainers_lg = " lg:grid lg:content-center lg:gap-[1vh]";
+  // let tw_hiddenContainers_xl = " xl:grid xl:content-center xl:gap-[1vh]";
+  // let tw_hiddenContainers_2xl =
+  //   " 2xl:w-screen 2xl:align-center 2xl:justify-center 2xl:place-items-start 2xl:gap-[5vw] 2xl:flex 2xl:shrink-1";
+
+  useEffect(() => {
+    if (variables.size === 0) {
+      setHighestListVar({ list: [] });
+    }
+  }, [variables.size]);
+
+  useEffect(() => {
+    localStorage.setItem("CURRENT_PREVIEW_TEXT", JSON.stringify(previewText));
+  }, [previewText]);
+
+  const highestListVarintoJSON = JSON.stringify(highestListVar);
+
+  useEffect(() => {
+    localStorage.setItem("CURRENT_HIGHEST_LIST_VAR", highestListVarintoJSON);
+  }, [highestListVarintoJSON]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "CURRENT_GEN_SENTENCES",
+      JSON.stringify(generatedSentence)
+    );
+  }, [generatedSentence]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "CURRENT_VARIABLES",
+      JSON.stringify(Array.from(variables.entries()))
+    );
+  }, [variables]);
+
+  const handleGeneratedSentenceChanges = useCallback((textArrayData) => {
+    setGeneratedSentence(textArrayData);
+  }, []);
+
+  const handlePreviewTextChanges = useCallback((text) => {
+    setPreviewText(text);
+  }, []);
+
+  const handleVariableChanges = useCallback((passedVariable) => {
+    console.log("incoming passed variables:");
+    console.log(passedVariable);
+
+    setVariables(new Map(passedVariable));
+    console.log("changed variables:");
+    console.log(variables);
+  }, []);
+
+  const handleHighestListVarChanges = useCallback((passedVariable) => {
+    setHighestListVar(passedVariable);
+  }, []);
+
+  const value = {
+    previewText,
+    variables,
+    generatedSentence,
+    highestListVar,
+    handlePreviewTextChanges,
+    handleVariableChanges,
+    handleGeneratedSentenceChanges,
+    handleHighestListVarChanges,
+  };
+
+  return (
+    <RepeaterContext.Provider value={value}>
+      {children}
+    </RepeaterContext.Provider>
+  );
+}

@@ -16,7 +16,12 @@ const getAllSentence = async (req, res) => {
   if (!sentence) {
     throw new NotFoundError("No Sentence Found");
   }
-  res.status(StatusCodes.OK).json({ sentence, sentenceCount: sentence.length });
+  res.status(StatusCodes.OK).json({
+    msg: "Succesfuly Fetch All Sentences..",
+    sentence,
+    sentenceCount: sentence.length,
+    createdBy: req.user.userId,
+  });
 };
 
 const getSentence = async (req, res) => {
@@ -29,49 +34,95 @@ const getSentence = async (req, res) => {
     throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
   }
 
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: `Found this ${req.params.id} sentence`, sentence });
+  res.status(StatusCodes.OK).json({
+    msg: `Found this ${req.params.id} sentence`,
+    sentence,
+    createdBy: req.user.userId,
+  });
 };
 
 const createSentence = async (req, res) => {
   req.body.createdBy = req.user.userId;
   const sentence = await Sentence.create(req.body);
-  res.status(StatusCodes.OK).json({ msg: `New Sentence Created!`, sentence });
+  res.status(StatusCodes.OK).json({
+    msg: `New Sentence Created!`,
+    sentence,
+    createdBy: req.user.userId,
+  });
 };
 
 const editSentence = async (req, res) => {
+  const sentenceID = req.params.id;
+
   const sentence = await Sentence.findOneAndUpdate(
     {
       createdBy: req.user.userId,
-      _id: req.params.id,
+      _id: sentenceID,
     },
     req.body,
     { new: true }
   );
 
   if (!sentence) {
-    throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
+    throw new NotFoundError(`No Sentence Found with this ID: ${sentenceID}`);
   }
 
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: `${req.params.id} Sentence Edited!`, sentence });
+  const { variables } = req.body;
+  console.log(variables);
+
+  if (variables) {
+    const variableIds = variables.filter((v) => v._id).map((v) => v._id);
+
+    await Variable.deleteMany({
+      usedBySentence: sentenceID,
+      _id: { $nin: variableIds },
+    });
+
+    const updatedOps = variables.map((v) => {
+      const hasId = Boolean(v._id);
+
+      return hasId
+        ? {
+            updateOne: {
+              filter: { _id: v._id, usedBySentence: sentenceID },
+              update: { $set: v },
+              upsert: false,
+            },
+          }
+        : {
+            insertOne: {
+              document: { ...v, usedBySentence: sentenceID },
+            },
+          };
+    });
+
+    const variable = await Variable.bulkWrite(updatedOps);
+  }
+
+  res.status(StatusCodes.OK).json({
+    msg: `${sentenceID} Sentence Edited!`,
+    subMsg: variables
+      ? `Variable fields that is changed: ${Object.keys(variables).join(",")}`
+      : "no variablies changed",
+    sentence,
+    createdBy: req.user.userId,
+  });
 };
 
 const deleteSentece = async (req, res) => {
-  const sentence = await Sentence.findOneAndDelte({
+  const sentence = await Sentence.findOneAndDelete({
     createdBy: req.user.userId,
     _id: req.params.id,
   });
-  const variable = await Variable.deleteMany({ createdBy: req.params.id });
+  const variable = await Variable.deleteMany({ usedBySentence: req.params.id });
 
   if (!sentence) {
     throw new NotFoundError(`No Sentence Found with this ID: ${id}`);
   }
   res.status(StatusCodes.OK).json({
-    msg: `This sentence has been deleted ${id}`,
+    msg: `This sentence has been deleted ${req.params.id}`,
     subMsg: `These variables are also deleted : ${variable}`,
+    createdBy: req.user.userId,
   });
 };
 
