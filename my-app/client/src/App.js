@@ -1,5 +1,6 @@
 // import "./App.css";
 import { use, useEffect, useState } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react"; //Vercel Tracker
 import Repeater from "./components/repeater";
 import Mode from "./components/toggle-mode";
 import bg from "./img/background-img.jpg";
@@ -171,7 +172,6 @@ function App() {
                   incomingHandleCurrentUserChanges={handleCurrentUserChanges}
                 ></LoginDebugger> */}
 
-
                 {/* <div>{currentLink}</div>
                 <button
                   onClick={() => {
@@ -183,8 +183,6 @@ function App() {
                 >
                   Change Link
                 </button> */}
-
-
               </div>
 
               <motion.footer
@@ -232,6 +230,7 @@ function App() {
             </div>
           </div>
         </RepeaterDataProvider>
+        <SpeedInsights />
       </div>
     </>
   );
