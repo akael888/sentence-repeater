@@ -57,6 +57,7 @@ function Login({
               className="max-w-[10dvh] h-full"
               name="password"
               placeholder="Password"
+              type="password"
               value={loginData.password}
               onChange={handleLoginDataChanges}
             ></input>
