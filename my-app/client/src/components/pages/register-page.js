@@ -2,17 +2,16 @@ import { motion } from "motion/react";
 import { useState } from "react";
 
 function RegisterPage({
-  currentLink,
+  incomingCurrentLink,
   incomingHandleCurrentUserChanges,
-  incomingAuthMessageChanges,
-  incomingIsRegisterFormOpen,
-  incomingToggleRegisterFormOpen,
 }) {
   const [registerData, setRegisterData] = useState({
     username: "",
     password: "",
     email: "",
   });
+
+  const [registerMessage, setRegisterMessage] = useState("");
 
   const handleLoginDataChanges = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
@@ -21,7 +20,7 @@ function RegisterPage({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${currentLink}/api/v1/auth/register`, {
+      const res = await fetch(`${incomingCurrentLink}/api/v1/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,14 +34,15 @@ function RegisterPage({
       console.log("this is Data");
       console.log(data.object);
 
+      const listMessage = data.msg;
+      console.log(listMessage);
       if (res.ok) {
-        incomingAuthMessageChanges(data.msg);
-        incomingHandleCurrentUserChanges(data.username);
+        setRegisterMessage(listMessage);
       } else {
-        incomingAuthMessageChanges(`Login Failed : ${data.msg}`);
+        setRegisterMessage(listMessage);
       }
     } catch (error) {
-      incomingAuthMessageChanges(error.message);
+      setRegisterMessage(error.message);
       console.log(error);
     }
   };
@@ -57,7 +57,7 @@ function RegisterPage({
             duration: 0.5,
             ease: "easeInOut",
           }}
-          className="p-2"
+          className="relativep-2"
         >
           Register
         </motion.h1>
@@ -94,12 +94,26 @@ function RegisterPage({
               type="password"
             ></input>
             <button
-              className="border-1 rounded-1 p-1 hover:bg-white bg-green-500 hover:text-black"
+              className="border-1 rounded-1 p-1 hover:bg-green-700 disabled:hover:bg-transparent hover:text-black disabled:text-white text-white disabled:bg-transparent"
               type="submit"
+              disabled={
+                registerData.email === "" ||
+                registerData.password === "" ||
+                registerData.username === ""
+              }
             >
               Submit
             </button>
           </motion.div>
+          {registerMessage !== "" ? (
+            <motion.p
+              className="p-2"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {registerMessage}
+            </motion.p>
+          ) : null}
         </form>
       </div>
     </>

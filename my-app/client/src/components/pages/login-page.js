@@ -7,7 +7,7 @@ function LoginPage({
   incomingCurrentUser,
 }) {
   const [loginData, setLoginData] = useState({ username: "", password: "" });
-  const [loginMessage, setLoginMessage] = useState("2");
+  const [loginMessage, setLoginMessage] = useState("");
 
   const handleLoginDataChanges = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -33,11 +33,14 @@ function LoginPage({
       if (res.ok) {
         // incomingAuthMessageChanges(data.msg);
         incomingHandleCurrentUserChanges(data.username);
+        setLoginMessage(data.msg)
       } else {
         // incomingAuthMessageChanges(`Login Failed : ${data.msg}`);
+        setLoginMessage(data.msg)
       }
     } catch (error) {
       // incomingAuthMessageChanges(error.message);
+      setLoginMessage(error.message)
       console.log(error);
     }
   };
@@ -101,7 +104,7 @@ function LoginPage({
               <motion.p
                 className="p-2"
                 initial={{ opacity: 0, y: -10 }}
-                transition={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
               >
                 {loginMessage}
               </motion.p>
