@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "motion/react";
+import { Link } from "react-router-dom";
 
 function Login({
   currentLink,
@@ -80,8 +81,9 @@ function Login({
             </button>
           </motion.div>
         ) : null}
+
         <button
-          className="border-1 rounded-1 p-1 hover:bg-white hover:text-black"
+          className="border-1 rounded-1 p-1 hover:bg-white hover:text-black text-white"
           type="button"
           onClick={() => {
             incomingToggleLoginFormOpen();
@@ -93,4 +95,5 @@ function Login({
     </>
   );
 }
+
 export default Login;
