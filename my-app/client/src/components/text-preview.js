@@ -66,7 +66,7 @@ function Preview({ incomingPreviewText, incomingVariables }) {
     <>
       <motion.div
         className={
-          "w-fit h-auto max-w-[80%] flex items-center text-center m-auto p-2.5 rounded-[10px] overflow-auto" +
+          "w-fit max-w-[90%] h-auto flex items-center text-center m-auto p-2.5 rounded-[10px] overflow-y-auto break-words" +
           tw_preview_glassMorphBG
         }
         initial={{ opacity: 0, y: -100, height: 0 }}
@@ -79,7 +79,7 @@ function Preview({ incomingPreviewText, incomingVariables }) {
             ease: "easeInOut",
           }}
       >
-        <h1 className="w-full whitespace-pre-wrap ">{generatePreviewandVariables()}</h1>
+        <h1 className="w-full min-h-[10%] whitespace-pre-wrap sm:text-normal p-1 ">{generatePreviewandVariables()}</h1>
       </motion.div>
     </>
   );

@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { motion } from "motion/react";
+import { Link } from "react-router-dom";
 
 function Login({
   currentLink,
   incomingHandleCurrentUserChanges,
   incomingAuthMessageChanges,
+  incomingIsLoginFormOpen,
+  incomingToggleLoginFormOpen,
 }) {
-  const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
-
   const [loginData, setLoginData] = useState({ username: "", password: "" });
 
   const handleLoginDataChanges = (e) => {
@@ -37,24 +39,34 @@ function Login({
         incomingAuthMessageChanges(`Login Failed : ${data.msg}`);
       }
     } catch (error) {
+      incomingAuthMessageChanges(error.message);
       console.log(error);
     }
   };
 
   return (
     <>
-      <form className="w-fit h-full flex" onSubmit={handleSubmit}>
-        {isLoginFormOpen ? (
-          <div className="text-black w-full h-full border-black">
+      <motion.form className="w-fit h-full flex gap-1" onSubmit={handleSubmit}>
+        {incomingIsLoginFormOpen ? (
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            exit={{ opacity: 0, x: 10 }}
+            className="text-black w-full h-full border-black flex gap-1"
+          >
             <input
-              className="max-w-[10dvh] h-full"
+              className="max-w-full h-full"
               name="username"
               placeholder="Username"
               value={loginData.username}
               onChange={handleLoginDataChanges}
             ></input>
             <input
-              className="max-w-[10dvh] h-full"
+              className="max-w-full h-full"
               name="password"
               placeholder="Password"
               type="password"
@@ -67,19 +79,21 @@ function Login({
             >
               Submit
             </button>
-          </div>
+          </motion.div>
         ) : null}
+
         <button
-          className="border-1 rounded-1 p-1 hover:bg-white hover:text-black"
+          className="border-1 rounded-1 p-1 hover:bg-white hover:text-black text-white"
           type="button"
           onClick={() => {
-            setIsLoginFormOpen(!isLoginFormOpen);
+            incomingToggleLoginFormOpen();
           }}
         >
           Login
         </button>
-      </form>
+      </motion.form>
     </>
   );
 }
+
 export default Login;

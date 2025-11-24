@@ -1,12 +1,13 @@
+import { motion } from "motion/react";
 import { useState } from "react";
 
 function Register({
   currentLink,
   incomingHandleCurrentUserChanges,
   incomingAuthMessageChanges,
+  incomingIsRegisterFormOpen,
+  incomingToggleRegisterFormOpen,
 }) {
-  const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
-
   const [registerData, setRegisterData] = useState({
     username: "",
     password: "",
@@ -41,31 +42,40 @@ function Register({
         incomingAuthMessageChanges(`Login Failed : ${data.msg}`);
       }
     } catch (error) {
+      incomingAuthMessageChanges(error.message);
       console.log(error);
     }
   };
 
   return (
     <>
-      <form className="w-fit h-full flex" onSubmit={handleSubmit}>
-        {isRegisterFormOpen ? (
-          <div className="text-black w-full h-full border-black">
+      <form className="w-fit h-full flex gap-1" onSubmit={handleSubmit}>
+        {incomingIsRegisterFormOpen ? (
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            className="text-black w-full h-full border-black gap-1 flex"
+          >
             <input
-              className="max-w-[10dvh] h-full"
+              className="max-w-full h-full"
               name="username"
               placeholder="Username"
               value={registerData.username}
               onChange={handleLoginDataChanges}
             ></input>
             <input
-              className="max-w-[10dvh] h-full"
+              className="max-w-full  h-full"
               name="email"
               placeholder="Email"
               value={registerData.email}
               onChange={handleLoginDataChanges}
             ></input>
             <input
-              className="max-w-[10dvh] h-full"
+              className="max-w-full  h-full"
               name="password"
               placeholder="Password"
               value={registerData.password}
@@ -78,13 +88,13 @@ function Register({
             >
               Submit
             </button>
-          </div>
+          </motion.div>
         ) : null}
         <button
           className="border-1 rounded-1 p-1 hover:bg-white hover:text-black"
           type="button"
           onClick={() => {
-            setIsRegisterFormOpen(!isRegisterFormOpen);
+            incomingToggleRegisterFormOpen();
           }}
         >
           Register

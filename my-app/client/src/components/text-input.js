@@ -12,8 +12,7 @@ function TextInput({
   //Text Input
   let tw_textInput_md = " md:w-[100%] md:p-[10px]";
   let tw_textInput_lg = " lg:w-[50%]";
-  let tw_textInput_focus =
-    " ";
+  let tw_textInput_focus = " ";
   let tw_textInput_hover =
     " hover:shadow-[0_0_30px_rgba(100,100,100,0.35)] hover:text-main-color hover:border hover:border-main-color hover:border-solid";
   let incomVarSize =
@@ -99,24 +98,19 @@ function TextInput({
 
   return (
     <>
-      <div className="w-full h-full flex justify-center items-center">
-        <input
+      <div className="w-full h-fit flex justify-center items-center break-words">
+        <textarea
           // contentEditable="true"
           className={
-            "placeholder-slate-100 dark:!placeholder-gray-300 w-full h-[100%] max-w-[80%] bg-white bg-opacity-10 text-center flex overflow-auto justify-center items-center cursor-text rounded-[10px] p-[10px] shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]" +
+            "placeholder-slate-100  dark:!placeholder-gray-300 w-full h-fit max-w-[80%] bg-white bg-opacity-10 text-center flex justify-center items-center cursor-text rounded-[10px] p-[10px] shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]" +
             tw_textInput_hover +
             tw_textInput_focus
           }
           placeholder="Type Text here.."
-          value={
-            incomingPreviewText != null
-              ? incomingPreviewText
-              : null
-          }
+          value={incomingPreviewText != null ? incomingPreviewText : null}
           // onClick={(e) => enableEditing(e.target)}
           onChange={(e) => addVariableOnInput(e)}
-          type="text"
-        ></input>
+        ></textarea>
       </div>
     </>
   );

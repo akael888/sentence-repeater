@@ -12,9 +12,15 @@ import WaveBackground from "./components/blob-background";
 import LoginDebugger from "./components/login-form-debugger";
 import Login from "./components/login-form";
 import Register from "./components/register-form";
-import Logout from "./components/logut-button";
+import LogoutButton from "./components/logut-button";
+
 import { RepeaterDataProvider } from "./components/repeater-context";
 import AuthActions from "./components/auth-actions";
+
+import LoginPage from "./components/pages/login-page";
+import { Link, Route, Routes } from "react-router-dom";
+import RegisterPage from "./components/pages/register-page";
+import AuthButtons from "./components/auth-buttons";
 
 function App() {
   //Backend Variables and Other Details
@@ -164,10 +170,36 @@ function App() {
           <div className="flex-1 overflow-y-auto overflow-x-hidden">
             <div className="min-h-full flex flex-col">
               <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
-                <Repeater
-                  currentLink={currentLink}
-                  incomingCurrentUser={currentUser}
-                />
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <>
+                        <Repeater
+                          currentLink={currentLink}
+                          incomingCurrentUser={currentUser}
+                        />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/login"
+                    element={
+                      <LoginPage
+                        incomingLink={currentLink}
+                        incomingHandleCurrentUserChanges={
+                          handleCurrentUserChanges
+                        }
+                        incomingCurrentUser={currentUser}
+                      />
+                    }
+                  />
+                  <Route
+                    path="/register"
+                    element={<RegisterPage incomingCurrentLink={currentLink} />}
+                  />
+                </Routes>
+
                 {/* <LoginDebugger
                   currentLink={currentLink}
                   incomingHandleCurrentUserChanges={handleCurrentUserChanges}
@@ -249,7 +281,7 @@ function TitleHeader({
 }) {
   return (
     <>
-      <nav className="w-full h-full sm:flex sm:justify-end items-center p-[10px] gap-3 flow-root">
+      <nav className="w-full h-full flex justify-end sm:flex sm:justify-end p-[10px] gap-3  ">
         {/* <a href="/" class="logo">
           <img
             className="flex-shrink-0 w-auto h-full max-h-[5vh] object-contain "
@@ -257,28 +289,30 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
-        <div className="w-fit h-full sm:float-none float-left sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
+        <Link to={"/"} style={{ display: "contents" }}>
+          <img
+            src="./logo512.png"
+            alt="sentence-repeater-logo"
+            className="sm:w-[2dvw] h-auto w-[10dvw] p-1"
+          ></img>
+        </Link>
+        <div className="w-fit h-full flex sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
           {incomingCurrentUser ? (
             <div className="flex gap-2 h-full">
               <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
-              <Logout
+              <LogoutButton
                 incomingHandleCurrentUserChanges={
                   incomingHandleCurrentUserChanges
                 }
                 incomingCurrentLink={incomingCurrentLink}
-              ></Logout>
+              />
             </div>
           ) : (
-            <AuthActions
-              incomingCurrentLink={incomingCurrentLink}
-              incomingHandleCurrentUserChanges={
-                incomingHandleCurrentUserChanges
-              }
-            ></AuthActions>
+            <AuthButtons />
           )}
         </div>
 
-        <div className="w-fit h-fit float-end sm:float-none">
+        <div className="w-8 h-full  flex items-center">
           <Burger
             isOpen={isOpen}
             handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
