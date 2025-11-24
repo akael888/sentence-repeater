@@ -5,7 +5,7 @@ import RegisterButton from "./register-button";
 function AuthButtons({}) {
   return (
     <>
-      <div className="h-full items-center">
+      <div className="w-full h-full items-center">
         <div className="flex justify-end items-center h-full gap-2">
           <RegisterButton />
           <LoginButton />

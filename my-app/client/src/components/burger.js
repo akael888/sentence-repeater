@@ -4,7 +4,7 @@ function Burger({ isOpen, handleOpenBurgerMenuChanges }) {
   return (
     <motion.button
       onClick={handleOpenBurgerMenuChanges}
-      className="w-8 h-8 flex justify-center items-center relative [&>*]:bg-stone-500 dark:[&>*]:bg-white z-[1000]"
+      className=" w-8 h-8 flex items-center justify-center relative [&>*]:bg-stone-500 dark:[&>*]:bg-white z-[1000]"
     >
       <motion.span
         className="absolute block w-8 h-1 rounded-[5px]"

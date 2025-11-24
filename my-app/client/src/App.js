@@ -194,7 +194,10 @@ function App() {
                       />
                     }
                   />
-                  <Route path="/register" element={<RegisterPage incomingCurrentLink={currentLink} />} />
+                  <Route
+                    path="/register"
+                    element={<RegisterPage incomingCurrentLink={currentLink} />}
+                  />
                 </Routes>
 
                 {/* <LoginDebugger
@@ -278,7 +281,7 @@ function TitleHeader({
 }) {
   return (
     <>
-      <nav className="w-full h-full sm:flex sm:justify-end items-center p-[10px] gap-3 flow-root">
+      <nav className="w-full h-full flex justify-end sm:flex sm:justify-end p-[10px] gap-3  ">
         {/* <a href="/" class="logo">
           <img
             className="flex-shrink-0 w-auto h-full max-h-[5vh] object-contain "
@@ -286,8 +289,14 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
-
-        <div className="w-fit h-full sm:float-none float-left sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
+        <Link to={"/"} style={{ display: "contents" }}>
+          <img
+            src="./logo512.png"
+            alt="sentence-repeater-logo"
+            className="sm:w-[2dvw] h-auto w-[10dvw] p-1"
+          ></img>
+        </Link>
+        <div className="w-fit h-full flex sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
           {incomingCurrentUser ? (
             <div className="flex gap-2 h-full">
               <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
@@ -302,14 +311,8 @@ function TitleHeader({
             <AuthButtons />
           )}
         </div>
-        <Link to={"/"} style={{ display: "contents" }}>
-          <img
-            src="./logo512.png"
-            alt="sentence-repeater-logo"
-            className="w-[1dvw] h-auto"
-          ></img>
-        </Link>
-        <div className="w-fit h-fit float-end sm:float-none">
+
+        <div className="w-8 h-full  flex items-center">
           <Burger
             isOpen={isOpen}
             handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
