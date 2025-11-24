@@ -105,16 +105,16 @@ function RegisterPage({
               Submit
             </button>
           </motion.div>
-          {registerMessage !== "" ? (
-            <motion.p
-              className="p-2"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              {registerMessage}
-            </motion.p>
-          ) : null}
         </form>
+        {registerMessage !== "" ? (
+          <motion.p
+            className="p-2"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            {registerMessage}
+          </motion.p>
+        ) : null}
       </div>
     </>
   );
