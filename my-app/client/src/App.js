@@ -194,7 +194,7 @@ function App() {
                       />
                     }
                   />
-                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/register" element={<RegisterPage incomingCurrentLink={currentLink} />} />
                 </Routes>
 
                 {/* <LoginDebugger
