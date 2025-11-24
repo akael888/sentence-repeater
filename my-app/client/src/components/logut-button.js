@@ -1,4 +1,4 @@
-function Logout({ incomingHandleCurrentUserChanges, incomingCurrentLink }) {
+function LogoutButton({ incomingHandleCurrentUserChanges, incomingCurrentLink }) {
   const logoutUser = async () => {
     try {
       const res = await fetch(`${incomingCurrentLink}/api/v1/auth/logout`, {
@@ -34,4 +34,4 @@ function Logout({ incomingHandleCurrentUserChanges, incomingCurrentLink }) {
   );
 }
 
-export default Logout;
+export default LogoutButton;
