@@ -12,9 +12,15 @@ import WaveBackground from "./components/blob-background";
 import LoginDebugger from "./components/login-form-debugger";
 import Login from "./components/login-form";
 import Register from "./components/register-form";
-import Logout from "./components/logut-button";
+import LogoutButton from "./components/logut-button";
+
 import { RepeaterDataProvider } from "./components/repeater-context";
 import AuthActions from "./components/auth-actions";
+
+import LoginPage from "./components/pages/login-page";
+import { Link, Route, Routes } from "react-router-dom";
+import RegisterPage from "./components/pages/register-page";
+import AuthButtons from "./components/auth-buttons";
 
 function App() {
   //Backend Variables and Other Details
@@ -164,10 +170,33 @@ function App() {
           <div className="flex-1 overflow-y-auto overflow-x-hidden">
             <div className="min-h-full flex flex-col">
               <div className="flex-1 w-full grid place-items-center p-[5%] z-[98]">
-                <Repeater
-                  currentLink={currentLink}
-                  incomingCurrentUser={currentUser}
-                />
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <>
+                        <Repeater
+                          currentLink={currentLink}
+                          incomingCurrentUser={currentUser}
+                        />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/login"
+                    element={
+                      <LoginPage
+                        incomingLink={currentLink}
+                        incomingHandleCurrentUserChanges={
+                          handleCurrentUserChanges
+                        }
+                        incomingCurrentUser={currentUser}
+                      />
+                    }
+                  />
+                  <Route path="/register" element={<RegisterPage />} />
+                </Routes>
+
                 {/* <LoginDebugger
                   currentLink={currentLink}
                   incomingHandleCurrentUserChanges={handleCurrentUserChanges}
@@ -257,27 +286,29 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
+
         <div className="w-fit h-full sm:float-none float-left sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
           {incomingCurrentUser ? (
             <div className="flex gap-2 h-full">
               <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
-              <Logout
+              <LogoutButton
                 incomingHandleCurrentUserChanges={
                   incomingHandleCurrentUserChanges
                 }
                 incomingCurrentLink={incomingCurrentLink}
-              ></Logout>
+              />
             </div>
           ) : (
-            <AuthActions
-              incomingCurrentLink={incomingCurrentLink}
-              incomingHandleCurrentUserChanges={
-                incomingHandleCurrentUserChanges
-              }
-            ></AuthActions>
+            <AuthButtons />
           )}
         </div>
-
+        <Link to={"/"} style={{ display: "contents" }}>
+          <img
+            src="./logo512.png"
+            alt="sentence-repeater-logo"
+            className="w-[1dvw] h-auto"
+          ></img>
+        </Link>
         <div className="w-fit h-fit float-end sm:float-none">
           <Burger
             isOpen={isOpen}
