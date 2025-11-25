@@ -517,14 +517,14 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                 </div>
               </div>
             </div>
-
             {/* Selected Variables */}
+            Variables:
             {Array.from(incomingVariables.entries()).map(([key, value]) => (
-              <div key={key} className="bg-blue-800 hover:bg-blue-600">
-                {value.name} ({value.type}): {value.value}
+              <div key={key} className="w-full">
+                <strong>{value.name}</strong> ({value.type}) :{" "}
+                <i>"{value.value}"</i>
               </div>
             ))}
-
             {/* Submit New Sentence */}
             <div className="flex flex-col justify-center gap-2 p-3">
               {isSubmitNewSentence ? (
@@ -586,7 +586,6 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
               ⇓ Load
             </button> */}
             </div>
-
             {/* Sentence List Header */}
             <div className="p-1 flex w-full h-full">
               <div className="p-1 w-[80dvh]">
@@ -599,21 +598,19 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                 ⟳
               </button>
             </div>
-
             {/* Selected Variables */}
             {/* {Array.from(variableList.entries()).map(([key, value]) => (
               <div key={key} className="bg-blue-800 hover:bg-blue-600">
                 {key} : {value.name} ( {value.value} )
               </div>
             ))} */}
-
             {/* Sentence List */}
-            <div className="grid gap-1 max-h-[20dvh] overflow-y-scroll h-full  max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black border-1 p-1">
+            <div className="grid gap-2 max-h-[20dvh] overflow-y-scroll h-full max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
               {Object.keys(sentenceList).map((value, index) => (
                 <>
                   {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
                   <div className="flex w-full gap-2">
-                    <div className="w-full">
+                    <div className="w-full border-1 rounded-1">
                       <div
                         key={index}
                         className="bg-transparent hover:bg-yellow-600 w-full h-fit rounded-1 p-1"
@@ -626,7 +623,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                           <i> "{sentenceList[value].sentence}"</i>
                         </div>
                       </div>
-                      <div className="p-1 border-b border-t w-full border-blue-600">
+                      <div className="p-1  w-full b">
                         {/* Variable List */}
                         {sentenceList[value].variables instanceof Map &&
                           Array.from(
@@ -634,8 +631,8 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                           ).map(([varKey, varValue]) => (
                             <div key={varKey} className="w-full ">
                               <div>
-                                {varValue.name} ({varValue.type}) :{" "}
-                                {varValue.value}
+                                <strong>{varValue.name}</strong> (
+                                {varValue.type}) : <i>"{varValue.value}"</i>
                               </div>
                             </div>
                           ))}
@@ -689,10 +686,8 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             </div>
           </div>
 
-          <div className="w-full max-h-[10dvh] overflow-y-scroll p-2">
-            {dbMessage.map((value) => (
-              <p>{value}</p>
-            ))}
+          <div className="w-full h-fit p-2">
+            {dbMessage[dbMessage.length-1]}
           </div>
         </div>
       ) : (
