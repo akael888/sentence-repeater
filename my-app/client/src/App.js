@@ -298,8 +298,8 @@ function TitleHeader({
         </Link>
         <div className="w-fit h-full flex sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
           {incomingCurrentUser ? (
-            <div className="flex gap-2 h-full">
-              <div className="h-full p-1">Hi, {incomingCurrentUser}!</div>
+            <div className="flex gap-2 h-full items-center justify-center">
+              <div className="p-1 text-base ">Hi, {incomingCurrentUser}!</div>
               <LogoutButton
                 incomingHandleCurrentUserChanges={
                   incomingHandleCurrentUserChanges
