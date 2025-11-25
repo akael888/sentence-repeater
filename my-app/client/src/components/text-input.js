@@ -102,7 +102,7 @@ function TextInput({
         <textarea
           // contentEditable="true"
           className={
-            "placeholder-slate-100  dark:!placeholder-gray-300 w-full h-fit max-w-[80%] bg-white bg-opacity-10 text-center flex justify-center items-center cursor-text rounded-[10px] p-[10px] shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]" +
+            "block align-top resize-none placeholder-slate-100  dark:!placeholder-gray-300 w-full h-fit max-w-[80%] bg-white bg-opacity-10 text-center flex justify-center items-center cursor-text rounded-[10px] p-[10px] shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]  rounded-[18px]" +
             tw_textInput_hover +
             tw_textInput_focus
           }

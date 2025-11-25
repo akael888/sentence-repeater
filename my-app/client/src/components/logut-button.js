@@ -23,7 +23,7 @@ function LogoutButton({ incomingHandleCurrentUserChanges, incomingCurrentLink })
   return (
     <>
       <button
-        className="border-1 rounded-1 p-1 h-full bg-red-700 hover:bg-transparent"
+        className="border-1 rounded-1 p-1 w-fit h-fit bg-red-700 hover:bg-transparent"
         onClick={() => {
           logoutUser();
         }}
