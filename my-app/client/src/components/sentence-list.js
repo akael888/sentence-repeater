@@ -25,48 +25,56 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
       description: "ABC",
       sentence: "ABC{}",
       isOptionOpened: false,
+      variables: { 0: { name: "ABC" } },
     },
     1: {
       name: "Test 2",
       description: "ABC",
       sentence: "ABC{}",
       isOptionOpened: false,
+      variables: { 0: { name: "ABC" } },
     },
     2: {
       name: "Test 3",
       description: "ABC",
       sentence: "ABC{}",
       isOptionOpened: false,
+      variables: { 0: { name: "ABC" } },
     },
     3: {
       name: "Test 4",
       description: "ABC",
       sentence: "ABC{}",
       isOptionOpened: false,
+      variables: { 0: { name: "ABC" } },
     },
     4: {
       name: "Test 4",
       description: "ABC",
       sentence: "ABC{}",
       isOptionOpened: false,
+      variables: { 0: { name: "ABC" } },
     },
     5: {
       name: "Test 5",
       description: "ABC",
       sentence: "ABC{}",
       isOptionOpened: false,
+      variables: { 0: { name: "ABC" } },
     },
     6: {
       name: "Test 6",
       description: "ABC",
       sentence: "ABC{}",
       isOptionOpened: false,
+      variables: { 0: { name: "ABC" } },
     },
     7: {
       name: "Test 7",
       description: "ABC",
       sentence: "ABC{}",
       isOptionOpened: false,
+      variables: { 0: { name: "ABC" } },
     },
   });
   const [variableList, setVariableList] = useState(() => {
@@ -225,13 +233,16 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
 
       if (res.ok) {
         let listSentence = {};
-        data.sentence.forEach((element) => {
+        for (const element of data.sentence) {
           listSentence[element._id] = {};
           listSentence[element._id]["sentence"] = element.sentence;
           listSentence[element._id]["name"] = element.sentenceName;
           listSentence[element._id]["description"] =
             element.sentenceDescription;
-        });
+          listSentence[element._id]["variables"] = await refreshVariables(
+            element._id
+          );
+        }
         setSentenceList(listSentence);
         if (data.msg) {
           handleDbMessageChanges(data.msg);
@@ -492,8 +503,92 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     <>
       {incomingCurrentUser ? (
         <div className="sm:p-10 p-2 [&>*]:text-xs [&>*]:sm:text-base">
+          {/* Sentence Full Table */}
           <div className=" w-full flex flex-col gap-1">
-            <div className="p-1 flex w-full  h-full">
+            {/* Current Sentence */}
+            <div className="flex w-full h-full gap-2 items-center">
+              <div className="flex flex-col w-full h-fit">
+                <div>
+                  <strong>Current Sentence</strong>
+                </div>
+                <div>
+                  <i>"{incomingPreviewText}"</i>
+                  <p>{currentSentence}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Selected Variables */}
+            {Array.from(incomingVariables.entries()).map(([key, value]) => (
+              <div key={key} className="bg-blue-800 hover:bg-blue-600">
+                {value.name} ({value.type}): {value.value}
+              </div>
+            ))}
+
+            {/* Submit New Sentence */}
+            <div className="flex flex-col justify-center gap-2 p-3">
+              {isSubmitNewSentence ? (
+                <form
+                  className="flex flex-row justify-center gap-2 "
+                  onSubmit={(e) => {
+                    submitSentence(
+                      sentenceData.sentenceName,
+                      sentenceData.sentenceDescription,
+                      e
+                    );
+                  }}
+                >
+                  <textarea
+                    name="sentenceName"
+                    placeholder="Sentence Name"
+                    value={sentenceData.sentenceName}
+                    onChange={handleSentenceDataChanges}
+                    className="bg-transparent border-b text-center resize-none h-fit w-fit"
+                  ></textarea>
+                  <textarea
+                    name="sentenceDescription"
+                    placeholder="Sentence Description"
+                    alue={sentenceData.sentenceDescription}
+                    onChange={handleSentenceDataChanges}
+                    className="bg-transparent border-b text-center resize-none h-fit w-fit"
+                  ></textarea>
+                  <button
+                    type="submit"
+                    className="bg-green-800 hover:bg-green-700 text-center p-2 rounded-1"
+                  >
+                    Submit
+                  </button>
+                </form>
+              ) : (
+                <></>
+              )}
+              <div className="gap-2 flex flex-row justify-center">
+                <button
+                  onClick={() => {
+                    setIsSubmitNewSentence(!isSubmitNewSentence);
+                  }}
+                  className="bg-green-800 hover:bg-green-700  p-2 rounded-1"
+                >
+                  Submit New Sentence
+                </button>
+
+                <button
+                  className="bg-yellow-800 hover:bg-yellow-900 p-2 rounded-1"
+                  onClick={() => {
+                    updateSentence(currentSentence);
+                  }}
+                >
+                  ↑ Update Sentence
+                </button>
+              </div>
+
+              {/* <button className="bg-amber-900 w-fit h-fit f p-1 rounded-1">
+              ⇓ Load
+            </button> */}
+            </div>
+
+            {/* Sentence List Header */}
+            <div className="p-1 flex w-full h-full">
               <div className="p-1 w-[80dvh]">
                 <h5>Sentence List</h5>
               </div>
@@ -504,133 +599,96 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                 ⟳
               </button>
             </div>
-            <div className="flex w-full h-full gap-2 items-center">
-              <div className="flex flex-col w-full">
-                <p>Current Sentence: </p>
-                <strong>{currentSentence}</strong>
-              </div>
-              <button
-                className="bg-green-800 hover:bg-green-900 p-2 rounded-1"
-                onClick={() => {
-                  updateSentence(currentSentence);
-                }}
-              >
-                ↑ Update Sentence
-              </button>
-            </div>
-            {Array.from(variableList.entries()).map(([key, value]) => (
+
+            {/* Selected Variables */}
+            {/* {Array.from(variableList.entries()).map(([key, value]) => (
               <div key={key} className="bg-blue-800 hover:bg-blue-600">
                 {key} : {value.name} ( {value.value} )
               </div>
-            ))}
-            <div className="flex flex-col justify-center gap-2 p-1">
-              {isSubmitNewSentence ? (
-                <div className="flex flex-col gap-2">
-                  <form
-                    className="gap-10"
-                    onSubmit={(e) => {
-                      submitSentence(
-                        sentenceData.sentenceName,
-                        sentenceData.sentenceDescription,
-                        e
-                      );
-                    }}
-                  >
-                    <input
-                      name="sentenceName"
-                      placeholder="Sentence Name"
-                      value={sentenceData.sentenceName}
-                      onChange={handleSentenceDataChanges}
-                    ></input>
-                    <input
-                      name="sentenceDescription"
-                      placeholder="Sentence Description"
-                      alue={sentenceData.sentenceDescription}
-                      onChange={handleSentenceDataChanges}
-                    ></input>
-                    <button
-                      type="submit"
-                      className="bg-green-800 hover:bg-green-700"
-                    >
-                      Submit
-                    </button>
-                  </form>
-                </div>
-              ) : (
-                <></>
-              )}
-              <button
-                onClick={() => {
-                  setIsSubmitNewSentence(!isSubmitNewSentence);
-                }}
-                className="bg-green-800 hover:bg-green-700"
-              >
-                Submit New Sentence
-              </button>
-              {/* <button className="bg-amber-900 w-fit h-fit f p-1 rounded-1">
-              ⇓ Load
-            </button> */}
-            </div>
+            ))} */}
+
+            {/* Sentence List */}
             <div className="grid gap-1 max-h-[20dvh] overflow-y-scroll h-full  max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black border-1 p-1">
               {Object.keys(sentenceList).map((value, index) => (
-                <div className="flex w-full gap-2 sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh]">
-                  <button
-                    key={index}
-                    className="bg-yellow-800 hover:bg-yellow-600 w-full rounded-1 p-1"
-                    onClick={() => {
-                      refreshVariables(value);
-                    }}
-                  >
-                    {sentenceList[value].name} :{" "}
-                    {sentenceList[value].description} | Sentence :{" "}
-                    {sentenceList[value].sentence}
-                  </button>
-                  <button
-                    className="bg-amber-900 sm:w-[5dvw] w-[15dvw] p-1 rounded-1 disabled:bg-green-600 hover:bg-amber-800"
-                    onClick={() => {
-                      handleCurrentSentenceChanges(value);
-                      loadSentence(value);
-                    }}
-                    disabled={currentSentence === value}
-                  >
-                    {currentSentence === value ? "✔" : "⇓"}
-                  </button>
+                <>
+                  {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
+                  <div className="flex w-full gap-2">
+                    <div className="w-full">
+                      <div
+                        key={index}
+                        className="bg-transparent hover:bg-yellow-600 w-full h-fit rounded-1 p-1"
+                      >
+                        <div className="border-b">
+                          <strong>{sentenceList[value].name}</strong>
+                        </div>
+                        <div>{sentenceList[value].description}</div>
+                        <div>
+                          <i> "{sentenceList[value].sentence}"</i>
+                        </div>
+                      </div>
+                      <div className="p-1 border-b border-t w-full border-blue-600">
+                        {/* Variable List */}
+                        {sentenceList[value].variables instanceof Map &&
+                          Array.from(
+                            sentenceList[value].variables.entries()
+                          ).map(([varKey, varValue]) => (
+                            <div key={varKey} className="w-full ">
+                              <div>
+                                {varValue.name} ({varValue.type}) :{" "}
+                                {varValue.value}
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                    <button
+                      className="bg-amber-900 sm:w-[5dvw] w-[15dvw] p-1 rounded-1 disabled:bg-green-600 hover:bg-amber-800"
+                      onClick={() => {
+                        handleCurrentSentenceChanges(value);
+                        loadSentence(value);
+                      }}
+                      disabled={currentSentence === value}
+                    >
+                      {currentSentence === value ? "✔" : "⇓"}
+                    </button>
 
-                  {sentenceList[value].isOptionOpened ? (
-                    <>
-                      <button
-                        className="bg-red-800 hover:bg-red-600  w-full h-full rounded-1 p-1"
-                        onClick={() => {
-                          deleteSentence(value);
-                        }}
-                      >
-                        ✖ Delete
-                      </button>
-                      <button
-                        className="w-full bg-gray-900 p-1 hover:bg-gray-800"
-                        onClick={() => {
-                          toggleOption(value);
-                        }}
-                      >
-                        ⋮
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        className="sm:w-[5dvw] w-[15dvw] bg-gray-900 p-1 hover:bg-gray-800"
-                        onClick={() => {
-                          toggleOption(value);
-                        }}
-                      >
-                        ⋮
-                      </button>
-                    </>
-                  )}
-                </div>
+                    {sentenceList[value].isOptionOpened ? (
+                      <>
+                        <button
+                          className="bg-red-800 hover:bg-red-600  w-full h-full rounded-1 p-1"
+                          onClick={() => {
+                            deleteSentence(value);
+                          }}
+                        >
+                          ✖ Delete
+                        </button>
+                        <button
+                          className="w-full bg-gray-900 p-1 hover:bg-gray-800"
+                          onClick={() => {
+                            toggleOption(value);
+                          }}
+                        >
+                          ⋮
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className="sm:w-[5dvw] w-[15dvw] bg-gray-900 p-1 hover:bg-gray-800"
+                          onClick={() => {
+                            toggleOption(value);
+                          }}
+                        >
+                          ⋮
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </>
               ))}
             </div>
           </div>
+
           <div className="w-full max-h-[10dvh] overflow-y-scroll p-2">
             {dbMessage.map((value) => (
               <p>{value}</p>
