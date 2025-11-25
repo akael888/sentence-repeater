@@ -589,10 +589,12 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             {/* Sentence List Header */}
             <div className="p-1 flex w-full h-full">
               <div className="p-1 w-[80dvh]">
-                <h5>Sentence List</h5>
+                <h5>
+                  <strong>Sentence List</strong>
+                </h5>
               </div>
               <button
-                className="bg-amber-700 w-[10dvh] h-full p-1 rounded-1 sm:h-full"
+                className=" w-[5dvh] h-full p-1 rounded-1 sm:h-full border-1 border-amber-700 hover:bg-amber-700"
                 onClick={refreshSentence}
               >
                 ⟳
@@ -687,7 +689,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
           </div>
 
           <div className="w-full h-fit p-2">
-            {dbMessage[dbMessage.length-1]}
+            {dbMessage[dbMessage.length - 1]}
           </div>
         </div>
       ) : (
