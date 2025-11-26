@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useRepeaterData } from "./repeater-context";
 
 function SentenceList({ incomingLink, incomingCurrentUser }) {
@@ -18,63 +19,22 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
   });
 
   const [isSubmitNewSentence, setIsSubmitNewSentence] = useState(false);
+  const [submitSentenceMessage, setSubmitSentenceMessage] = useState("");
 
   const [sentenceList, setSentenceList] = useState({
     0: {
-      name: "Test 1",
-      description: "ABC",
+      name: "Data A",
+      description: "Qwerty",
       sentence: "ABC{}",
       isOptionOpened: false,
       variables: { 0: { name: "ABC" } },
     },
     1: {
-      name: "Test 2",
-      description: "ABC",
-      sentence: "ABC{}",
+      name: "Data B",
+      description: "Qwerty",
+      sentence: "DEF{}",
       isOptionOpened: false,
-      variables: { 0: { name: "ABC" } },
-    },
-    2: {
-      name: "Test 3",
-      description: "ABC",
-      sentence: "ABC{}",
-      isOptionOpened: false,
-      variables: { 0: { name: "ABC" } },
-    },
-    3: {
-      name: "Test 4",
-      description: "ABC",
-      sentence: "ABC{}",
-      isOptionOpened: false,
-      variables: { 0: { name: "ABC" } },
-    },
-    4: {
-      name: "Test 4",
-      description: "ABC",
-      sentence: "ABC{}",
-      isOptionOpened: false,
-      variables: { 0: { name: "ABC" } },
-    },
-    5: {
-      name: "Test 5",
-      description: "ABC",
-      sentence: "ABC{}",
-      isOptionOpened: false,
-      variables: { 0: { name: "ABC" } },
-    },
-    6: {
-      name: "Test 6",
-      description: "ABC",
-      sentence: "ABC{}",
-      isOptionOpened: false,
-      variables: { 0: { name: "ABC" } },
-    },
-    7: {
-      name: "Test 7",
-      description: "ABC",
-      sentence: "ABC{}",
-      isOptionOpened: false,
-      variables: { 0: { name: "ABC" } },
+      variables: { 0: { name: "DEF" } },
     },
   });
   const [variableList, setVariableList] = useState(() => {
@@ -92,9 +52,10 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
 
   const [currentSentence, setCurrentSentence] = useState(() => {
     try {
-      const stored = localStorage.getItem("CURRENT_SENTENCE_ID");
+      const stored = localStorage.getItem("CURRENT_SENTENCE_OBJECT");
       if (stored) {
-        return stored;
+        const parsedObject = JSON.parse(stored);
+        return parsedObject;
       }
     } catch (err) {
       console.error(
@@ -102,7 +63,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
         err
       );
     }
-    return true;
+    return {};
   });
 
   const toggleOption = (keyToUpdate) => {
@@ -115,9 +76,12 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     }));
   };
 
-  const handleCurrentSentenceChanges = (sentenceID) => {
-    setCurrentSentence(sentenceID);
-    localStorage.setItem("CURRENT_SENTENCE_ID", sentenceID);
+  const handleCurrentSentenceChanges = (sentenceObject) => {
+    setCurrentSentence(sentenceObject);
+    localStorage.setItem(
+      "CURRENT_SENTENCE_OBJECT",
+      JSON.stringify(sentenceObject)
+    );
   };
 
   const handleDbMessageChanges = (message) => {
@@ -164,9 +128,14 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
         credentials: "include",
       });
       const dataSentence = await resSentence.json();
-      const sentenceID = String(dataSentence.sentence._id);
+      let sentenceID = "";
+
+      if (dataSentence.msg) {
+        await setSubmitSentenceMessage(dataSentence.msg);
+      }
 
       if (resSentence.ok) {
+        sentenceID = String(dataSentence.sentence._id);
         console.log(dataSentence.sentence._id);
         console.log(resSentence);
         console.log("Sentence Is Submitted!");
@@ -195,6 +164,9 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
               }
             );
             const dataVariable = await resVariable.json();
+            if (dataVariable.msg) {
+              await setSubmitSentenceMessage(dataSentence.msg);
+            }
             console.log("submitvardata");
             console.log(resVariable);
             if (resVariable.ok) {
@@ -230,7 +202,9 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
 
       const data = await res.json();
       console.log(data);
-
+      if (data.msg) {
+        await handleDbMessageChanges(data.msg);
+      }
       if (res.ok) {
         let listSentence = {};
         for (const element of data.sentence) {
@@ -244,9 +218,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
           );
         }
         setSentenceList(listSentence);
-        if (data.msg) {
-          handleDbMessageChanges(data.msg);
-        }
+
         console.log("Succesfully Refreshing Data");
         console.log(listSentence);
       } else {
@@ -276,6 +248,9 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
       const dataVariable = await resVar.json();
       console.log("dataVariable");
       console.log(dataVariable);
+      if (dataVariable.msg) {
+        await handleDbMessageChanges(dataVariable.msg);
+      }
       if (resVar.ok) {
         console.log("ResVar OK");
         let listVar = new Map();
@@ -292,9 +267,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
         console.log("listvar:");
         console.log(listVar);
         setVariableList(listVar);
-        if (dataVariable.msg) {
-          handleDbMessageChanges(dataVariable.msg);
-        }
+
         console.log(`Refreshed variable data of sentence: ${refSentence}`);
         return listVar;
       } else {
@@ -313,7 +286,12 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
     if (selectedText) {
       incomingHandlePreviewTextChanges(selectedText);
     }
-
+    handleCurrentSentenceChanges({
+      sentence: sentenceList[targetSentence].sentence,
+      id: targetSentence,
+      sentenceName: sentenceList[targetSentence].name,
+      sentenceDescription: sentenceList[targetSentence].description,
+    });
     const clonedMap = new Map(
       Array.from(varMap.entries()).map(([key, value]) => [key, { ...value }])
     );
@@ -341,11 +319,12 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
         }
       );
       const dataSentence = await resSentence.json();
+      if (dataSentence.msg) {
+        await handleDbMessageChanges(dataSentence.msg);
+      }
       if (resSentence.ok) {
         console.log(dataSentence);
-        if (dataSentence.msg) {
-          handleDbMessageChanges(dataSentence.msg);
-        }
+
         console.log(`Successfully Deleted ${refSentence}`);
       } else {
         console.log(dataSentence);
@@ -389,6 +368,9 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
       );
       const data = resSentence.json();
       console.log(data);
+      if (data.msg) {
+        await handleDbMessageChanges(data.msg);
+      }
 
       if (resSentence.ok) {
         console.log(data);
@@ -506,80 +488,114 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
           {/* Sentence Full Table */}
           <div className=" w-full flex flex-col gap-1">
             {/* Current Sentence */}
-            <div className="flex w-full h-full gap-2 items-center">
-              <div className="flex flex-col w-full h-fit">
-                <div>
-                  <strong>Current Sentence</strong>
+            <div className="flex w-full h-full justify-center items-center flex-col gap-1">
+              <div className="w-[80%] h-fit max-h-[50%] min-h-fit border-1 rounded-1 p-1">
+                {/* Header Part of the Info */}
+                <div className="w-full h-full flex p-1">
+                  <div className="flex flex-col items-start w-[90%] h-full p-1">
+                    <h3>{currentSentence.sentenceName}</h3>
+                    <div>
+                      <p>{currentSentence.sentenceDescription}</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-center p-3">
+                    <button
+                      className="border-1 border-yellow-800 hover:bg-yellow-900 p-2 rounded-5 w-[50px] h-[50px]"
+                      onClick={() => {
+                        updateSentence(currentSentence.id);
+                      }}
+                    >
+                      ↑
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <i>"{incomingPreviewText}"</i>
-                  <p>{currentSentence}</p>
+                {/* Body Part of the Info */}
+                <div className="w-full h-full flex p-1">
+                  <div className="w-full h-full flex flex-col  items-start p-1">
+                    <h6>Variables</h6>
+                    <div className="w-full h-full grid-cols-4 grid gap-1 justify-around">
+                      {Array.from(incomingVariables.entries()).map(
+                        ([key, value]) => (
+                          <>
+                            <div className="border-1 rounded-1 p-1 text-[0.8dvw] break-words">
+                              {value.name}
+                            </div>
+                          </>
+                        )
+                      )}
+                    </div>
+                  </div>
+                  <div className="w-fit h-full flex flex-col justify-end items-end "></div>
                 </div>
               </div>
+              {/* <div className="w-[80%] h-fit flex justify-end">
+                <div className="border-1 rounded-1 p-1 sm:text-[0.8dvw]">
+                  {currentSentence.id}
+                </div>
+              </div> */}
             </div>
             {/* Selected Variables */}
-            Variables:
-            {Array.from(incomingVariables.entries()).map(([key, value]) => (
+            {/* {Array.from(incomingVariables.entries()).map(([key, value]) => (
               <div key={key} className="w-full">
                 <strong>{value.name}</strong> ({value.type}) :{" "}
                 <i>"{value.value}"</i>
               </div>
-            ))}
+            ))} */}
             {/* Submit New Sentence */}
+
             <div className="flex flex-col justify-center gap-2 p-3">
               {isSubmitNewSentence ? (
-                <form
-                  className="flex flex-row justify-center gap-2 "
-                  onSubmit={(e) => {
-                    submitSentence(
-                      sentenceData.sentenceName,
-                      sentenceData.sentenceDescription,
-                      e
-                    );
-                  }}
-                >
-                  <textarea
-                    name="sentenceName"
-                    placeholder="Sentence Name"
-                    value={sentenceData.sentenceName}
-                    onChange={handleSentenceDataChanges}
-                    className="bg-transparent border-b text-center resize-none h-fit w-fit"
-                  ></textarea>
-                  <textarea
-                    name="sentenceDescription"
-                    placeholder="Sentence Description"
-                    alue={sentenceData.sentenceDescription}
-                    onChange={handleSentenceDataChanges}
-                    className="bg-transparent border-b text-center resize-none h-fit w-fit"
-                  ></textarea>
-                  <button
-                    type="submit"
-                    className="bg-green-800 hover:bg-green-700 text-center p-2 rounded-1"
+                <>
+                  <form
+                    className="flex flex-row justify-center gap-2 "
+                    onSubmit={(e) => {
+                      submitSentence(
+                        sentenceData.sentenceName,
+                        sentenceData.sentenceDescription,
+                        e
+                      );
+                    }}
                   >
-                    Submit
-                  </button>
-                </form>
+                    <textarea
+                      name="sentenceName"
+                      placeholder="Sentence Name"
+                      value={sentenceData.sentenceName}
+                      onChange={handleSentenceDataChanges}
+                      className="bg-transparent border-b text-center resize-none h-fit w-fit"
+                    ></textarea>
+                    <textarea
+                      name="sentenceDescription"
+                      placeholder="Sentence Description"
+                      alue={sentenceData.sentenceDescription}
+                      onChange={handleSentenceDataChanges}
+                      className="bg-transparent border-b text-center resize-none h-fit w-fit"
+                    ></textarea>
+                    <button
+                      type="submit"
+                      className="bg-green-800 hover:bg-green-700 text-center p-2 rounded-1"
+                    >
+                      Submit
+                    </button>
+                  </form>
+                  <div>{submitSentenceMessage}</div>
+                </>
               ) : (
                 <></>
               )}
-              <div className="gap-2 flex flex-row justify-center">
-                <button
+              <div className="w-full gap-2 flex flex-row justify-center">
+                <motion.button
                   onClick={() => {
                     setIsSubmitNewSentence(!isSubmitNewSentence);
                   }}
-                  className="bg-green-800 hover:bg-green-700  p-2 rounded-1"
+                  className="w-full p-2 "
                 >
-                  Submit New Sentence
-                </button>
-
-                <button
-                  className="bg-yellow-800 hover:bg-yellow-900 p-2 rounded-1"
-                  onClick={() => {
-                    updateSentence(currentSentence);
-                  }}
-                >
-                  ↑ Update Sentence
-                </button>
+                  <motion.span
+                    animate={{ rotate: isSubmitNewSentence ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    ▼
+                  </motion.span>
+                </motion.button>
               </div>
 
               {/* <button className="bg-amber-900 w-fit h-fit f p-1 rounded-1">
@@ -588,17 +604,19 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             </div>
             {/* Sentence List Header */}
             <div className="p-1 flex w-full h-full">
-              <div className="p-1 w-[80dvh]">
-                <h5>
+              <div className="p-1 w-[90dvw]">
+                <h3>
                   <strong>Sentence List</strong>
-                </h5>
+                </h3>
               </div>
-              <button
-                className=" w-[5dvh] h-full p-1 rounded-1 sm:h-full border-1 border-amber-700 hover:bg-amber-700"
-                onClick={refreshSentence}
-              >
-                ⟳
-              </button>
+              <div className="w-[10dvw]">
+                <button
+                  className="w-full h-full p-1 rounded-1 sm:h-full border-1 border-amber-700 hover:bg-amber-700"
+                  onClick={refreshSentence}
+                >
+                  ⟳
+                </button>
+              </div>
             </div>
             {/* Selected Variables */}
             {/* {Array.from(variableList.entries()).map(([key, value]) => (
@@ -643,12 +661,11 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                     <button
                       className="bg-amber-900 sm:w-[5dvw] w-[15dvw] p-1 rounded-1 disabled:bg-green-600 hover:bg-amber-800"
                       onClick={() => {
-                        handleCurrentSentenceChanges(value);
                         loadSentence(value);
                       }}
-                      disabled={currentSentence === value}
+                      disabled={currentSentence.id === value}
                     >
-                      {currentSentence === value ? "✔" : "⇓"}
+                      {currentSentence.id === value ? "✔" : "⇓"}
                     </button>
 
                     {sentenceList[value].isOptionOpened ? (
