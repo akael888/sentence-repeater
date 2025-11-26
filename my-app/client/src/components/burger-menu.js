@@ -14,7 +14,7 @@ function BurgerMenu({
 
   return (
     <motion.div
-      className="fixed top-0 right-0 w-[70%] lg:w-[30%] h-screen bg-amber-100 dark:!bg-stone-800  z-[100] shadow-lg [&>*]:text-stone-500  dark:[&>*]:!text-amber-200 flex flex-col justify-center gap-[10px] z-[99]"
+      className="fixed top-0 right-0 w-[100%] lg:w-[30%] h-screen bg-amber-100 dark:!bg-stone-800  z-[100] shadow-lg [&>*]:text-stone-500  dark:[&>*]:!text-amber-200 flex flex-col justify-center gap-[10px] z-[99]"
       initial={{ x: "100%" }}
       animate={{ x: isOpen ? 0 : "100%" }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
