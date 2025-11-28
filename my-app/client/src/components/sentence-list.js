@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRepeaterData } from "./repeater-context";
+import SentenceCard from "./sentence-card";
 
 function SentenceList({ incomingLink, incomingCurrentUser }) {
   const {
@@ -23,6 +24,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
 
   const [sentenceList, setSentenceList] = useState({
     0: {
+      id: "id123",
       name: "Data A",
       description: "Qwerty",
       sentence: "ABC{}",
@@ -30,6 +32,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
       variables: { 0: { name: "ABC" } },
     },
     1: {
+      id: "id123",
       name: "Data B",
       description: "Qwerty",
       sentence: "DEF{}",
@@ -487,53 +490,15 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
         <div className="sm:p-10 p-2 [&>*]:text-xs [&>*]:sm:text-base">
           {/* Sentence Full Table */}
           <div className=" w-full flex flex-col gap-1">
-            {/* Current Sentence */}
-            <div className="flex w-full h-full justify-center items-center flex-col gap-1">
-              <div className="w-[80%] h-fit max-h-[50%] min-h-fit border-1 rounded-1 p-1">
-                {/* Header Part of the Info */}
-                <div className="w-full h-full flex p-1">
-                  <div className="flex flex-col items-start w-[90%] h-full p-1">
-                    <h3>{currentSentence.sentenceName}</h3>
-                    <div>
-                      <p>{currentSentence.sentenceDescription}</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-center p-3">
-                    <button
-                      className="border-1 border-yellow-800 hover:bg-yellow-900 p-2 rounded-5 w-[50px] h-[50px]"
-                      onClick={() => {
-                        updateSentence(currentSentence.id);
-                      }}
-                    >
-                      ↑
-                    </button>
-                  </div>
-                </div>
-                {/* Body Part of the Info */}
-                <div className="w-full h-full flex p-1">
-                  <div className="w-full h-full flex flex-col  items-start p-1">
-                    <h6>Variables</h6>
-                    <div className="w-full h-full grid-cols-4 grid gap-1 justify-around">
-                      {Array.from(incomingVariables.entries()).map(
-                        ([key, value]) => (
-                          <>
-                            <div className="border-1 rounded-1 p-1 text-[0.8dvw] break-words">
-                              {value.name}
-                            </div>
-                          </>
-                        )
-                      )}
-                    </div>
-                  </div>
-                  <div className="w-fit h-full flex flex-col justify-end items-end "></div>
-                </div>
-              </div>
-              {/* <div className="w-[80%] h-fit flex justify-end">
-                <div className="border-1 rounded-1 p-1 sm:text-[0.8dvw]">
-                  {currentSentence.id}
-                </div>
-              </div> */}
-            </div>
+            {/* Current Sentence Card */}
+            <SentenceCard
+              incomingSentenceName={currentSentence.sentenceName}
+              incomingSentenceDescription={currentSentence.sentenceDescription}
+              incomingSentenceID={currentSentence.id}
+              incomingUpdateSentence={updateSentence}
+              incomingVariables={incomingVariables}
+              cardType="current"
+            ></SentenceCard>
             {/* Selected Variables */}
             {/* {Array.from(incomingVariables.entries()).map(([key, value]) => (
               <div key={key} className="w-full">
@@ -625,81 +590,22 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
               </div>
             ))} */}
             {/* Sentence List */}
-            <div className="grid gap-2 max-h-[20dvh] overflow-y-scroll h-full max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
+            <div className="grid  gap-2 max-h-[25dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
               {Object.keys(sentenceList).map((value, index) => (
                 <>
                   {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
-                  <div className="flex w-full gap-2">
-                    <div className="w-full border-1 rounded-1">
-                      <div
-                        key={index}
-                        className="bg-transparent hover:bg-yellow-600 w-full h-fit rounded-1 p-1"
-                      >
-                        <div className="border-b">
-                          <strong>{sentenceList[value].name}</strong>
-                        </div>
-                        <div>{sentenceList[value].description}</div>
-                        <div>
-                          <i> "{sentenceList[value].sentence}"</i>
-                        </div>
-                      </div>
-                      <div className="p-1  w-full b">
-                        {/* Variable List */}
-                        {sentenceList[value].variables instanceof Map &&
-                          Array.from(
-                            sentenceList[value].variables.entries()
-                          ).map(([varKey, varValue]) => (
-                            <div key={varKey} className="w-full ">
-                              <div>
-                                <strong>{varValue.name}</strong> (
-                                {varValue.type}) : <i>"{varValue.value}"</i>
-                              </div>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                    <button
-                      className="bg-amber-900 sm:w-[5dvw] w-[15dvw] p-1 rounded-1 disabled:bg-green-600 hover:bg-amber-800"
-                      onClick={() => {
-                        loadSentence(value);
-                      }}
-                      disabled={currentSentence.id === value}
-                    >
-                      {currentSentence.id === value ? "✔" : "⇓"}
-                    </button>
-
-                    {sentenceList[value].isOptionOpened ? (
-                      <>
-                        <button
-                          className="bg-red-800 hover:bg-red-600  w-full h-full rounded-1 p-1"
-                          onClick={() => {
-                            deleteSentence(value);
-                          }}
-                        >
-                          ✖ Delete
-                        </button>
-                        <button
-                          className="w-full bg-gray-900 p-1 hover:bg-gray-800"
-                          onClick={() => {
-                            toggleOption(value);
-                          }}
-                        >
-                          ⋮
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          className="sm:w-[5dvw] w-[15dvw] bg-gray-900 p-1 hover:bg-gray-800"
-                          onClick={() => {
-                            toggleOption(value);
-                          }}
-                        >
-                          ⋮
-                        </button>
-                      </>
-                    )}
-                  </div>
+                  <SentenceCard
+                    incomingSentenceName={sentenceList[value].name}
+                    incomingSentenceDescription={
+                      sentenceList[value].description
+                    }
+                    incomingSentenceID={value}
+                    incomingSentenceValue={(sentenceList[value].sentence)}
+                    incomingVariables={sentenceList[value].variables}
+                    incomingLoadSentence={loadSentence}
+                    incomingDeleteSentence={deleteSentence}
+                    incomingCurrentSentenceId={currentSentence.id}
+                  ></SentenceCard>
                 </>
               ))}
             </div>
