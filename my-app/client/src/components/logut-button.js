@@ -4,6 +4,7 @@ function LogoutButton({
 }) {
   const logoutUser = async () => {
     try {
+      console.log("Logging Out..");
       const res = await fetch(`${incomingCurrentLink}/api/v1/auth/logout`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -13,11 +14,14 @@ function LogoutButton({
       const data = res.json();
       console.log(data);
       if (res.ok) {
+        console.log("Log Out Succesful!");
         console.log(data.msg);
+        incomingHandleCurrentUserChanges(undefined);
         try {
           localStorage.removeItem("CURRENT_SENTENCE_OBJECT");
-        } catch (error) {}
-        incomingHandleCurrentUserChanges(undefined);
+        } catch (error) {
+          console.log(error);
+        }
       } else {
         console.log(data.msg);
       }
