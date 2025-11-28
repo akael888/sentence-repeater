@@ -45,7 +45,7 @@ function SentenceCard({
                 </div>
               ) : null}
               {sentenceID ? (
-                <div className="p-1 border-1 rounded-1 text-sm ">
+                <div className="p-1 border-1 rounded-1 text-[2dvw] sm:text-base ">
                   {sentenceID}
                 </div>
               ) : null}
@@ -104,7 +104,7 @@ function SentenceCard({
                   Array.from(sentenceVariables.entries()).map(
                     ([key, value]) => (
                       <>
-                        <div className="rounded-1 p-1 text-[0.8dvw] break-words box-shadow shadow-black shadow-md hover:shadow-green-900">
+                        <div className="rounded-1 p-1 text-sm sm:text-[0.8dvw] break-words box-shadow shadow-black shadow-md hover:shadow-green-900">
                           {value.name}
                         </div>
                       </>
