@@ -21,6 +21,7 @@ import LoginPage from "./components/pages/login-page";
 import { Link, Route, Routes } from "react-router-dom";
 import RegisterPage from "./components/pages/register-page";
 import AuthButtons from "./components/auth-buttons";
+import Loading from "./components/loading-indicator";
 
 function App() {
   //Backend Variables and Other Details
@@ -289,6 +290,10 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
+        <div>
+          <Loading />
+        </div>
+
         <Link to={"/"} style={{ display: "contents" }}>
           <img
             src="./logo512.png"
