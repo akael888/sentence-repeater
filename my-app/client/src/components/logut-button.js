@@ -1,4 +1,7 @@
-function LogoutButton({ incomingHandleCurrentUserChanges, incomingCurrentLink }) {
+function LogoutButton({
+  incomingHandleCurrentUserChanges,
+  incomingCurrentLink,
+}) {
   const logoutUser = async () => {
     try {
       const res = await fetch(`${incomingCurrentLink}/api/v1/auth/logout`, {
@@ -11,6 +14,9 @@ function LogoutButton({ incomingHandleCurrentUserChanges, incomingCurrentLink })
       console.log(data);
       if (res.ok) {
         console.log(data.msg);
+        try {
+          localStorage.removeItem("CURRENT_SENTENCE_OBJECT");
+        } catch (error) {}
         incomingHandleCurrentUserChanges(undefined);
       } else {
         console.log(data.msg);
