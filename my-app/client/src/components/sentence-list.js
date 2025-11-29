@@ -596,26 +596,34 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
               </div>
             ))} */}
             {/* Sentence List */}
-            <div className="grid  gap-2 max-h-[35dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
-              {Object.keys(sentenceList).map((value, index) => (
+            <div className="grid  gap-2 max-h-[35dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[35dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
+              {sentenceList.size > 0 ? (
+                Object.keys(sentenceList).map((value, index) => (
+                  <>
+                    <div className="w-full h-full">
+                      <SentenceCard
+                        incomingSentenceName={sentenceList[value].name}
+                        incomingSentenceDescription={
+                          sentenceList[value].description
+                        }
+                        incomingSentenceID={value}
+                        incomingSentenceValue={sentenceList[value].sentence}
+                        incomingVariables={sentenceList[value].variables}
+                        incomingLoadSentence={loadSentence}
+                        incomingDeleteSentence={deleteSentence}
+                        incomingCurrentSentenceId={currentSentence.id}
+                      ></SentenceCard>
+                    </div>
+                    {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
+                  </>
+                ))
+              ) : (
                 <>
-                  <div className="w-full h-full">
-                    <SentenceCard
-                      incomingSentenceName={sentenceList[value].name}
-                      incomingSentenceDescription={
-                        sentenceList[value].description
-                      }
-                      incomingSentenceID={value}
-                      incomingSentenceValue={sentenceList[value].sentence}
-                      incomingVariables={sentenceList[value].variables}
-                      incomingLoadSentence={loadSentence}
-                      incomingDeleteSentence={deleteSentence}
-                      incomingCurrentSentenceId={currentSentence.id}
-                    ></SentenceCard>
+                  <div className="w-full h-full flex justify-center items-center">
+                    Empty Sentence
                   </div>
-                  {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
                 </>
-              ))}
+              )}
             </div>
           </div>
 
@@ -625,7 +633,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
         </div>
       ) : (
         <div>
-          <strong>Not Logged In</strong>{" "}
+          <strong>Not Logged In</strong>
           <p>Please Log In to Access Stored Sentence Data</p>
         </div>
       )}
