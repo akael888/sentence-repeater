@@ -104,7 +104,7 @@ function SentenceCard({
                   Array.from(sentenceVariables.entries()).map(
                     ([key, value]) => (
                       <>
-                        <div className="rounded-1 p-1 text-sm sm:text-[0.8dvw] break-words box-shadow shadow-black shadow-md hover:shadow-green-900">
+                        <div className="rounded-1 p-1 text-[3dvw] sm:text-[0.8dvw] break-words box-shadow shadow-black shadow-md hover:shadow-green-900">
                           {value.name}
                         </div>
                       </>
