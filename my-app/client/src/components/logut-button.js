@@ -38,7 +38,7 @@ function LogoutButton({
           logoutUser();
         }}
       >
-        ➜] Logout
+        ➜]
       </button>
     </>
   );
