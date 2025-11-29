@@ -487,18 +487,23 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
   return (
     <>
       {incomingCurrentUser ? (
-        <div className="sm:p-10 p-2 [&>*]:text-xs [&>*]:sm:text-base">
+        <div className="h-full w-full flex flex-col justify-center items-center sm:p-10 pt-20 [&>*]:text-xs [&>*]:sm:text-base">
           {/* Sentence Full Table */}
-          <div className=" w-full flex flex-col gap-1">
+          <div className="w-full max-h-[90%] flex flex-col gap-1">
             {/* Current Sentence Card */}
-            <SentenceCard
-              incomingSentenceName={currentSentence.sentenceName}
-              incomingSentenceDescription={currentSentence.sentenceDescription}
-              incomingSentenceID={currentSentence.id}
-              incomingUpdateSentence={updateSentence}
-              incomingVariables={incomingVariables}
-              cardType="current"
-            ></SentenceCard>
+            <div>
+              <SentenceCard
+                incomingSentenceName={currentSentence.sentenceName}
+                incomingSentenceDescription={
+                  currentSentence.sentenceDescription
+                }
+                incomingSentenceID={currentSentence.id}
+                incomingUpdateSentence={updateSentence}
+                incomingVariables={incomingVariables}
+                cardType="current"
+              ></SentenceCard>
+            </div>
+
             {/* Selected Variables */}
             {/* {Array.from(incomingVariables.entries()).map(([key, value]) => (
               <div key={key} className="w-full">
@@ -506,9 +511,9 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                 <i>"{value.value}"</i>
               </div>
             ))} */}
-            {/* Submit New Sentence */}
 
-            <div className="flex flex-col justify-center gap-2 p-3">
+            {/* Submit New Sentence */}
+            <div className="w-full h-fit flex flex-col justify-center gap-2 p-3">
               {isSubmitNewSentence ? (
                 <>
                   <form
@@ -567,8 +572,9 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
               ⇓ Load
             </button> */}
             </div>
+
             {/* Sentence List Header */}
-            <div className="p-1 flex w-full h-full">
+            <div className="p-1 flex w-full h-fit">
               <div className="p-1 w-[90dvw]">
                 <h3>
                   <strong>Sentence List</strong>
@@ -590,28 +596,30 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
               </div>
             ))} */}
             {/* Sentence List */}
-            <div className="grid  gap-2 max-h-[25dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
+            <div className="grid  gap-2 max-h-[35dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[10dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
               {Object.keys(sentenceList).map((value, index) => (
                 <>
+                  <div className="w-full h-full">
+                    <SentenceCard
+                      incomingSentenceName={sentenceList[value].name}
+                      incomingSentenceDescription={
+                        sentenceList[value].description
+                      }
+                      incomingSentenceID={value}
+                      incomingSentenceValue={sentenceList[value].sentence}
+                      incomingVariables={sentenceList[value].variables}
+                      incomingLoadSentence={loadSentence}
+                      incomingDeleteSentence={deleteSentence}
+                      incomingCurrentSentenceId={currentSentence.id}
+                    ></SentenceCard>
+                  </div>
                   {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
-                  <SentenceCard
-                    incomingSentenceName={sentenceList[value].name}
-                    incomingSentenceDescription={
-                      sentenceList[value].description
-                    }
-                    incomingSentenceID={value}
-                    incomingSentenceValue={(sentenceList[value].sentence)}
-                    incomingVariables={sentenceList[value].variables}
-                    incomingLoadSentence={loadSentence}
-                    incomingDeleteSentence={deleteSentence}
-                    incomingCurrentSentenceId={currentSentence.id}
-                  ></SentenceCard>
                 </>
               ))}
             </div>
           </div>
 
-          <div className="w-full h-fit p-2">
+          <div className="w-full max-h-[10%] p-2">
             {dbMessage[dbMessage.length - 1]}
           </div>
         </div>
