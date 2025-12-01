@@ -499,10 +499,17 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                 }
                 incomingSentenceID={currentSentence.id}
                 incomingUpdateSentence={updateSentence}
+                incomingSubmitSentence={submitSentence}
                 incomingVariables={incomingVariables}
                 cardType="current"
               ></SentenceCard>
             </div>
+
+            {submitSentenceMessage ? (
+              <div className="p-1 w-full h-full flex justify-center items-center">
+                {submitSentenceMessage}
+              </div>
+            ) : null}
 
             {/* Selected Variables */}
             {/* {Array.from(incomingVariables.entries()).map(([key, value]) => (
@@ -513,65 +520,6 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             ))} */}
 
             {/* Submit New Sentence */}
-            <div className="w-full h-fit flex flex-col justify-center gap-2 p-3">
-              {isSubmitNewSentence ? (
-                <>
-                  <form
-                    className="flex flex-row justify-center gap-2 "
-                    onSubmit={(e) => {
-                      submitSentence(
-                        sentenceData.sentenceName,
-                        sentenceData.sentenceDescription,
-                        e
-                      );
-                    }}
-                  >
-                    <textarea
-                      name="sentenceName"
-                      placeholder="Sentence Name"
-                      value={sentenceData.sentenceName}
-                      onChange={handleSentenceDataChanges}
-                      className="bg-transparent border-b text-center resize-none h-fit w-fit"
-                    ></textarea>
-                    <textarea
-                      name="sentenceDescription"
-                      placeholder="Sentence Description"
-                      alue={sentenceData.sentenceDescription}
-                      onChange={handleSentenceDataChanges}
-                      className="bg-transparent border-b text-center resize-none h-fit w-fit"
-                    ></textarea>
-                    <button
-                      type="submit"
-                      className="bg-green-800 hover:bg-green-700 text-center p-2 rounded-1"
-                    >
-                      Submit
-                    </button>
-                  </form>
-                  <div>{submitSentenceMessage}</div>
-                </>
-              ) : (
-                <></>
-              )}
-              <div className="w-full gap-2 flex flex-row justify-center">
-                <motion.button
-                  onClick={() => {
-                    setIsSubmitNewSentence(!isSubmitNewSentence);
-                  }}
-                  className="w-full p-2 "
-                >
-                  <motion.span
-                    animate={{ rotate: isSubmitNewSentence ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    ▼
-                  </motion.span>
-                </motion.button>
-              </div>
-
-              {/* <button className="bg-amber-900 w-fit h-fit f p-1 rounded-1">
-              ⇓ Load
-            </button> */}
-            </div>
 
             {/* Sentence List Header */}
             <div className="p-1 flex w-full h-fit">
@@ -597,7 +545,7 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             ))} */}
             {/* Sentence List */}
             <div className="grid  gap-2 max-h-[35dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[35dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
-              {sentenceList.size > 0 ? (
+              {Object.keys(sentenceList).length > 0 ? (
                 Object.keys(sentenceList).map((value, index) => (
                   <>
                     <div className="w-full h-full">
