@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useState } from "react";
 
 function SentenceCard({
   incomingUpdateSentence,
@@ -10,16 +11,28 @@ function SentenceCard({
   incomingSentenceValue,
   incomingVariables,
   incomingCurrentSentenceId,
+  incomingSubmitSentence,
   cardType = "default",
 }) {
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [sentenceData, setSentenceData] = useState({
+    sentenceName: incomingSentenceName || "Sentence Name",
+    sentenceDescription: incomingSentenceDescription || "Sentence Description",
+  });
+
   let sentenceVariables = incomingVariables || null;
-  let sentenceName = incomingSentenceName || "Sentence Name";
-  let sentenceDescription =
-    incomingSentenceDescription || "Sentence Description";
+  // let sentenceName = incomingSentenceName || "Sentence Name";
+  // let sentenceDescription =
+  //   incomingSentenceDescription || "Sentence Description";
   let sentenceID = incomingSentenceID || null;
   let sentenceValue = incomingSentenceValue || "Sentence";
   let currentSentenceID = incomingCurrentSentenceId || "CurrSentenceID";
   const isCurrentSentence = currentSentenceID === sentenceID;
+
+  const handleSentenceDataChanges = (e) => {
+    setSentenceData({ ...sentenceData, [e.target.name]: e.target.value });
+  };
 
   return (
     <>
@@ -29,13 +42,72 @@ function SentenceCard({
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div className="w-[80%] h-fit max-h-[50%] min-h-fit rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black">
+        <form
+          onSubmit={(e) =>
+            incomingSubmitSentence(
+              sentenceData.sentenceName,
+              sentenceData.sentenceDescription,
+              e
+            )
+          }
+          className="w-[80%] h-fit max-h-[50%] min-h-fit rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black"
+        >
           {/* Header Part of the Info */}
           <div className="w-full h-full flex p-1">
             <div className="flex flex-col items-start w-[90%] h-full p-1">
-              <h3>{sentenceName}</h3>
+              {isEditingName ? (
+                <h3>
+                  <input
+                    className="bg-transparent h-full w-full break-words"
+                    name="sentenceName"
+                    placeholder="Sentence Name"
+                    value={sentenceData.sentenceName}
+                    onChange={handleSentenceDataChanges}
+                    onBlur={() => setIsEditingName(false)}
+                    autoFocus
+                  />
+                </h3>
+              ) : (
+                <h3
+                  onClick={() => {
+                    cardType === "current" && setIsEditingName(true);
+                  }}
+                  className={`break-words text-left w-full ${
+                    cardType === "current" && "hover:text-white cursor-pointer"
+                  }`}
+                >
+                  {sentenceData.sentenceName !== ""
+                    ? sentenceData.sentenceName
+                    : "Sentence Name"}
+                </h3>
+              )}
+
               <div>
-                <p>{sentenceDescription}</p>
+                {isEditingDescription ? (
+                  <p>
+                    <input
+                      className="bg-transparent h-full w-fit text-break"
+                      name="sentenceDescription"
+                      placeholder="Sentence Description"
+                      value={sentenceData.sentenceDescription}
+                      onChange={handleSentenceDataChanges}
+                      onBlur={() => setIsEditingDescription(false)}
+                      autoFocus
+                    />
+                  </p>
+                ) : (
+                  <p
+                    onClick={() => {
+                      cardType === "current" && setIsEditingDescription(true);
+                    }}
+                    className={`break-words text-left w-full ${
+                      cardType === "current" &&
+                      "hover:text-white cursor-pointer"
+                    }`}
+                  >
+                    {sentenceData.sentenceDescription}
+                  </p>
+                )}
               </div>
               {cardType === "default" ? (
                 <div>
@@ -58,10 +130,18 @@ function SentenceCard({
                     onClick={() => {
                       incomingUpdateSentence(sentenceID);
                     }}
+                    type="button"
                   >
                     <img src="./svg/save-clear.svg" alt="Save Logo" />
                   </button>
-                ) : null
+                ) : (
+                  <button
+                    className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
+                    type="submit"
+                  >
+                    <img src="./svg/upload-dark.svg" alt="Upload Logo" />
+                  </button>
+                )
               ) : (
                 <>
                   <button
@@ -72,6 +152,7 @@ function SentenceCard({
                       incomingLoadSentence(sentenceID);
                     }}
                     disabled={isCurrentSentence}
+                    type="button"
                   >
                     {isCurrentSentence ? (
                       <img src="./svg/check-dark.svg" alt="Load Logo" />
@@ -84,6 +165,7 @@ function SentenceCard({
                     onClick={() => {
                       incomingDeleteSentence(sentenceID);
                     }}
+                    type="button"
                   >
                     <img src="./svg/delete-dark.svg" alt="Delete Logo" />
                   </button>
@@ -114,12 +196,13 @@ function SentenceCard({
             </div>
             <div className="w-fit h-full flex flex-col justify-end items-end "></div>
           </div>
-        </div>
-        {/* <div className="w-[80%] h-fit flex justify-end">
+
+          {/* <div className="w-[80%] h-fit flex justify-end">
                 <div className="border-1 rounded-1 p-1 sm:text-[0.8dvw]">
                   {currentSentence.id}
                 </div>
               </div> */}
+        </form>
       </motion.div>
     </>
   );
