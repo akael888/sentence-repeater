@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function SentenceCard({
   incomingUpdateSentence,
@@ -12,26 +12,37 @@ function SentenceCard({
   incomingVariables,
   incomingCurrentSentenceId,
   incomingSubmitSentence,
+  incomingHandleCurrentSentenceChanges,
+  incomingSetSentenceData,
+  incomingSentenceData,
   cardType = "default",
 }) {
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [sentenceData, setSentenceData] = useState({
-    sentenceName: incomingSentenceName || "Sentence Name",
-    sentenceDescription: incomingSentenceDescription || "Sentence Description",
-  });
+  // const [sentenceData, setSentenceData] = useState({
+  //   sentenceName: incomingSentenceName || "Sentence Name",
+  //   sentenceDescription: incomingSentenceDescription || "Sentence Description",
+  // });
 
   let sentenceVariables = incomingVariables || null;
-  // let sentenceName = incomingSentenceName || "Sentence Name";
-  // let sentenceDescription =
-  //   incomingSentenceDescription || "Sentence Description";
+  let sentenceName =
+    incomingSentenceData != null
+      ? incomingSentenceData.sentenceName
+      : incomingSentenceName || "Sentence Name";
+  let sentenceDescription = incomingSentenceData 
+    ? incomingSentenceData.sentenceDescription
+    : incomingSentenceDescription || "Sentence Description";
   let sentenceID = incomingSentenceID || null;
   let sentenceValue = incomingSentenceValue || "Sentence";
   let currentSentenceID = incomingCurrentSentenceId || "CurrSentenceID";
   const isCurrentSentence = currentSentenceID === sentenceID;
 
   const handleSentenceDataChanges = (e) => {
-    setSentenceData({ ...sentenceData, [e.target.name]: e.target.value });
+    // setSentenceData({ ...sentenceData, [e.target.name]: e.target.value });
+    incomingSetSentenceData({
+      ...incomingSentenceData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -44,11 +55,7 @@ function SentenceCard({
       >
         <form
           onSubmit={(e) =>
-            incomingSubmitSentence(
-              sentenceData.sentenceName,
-              sentenceData.sentenceDescription,
-              e
-            )
+            incomingSubmitSentence(sentenceName, sentenceDescription, e)
           }
           className="w-[80%] h-fit max-h-[50%] min-h-fit rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black"
         >
@@ -61,7 +68,7 @@ function SentenceCard({
                     className="bg-transparent h-full w-full break-words"
                     name="sentenceName"
                     placeholder="Sentence Name"
-                    value={sentenceData.sentenceName}
+                    value={sentenceName}
                     onChange={handleSentenceDataChanges}
                     onBlur={() => setIsEditingName(false)}
                     autoFocus
@@ -76,9 +83,7 @@ function SentenceCard({
                     cardType === "current" && "hover:text-white cursor-pointer"
                   }`}
                 >
-                  {sentenceData.sentenceName !== ""
-                    ? sentenceData.sentenceName
-                    : "Sentence Name"}
+                  {sentenceName !== "" ? sentenceName : "Sentence Name"}
                 </h3>
               )}
 
@@ -89,7 +94,7 @@ function SentenceCard({
                       className="bg-transparent h-full w-fit text-break"
                       name="sentenceDescription"
                       placeholder="Sentence Description"
-                      value={sentenceData.sentenceDescription}
+                      value={sentenceDescription}
                       onChange={handleSentenceDataChanges}
                       onBlur={() => setIsEditingDescription(false)}
                       autoFocus
@@ -105,22 +110,20 @@ function SentenceCard({
                       "hover:text-white cursor-pointer"
                     }`}
                   >
-                    {sentenceData.sentenceDescription}
+                    {sentenceDescription}
                   </p>
                 )}
               </div>
-              {cardType === "default" ? (
-                <div>
-                  <p>
-                    <i>"{sentenceValue}"</i>
-                  </p>
-                </div>
-              ) : null}
-              {sentenceID ? (
+              <div>
+                <p>
+                  <i>"{sentenceValue}"</i>
+                </p>
+              </div>
+              {sentenceID && (
                 <div className="p-1 border-1 rounded-1 text-[2dvw] sm:text-base ">
                   {sentenceID}
                 </div>
-              ) : null}
+              )}
             </div>
             <div className="flex justify-center p-3">
               {cardType === "current" ? (
