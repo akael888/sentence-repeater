@@ -29,9 +29,10 @@ function SentenceCard({
     incomingSentenceData != null
       ? incomingSentenceData.sentenceName
       : incomingSentenceName || "Sentence Name";
-  let sentenceDescription = incomingSentenceData 
-    ? incomingSentenceData.sentenceDescription
-    : incomingSentenceDescription || "Sentence Description";
+  let sentenceDescription =
+    incomingSentenceData != null
+      ? incomingSentenceData.sentenceDescription
+      : incomingSentenceDescription || "Sentence Description";
   let sentenceID = incomingSentenceID || null;
   let sentenceValue = incomingSentenceValue || "Sentence";
   let currentSentenceID = incomingCurrentSentenceId || "CurrSentenceID";
@@ -110,7 +111,7 @@ function SentenceCard({
                       "hover:text-white cursor-pointer"
                     }`}
                   >
-                    {sentenceDescription}
+                    {sentenceDescription !== "" ? sentenceDescription : "Sentence Description"}
                   </p>
                 )}
               </div>
