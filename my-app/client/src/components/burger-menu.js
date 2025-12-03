@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { useState } from "react";
 import CustomToggle from "./toggle-custom";
-import SentenceList from "./sentence-list";
+import SentenceCardManager from "./sentence-card-manager";
 
 function BurgerMenu({
   isOpen,
@@ -20,10 +20,10 @@ function BurgerMenu({
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       {incomingCurrentUser ? (
-        <SentenceList
+        <SentenceCardManager
           incomingLink={incomingLink}
           incomingCurrentUser={incomingCurrentUser}
-        ></SentenceList>
+        ></SentenceCardManager>
       ) : (
         <>
           {/* Logo Sentence Repeater */}
@@ -78,18 +78,17 @@ function BurgerMenu({
               </motion.div>
             </motion.div>
           </div>
-
-          {/* Dark Mode Repeater */}
-          <div className="w-full h-auto flex flex-row justify-center items-center text-center gap-2">
-            <div>Dark Mode |</div>
-
-            <CustomToggle
-              onChange={darkModeChanges}
-              checked={isDarkMode}
-            ></CustomToggle>
-          </div>
         </>
       )}
+      {/* Dark Mode Repeater */}
+      <div className="w-full h-fit flex flex-row justify-center items-center text-center gap-2">
+        <div>Dark Mode |</div>
+
+        <CustomToggle
+          onChange={darkModeChanges}
+          checked={isDarkMode}
+        ></CustomToggle>
+      </div>
     </motion.div>
   );
 }
