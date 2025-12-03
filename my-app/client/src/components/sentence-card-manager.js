@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useRepeaterData } from "./repeater-context";
 import SentenceCard from "./sentence-card";
 
-function SentenceList({ incomingLink, incomingCurrentUser }) {
+function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
   const {
     variables: incomingVariables,
     previewText: incomingPreviewText,
@@ -15,8 +15,8 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
   const [dbMessage, setDbMessage] = useState([]);
 
   const [sentenceData, setSentenceData] = useState({
-    sentenceName: "123",
-    sentenceDescription: "123",
+    sentenceName: "",
+    sentenceDescription: "",
   });
 
   const [isSubmitNewSentence, setIsSubmitNewSentence] = useState(false);
@@ -482,9 +482,9 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
   return (
     <>
       {incomingCurrentUser ? (
-        <div className="h-full w-full flex flex-col justify-center items-center sm:p-10 pt-20 [&>*]:text-xs [&>*]:sm:text-base">
+        <div className="h-fit w-full flex flex-col justify-center items-center [&>*]:text-xs [&>*]:sm:text-base">
           {/* Sentence Full Table */}
-          <div className="w-full max-h-[90%] flex flex-col gap-1">
+          <div className="w-full flex flex-col gap-4">
             {/* Current Sentence Card */}
             <div>
               <SentenceCard
@@ -505,13 +505,11 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
                 cardType="current"
               ></SentenceCard>
             </div>
-
             {submitSentenceMessage ? (
               <div className="p-1 w-full h-full flex justify-center items-center">
                 {submitSentenceMessage}
               </div>
             ) : null}
-
             {/* Selected Variables */}
             {/* {Array.from(incomingVariables.entries()).map(([key, value]) => (
               <div key={key} className="w-full">
@@ -523,61 +521,59 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             {/* Submit New Sentence */}
 
             {/* Sentence List Header */}
-            <div className="p-1 flex w-full h-fit">
-              <div className="p-1 w-[90dvw]">
-                <h3>
-                  <strong>Sentence List</strong>
-                </h3>
+            <div>
+              <div className="p-1 flex w-full h-fit">
+                <div className="p-1 w-[90dvw]">
+                  <h3>
+                    <strong>Sentence Cards</strong>
+                  </h3>
+                </div>
+                <div className="w-[10dvw]">
+                  <button
+                    className="w-full h-full  rounded-5 border-amber-800 border-1 sm:h-full  hover:bg-amber-700"
+                    onClick={refreshSentence}
+                  >
+                    ⟳
+                  </button>
+                </div>
               </div>
-              <div className="w-[10dvw]">
-                <button
-                  className="w-full h-full p-1 rounded-1 sm:h-full border-1 border-amber-700 hover:bg-amber-700"
-                  onClick={refreshSentence}
-                >
-                  ⟳
-                </button>
-              </div>
-            </div>
-            {/* Selected Variables */}
-            {/* {Array.from(variableList.entries()).map(([key, value]) => (
+              {/* Selected Variables */}
+              {/* {Array.from(variableList.entries()).map(([key, value]) => (
               <div key={key} className="bg-blue-800 hover:bg-blue-600">
                 {key} : {value.name} ( {value.value} )
               </div>
             ))} */}
-            {/* Sentence List */}
-            <div className="grid  gap-2 max-h-[35dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[35dvh] inset-shadow-sm shadow-black p-1 border-t border-b">
-              {Object.keys(sentenceList).length > 0 ? (
-                Object.keys(sentenceList).map((value, index) => (
+              {/* Sentence List */}
+              <div className="grid  gap-2 max-h-[35dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[35dvh] inset-shadow-sm shadow-black shadow-inner shadow-md p-1">
+                {Object.keys(sentenceList).length > 0 ? (
+                  Object.keys(sentenceList).map((value, index) => (
+                    <>
+                      <div className="w-full h-full">
+                        <SentenceCard
+                          incomingSentenceName={sentenceList[value].name}
+                          incomingSentenceDescription={
+                            sentenceList[value].description
+                          }
+                          incomingSentenceID={value}
+                          incomingSentenceValue={sentenceList[value].sentence}
+                          incomingVariables={sentenceList[value].variables}
+                          incomingLoadSentence={loadSentence}
+                          incomingDeleteSentence={deleteSentence}
+                          incomingCurrentSentenceId={currentSentence.id}
+                        ></SentenceCard>
+                      </div>
+                      {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
+                    </>
+                  ))
+                ) : (
                   <>
-                    <div className="w-full h-full">
-                      <SentenceCard
-                        incomingSentenceName={sentenceList[value].name}
-                        incomingSentenceDescription={
-                          sentenceList[value].description
-                        }
-                        incomingSentenceID={value}
-                        incomingSentenceValue={sentenceList[value].sentence}
-                        incomingVariables={sentenceList[value].variables}
-                        incomingLoadSentence={loadSentence}
-                        incomingDeleteSentence={deleteSentence}
-                        incomingCurrentSentenceId={currentSentence.id}
-                      ></SentenceCard>
+                    <div className="w-full h-full flex justify-center items-center">
+                      Empty Sentence
                     </div>
-                    {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
                   </>
-                ))
-              ) : (
-                <>
-                  <div className="w-full h-full flex justify-center items-center">
-                    Empty Sentence
-                  </div>
-                </>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-
-          <div className="w-full max-h-[10%] p-2">
-            {dbMessage[dbMessage.length - 1]}
           </div>
         </div>
       ) : (
@@ -586,8 +582,11 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
           <p>Please Log In to Access Stored Sentence Data</p>
         </div>
       )}
+      <div className="w-full h-fit sm:text-base text-sm p-2">
+        {dbMessage[dbMessage.length - 1]}
+      </div>
     </>
   );
 }
 
-export default SentenceList;
+export default SentenceCardManager;
