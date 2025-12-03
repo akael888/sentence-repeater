@@ -15,31 +15,14 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
   const [dbMessage, setDbMessage] = useState([]);
 
   const [sentenceData, setSentenceData] = useState({
-    sentenceName: "",
-    sentenceDescription: "",
+    sentenceName: "123",
+    sentenceDescription: "123",
   });
 
   const [isSubmitNewSentence, setIsSubmitNewSentence] = useState(false);
   const [submitSentenceMessage, setSubmitSentenceMessage] = useState("");
 
-  const [sentenceList, setSentenceList] = useState({
-    0: {
-      id: "id123",
-      name: "Data A",
-      description: "Qwerty",
-      sentence: "ABC{}",
-      isOptionOpened: false,
-      variables: { 0: { name: "ABC" } },
-    },
-    1: {
-      id: "id123",
-      name: "Data B",
-      description: "Qwerty",
-      sentence: "DEF{}",
-      isOptionOpened: false,
-      variables: { 0: { name: "DEF" } },
-    },
-  });
+  const [sentenceList, setSentenceList] = useState({});
   const [variableList, setVariableList] = useState(() => {
     try {
       const stored = localStorage.getItem("CURRENT_VARIABLES");
@@ -58,6 +41,10 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
       const stored = localStorage.getItem("CURRENT_SENTENCE_OBJECT");
       if (stored) {
         const parsedObject = JSON.parse(stored);
+        setSentenceData({
+          sentenceName: parsedObject.sentenceName,
+          sentenceDescription: parsedObject.sentenceDescription,
+        });
         return parsedObject;
       }
     } catch (err) {
@@ -81,6 +68,10 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
 
   const handleCurrentSentenceChanges = (sentenceObject) => {
     setCurrentSentence(sentenceObject);
+    setSentenceData({
+      sentenceName: sentenceObject.sentenceName,
+      sentenceDescription: sentenceObject.sentenceDescription,
+    });
     localStorage.setItem(
       "CURRENT_SENTENCE_OBJECT",
       JSON.stringify(sentenceObject)
@@ -355,8 +346,12 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
       console.log(variableData);
       const submitSentenceandVariableData = {
         sentence: incomingPreviewText,
+        sentenceName: sentenceData.sentenceName,
+        sentenceDescription: sentenceData.sentenceDescription,
         variables: variableData,
       };
+      console.log("Submit Sentence Var Data");
+      console.log(submitSentenceandVariableData);
       const resSentence = await fetch(
         `${incomingLink}/api/v1/sentence/${refSentence}`,
         {
@@ -493,14 +488,20 @@ function SentenceList({ incomingLink, incomingCurrentUser }) {
             {/* Current Sentence Card */}
             <div>
               <SentenceCard
-                incomingSentenceName={currentSentence.sentenceName}
-                incomingSentenceDescription={
-                  currentSentence.sentenceDescription
-                }
+                // incomingSentenceName={currentSentence.sentenceName}
+                // incomingSentenceDescription={
+                //   currentSentence.sentenceDescription
+                // }
                 incomingSentenceID={currentSentence.id}
                 incomingUpdateSentence={updateSentence}
                 incomingSubmitSentence={submitSentence}
                 incomingVariables={incomingVariables}
+                incomingHandleCurrentSentenceChanges={
+                  handleCurrentSentenceChanges
+                }
+                incomingSetSentenceData={setSentenceData}
+                incomingSentenceData={sentenceData}
+                incomingSentenceValue={incomingPreviewText}
                 cardType="current"
               ></SentenceCard>
             </div>
