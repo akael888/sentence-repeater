@@ -290,38 +290,43 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
-        <div>
+        {/* <div>
           <Loading />
+        </div> */}
+        <div className="w-fit h-fit p-1">
+          <Link to={"/"} style={{ display: "contents" }}>
+            <img
+              src="./logo512.png"
+              alt="sentence-repeater-logo"
+              className="sm:w-[2dvw] h-auto w-[10dvw] p-1"
+            ></img>
+          </Link>
         </div>
+        <div className="w-full h-full flex p-1 gap-3 justify-end">
+          <div className="w-fit h-full flex sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
+            {incomingCurrentUser ? (
+              <div className="flex gap-2 h-full items-center justify-center">
+                <div className="p-1 text-base ">
+                  <i> Hi, {incomingCurrentUser}!</i>
+                </div>
+                <LogoutButton
+                  incomingHandleCurrentUserChanges={
+                    incomingHandleCurrentUserChanges
+                  }
+                  incomingCurrentLink={incomingCurrentLink}
+                />
+              </div>
+            ) : (
+              <AuthButtons />
+            )}
+          </div>
 
-        <Link to={"/"} style={{ display: "contents" }}>
-          <img
-            src="./logo512.png"
-            alt="sentence-repeater-logo"
-            className="sm:w-[2dvw] h-auto w-[10dvw] p-1"
-          ></img>
-        </Link>
-        <div className="w-fit h-full flex sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
-          {incomingCurrentUser ? (
-            <div className="flex gap-2 h-full items-center justify-center">
-              <div className="p-1 text-base ">Hi, {incomingCurrentUser}!</div>
-              <LogoutButton
-                incomingHandleCurrentUserChanges={
-                  incomingHandleCurrentUserChanges
-                }
-                incomingCurrentLink={incomingCurrentLink}
-              />
-            </div>
-          ) : (
-            <AuthButtons />
-          )}
-        </div>
-
-        <div className="w-8 h-full  flex items-center">
-          <Burger
-            isOpen={isOpen}
-            handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
-          ></Burger>
+          <div className="w-8 h-full  flex items-center">
+            <Burger
+              isOpen={isOpen}
+              handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
+            ></Burger>
+          </div>
         </div>
 
         {/* <Mode
