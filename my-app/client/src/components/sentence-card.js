@@ -58,7 +58,7 @@ function SentenceCard({
           onSubmit={(e) =>
             incomingSubmitSentence(sentenceName, sentenceDescription, e)
           }
-          className="w-[80%] h-fit max-h-[50%] min-h-fit rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black"
+          className="w-full sm:h-fit max-h-[50%] h-[10%] rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black"
         >
           {/* Header Part of the Info */}
           <div className="w-full h-full flex p-1">
@@ -126,7 +126,7 @@ function SentenceCard({
                 </div>
               )}
             </div>
-            <div className="flex justify-center p-3">
+            <div className="flex flex-col sm:flex-row justify-center p-3">
               {cardType === "current" ? (
                 sentenceID ? (
                   <button
@@ -190,7 +190,7 @@ function SentenceCard({
                   Array.from(sentenceVariables.entries()).map(
                     ([key, value]) => (
                       <>
-                        <div className="rounded-1 p-1 text-[3dvw] sm:text-[0.8dvw] break-words box-shadow shadow-black shadow-md hover:shadow-green-900">
+                        <div className="rounded-1 p-1 text-[2dvw] sm:text-[0.8dvw] break-words box-shadow shadow-black shadow-md hover:shadow-green-900">
                           {value.name}
                         </div>
                       </>

@@ -481,109 +481,118 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
 
   return (
     <>
-      {incomingCurrentUser ? (
-        <div className="h-fit w-full flex flex-col justify-center items-center [&>*]:text-xs [&>*]:sm:text-base">
-          {/* Sentence Full Table */}
-          <div className="w-full flex flex-col gap-4">
-            {/* Current Sentence Card */}
-            <div>
-              <SentenceCard
-                // incomingSentenceName={currentSentence.sentenceName}
-                // incomingSentenceDescription={
-                //   currentSentence.sentenceDescription
-                // }
-                incomingSentenceID={currentSentence.id}
-                incomingUpdateSentence={updateSentence}
-                incomingSubmitSentence={submitSentence}
-                incomingVariables={incomingVariables}
-                incomingHandleCurrentSentenceChanges={
-                  handleCurrentSentenceChanges
-                }
-                incomingSetSentenceData={setSentenceData}
-                incomingSentenceData={sentenceData}
-                incomingSentenceValue={incomingPreviewText}
-                cardType="current"
-              ></SentenceCard>
-            </div>
-            {submitSentenceMessage ? (
-              <div className="p-1 w-full h-full flex justify-center items-center">
-                {submitSentenceMessage}
+      <div className="w-full h-full flex flex-col justify-center items-center">
+        {incomingCurrentUser ? (
+          <div className="h-fit w-full flex flex-col justify-center items-center [&>*]:text-xs [&>*]:sm:text-base">
+            {/* Sentence Full Table */}
+            <div className="w-full flex flex-col gap-4">
+              {/* Current Sentence Card */}
+              <div className="flex flex-col gap-1 justify-center items-center sm:p-10 pt-8 w-full h-full">
+                <div className="sm:w-[80%] sm:h-[80%] h-full w-[90%]">
+                  <SentenceCard
+                    // incomingSentenceName={currentSentence.sentenceName}
+                    // incomingSentenceDescription={
+                    //   currentSentence.sentenceDescription
+                    // }
+                    incomingSentenceID={currentSentence.id}
+                    incomingUpdateSentence={updateSentence}
+                    incomingSubmitSentence={submitSentence}
+                    incomingVariables={incomingVariables}
+                    incomingHandleCurrentSentenceChanges={
+                      handleCurrentSentenceChanges
+                    }
+                    incomingSetSentenceData={setSentenceData}
+                    incomingSentenceData={sentenceData}
+                    incomingSentenceValue={incomingPreviewText}
+                    cardType="current"
+                  ></SentenceCard>
+                </div>
+                {submitSentenceMessage ? (
+                  <div className="p-1 w-full h-full flex justify-center items-center">
+                    {submitSentenceMessage}
+                  </div>
+                ) : null}
               </div>
-            ) : null}
-            {/* Selected Variables */}
-            {/* {Array.from(incomingVariables.entries()).map(([key, value]) => (
+
+              {/* Selected Variables */}
+              {/* {Array.from(incomingVariables.entries()).map(([key, value]) => (
               <div key={key} className="w-full">
                 <strong>{value.name}</strong> ({value.type}) :{" "}
                 <i>"{value.value}"</i>
               </div>
             ))} */}
 
-            {/* Submit New Sentence */}
+              {/* Submit New Sentence */}
 
-            {/* Sentence List Header */}
-            <div>
-              <div className="p-1 flex w-full h-fit">
-                <div className="p-1 w-[90dvw]">
-                  <h3>
-                    <strong>Sentence Cards</strong>
-                  </h3>
+              {/* Sentence List Header */}
+              <div>
+                <div className="p-1 flex w-full h-fit">
+                  <div className="p-1 w-[90dvw]">
+                    <h3>
+                      <strong>Sentence Cards</strong>
+                    </h3>
+                  </div>
+                  <div className="w-[10dvw]">
+                    <button
+                      className="w-full h-full  rounded-1 border-amber-800 border-1 sm:h-full  hover:bg-amber-700"
+                      onClick={refreshSentence}
+                    >
+                      ⟳
+                    </button>
+                  </div>
                 </div>
-                <div className="w-[10dvw]">
-                  <button
-                    className="w-full h-full  rounded-5 border-amber-800 border-1 sm:h-full  hover:bg-amber-700"
-                    onClick={refreshSentence}
-                  >
-                    ⟳
-                  </button>
-                </div>
-              </div>
-              {/* Selected Variables */}
-              {/* {Array.from(variableList.entries()).map(([key, value]) => (
+                {/* Selected Variables */}
+                {/* {Array.from(variableList.entries()).map(([key, value]) => (
               <div key={key} className="bg-blue-800 hover:bg-blue-600">
                 {key} : {value.name} ( {value.value} )
               </div>
             ))} */}
-              {/* Sentence List */}
-              <div className="grid  gap-2 max-h-[35dvh] overflow-y-scroll  h-full max-w-[100%] min-h-[35dvh] inset-shadow-sm shadow-black shadow-inner shadow-md p-1">
-                {Object.keys(sentenceList).length > 0 ? (
-                  Object.keys(sentenceList).map((value, index) => (
+                {/* Sentence List */}
+                <div className="grid sm:grid-flow-row grid-flow-col gap-2 sm:max-h-[35dvh] overflow-y-auto oveflow-x-auto w-full h-fit max-w-[100%] min-h-[35dvh]  p-2">
+                  {Object.keys(sentenceList).length > 0 ? (
+                    Object.keys(sentenceList).map((value, index) => (
+                      <>
+                        <div className="flex w-full h-full justify-center items-center">
+                          <div className="sm:w-[80%] h-full">
+                            <SentenceCard
+                              incomingSentenceName={sentenceList[value].name}
+                              incomingSentenceDescription={
+                                sentenceList[value].description
+                              }
+                              incomingSentenceID={value}
+                              incomingSentenceValue={
+                                sentenceList[value].sentence
+                              }
+                              incomingVariables={sentenceList[value].variables}
+                              incomingLoadSentence={loadSentence}
+                              incomingDeleteSentence={deleteSentence}
+                              incomingCurrentSentenceId={currentSentence.id}
+                            ></SentenceCard>
+                          </div>
+                        </div>
+                        {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
+                      </>
+                    ))
+                  ) : (
                     <>
-                      <div className="w-full h-full">
-                        <SentenceCard
-                          incomingSentenceName={sentenceList[value].name}
-                          incomingSentenceDescription={
-                            sentenceList[value].description
-                          }
-                          incomingSentenceID={value}
-                          incomingSentenceValue={sentenceList[value].sentence}
-                          incomingVariables={sentenceList[value].variables}
-                          incomingLoadSentence={loadSentence}
-                          incomingDeleteSentence={deleteSentence}
-                          incomingCurrentSentenceId={currentSentence.id}
-                        ></SentenceCard>
+                      <div className="w-full h-full flex justify-center items-center">
+                        Empty Sentence
                       </div>
-                      {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
                     </>
-                  ))
-                ) : (
-                  <>
-                    <div className="w-full h-full flex justify-center items-center">
-                      Empty Sentence
-                    </div>
-                  </>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>
+        ) : (
+          <div>
+            <strong>Not Logged In</strong>
+            <p>Please Log In to Access Stored Sentence Data</p>
+          </div>
+        )}
+        <div className="w-full h-fit sm:text-base text-sm p-2">
+          {dbMessage[dbMessage.length - 1]}
         </div>
-      ) : (
-        <div>
-          <strong>Not Logged In</strong>
-          <p>Please Log In to Access Stored Sentence Data</p>
-        </div>
-      )}
-      <div className="w-full h-fit sm:text-base text-sm p-2">
-        {dbMessage[dbMessage.length - 1]}
       </div>
     </>
   );
