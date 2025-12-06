@@ -481,14 +481,14 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
 
   return (
     <>
-      <div className="w-full h-full flex flex-col justify-center items-center">
+      <div className="w-full h-[90%] flex flex-col justify-center items-center pt-5 pb-5">
         {incomingCurrentUser ? (
-          <div className="h-fit w-full flex flex-col justify-center items-center [&>*]:text-xs [&>*]:sm:text-base">
+          <div className="h-full w-full flex flex-col justify-center items-center [&>*]:text-xs [&>*]:sm:text-base">
             {/* Sentence Full Table */}
-            <div className="w-full flex flex-col gap-4">
+            <div className="w-full h-full flex flex-col gap-4">
               {/* Current Sentence Card */}
-              <div className="flex flex-col gap-1 justify-center items-center sm:p-10 pt-8 w-full h-full">
-                <div className="sm:w-[80%] sm:h-[80%] h-full w-[90%]">
+              <div className="flex flex-col gap-1 justify-center items-center sm:p-10 pt-8 w-full h-[50%]">
+                <div className="w-[80%] h-[80%] ">
                   <SentenceCard
                     // incomingSentenceName={currentSentence.sentenceName}
                     // incomingSentenceDescription={
@@ -525,22 +525,7 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
               {/* Submit New Sentence */}
 
               {/* Sentence List Header */}
-              <div>
-                <div className="p-1 flex w-full h-fit">
-                  <div className="p-1 w-[90dvw]">
-                    <h3>
-                      <strong>Sentence Cards</strong>
-                    </h3>
-                  </div>
-                  <div className="w-[10dvw]">
-                    <button
-                      className="w-full h-full  rounded-1 border-amber-800 border-1 sm:h-full  hover:bg-amber-700"
-                      onClick={refreshSentence}
-                    >
-                      ⟳
-                    </button>
-                  </div>
-                </div>
+              <div className="w-full h-[50%]">
                 {/* Selected Variables */}
                 {/* {Array.from(variableList.entries()).map(([key, value]) => (
               <div key={key} className="bg-blue-800 hover:bg-blue-600">
@@ -548,7 +533,7 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
               </div>
             ))} */}
                 {/* Sentence List */}
-                <div className="grid sm:grid-flow-row grid-flow-col gap-2 sm:max-h-[35dvh] overflow-y-auto oveflow-x-auto w-full h-fit max-w-[100%] min-h-[35dvh]  p-2">
+                <div className="grid sm:grid-flow-row grid-flow-col gap-2 sm:max-h-[35dvh] overflow-y-auto oveflow-x-auto w-full h-[30%] max-w-[100%] min-h-[35dvh]  p-2">
                   {Object.keys(sentenceList).length > 0 ? (
                     Object.keys(sentenceList).map((value, index) => (
                       <>
@@ -581,6 +566,13 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
                     </>
                   )}
                 </div>
+                <div className="p-1 flex w-full h-[10%]">
+                  {/* <div className="p-1 w-[90dvw]">
+                    <h3>
+                      <strong>Sentence Cards</strong>
+                    </h3>
+                  </div> */}
+                </div>
               </div>
             </div>
           </div>
@@ -590,8 +582,18 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
             <p>Please Log In to Access Stored Sentence Data</p>
           </div>
         )}
-        <div className="w-full h-fit sm:text-base text-sm p-2">
-          {dbMessage[dbMessage.length - 1]}
+        <div className="w-full h-[10%] flex flex-cols justify-center items-center">
+          <div className="w-full h-full sm:text-base text-sm p-2">
+            {dbMessage[dbMessage.length - 1]}
+          </div>
+          <div className="w-full h-full flex justify-center items-center">
+            <button
+              className="w-[10%] h-full rounded-1 border-amber-800 border-1 sm:h-full  hover:bg-amber-700"
+              onClick={refreshSentence}
+            >
+              ⟳
+            </button>
+          </div>
         </div>
       </div>
     </>

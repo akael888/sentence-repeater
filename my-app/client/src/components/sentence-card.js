@@ -50,7 +50,7 @@ function SentenceCard({
     <>
       {/* Current Sentence Card */}
       <motion.div
-        className="flex w-full h-fit justify-center items-center flex-col gap-1"
+        className="flex w-full h-full justify-center items-center flex-col gap-1"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -58,11 +58,11 @@ function SentenceCard({
           onSubmit={(e) =>
             incomingSubmitSentence(sentenceName, sentenceDescription, e)
           }
-          className="w-full sm:h-fit max-h-[50%] h-[10%] rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black"
+          className="w-full  max-h-[100%] h-full rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black"
         >
           {/* Header Part of the Info */}
-          <div className="w-full h-full flex p-1">
-            <div className="flex flex-col items-start w-[90%] h-full p-1">
+          <div className="w-full h-fit flex p-1">
+            <div className="flex flex-col items-start w-[90%] h-fit p-1">
               {isEditingName ? (
                 <h3>
                   <input
@@ -126,7 +126,7 @@ function SentenceCard({
                 </div>
               )}
             </div>
-            <div className="flex flex-col sm:flex-row justify-center p-3">
+            <div className="flex flex-col sm:flex-row justify-center p-3 h-fit">
               {cardType === "current" ? (
                 sentenceID ? (
                   <button
