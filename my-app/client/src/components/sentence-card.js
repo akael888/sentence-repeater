@@ -58,7 +58,7 @@ function SentenceCard({
           onSubmit={(e) =>
             incomingSubmitSentence(sentenceName, sentenceDescription, e)
           }
-          className="w-full  max-h-[100%] h-full rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black"
+          className="w-full  max-h-fit h-full rounded-1 p-3 bg-gradient-to-r from-amber-800 to-amber-900 box-shadow shadow-md hover:from-amber-700 hover:to-amber-800 shadow-black"
         >
           {/* Header Part of the Info */}
           <div className="w-full h-fit flex p-1">
@@ -111,7 +111,9 @@ function SentenceCard({
                       "hover:text-white cursor-pointer"
                     }`}
                   >
-                    {sentenceDescription !== "" ? sentenceDescription : "Sentence Description"}
+                    {sentenceDescription !== ""
+                      ? sentenceDescription
+                      : "Sentence Description"}
                   </p>
                 )}
               </div>
@@ -129,15 +131,23 @@ function SentenceCard({
             <div className="flex flex-col sm:flex-row justify-center p-3 h-fit">
               {cardType === "current" ? (
                 sentenceID ? (
-                  <button
-                    className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
-                    onClick={() => {
-                      incomingUpdateSentence(sentenceID);
-                    }}
-                    type="button"
-                  >
-                    <img src="./svg/save-clear.svg" alt="Save Logo" />
-                  </button>
+                  <>
+                    <button
+                      className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
+                      onClick={() => {
+                        incomingUpdateSentence(sentenceID);
+                      }}
+                      type="button"
+                    >
+                      <img src="./svg/save-clear.svg" alt="Save Logo" />
+                    </button>
+                    <button
+                      className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
+                      type="submit"
+                    >
+                      <img src="./svg/upload-dark.svg" alt="Upload Logo" />
+                    </button>
+                  </>
                 ) : (
                   <button
                     className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
