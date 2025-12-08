@@ -9,6 +9,7 @@ function BurgerMenu({
   isDarkMode,
   incomingLink,
   incomingCurrentUser,
+  incomingHandleBackEndLoadingChanges,
 }) {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
 
@@ -23,6 +24,9 @@ function BurgerMenu({
         <SentenceCardManager
           incomingLink={incomingLink}
           incomingCurrentUser={incomingCurrentUser}
+          incomingHandleBackEndLoadingChanges={
+            incomingHandleBackEndLoadingChanges
+          }
         ></SentenceCardManager>
       ) : (
         <>
@@ -78,17 +82,18 @@ function BurgerMenu({
               </motion.div>
             </motion.div>
           </div>
+
+          {/* Dark Mode Repeater */}
+          <div className="w-full h-fit flex flex-row justify-center items-center text-center gap-2">
+            <div>Dark Mode |</div>
+
+            <CustomToggle
+              onChange={darkModeChanges}
+              checked={isDarkMode}
+            ></CustomToggle>
+          </div>
         </>
       )}
-      {/* Dark Mode Repeater */}
-      <div className="w-full h-fit flex flex-row justify-center items-center text-center gap-2">
-        <div>Dark Mode |</div>
-
-        <CustomToggle
-          onChange={darkModeChanges}
-          checked={isDarkMode}
-        ></CustomToggle>
-      </div>
     </motion.div>
   );
 }

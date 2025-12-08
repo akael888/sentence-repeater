@@ -33,7 +33,7 @@ function LogoutButton({
   return (
     <>
       <button
-        className="border-1 rounded-1 p-1 w-fit h-fit bg-red-700 hover:bg-transparent"
+        className="border-1 rounded-1 p-1 w-fit h-fit hover:bg-red-800"
         onClick={() => {
           logoutUser();
         }}
