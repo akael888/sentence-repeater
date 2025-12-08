@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Repeater from "./components/repeater";
 import Mode from "./components/toggle-mode";
 import bg from "./img/background-img.jpg";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import Burger from "./components/burger";
 import BurgerMenu from "./components/burger-menu";
 import WaveBackground from "./components/blob-background";
@@ -26,6 +26,8 @@ import Loading from "./components/loading-indicator";
 function App() {
   //Backend Variables and Other Details
   const [sentenceDataTest, setSentenceDataTest] = useState();
+
+  const [isLoadingBackEnd, setIsLoadingBackEnd] = useState(false);
 
   //Toggle Link
   const [linkCounter, setLinkCounter] = useState(0);
@@ -103,6 +105,10 @@ function App() {
     setCurrentUser(newUser);
   };
 
+  const handleBackEndLoadingChanges = (booleanValue) => {
+    setIsLoadingBackEnd(booleanValue);
+  };
+
   useEffect(() => {
     try {
       localStorage.setItem("IS_DARK_MODE", JSON.stringify(isDarkMode));
@@ -143,6 +149,7 @@ function App() {
             isDarkMode={isDarkMode}
             incomingLink={currentLink}
             incomingCurrentUser={currentUser}
+            incomingHandleBackEndLoadingChanges={handleBackEndLoadingChanges}
           ></BurgerMenu>
           <motion.header
             initial={{ opacity: 0 }}
@@ -152,7 +159,7 @@ function App() {
               ease: "easeInOut",
             }}
             className={
-              "h-fit min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0"
+              "sm:h-[5%] h-[10%] min-h-[5vh] w-full flex flex-col items-center justify-center font-[calc(10px_+_2vmin)] text-main-color text-center z-[100] sticky top-0"
               // +
               // tw_appHeader_glassMorphBG
             }
@@ -165,6 +172,7 @@ function App() {
               incomingCurrentUser={currentUser}
               incomingHandleCurrentUserChanges={handleCurrentUserChanges}
               incomingCurrentLink={currentLink}
+              incomingIsLoadingBackend={isLoadingBackEnd}
             />
           </motion.header>
 
@@ -192,12 +200,22 @@ function App() {
                           handleCurrentUserChanges
                         }
                         incomingCurrentUser={currentUser}
+                        incomingHandleBackEndLoadingChanges={
+                          handleBackEndLoadingChanges
+                        }
                       />
                     }
                   />
                   <Route
                     path="/register"
-                    element={<RegisterPage incomingCurrentLink={currentLink} />}
+                    element={
+                      <RegisterPage
+                        incomingCurrentLink={currentLink}
+                        incomingHandleBackEndLoadingChanges={
+                          handleBackEndLoadingChanges
+                        }
+                      />
+                    }
                   />
                 </Routes>
 
@@ -279,6 +297,7 @@ function TitleHeader({
   incomingCurrentUser,
   incomingHandleCurrentUserChanges,
   incomingCurrentLink,
+  incomingIsLoadingBackend,
 }) {
   return (
     <>
@@ -290,19 +309,23 @@ function TitleHeader({
             alt="sentence-repeater-logo"
           />
         </a> */}
-        {/* <div>
-          <Loading />
-        </div> */}
-        <div className="w-fit h-fit p-1">
+
+        <div className="w-[10%] flex justify-start items-start p-1">
           <Link to={"/"} style={{ display: "contents" }}>
             <img
               src="./logo512.png"
               alt="sentence-repeater-logo"
-              className="sm:w-[2dvw] h-auto w-[10dvw] p-1"
+              className="sm:w-[30px] h-auto w-[30px] p-1"
             ></img>
           </Link>
         </div>
         <div className="w-full h-full flex p-1 gap-3 justify-end">
+          <div>
+            <AnimatePresence>
+              {incomingIsLoadingBackend ? <Loading /> : null}
+            </AnimatePresence>
+          </div>
+
           <div className="w-fit h-full flex sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
             {incomingCurrentUser ? (
               <div className="flex gap-2 h-full items-center justify-center">
@@ -320,7 +343,6 @@ function TitleHeader({
               <AuthButtons />
             )}
           </div>
-
           <div className="w-8 h-full  flex items-center">
             <Burger
               isOpen={isOpen}

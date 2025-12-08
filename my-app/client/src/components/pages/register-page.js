@@ -4,6 +4,7 @@ import { useState } from "react";
 function RegisterPage({
   incomingCurrentLink,
   incomingHandleCurrentUserChanges,
+  incomingHandleBackEndLoadingChanges,
 }) {
   const [registerData, setRegisterData] = useState({
     username: "",
@@ -19,6 +20,7 @@ function RegisterPage({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    incomingHandleBackEndLoadingChanges(true);
     try {
       const res = await fetch(`${incomingCurrentLink}/api/v1/auth/register`, {
         method: "POST",
@@ -45,6 +47,7 @@ function RegisterPage({
       setRegisterMessage(error.message);
       console.log(error);
     }
+    incomingHandleBackEndLoadingChanges(false);
   };
 
   return (

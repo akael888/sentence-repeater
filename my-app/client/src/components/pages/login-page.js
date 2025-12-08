@@ -5,6 +5,7 @@ function LoginPage({
   incomingLink,
   incomingHandleCurrentUserChanges,
   incomingCurrentUser,
+  incomingHandleBackEndLoadingChanges,
 }) {
   const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [loginMessage, setLoginMessage] = useState("");
@@ -15,6 +16,7 @@ function LoginPage({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    incomingHandleBackEndLoadingChanges(true);
     try {
       const res = await fetch(`${incomingLink}/api/v1/auth/login`, {
         method: "POST",
@@ -43,6 +45,7 @@ function LoginPage({
       setLoginMessage(error.message);
       console.log(error);
     }
+    incomingHandleBackEndLoadingChanges(false);
   };
 
   return (
