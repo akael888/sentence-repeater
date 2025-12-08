@@ -3,8 +3,13 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRepeaterData } from "./repeater-context";
 import SentenceCard from "./sentence-card";
+import DBMessage from "./db-message";
 
-function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
+function SentenceCardManager({
+  incomingLink,
+  incomingCurrentUser,
+  incomingHandleBackEndLoadingChanges,
+}) {
   const {
     variables: incomingVariables,
     previewText: incomingPreviewText,
@@ -19,8 +24,8 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
     sentenceDescription: "",
   });
 
-  const [isSubmitNewSentence, setIsSubmitNewSentence] = useState(false);
-  const [submitSentenceMessage, setSubmitSentenceMessage] = useState("");
+  // const [isSubmitNewSentence, setIsSubmitNewSentence] = useState(false);
+  // const [submitSentenceMessage, setSubmitSentenceMessage] = useState("");
 
   const [sentenceList, setSentenceList] = useState({});
   const [variableList, setVariableList] = useState(() => {
@@ -56,15 +61,15 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
     return {};
   });
 
-  const toggleOption = (keyToUpdate) => {
-    setSentenceList((prevList) => ({
-      ...prevList,
-      [keyToUpdate]: {
-        ...prevList[keyToUpdate],
-        isOptionOpened: !prevList[keyToUpdate].isOptionOpened,
-      },
-    }));
-  };
+  // const toggleOption = (keyToUpdate) => {
+  //   setSentenceList((prevList) => ({
+  //     ...prevList,
+  //     [keyToUpdate]: {
+  //       ...prevList[keyToUpdate],
+  //       isOptionOpened: !prevList[keyToUpdate].isOptionOpened,
+  //     },
+  //   }));
+  // };
 
   const handleCurrentSentenceChanges = (sentenceObject) => {
     setCurrentSentence(sentenceObject);
@@ -82,9 +87,9 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
     setDbMessage([...dbMessage, message]);
   };
 
-  const handleSentenceDataChanges = (e) => {
-    setSentenceData({ ...sentenceData, [e.target.name]: e.target.value });
-  };
+  // const handleSentenceDataChanges = (e) => {
+  //   setSentenceData({ ...sentenceData, [e.target.name]: e.target.value });
+  // };
 
   useEffect(() => {
     console.log("incomingCurrentUser");
@@ -100,6 +105,7 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
     incomingSentenceDescription,
     e
   ) => {
+    incomingHandleBackEndLoadingChanges(true);
     e.preventDefault();
     console.log("Submitting Sentence..");
     try {
@@ -125,7 +131,7 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
       let sentenceID = "";
 
       if (dataSentence.msg) {
-        await setSubmitSentenceMessage(dataSentence.msg);
+        await handleDbMessageChanges(dataSentence.msg);
       }
 
       if (resSentence.ok) {
@@ -133,57 +139,61 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
         console.log(dataSentence.sentence._id);
         console.log(resSentence);
         console.log("Sentence Is Submitted!");
+
+        console.log("Submitting Variables");
+        incomingVariables.forEach(async (element) => {
+          try {
+            if (element) {
+              console.log(element);
+              // let varType = String(element.type).toLowerCase;
+              const submitVariableData =
+                convertFrontEndVariableIntoDatabaseVariable(
+                  element,
+                  sentenceID
+                );
+              const resVariable = await fetch(
+                `${incomingLink}/api/v1/sentence/${sentenceID}/variable`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    // Authorization: `Bearer ${token}`,
+                  },
+                  body: JSON.stringify(submitVariableData),
+                  credentials: "include",
+                }
+              );
+              const dataVariable = await resVariable.json();
+              if (dataVariable.msg) {
+                await handleDbMessageChanges(dataSentence.msg);
+              }
+              console.log("submitvardata");
+              console.log(resVariable);
+              if (resVariable.ok) {
+                console.log(dataVariable);
+                console.log(`${element.name} variable is submitted`);
+                refreshSentence();
+              } else {
+                console.log(dataVariable);
+                console.log(`Failed to submit variable ${element.name}`);
+              }
+            } else console.log("Empty Data");
+          } catch (error) {
+            console.log(error);
+          }
+        });
       } else {
         console.log("Sentence Failed to be Submitted!");
       }
-
-      console.log("Submitting Variables");
-      incomingVariables.forEach(async (element) => {
-        try {
-          if (element) {
-            console.log(element);
-            // let varType = String(element.type).toLowerCase;
-            const submitVariableData =
-              convertFrontEndVariableIntoDatabaseVariable(element, sentenceID);
-            const resVariable = await fetch(
-              `${incomingLink}/api/v1/sentence/${sentenceID}/variable`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  // Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(submitVariableData),
-                credentials: "include",
-              }
-            );
-            const dataVariable = await resVariable.json();
-            if (dataVariable.msg) {
-              await setSubmitSentenceMessage(dataSentence.msg);
-            }
-            console.log("submitvardata");
-            console.log(resVariable);
-            if (resVariable.ok) {
-              console.log(dataVariable);
-              console.log(`${element.name} variable is submitted`);
-            } else {
-              console.log(dataVariable);
-              console.log(`Failed to submit variable ${element.name}`);
-            }
-          } else console.log("Empty Data");
-        } catch (error) {
-          console.log(error);
-        }
-      });
     } catch (error) {
       console.log(error);
     }
-
-    refreshSentence();
+    incomingHandleBackEndLoadingChanges(false);
   };
 
   const refreshSentence = async () => {
     console.log("Refreshing Sentence..");
+    incomingHandleBackEndLoadingChanges(true);
     try {
       const res = await fetch(`${incomingLink}/api/v1/sentence`, {
         method: "GET",
@@ -221,10 +231,12 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
     } catch (error) {
       console.log(error);
     }
+    incomingHandleBackEndLoadingChanges(false);
   };
 
   const refreshVariables = async (targetSentence) => {
     console.log("Refresing Variables..");
+    incomingHandleBackEndLoadingChanges(true);
     const refSentence = targetSentence;
     try {
       const resVar = await fetch(
@@ -267,13 +279,17 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
       } else {
         console.log(`Failed to get variable data of sentence: ${refSentence}`);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+    incomingHandleBackEndLoadingChanges(false);
   };
 
   const loadSentence = async (targetSentence) => {
     // Taking sentence that is downloaded into Front End and apply it into the Repeater
 
     console.log("Loading Sentence..");
+    incomingHandleBackEndLoadingChanges(true);
     const varMap = await refreshVariables(targetSentence);
 
     const selectedText = sentenceList[targetSentence].sentence;
@@ -294,11 +310,13 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
     console.log("variables:");
     incomingHandleVariableChanges(clonedMap);
 
+    incomingHandleBackEndLoadingChanges(false);
     console.log("Loading Successful!..");
   };
 
   const deleteSentence = async (targetSentence) => {
     console.log("Deleting Sentence..");
+    incomingHandleBackEndLoadingChanges(true);
     const refSentence = targetSentence;
     try {
       const resSentence = await fetch(
@@ -320,20 +338,30 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
         console.log(dataSentence);
 
         console.log(`Successfully Deleted ${refSentence}`);
+        if (targetSentence === currentSentence.id) {
+          handleCurrentSentenceChanges({
+            id: null,
+            sentenceName: "",
+            sentenceDescription: "",
+          });
+        }
+        refreshSentence();
+        refreshVariables(refSentence);
       } else {
         console.log(dataSentence);
         console.log(`Failed deleting ${refSentence}`);
       }
-      refreshSentence();
-      refreshVariables(refSentence);
     } catch (error) {
       console.log(error);
     }
+    incomingHandleBackEndLoadingChanges(false);
   };
 
   const updateSentence = async (targetSentence) => {
     //Gak bakalan bisa Update Sentence Kalau Refresh, karena Sentencenya gak nyimpen ID
     try {
+      console.log("Updating Sentence..");
+      incomingHandleBackEndLoadingChanges(true);
       const refSentence = targetSentence;
       const variableArray = Array.from(incomingVariables.values());
       const variableData = variableArray.map((element) => {
@@ -372,18 +400,17 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
 
       if (resSentence.ok) {
         console.log(data);
-
+        refreshSentence();
+        refreshVariables(refSentence);
         console.log("Data Successfully Updated!");
       } else {
         console.log(data);
         console.log("Data is not Updated!");
       }
-
-      refreshSentence();
-      refreshVariables(refSentence);
     } catch (error) {
       console.log(error);
     }
+    incomingHandleBackEndLoadingChanges(true);
   };
 
   const convertFrontEndVariableIntoDatabaseVariable = (
@@ -481,13 +508,13 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
 
   return (
     <>
-      <div className="w-full h-[90%] flex flex-col justify-center items-center pt-5 pb-5 relative">
+      <div className="w-full h-full flex flex-col justify-center items-center pt-5 relative">
         {incomingCurrentUser ? (
           <div className="h-full w-full flex flex-col justify-center items-center [&>*]:text-xs [&>*]:sm:text-base">
             {/* Sentence Full Table */}
             <div className="w-full h-full flex flex-col gap-4">
               {/* Current Sentence Card */}
-              <div className="flex flex-col gap-1 justify-center items-center sm:p-10 pt-8 w-full h-fit">
+              <div className="flex flex-col gap-1 justify-center items-center sm:p-10 pt-8 w-full ">
                 <div className="w-[80%] h-fit">
                   <SentenceCard
                     // incomingSentenceName={currentSentence.sentenceName}
@@ -507,11 +534,11 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
                     cardType="current"
                   ></SentenceCard>
                 </div>
-                {submitSentenceMessage ? (
+                {/* {submitSentenceMessage ? (
                   <div className="p-1 w-full h-full flex justify-center items-center">
                     {submitSentenceMessage}
                   </div>
-                ) : null}
+                ) : null} */}
               </div>
 
               {/* Selected Variables */}
@@ -525,7 +552,7 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
               {/* Submit New Sentence */}
 
               {/* Sentence List Header */}
-              <div className="w-full h-full">
+              <div className="w-full flex-1 min-h-0 flex flex-col">
                 {/* Selected Variables */}
                 {/* {Array.from(variableList.entries()).map(([key, value]) => (
               <div key={key} className="bg-blue-800 hover:bg-blue-600">
@@ -533,53 +560,55 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
               </div>
             ))} */}
                 {/* Sentence List */}
-                <div className="grid sm:grid-flow-row grid-flow-col gap-2 sm:max-h-[70%] overflow-y-auto oveflow-x-auto w-full h-full max-w-[100%] min-h-[35dvh]  p-2 relative border-top">
-                  <div className="w-full h-[10%] flex justify-end items-end absolute">
-                    <button
-                      className="w-[50px] h-[100px] rounded-1 border-amber-800 border-1 sm:h-full  hover:bg-amber-700"
-                      onClick={refreshSentence}
-                    >
-                      ⟳
-                    </button>
+                <div className=" w-full h-full p-2 relative ">
+                  <div className="absolute top-2 left-2 right-2 flex justify-center items-center backdrop-blur-sm rounded-lg shadow-lg p-2">
+                    <div className="w-[90%] sm:h-fit h-[10%]">
+                      <h4>Sentence List</h4>
+                    </div>
+                    <div className="w-[10%] sm:h-fit h-[10%]">
+                      <button
+                        className=" w-[40px] h-[40px] box-shadow shadow-black shadow-md rounded-1  hover:bg-amber-700 transition-colors hover:bg-yellow-900 active:scale-[0.9]"
+                        onClick={refreshSentence}
+                      >
+                        ⟳
+                      </button>
+                    </div>
                   </div>
-                  {Object.keys(sentenceList).length > 0 ? (
-                    Object.keys(sentenceList).map((value, index) => (
-                      <>
-                        <div className="flex w-full h-full justify-center items-center">
-                          <div className="sm:w-[80%] h-full">
-                            <SentenceCard
-                              incomingSentenceName={sentenceList[value].name}
-                              incomingSentenceDescription={
-                                sentenceList[value].description
-                              }
-                              incomingSentenceID={value}
-                              incomingSentenceValue={
-                                sentenceList[value].sentence
-                              }
-                              incomingVariables={sentenceList[value].variables}
-                              incomingLoadSentence={loadSentence}
-                              incomingDeleteSentence={deleteSentence}
-                              incomingCurrentSentenceId={currentSentence.id}
-                            ></SentenceCard>
+                  <div className="overflow-y-auto oveflow-x-auto gap-2 grid-flow-row grid w-full h-full sm:pt-16 pt-[20%]">
+                    {Object.keys(sentenceList).length > 0 ? (
+                      Object.keys(sentenceList).map((value, index) => (
+                        <>
+                          <div className="flex w-full h-full justify-center items-center">
+                            <div className="sm:w-[80%] h-full">
+                              <SentenceCard
+                                incomingSentenceName={sentenceList[value].name}
+                                incomingSentenceDescription={
+                                  sentenceList[value].description
+                                }
+                                incomingSentenceID={value}
+                                incomingSentenceValue={
+                                  sentenceList[value].sentence
+                                }
+                                incomingVariables={
+                                  sentenceList[value].variables
+                                }
+                                incomingLoadSentence={loadSentence}
+                                incomingDeleteSentence={deleteSentence}
+                                incomingCurrentSentenceId={currentSentence.id}
+                              ></SentenceCard>
+                            </div>
                           </div>
+                          {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
+                        </>
+                      ))
+                    ) : (
+                      <>
+                        <div className="w-full h-full flex justify-center items-center">
+                          Empty Sentence
                         </div>
-                        {/* sm:[&>*]:h-[5dvh] [&>*]:h-[10dvh] */}
                       </>
-                    ))
-                  ) : (
-                    <>
-                      <div className="w-full h-full flex justify-center items-center">
-                        Empty Sentence
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div className="p-1 flex w-full h-[10%]">
-                  {/* <div className="p-1 w-[90dvw]">
-                    <h3>
-                      <strong>Sentence Cards</strong>
-                    </h3>
-                  </div> */}
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -590,15 +619,7 @@ function SentenceCardManager({ incomingLink, incomingCurrentUser }) {
             <p>Please Log In to Access Stored Sentence Data</p>
           </div>
         )}
-        {dbMessage ? (
-          <motion.div
-            className="w-full h-fit sm:text-base text-sm p-2 absolute bg-black opacity-20"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            {dbMessage[dbMessage.length - 1]}
-          </motion.div>
-        ) : null}
+        <DBMessage incomingMessage={dbMessage} />
       </div>
     </>
   );

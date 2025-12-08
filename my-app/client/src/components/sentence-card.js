@@ -133,7 +133,7 @@ function SentenceCard({
                 sentenceID ? (
                   <>
                     <button
-                      className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
+                      className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
                       onClick={() => {
                         incomingUpdateSentence(sentenceID);
                       }}
@@ -142,18 +142,18 @@ function SentenceCard({
                       <img src="./svg/save-clear.svg" alt="Save Logo" />
                     </button>
                     <button
-                      className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
+                      className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
                       type="submit"
                     >
-                      <img src="./svg/upload-dark.svg" alt="Upload Logo" />
+                      <img src="./svg/plus-dark.svg" alt="Upload Logo" />
                     </button>
                   </>
                 ) : (
                   <button
-                    className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
+                    className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
                     type="submit"
                   >
-                    <img src="./svg/upload-dark.svg" alt="Upload Logo" />
+                    <img src="./svg/plus-dark.svg" alt="Upload Logo" />
                   </button>
                 )
               ) : (
@@ -161,7 +161,7 @@ function SentenceCard({
                   <button
                     className={`${
                       isCurrentSentence ? "bg-green-900" : "hover:bg-yellow-900"
-                    } p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md`}
+                    } p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md active:scale-[0.9]`}
                     onClick={() => {
                       incomingLoadSentence(sentenceID);
                     }}
@@ -175,7 +175,7 @@ function SentenceCard({
                     )}
                   </button>
                   <button
-                    className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md"
+                    className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md active:scale-[0.9]"
                     onClick={() => {
                       incomingDeleteSentence(sentenceID);
                     }}
