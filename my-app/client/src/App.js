@@ -310,12 +310,12 @@ function TitleHeader({
           />
         </a> */}
 
-        <div className="w-[10%] flex justify-start items-start p-1">
+        <div className="w-fit h-full flex justify-center items-center p-1">
           <Link to={"/"} style={{ display: "contents" }}>
             <img
               src="./logo512.png"
               alt="sentence-repeater-logo"
-              className="sm:w-[30px] h-auto w-[30px] p-1"
+              className="h-auto w-[30px] p-1"
             ></img>
           </Link>
         </div>

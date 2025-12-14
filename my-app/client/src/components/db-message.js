@@ -20,7 +20,7 @@ function DBMessage({ incomingMessage }) {
       <AnimatePresence>
         {incomingMessage && dbMessageVisible ? (
           <motion.div
-            className="w-full h-fit bottom-0 sm:text-base text-sm p-2 absolute backdrop-blur-sm"
+            className="w-full h-fit bottom-0 text-[clamp(0.1rem , 2.5vw, 0.3rem)] p-2 absolute backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{opacity:0}}
