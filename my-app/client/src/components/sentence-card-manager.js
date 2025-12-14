@@ -574,7 +574,7 @@ function SentenceCardManager({
                       </button>
                     </div>
                   </div>
-                  <div className="overflow-y-auto oveflow-x-auto gap-2 grid-flow-row grid w-full h-full sm:pt-16 pt-[20%]">
+                  <div className="overflow-y-auto oveflow-x-auto gap-2 grid-flow-row grid w-full h-full sm:pt-16 pt-[20%] scrollbar scrollbar-thumb-white scrollbar-track-transparent">
                     {Object.keys(sentenceList).length > 0 ? (
                       Object.keys(sentenceList).map((value, index) => (
                         <>
