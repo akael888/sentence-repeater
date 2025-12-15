@@ -85,12 +85,13 @@ function BurgerMenu({
 
           {/* Dark Mode Repeater */}
           <div className="w-full h-fit flex flex-row justify-center items-center text-center gap-2">
-            <div>Dark Mode |</div>
+            <div>Dark Mode | In Progress</div>
 
-            <CustomToggle
+            {/* <CustomToggle
               onChange={darkModeChanges}
               checked={isDarkMode}
-            ></CustomToggle>
+              disabled={true}
+            ></CustomToggle> */}
           </div>
         </>
       )}
