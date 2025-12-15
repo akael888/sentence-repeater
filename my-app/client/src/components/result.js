@@ -66,8 +66,8 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
         {arrayResults ? (
           <>
             {arrayResults.length > 0 ? (
-              <motion.div className="w-full">
-                <div className="w-full grid gap-[10px] place-content-center">
+              <motion.div className="w-full h-full">
+                <div className="w-full grid gap-[10px] place-items-stretch">
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -76,7 +76,7 @@ function ShowResult({ arrayResults, arrayResultsChange }) {
                       duration: 0.5,
                       ease: "easeInOut",
                     }}
-                    className="w-full h-full min-w-[20dvw] min-h-[10vh] max-w-[100dvw] max-h-[25vh] grid row-[2] row-start-auto text-center place-items-center shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]   grid z-0  m-auto rounded-[10px] "
+                    className="w-full h-full sm:min-w-[20dvw]  min-h-[10vh] sm:max-w-[100dvw] max-h-[25vh] grid row-[2] row-start-auto text-center place-items-center shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-[6px] backdrop-saturate-[120%]   grid z-0  m-auto rounded-[10px] "
                   >
                     <div className="w-full h-full grid p-[10px] place-items-center text-center">
                       <div className="w-full h-full p-[5px]">Results</div>
