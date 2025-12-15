@@ -579,7 +579,7 @@ function SentenceCardManager({
                       Object.keys(sentenceList).map((value, index) => (
                         <>
                           <div className="flex w-full h-full justify-center items-center">
-                            <div className="sm:w-[80%] h-full">
+                            <div className="w-[80%] h-full">
                               <SentenceCard
                                 incomingSentenceName={sentenceList[value].name}
                                 incomingSentenceDescription={
