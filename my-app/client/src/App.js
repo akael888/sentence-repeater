@@ -173,6 +173,7 @@ function App() {
               incomingHandleCurrentUserChanges={handleCurrentUserChanges}
               incomingCurrentLink={currentLink}
               incomingIsLoadingBackend={isLoadingBackEnd}
+              incomingHandleBackEndLoadingChanges={handleBackEndLoadingChanges}
             />
           </motion.header>
 
@@ -298,6 +299,7 @@ function TitleHeader({
   incomingHandleCurrentUserChanges,
   incomingCurrentLink,
   incomingIsLoadingBackend,
+  incomingHandleBackEndLoadingChanges,
 }) {
   return (
     <>
@@ -320,7 +322,7 @@ function TitleHeader({
           </Link>
         </div>
         <div className="w-full h-full flex p-1 gap-3 justify-end">
-          <div>
+          <div className="w-fit h-full flex justify-center items-center">
             <AnimatePresence>
               {incomingIsLoadingBackend ? <Loading /> : null}
             </AnimatePresence>
@@ -337,6 +339,9 @@ function TitleHeader({
                     incomingHandleCurrentUserChanges
                   }
                   incomingCurrentLink={incomingCurrentLink}
+                  incomingHandleBackEndLoadingChanges={
+                    incomingHandleBackEndLoadingChanges
+                  }
                 />
               </div>
             ) : (
