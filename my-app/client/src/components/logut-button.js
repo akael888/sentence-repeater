@@ -1,10 +1,12 @@
 function LogoutButton({
   incomingHandleCurrentUserChanges,
   incomingCurrentLink,
+  incomingHandleBackEndLoadingChanges,
 }) {
   const logoutUser = async () => {
     try {
       console.log("Logging Out..");
+      incomingHandleBackEndLoadingChanges(true);
       const res = await fetch(`${incomingCurrentLink}/api/v1/auth/logout`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -28,6 +30,7 @@ function LogoutButton({
     } catch (error) {
       console.log(error);
     }
+    incomingHandleBackEndLoadingChanges(false);
   };
 
   return (
