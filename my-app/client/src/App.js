@@ -1,27 +1,21 @@
 // import "./App.css";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SpeedInsights } from "@vercel/speed-insights/react"; //Vercel Tracker
 import { Analytics } from "@vercel/analytics/react";
 import Repeater from "./components/repeater";
-import Mode from "./components/toggle-mode";
-import bg from "./img/background-img.jpg";
-import { AnimatePresence, motion } from "motion/react";
-import Burger from "./components/burger";
+
+import { motion } from "motion/react";
+
 import BurgerMenu from "./components/burger-menu";
 import WaveBackground from "./components/blob-background";
-import LoginDebugger from "./components/login-form-debugger";
-import Login from "./components/login-form";
-import Register from "./components/register-form";
-import LogoutButton from "./components/logut-button";
 
 import { RepeaterDataProvider } from "./components/repeater-context";
-import AuthActions from "./components/auth-actions";
 
 import LoginPage from "./components/pages/login-page";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import RegisterPage from "./components/pages/register-page";
-import AuthButtons from "./components/auth-buttons";
-import Loading from "./components/loading-indicator";
+
+import TitleHeader from "./components/title-header";
 
 function App() {
   //Backend Variables and Other Details
@@ -286,87 +280,6 @@ function App() {
         <SpeedInsights />
         <Analytics />
       </div>
-    </>
-  );
-}
-
-function TitleHeader({
-  darkModeTitle,
-  darkModeChangesTitle,
-  isOpen,
-  handleOpenBurgerMenuChanges,
-  incomingCurrentUser,
-  incomingHandleCurrentUserChanges,
-  incomingCurrentLink,
-  incomingIsLoadingBackend,
-  incomingHandleBackEndLoadingChanges,
-}) {
-  return (
-    <>
-      <nav className="w-full h-full flex justify-end sm:flex sm:justify-end p-[10px] gap-3  ">
-        {/* <a href="/" class="logo">
-          <img
-            className="flex-shrink-0 w-auto h-full max-h-[5vh] object-contain "
-            src="./logo512.png"
-            alt="sentence-repeater-logo"
-          />
-        </a> */}
-
-        <div className="w-fit h-full flex justify-center items-center p-1">
-          <Link to={"/"} style={{ display: "contents" }}>
-            <img
-              src="./logo512.png"
-              alt="sentence-repeater-logo"
-              className="h-auto w-[30px] p-1"
-            ></img>
-          </Link>
-        </div>
-        <div className="w-full h-full flex p-1 gap-3 justify-end">
-          <div className="w-fit h-full flex justify-center items-center">
-            <AnimatePresence>
-              {incomingIsLoadingBackend ? <Loading /> : null}
-            </AnimatePresence>
-          </div>
-
-          <div className="w-fit h-full flex sm:flex sm:gap-1 sm:items-center [&>*]:text-xs [&>*]:sm:text-base">
-            {incomingCurrentUser ? (
-              <div className="flex gap-2 h-full items-center justify-center">
-                <div className="p-1 text-base ">
-                  <i> Hi, {incomingCurrentUser}!</i>
-                </div>
-                <LogoutButton
-                  incomingHandleCurrentUserChanges={
-                    incomingHandleCurrentUserChanges
-                  }
-                  incomingCurrentLink={incomingCurrentLink}
-                  incomingHandleBackEndLoadingChanges={
-                    incomingHandleBackEndLoadingChanges
-                  }
-                />
-              </div>
-            ) : (
-              <AuthButtons />
-            )}
-          </div>
-          <div className="w-8 h-full  flex items-center">
-            <Burger
-              isOpen={isOpen}
-              handleOpenBurgerMenuChanges={handleOpenBurgerMenuChanges}
-            ></Burger>
-          </div>
-        </div>
-
-        {/* <Mode
-          currentState={darkModeTitle}
-          darkModeChanges={darkModeChangesTitle}
-        /> */}
-        {/* <ul className="flex justify-between items-center gap-[10px] w-full h-full">
-          <li className="w-full h-full">
-            <a href="/">How to Use</a>
-          </li>
-          
-        </ul> */}
-      </nav>
     </>
   );
 }
