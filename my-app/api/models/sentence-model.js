@@ -16,7 +16,7 @@ const SentenceSchema = new mongoose.Schema(
       type: String,
       required: [true, "Missing Sentence Description"],
       minlength: 3,
-      maxlength: 100,
+      maxlength: 20,
     },
     createdBy: {
       type: mongoose.Types.ObjectId,
