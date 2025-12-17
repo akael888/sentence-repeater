@@ -6,6 +6,8 @@ function RegisterPage({
   incomingHandleCurrentUserChanges,
   incomingHandleBackEndLoadingChanges,
 }) {
+  const [isPasswordHidden, setIsPasswordHidden] = useState(false);
+
   const [registerData, setRegisterData] = useState({
     username: "",
     password: "",
@@ -64,7 +66,7 @@ function RegisterPage({
         >
           Register
         </motion.h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} >
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -72,30 +74,57 @@ function RegisterPage({
               duration: 0.5,
               ease: "easeInOut",
             }}
-            className="text-black w-full h-full border-black gap-3 grid"
+            className="text-white w-full h-full border-black gap-3 grid flex justify-center items-center"
           >
-            <input
-              className=" h-full bg-transparent text-center border-white border-b"
-              name="username"
-              placeholder="Username"
-              value={registerData.username}
-              onChange={handleLoginDataChanges}
-            ></input>
-            <input
-              className=" h-full bg-transparent text-center border-white border-b"
-              name="email"
-              placeholder="Email"
-              value={registerData.email}
-              onChange={handleLoginDataChanges}
-            ></input>
-            <input
-              className=" h-full bg-transparent text-center border-white border-b"
-              name="password"
-              placeholder="Password"
-              value={registerData.password}
-              onChange={handleLoginDataChanges}
-              type="password"
-            ></input>
+            <div className="w-full h-full flex">
+              <input
+                className=" w-full h-full bg-transparent text-center border-white border-b"
+                name="username"
+                placeholder="Username"
+                value={registerData.username}
+                onChange={handleLoginDataChanges}
+                required={true}
+                maxLength={10}
+                minLength={3}
+              ></input>
+            </div>
+            <div className="w-full h-full flex">
+              <input
+                className="w-full h-full bg-transparent text-center border-white border-b"
+                name="email"
+                placeholder="Email"
+                required={true}
+                value={registerData.email}
+                onChange={handleLoginDataChanges}
+              ></input>
+            </div>
+            <div className="w-full h-full flex">
+              <input
+                className=" h-full bg-transparent text-center border-white border-b"
+                name="password"
+                placeholder="Password"
+                value={registerData.password}
+                required={true}
+                onChange={handleLoginDataChanges}
+                type={isPasswordHidden ? "text" : "password"}
+                minLength={6}
+              ></input>
+              <button
+                onClick={() => setIsPasswordHidden(!isPasswordHidden)}
+                type="button"
+              >
+                <img
+                  src={
+                    isPasswordHidden
+                      ? "./svg/eye-off-dark.svg"
+                      : "./svg/eye-on-dark.svg"
+                  }
+                  alt="password-hidden-logo"
+                  className="h-auto w-[30px] p-1"
+                ></img>
+              </button>
+            </div>
+
             <button
               className="border-1 rounded-1 p-1 hover:bg-green-700 disabled:hover:bg-transparent hover:text-black disabled:text-white text-white disabled:bg-transparent"
               type="submit"
@@ -110,13 +139,13 @@ function RegisterPage({
           </motion.div>
         </form>
         {registerMessage !== "" ? (
-          <motion.p
+          <motion.div
             className="p-2"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
             {registerMessage}
-          </motion.p>
+          </motion.div>
         ) : null}
       </div>
     </>
