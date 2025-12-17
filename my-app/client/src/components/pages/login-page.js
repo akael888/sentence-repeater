@@ -7,6 +7,8 @@ function LoginPage({
   incomingCurrentUser,
   incomingHandleBackEndLoadingChanges,
 }) {
+  const [isPasswordHidden, setIsPasswordHidden] = useState(false);
+
   const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [loginMessage, setLoginMessage] = useState("");
 
@@ -75,7 +77,7 @@ function LoginPage({
                   ease: "easeInOut",
                 }}
                 exit={{ opacity: 0, x: 10 }}
-                className="text-black w-full h-full border-black grid gap-3 text-center"
+                className="text-white w-full h-full border-black grid gap-3 text-center"
               >
                 <input
                   className=" h-full bg-transparent text-center border-white border-b"
@@ -83,15 +85,36 @@ function LoginPage({
                   placeholder="Username"
                   value={loginData.username}
                   onChange={handleLoginDataChanges}
+                  required={true}
+                  maxLength={10}
+                  minLength={3}
                 ></input>
-                <input
-                  className="h-full bg-transparent text-center border-white border-b"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  value={loginData.password}
-                  onChange={handleLoginDataChanges}
-                ></input>
+                <div className="w-full h-full flex">
+                  <input
+                    className="h-full bg-transparent text-center border-white border-b"
+                    name="password"
+                    placeholder="Password"
+                    type={isPasswordHidden ? "text" : "password"}
+                    value={loginData.password}
+                    onChange={handleLoginDataChanges}
+                    required={true}
+                    minLength={6}
+                  ></input>
+                  <button
+                    onClick={() => setIsPasswordHidden(!isPasswordHidden)}
+                    type="button"
+                  >
+                    <img
+                      src={
+                        isPasswordHidden
+                          ? "./svg/eye-off-dark.svg"
+                          : "./svg/eye-on-dark.svg"
+                      }
+                      alt="password-hidden-logo"
+                      className="h-auto w-[30px] p-1"
+                    ></img>
+                  </button>
+                </div>
                 <button
                   className="border-1 rounded-1 p-1 hover:bg-green-700 disabled:hover:bg-transparent hover:text-black disabled:text-white text-white"
                   type="submit"

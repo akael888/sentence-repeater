@@ -71,6 +71,9 @@ function SentenceCard({
                     placeholder="Sentence Name"
                     value={sentenceName}
                     onChange={handleSentenceDataChanges}
+                    required={true}
+                    minLength={3}
+                    maxLength={15}
                     onBlur={() => setIsEditingName(false)}
                     autoFocus
                   />
@@ -97,6 +100,9 @@ function SentenceCard({
                       placeholder="Sentence Description"
                       value={sentenceDescription}
                       onChange={handleSentenceDataChanges}
+                      minLength={3}
+                      maxLength={20}
+                      required={true}
                       onBlur={() => setIsEditingDescription(false)}
                       autoFocus
                     />
