@@ -80,7 +80,7 @@ function LoginPage({
                 className="text-white w-full h-full border-black grid gap-3 text-center"
               >
                 <input
-                  className=" h-full bg-transparent text-center border-white border-b"
+                  className=" h-full bg-transparent text-center border-white border-b rounded-1"
                   name="username"
                   placeholder="Username"
                   value={loginData.username}
@@ -91,7 +91,7 @@ function LoginPage({
                 ></input>
                 <div className="w-full h-full flex">
                   <input
-                    className="h-full bg-transparent text-center border-white border-b"
+                    className="h-full bg-transparent text-center border-white border-b rounded-1"
                     name="password"
                     placeholder="Password"
                     type={isPasswordHidden ? "text" : "password"}
@@ -116,7 +116,7 @@ function LoginPage({
                   </button>
                 </div>
                 <button
-                  className="border-1 rounded-1 p-1 hover:bg-green-700 disabled:hover:bg-transparent hover:text-black disabled:text-white text-white"
+                  className="border-1 rounded-1 p-1 hover:bg-green-700 disabled:hover:bg-transparent hover:text-black disabled:hidden text-white"
                   type="submit"
                   disabled={
                     loginData.username === "" || loginData.password === ""
@@ -128,7 +128,7 @@ function LoginPage({
             </motion.form>
           </>
         )}
-        {loginMessage !== "" ? (
+        {loginMessage !== "" && !incomingCurrentUser ? (
           <motion.p
             className="p-2"
             initial={{ opacity: 0, y: -10 }}
