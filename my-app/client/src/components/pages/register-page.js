@@ -62,7 +62,7 @@ function RegisterPage({
             duration: 0.5,
             ease: "easeInOut",
           }}
-          className="relativep-2"
+          className="relative p-2"
         >
           Register
         </motion.h1>
@@ -78,7 +78,7 @@ function RegisterPage({
           >
             <div className="w-full h-full flex">
               <input
-                className=" w-full h-full bg-transparent text-center border-white border-b"
+                className=" w-full h-full bg-transparent text-center border-white border-b rounded-1"
                 name="username"
                 placeholder="Username"
                 value={registerData.username}
@@ -90,7 +90,7 @@ function RegisterPage({
             </div>
             <div className="w-full h-full flex">
               <input
-                className="w-full h-full bg-transparent text-center border-white border-b"
+                className="w-full h-full bg-transparent text-center border-white border-b rounded-1"
                 name="email"
                 placeholder="Email"
                 required={true}
@@ -100,7 +100,7 @@ function RegisterPage({
             </div>
             <div className="w-full h-full flex">
               <input
-                className=" h-full bg-transparent text-center border-white border-b"
+                className=" h-full bg-transparent text-center border-white border-b rounded-1"
                 name="password"
                 placeholder="Password"
                 value={registerData.password}
@@ -125,17 +125,17 @@ function RegisterPage({
               </button>
             </div>
 
-            <button
-              className="border-1 rounded-1 p-1 hover:bg-green-700 disabled:hover:bg-transparent hover:text-black disabled:text-white text-white disabled:bg-transparent"
+            <motion.button
+              className="border-1 rounded-1 p-1 hover:bg-green-700  hover:text-black  text-white  disabled:hidden"
               type="submit"
               disabled={
                 registerData.email === "" ||
                 registerData.password === "" ||
                 registerData.username === ""
-              }
+              } 
             >
               Submit
-            </button>
+            </motion.button>
           </motion.div>
         </form>
         {registerMessage !== "" ? (
