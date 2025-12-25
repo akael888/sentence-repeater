@@ -16,6 +16,7 @@ function SentenceCard({
   incomingSetSentenceData,
   incomingSentenceData,
   cardType = "default",
+  incomingIsLoadingBackend,
 }) {
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -139,25 +140,28 @@ function SentenceCard({
                 sentenceID ? (
                   <>
                     <button
-                      className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md hover:scale-95"
+                      className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md hover:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed"
                       onClick={() => {
                         incomingUpdateSentence(sentenceID);
                       }}
                       type="button"
+                      disabled={incomingIsLoadingBackend}
                     >
                       <img src="./svg/save-clear.svg" alt="Save Logo" />
                     </button>
                     <button
-                      className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md hover:scale-95"
+                      className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md hover:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed"
                       type="submit"
+                      disabled={incomingIsLoadingBackend}
                     >
                       <img src="./svg/plus-dark.svg" alt="Upload Logo" />
                     </button>
                   </>
                 ) : (
                   <button
-                    className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md hover:scale-95"
+                    className=" hover:bg-yellow-900 active:scale-[0.9] p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md hover:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed"
                     type="submit"
+                    disabled={incomingIsLoadingBackend}
                   >
                     <img src="./svg/plus-dark.svg" alt="Upload Logo" />
                   </button>
@@ -167,11 +171,11 @@ function SentenceCard({
                   <button
                     className={`${
                       isCurrentSentence ? "bg-green-900" : "hover:bg-yellow-900"
-                    } p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md active:scale-[0.9] hover:scale-95`}
+                    } p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md active:scale-[0.9] hover:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed`}
                     onClick={() => {
                       incomingLoadSentence(sentenceID);
                     }}
-                    disabled={isCurrentSentence}
+                    disabled={isCurrentSentence || incomingIsLoadingBackend}
                     type="button"
                   >
                     {isCurrentSentence ? (
@@ -181,11 +185,12 @@ function SentenceCard({
                     )}
                   </button>
                   <button
-                    className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md active:scale-[0.9] hover:scale-95"
+                    className=" hover:bg-yellow-900 p-2 rounded-1 w-[50px] h-[50px] box-shadow shadow-black shadow-md active:scale-[0.9] hover:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed"
                     onClick={() => {
                       incomingDeleteSentence(sentenceID);
                     }}
                     type="button"
+                    disabled={incomingIsLoadingBackend}
                   >
                     <img src="./svg/delete-dark.svg" alt="Delete Logo" />
                   </button>
@@ -193,6 +198,7 @@ function SentenceCard({
               )}
             </div>
           </div>
+          {/* <div>{incomingIsLoadingBackend ? "true" : "false"}</div> */}
           {/* Body Part of the Info */}
           <div className="w-full h-fit flex p-1">
             <div className="w-full h-fit flex flex-col  items-start p-1">

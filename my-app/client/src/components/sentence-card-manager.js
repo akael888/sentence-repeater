@@ -8,6 +8,7 @@ import DBMessage from "./db-message";
 function SentenceCardManager({
   incomingLink,
   incomingCurrentUser,
+  incomingIsLoadingBackend,
   incomingHandleBackEndLoadingChanges,
 }) {
   const {
@@ -532,6 +533,7 @@ function SentenceCardManager({
                     incomingSentenceData={sentenceData}
                     incomingSentenceValue={incomingPreviewText}
                     cardType="current"
+                    incomingIsLoadingBackend={incomingIsLoadingBackend}
                   ></SentenceCard>
                 </div>
                 {/* {submitSentenceMessage ? (
@@ -567,8 +569,9 @@ function SentenceCardManager({
                     </div>
                     <div className="w-[10%] sm:h-fit h-[10%]">
                       <button
-                        className=" w-[40px] h-[40px] box-shadow shadow-black shadow-md rounded-1  hover:bg-amber-700 transition-colors hover:bg-yellow-900 active:scale-[0.9]"
+                        className=" w-[40px] h-[40px] box-shadow shadow-black shadow-md rounded-1  hover:bg-amber-700 transition-colors hover:bg-yellow-900 active:scale-[0.9] disabled:pointer-events-none disabled:cursor-not-allowed"
                         onClick={refreshSentence}
+                        disabled={incomingIsLoadingBackend}
                       >
                         ⟳
                       </button>
@@ -595,6 +598,7 @@ function SentenceCardManager({
                                 incomingLoadSentence={loadSentence}
                                 incomingDeleteSentence={deleteSentence}
                                 incomingCurrentSentenceId={currentSentence.id}
+                                incomingIsLoadingBackend={incomingIsLoadingBackend}
                               ></SentenceCard>
                             </div>
                           </div>
