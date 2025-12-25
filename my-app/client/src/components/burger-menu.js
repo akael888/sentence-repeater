@@ -9,6 +9,7 @@ function BurgerMenu({
   isDarkMode,
   incomingLink,
   incomingCurrentUser,
+  incomingIsLoadingBackend,
   incomingHandleBackEndLoadingChanges,
 }) {
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
@@ -27,6 +28,7 @@ function BurgerMenu({
           incomingHandleBackEndLoadingChanges={
             incomingHandleBackEndLoadingChanges
           }
+          incomingIsLoadingBackend={incomingIsLoadingBackend}
         ></SentenceCardManager>
       ) : (
         <>

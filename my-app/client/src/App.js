@@ -143,6 +143,7 @@ function App() {
             isDarkMode={isDarkMode}
             incomingLink={currentLink}
             incomingCurrentUser={currentUser}
+            incomingIsLoadingBackend={isLoadingBackEnd}
             incomingHandleBackEndLoadingChanges={handleBackEndLoadingChanges}
           ></BurgerMenu>
           <motion.header
