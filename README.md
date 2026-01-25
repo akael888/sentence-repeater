@@ -1,7 +1,18 @@
 # Sentence Repeater
-> Tech Used: React JS, Tailwind CSS, React Bootstrap, Framer Motion, Node JS, Express JS, MongoDB
+> Tech Used: 
+- React JS (CRA) 
+- Tailwind CSS
+- React Bootstrap
+- Framer Motion
+- Node JS
+- Express JS
+- MongoDB
+- Bruno and Postman
 
-> Link: https://sentence-repeater.vercel.app/
+> Link: 
+- Front End : https://sentence-repeater.vercel.app/
+- Back End : https://sentence-repeater-backend.vercel.app/
+
 
 > Demo Video:
 
@@ -16,6 +27,7 @@
 ## Main Features
 - Variable Definition: The Ability to define a variable that exists within the sentence. Each Variable has different types, operations, and rules
 - Local Storage: Latest changes of the Sentence Input, Generate Amount, Variable Changes, and the Results will be stored in Local Storage. This way, the app remembers the user's latest input that persists upon refresh
+- Auth, Database Operations and End Points
 
 ## Other Features
 - Dark Mode
@@ -58,3 +70,6 @@ If all operations are disabled, the variable will be duplicated using its start 
       - The generated amount will change based on the Highest List Variable (List Variable Size * Variable Interval = Highest List Variable)
   - and Date
     - Dates have 2 operations: Randomize and Iterate
+
+## Endpoints
+
