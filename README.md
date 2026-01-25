@@ -72,4 +72,32 @@ If all operations are disabled, the variable will be duplicated using its start 
     - Dates have 2 operations: Randomize and Iterate
 
 ## Endpoints
+URL = sentence-repeater-backend.vercel.app
 
+No Auth Required:
+- Login
+POST > URL/auth/login
+- Register
+POST > URL/auth/register
+
+Auth Required:
+- Create Sentence
+POST > URL/sentence
+- Create Variable
+POST > URL/sentence/{sentenceID}/variable
+- Delete Sentence
+DELETE > URL/sentence/{sentenceID}
+- Delete Variable
+DELETE > URL/sentence/{sentenceID}/variable/{variableID}
+- Edit Sentence
+PATCH > URL/sentence/{sentenceID
+- Get All Sentence
+GET > URL/sentence
+- Get All Variable
+GET > URL/sentence/{sentenceID}/variable
+- Get Sentence
+GET > URL/sentence/{sentenceID}
+- Get Username
+GET > URL/user/username
+- Get Variable
+GET > URL/sentence/{sentenceID}/variable/{variableID
